@@ -1,0 +1,53 @@
+{
+  "mcpServers": {
+    "filesystem-projects": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "C:/Users/pavel/projects"],
+      "alwaysAllow": ["read_text_file", "list_directory", "directory_tree", "read_multiple_files"],
+      "description": "Filesystem access to projects directory with read-only permissions for safety"
+    },
+    "filesystem-agentic": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "C:/Users/pavel/vscodeportable/agentic"],
+      "description": "Filesystem access to agentic repository directory"
+    },
+    "memory": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-memory"],
+      "description": "In-memory knowledge graph for storing and retrieving entities, relations, and observations",
+      "alwaysAllow": ["read_graph", "search_nodes", "open_nodes"]
+    }
+  },
+  "security": {
+    "pathValidation": {
+      "enabled": true,
+      "allowedPaths": [
+        "C:/Users/pavel/projects",
+        "C:/Users/pavel/vscodeportable/agentic"
+      ],
+      "blockedPaths": [
+        "C:/Windows",
+        "C:/Program Files",
+        "C:/Program Files (x86)"
+      ]
+    },
+    "rateLimiting": {
+      "enabled": true,
+      "maxRequestsPerMinute": 100,
+      "maxRequestsPerHour": 1000
+    },
+    "permissionControl": {
+      "writeOperationsRequireApproval": true,
+      "dangerousOperationsRequireApproval": true,
+      "safeReadOperations": [
+        "read_text_file",
+        "list_directory",
+        "directory_tree",
+        "read_multiple_files",
+        "read_graph",
+        "search_nodes",
+        "open_nodes"
+      ]
+    }
+  }
+}

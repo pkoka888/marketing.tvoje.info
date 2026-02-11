@@ -1,0 +1,277 @@
+---
+import type { Language } from '../../i18n/translations';
+import { getLangFromUrl, translations } from '../../i18n/translations';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang: propLang } = Astro.props;
+const lang = propLang || getLangFromUrl(Astro.url);
+const t = translations[lang];
+
+const formspreeId = import.meta.env.PUBLIC_FORMSPREE_ID || 'your-form-id';
+---
+
+<section id="contact" class="section bg-gray-50 dark:bg-dark-800">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto">
+      <!-- Section Header -->
+      <div class="text-center mb-16">
+        <h2 class="section-title text-gray-900 dark:text-white">
+          {t.contact.title}
+        </h2>
+        <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mt-4">
+          {t.contact.subtitle}
+        </p>
+      </div>
+      
+      <!-- Contact Form -->
+      <form
+        action={`https://formspree.io/f/${formspreeId}`}
+        method="POST"
+        class="card p-8"
+        id="contact-form"
+        novalidate
+      >
+        <!-- Honeypot field (hidden) -->
+        <input type="text" name="_gotcha" style="display: none;" tabindex="-1" autocomplete="off" />
+        
+        <!-- Language field -->
+        <input type="hidden" name="_language" value={lang} />
+        
+        <div class="grid md:grid-cols-2 gap-6 mb-6">
+          <!-- Name -->
+          <div>
+            <label for="name" class="label">
+              {t.contact.name} <span class="text-red-500" aria-hidden="true">*</span>
+            </label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              required
+              class="input"
+              placeholder={t.contact.name}
+              aria-required="true"
+              aria-describedby="name-error"
+            />
+            <p id="name-error" class="mt-1 text-sm text-red-500 hidden" role="alert">
+              {t.contact.required}
+            </p>
+          </div>
+          
+          <!-- Email -->
+          <div>
+            <label for="email" class="label">
+              {t.contact.email} <span class="text-red-500" aria-hidden="true">*</span>
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              class="input"
+              placeholder="email@example.com"
+              aria-required="true"
+              aria-describedby="email-error"
+            />
+            <p id="email-error" class="mt-1 text-sm text-red-500 hidden" role="alert">
+              {t.contact.required}
+            </p>
+          </div>
+        </div>
+        
+        <div class="grid md:grid-cols-2 gap-6 mb-6">
+          <!-- Company -->
+          <div>
+            <label for="company" class="label">
+              {t.contact.company}
+            </label>
+            <input
+              type="text"
+              id="company"
+              name="company"
+              class="input"
+              placeholder={t.contact.company}
+            />
+          </div>
+          
+          <!-- Subject -->
+          <div>
+            <label for="subject" class="label">
+              {t.contact.subject} <span class="text-red-500" aria-hidden="true">*</span>
+            </label>
+            <input
+              type="text"
+              id="subject"
+              name="subject"
+              required
+              class="input"
+              placeholder={t.contact.subject}
+              aria-required="true"
+              aria-describedby="subject-error"
+            />
+            <p id="subject-error" class="mt-1 text-sm text-red-500 hidden" role="alert">
+              {t.contact.required}
+            </p>
+          </div>
+        </div>
+        
+        <!-- Message -->
+        <div class="mb-6">
+          <label for="message" class="label">
+            {t.contact.message} <span class="text-red-500" aria-hidden="true">*</span>
+          </label>
+          <textarea
+            id="message"
+            name="message"
+            rows="5"
+            required
+            class="input"
+            placeholder={t.contact.message}
+            aria-required="true"
+            aria-describedby="message-error"
+          ></textarea>
+          <p id="message-error" class="mt-1 text-sm text-red-500 hidden" role="alert">
+            {t.contact.required}
+          </p>
+        </div>
+        
+        <!-- GDPR Consent -->
+        <div class="mb-8">
+          <label class="flex items-start gap-3 cursor-pointer">
+            <input
+              type="checkbox"
+              name="gdpr_consent"
+              required
+              class="mt-1 w-5 h-5 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+              aria-required="true"
+            />
+            <span class="text-sm text-gray-600 dark:text-gray-400">
+              {lang === 'cs'
+                ? 'Souhlasím se zpracováním osobních údajů za účelem kontaktování. Přečetl jsem si <a href="/privacy" class="text-primary-600 hover:text-primary-700">zásady ochrany osobních údajů</a>.'
+                : 'I consent to the processing of personal data for the purpose of contact. I have read the <a href="/privacy" class="text-primary-600 hover:text-primary-700">privacy policy</a>.'}
+            </span>
+          </label>
+        </div>
+        
+        <!-- Submit Button -->
+        <div class="text-center">
+          <button
+            type="submit"
+            class="btn-primary w-full md:w-auto px-12"
+          >
+            <span class="btn-text">{t.contact.submit}</span>
+            <span class="btn-loading hidden">
+              <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              {t.common.loading}
+            </span>
+          </button>
+        </div>
+        
+        <!-- Success Message -->
+        <div id="form-success" class="hidden mt-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg" role="status">
+          <div class="flex items-center gap-3">
+            <svg class="w-6 h-6 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <p class="text-green-700 dark:text-green-300">{t.contact.success}</p>
+          </div>
+        </div>
+        
+        <!-- Error Message -->
+        <div id="form-error" class="hidden mt-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg" role="alert">
+          <div class="flex items-center gap-3">
+            <svg class="w-6 h-6 text-red-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <p class="text-red-700 dark:text-red-300">{t.contact.error}</p>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement;
+  const submitBtn = form?.querySelector('button[type="submit"]') as HTMLButtonElement;
+  const btnText = submitBtn?.querySelector('.btn-text') as HTMLElement;
+  const btnLoading = submitBtn?.querySelector('.btn-loading') as HTMLElement;
+  const successMessage = document.getElementById('form-success');
+  const errorMessage = document.getElementById('form-error');
+  
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    // Show loading state
+    if (submitBtn && btnText && btnLoading) {
+      btnText.classList.add('hidden');
+      btnLoading.classList.remove('hidden');
+      submitBtn.disabled = true;
+    }
+    
+    // Hide messages
+    successMessage?.classList.add('hidden');
+    errorMessage?.classList.add('hidden');
+    
+    try {
+      const formData = new FormData(form);
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+      
+      if (response.ok) {
+        successMessage?.classList.remove('hidden');
+        form.reset();
+      } else {
+        throw new Error('Form submission failed');
+      }
+    } catch (error) {
+      errorMessage?.classList.remove('hidden');
+    } finally {
+      // Reset button state
+      if (submitBtn && btnText && btnLoading) {
+        btnText.classList.remove('hidden');
+        btnLoading.classList.add('hidden');
+        submitBtn.disabled = false;
+      }
+    }
+  });
+  
+  // Client-side validation
+  const inputs = form?.querySelectorAll('input[required], textarea[required]');
+  inputs?.forEach((input) => {
+    input.addEventListener('blur', () => {
+      const inputElement = input as HTMLInputElement | HTMLTextAreaElement;
+      const errorId = `${inputElement.id}-error`;
+      const errorElement = document.getElementById(errorId);
+      
+      if (!inputElement.validity.valid) {
+        errorElement?.classList.remove('hidden');
+        inputElement.setAttribute('aria-invalid', 'true');
+      } else {
+        errorElement?.classList.add('hidden');
+        inputElement.setAttribute('aria-invalid', 'false');
+      }
+    });
+    
+    input.addEventListener('input', () => {
+      const inputElement = input as HTMLInputElement | HTMLTextAreaElement;
+      if (inputElement.validity.valid) {
+        const errorId = `${inputElement.id}-error`;
+        const errorElement = document.getElementById(errorId);
+        errorElement?.classList.add('hidden');
+        inputElement.setAttribute('aria-invalid', 'false');
+      }
+    });
+  });
+</script>

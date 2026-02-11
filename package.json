@@ -1,0 +1,51 @@
+{
+  "name": "portfolio",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "DevOps & AI Developer Portfolio - Built with Astro 5.0, Tailwind CSS 4.0, and TypeScript",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "lint": "eslint src --ext .astro,.ts,.js",
+    "typecheck": "astro sync && tsc --noEmit",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@astrojs/mdx": "^4.0.3",
+    "@astrojs/sitemap": "^3.2.1",
+    "@astrojs/tailwind": "^5.1.3",
+    "@tailwindcss/forms": "^0.5.9",
+    "@tailwindcss/typography": "^0.5.15",
+    "astro": "^5.0.5",
+    "typescript": "^5.7.2"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.2",
+    "@types/node": "^22.10.1",
+    "eslint": "^9.16.0",
+    "prettier": "^3.4.2",
+    "prettier-plugin-astro": "^0.14.1",
+    "tailwindcss": "^3.4.15",
+    "vitest": "^4.0.18"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "keywords": [
+    "astro",
+    "portfolio",
+    "devops",
+    "ai",
+    "tailwindcss",
+    "typescript"
+  ],
+  "author": "DevOps & AI Developer",
+  "license": "MIT"
+}

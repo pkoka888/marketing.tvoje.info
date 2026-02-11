@@ -1,0 +1,140 @@
+# Environment Variables
+.env
+.env.local
+.env.*.local
+
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Backup directories
+bak/
+
+# Build Outputs
+dist/
+build/
+out/
+.next/
+.nuxt/
+.vuepress/dist/
+.serverless/
+.fusebox/
+.dynamodb/
+.tern-port
+
+# Testing
+coverage/
+.nyc_output/
+*.test.js.snap
+__tests__/coverage/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+*.lnk
+
+# Temporary Files
+tmp/
+temp/
+*.tmp
+*.temp
+
+# Cache
+.cache/
+.parcel-cache/
+.vite/
+.eslintcache
+.stylelintcache
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Memory Bank (optional - uncomment if you want to exclude)
+# .kilocode/rules/memory-bank/
+
+# Agent Configuration (optional - uncomment if you want to exclude)
+# .agent/
+
+# MCP Server Configuration (optional - uncomment if you want to exclude)
+# .kilocode/mcp.json
+
+# Custom Modes (optional - uncomment if you want to exclude)
+# .kilocode/modes/
+
+# Skills (optional - uncomment if you want to exclude)
+# .kilocode/skills/
+
+# Workflows (optional - uncomment if you want to exclude)
+# .kilocode/workflows/
+
+# Rules (optional - uncomment if you want to exclude)
+# .kilocode/rules/
+# .kilocode/rules-architect/
+# .kilocode/rules-code/
+# .kilocode/rules-debug/
+
+# Documentation (optional - uncomment if you want to exclude)
+# README.md
+# SETUP.md
+# USAGE.md
+# ARCHITECTURE.md
+
+# Backup Files
+*.bak
+*.backup
+*.old
+
+# Security
+*.pem
+*.key
+*.crt
+secrets/
+credentials/
+
+# Docker
+.dockerignore
+docker-compose.override.yml
+
+# Kubernetes
+*.kubeconfig
+kubectl/
+
+# Terraform
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+
+# AWS
+.aws/
+
+# Google Cloud
+.gcloud/
+
+# Azure
+.azure/
+
+# Misc
+*.pid
+*.seed
+*.pid.lock

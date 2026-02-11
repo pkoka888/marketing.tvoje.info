@@ -1,0 +1,12 @@
+# robots.txt
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://portfolio.tvoje.info/sitemap-index.xml
+
+# Host
+Host: https://portfolio.tvoje.info
+
+# Crawl-delay
+Crawl-delay: 10

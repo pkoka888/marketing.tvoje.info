@@ -1,0 +1,79 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/common/Header.astro';
+import Footer from '../../components/common/Footer.astro';
+import Services from '../../components/sections/Services.astro';
+import Testimonials from '../../components/sections/Testimonials.astro';
+import Contact from '../../components/sections/Contact.astro';
+---
+
+<Layout
+  title="Služby"
+  description="Profesionální DevOps a AI vývojářské služby zahrnující cloud infrastrukturu, automatizaci a umělou inteligenci"
+  lang="cs"
+>
+  <Header slot="header" lang="cs" />
+  
+  <main>
+    <section class="relative py-24 bg-gradient-to-br from-gray-50 via50 dark:from-white to-primary--dark-900 dark:via-dark-800 dark:to-dark-900">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-6">
+          Profesionální <span class="gradient-text">Služby</span>
+        </h1>
+        <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+          Expertní DevOps a AI vývojářské služby pro transformaci vašeho podnikání s automatizací a inteligentními řešeními.
+        </p>
+      </div>
+    </section>
+    
+    <Services />
+    
+    <section class="section bg-white dark:bg-dark-900">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+          <h2 class="section-title text-gray-900 dark:text-white">
+            Jak pracuji
+          </h2>
+          <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mt-4">
+            Otestovaný proces, který přináší výsledky
+          </p>
+        </div>
+        
+        <div class="max-w-4xl mx-auto">
+          <div class="grid md:grid-cols-4 gap-8">
+            {[
+              { step: '01', title: 'Discovery', description: 'Pochopení vašich požadavků a cílů' },
+              { step: '02', title: 'Plánování', description: 'Vytvoření detailního plánu a architektury' },
+              { step: '03', title: 'Implementace', description: 'Realizace s agilní metodologií' },
+              { step: '04', title: 'Dodání', description: 'Nasazení a zajištění spokojenosti' },
+            ].map((item, index) => (
+              <div class="relative text-center">
+                <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-primary-100 dark:bg-primary-900/30 flex items-center justify-center">
+                  <span class="text-2xl font-bold text-primary-600 dark:text-primary-400">
+                    {item.step}
+                  </span>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                  {item.title}
+                </h3>
+                <p class="text-gray-600 dark:text-gray-400 text-sm">
+                  {item.description}
+                </p>
+                {index < 3 && (
+                  <div class="hidden md:block absolute top-8 left-[60%] w-[80%] border-t-2 border-dashed border-gray-300 dark:border-dark-600">
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <Testimonials />
+    
+    <Contact />
+  </main>
+  
+  <Footer slot="footer" lang="cs" />
+</Layout>

@@ -1,0 +1,41 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: '/'
+    schedule:
+      interval: weekly
+      day: sunday
+      time: '00:00'
+    open-pull-requests-limit: 10
+    commit-message:
+      prefix: 'chore(deps):'
+    pull-requests:
+      labels:
+        - 'dependencies'
+      assignees:
+        - 'pavel'
+      reviewers:
+        - 'pavel'
+      draft-requirements:
+        - 'type: dependency-upgrade'
+        - 'type: dependency-update'
+    allow:
+      - 'github.com'
+      - 'npmjs.com'
+security-updates:
+  - package-ecosystem: github-ecosystem
+    directory: '/'
+    schedule:
+      interval: weekly
+      day: sunday
+      time: '00:00'
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: 'chore(security):'
+    pull-requests:
+      labels:
+        - 'security'
+      assignees:
+        - 'pavel'
+      reviewers:
+        - 'pavel'

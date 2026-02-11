@@ -1,0 +1,155 @@
+---
+import type { Language } from '../../i18n/translations';
+import { getLangFromUrl, translations } from '../../i18n/translations';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang: propLang } = Astro.props;
+const lang = propLang || getLangFromUrl(Astro.url);
+const t = translations[lang];
+
+const skills = [
+  {
+    category: 'DevOps',
+    items: ['AWS', 'Azure', 'GCP', 'Kubernetes', 'Docker', 'Terraform', 'CI/CD', 'GitHub Actions'],
+  },
+  {
+    category: 'AI & ML',
+    items: ['Python', 'TensorFlow', 'PyTorch', 'OpenAI', 'NLP', 'Computer Vision', 'MLOps'],
+  },
+  {
+    category: 'Programming',
+    items: ['TypeScript', 'JavaScript', 'Go', 'Rust', 'Node.js', 'Astro'],
+  },
+  {
+    category: 'Infrastructure',
+    items: ['Linux', 'Bash', 'Ansible', 'Prometheus', 'Grafana', 'ELK Stack'],
+  },
+];
+
+const certifications = [
+  { name: 'AWS Solutions Architect', issuer: 'Amazon', year: '2024' },
+  { name: 'Kubernetes Administrator', issuer: 'CNCF', year: '2023' },
+  { name: 'Terraform Associate', issuer: 'HashiCorp', year: '2023' },
+  { name: 'OpenAI API Developer', issuer: 'OpenAI', year: '2024' },
+];
+---
+
+<section id="about" class="section bg-white dark:bg-dark-900">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid lg:grid-cols-2 gap-12 items-start">
+        <!-- Profile Section -->
+        <div class="order-2 lg:order-1">
+          <h2 class="section-title text-left mb-8">
+            {t.about.title}
+          </h2>
+          
+          <div class="prose prose-lg dark:prose-invert">
+            {t.about.bio.split('\n\n').map((paragraph) => (
+              <p class="text-gray-600 dark:text-gray-300 mb-6">
+                {paragraph}
+              </p>
+            ))}
+          </div>
+          
+          <!-- Certifications -->
+          <div class="mt-8">
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+              {t.about.certifications}
+            </h3>
+            <div class="flex flex-wrap gap-3">
+              {certifications.map((cert) => (
+                <div class="flex items-center gap-2 px-4 py-2 bg-primary-50 dark:bg-primary-900/20 rounded-lg">
+                  <svg class="w-5 h-5 text-primary-600 dark:text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                  </svg>
+                  <span class="text-sm font-medium text-gray-700 dark:text-gray-300">
+                    {cert.name}
+                  </span>
+                  <span class="text-xs text-gray-500 dark:text-gray-400">
+                    {cert.year}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+          
+          <!-- Download CV -->
+          <div class="mt-8">
+            <a
+              href={lang === 'cs' ? '/cv-cz.pdf' : '/cv-en.pdf'}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-secondary"
+            >
+              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+              </svg>
+              {t.about.downloadCV}
+            </a>
+          </div>
+        </div>
+        
+        <!-- Skills Section -->
+        <div class="order-1 lg:order-2">
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-6">
+            {t.about.skills}
+          </h3>
+          
+          <div class="space-y-6">
+            {skills.map((skill) => (
+              <div>
+                <h4 class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-3">
+                  {skill.category}
+                </h4>
+                <div class="flex flex-wrap gap-2">
+                  {skill.items.map((item) => (
+                    <span class="px-3 py-1 text-sm rounded-full bg-gray-100 dark:bg-dark-700 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-dark-600">
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+          
+          <!-- Quick Stats -->
+          <div class="mt-8 p-6 bg-gray-50 dark:bg-dark-800 rounded-xl">
+            <h4 class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-4">
+              {lang === 'cs' ? 'Klíčová čísla' : 'Key Numbers'}
+            </h4>
+            <div class="grid grid-cols-2 gap-4">
+              <div class="text-center p-4 bg-white dark:bg-dark-700 rounded-lg">
+                <div class="text-2xl font-bold text-primary-600 dark:text-primary-400">5+</div>
+                <div class="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                  {lang === 'cs' ? 'Let na trhu' : 'Years in market'}
+                </div>
+              </div>
+              <div class="text-center p-4 bg-white dark:bg-dark-700 rounded-lg">
+                <div class="text-2xl font-bold text-primary-600 dark:text-primary-400">50+</div>
+                <div class="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                  {lang === 'cs' ? 'Projektů' : 'Projects'}
+                </div>
+              </div>
+              <div class="text-center p-4 bg-white dark:bg-dark-700 rounded-lg">
+                <div class="text-2xl font-bold text-primary-600 dark:text-primary-400">30+</div>
+                <div class="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                  {lang === 'cs' ? 'Klientů' : 'Clients'}
+                </div>
+              </div>
+              <div class="text-center p-4 bg-white dark:bg-dark-700 rounded-lg">
+                <div class="text-2xl font-bold text-primary-600 dark:text-primary-400">99%</div>
+                <div class="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                  {lang === 'cs' ? 'Úspěšnost' : 'Success rate'}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

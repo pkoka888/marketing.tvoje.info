@@ -1,0 +1,107 @@
+---
+import type { Language } from '../../i18n/translations';
+import { getLangFromUrl, translations } from '../../i18n/translations';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang: propLang } = Astro.props;
+const lang = propLang || getLangFromUrl(Astro.url);
+const t = translations[lang];
+---
+
+<section class="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-gray-50 via-white to-primary-50 dark:from-dark-900 dark:via-dark-800 dark:to-dark-900">
+  <!-- Background decoration -->
+  <div class="absolute inset-0 overflow-hidden" aria-hidden="true">
+    <div class="absolute -top-40 -right-40 w-80 h-80 rounded-full bg-primary-500/10 dark:bg-primary-500/5 blur-3xl"></div>
+    <div class="absolute -bottom-40 -left-40 w-80 h-80 rounded-full bg-accent-500/10 dark:bg-accent-500/5 blur-3xl"></div>
+  </div>
+  
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="text-center max-w-4xl mx-auto">
+      <!-- Badge -->
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 text-sm font-medium mb-8 animate-fade-in">
+        <span class="relative flex h-2 w-2">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-500 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-2 w-2 bg-primary-500"></span>
+        </span>
+        {lang === 'cs' ? 'K dispozici pro nové projekty' : 'Available for new projects'}
+      </div>
+      
+      <!-- Title -->
+      <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 animate-slide-up">
+        <span class="block text-gray-900 dark:text-white">
+          {t.hero.title}
+        </span>
+        <span class="block gradient-text mt-2">
+          {lang === 'cs' ? 'pro moderní firmy' : 'for modern businesses'}
+        </span>
+      </h1>
+      
+      <!-- Subtitle -->
+      <p class="text-lg sm:text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-10 max-w-2xl mx-auto animate-slide-up animate-delay-100">
+        {t.hero.subtitle}
+      </p>
+      
+      <!-- CTA Buttons -->
+      <div class="flex flex-col sm:flex-row gap-4 justify-center animate-slide-up animate-delay-200">
+        <a
+          href={lang === 'cs' ? '/cs/projects' : '/projects'}
+          class="btn-primary text-base px-8 py-4"
+        >
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+          </svg>
+          {t.hero.cta}
+        </a>
+        <a
+          href={lang === 'cs' ? '/cs#contact' : '/#contact'}
+          class="btn-secondary text-base px-8 py-4"
+        >
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg>
+          {t.hero.secondaryCta}
+        </a>
+      </div>
+      
+      <!-- Stats / Trust indicators -->
+      <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 animate-fade-in animate-delay-300">
+        <div class="text-center">
+          <div class="text-3xl md:text-4xl font-bold text-primary-600 dark:text-primary-400">5+</div>
+          <div class="text-sm text-gray-600 dark:text-gray-400 mt-1">
+            {lang === 'cs' ? 'Let zkušeností' : 'Years experience'}
+          </div>
+        </div>
+        <div class="text-center">
+          <div class="text-3xl md:text-4xl font-bold text-primary-600 dark:text-primary-400">50+</div>
+          <div class="text-sm text-gray-600 dark:text-gray-400 mt-1">
+            {lang === 'cs' ? 'Dokončených projektů' : 'Projects completed'}
+          </div>
+        </div>
+        <div class="text-center">
+          <div class="text-3xl md:text-4xl font-bold text-primary-600 dark:text-primary-400">30+</div>
+          <div class="text-sm text-gray-600 dark:text-gray-400 mt-1">
+            {lang === 'cs' ? 'Spokojených klientů' : 'Happy clients'}
+          </div>
+        </div>
+        <div class="text-center">
+          <div class="text-3xl md:text-4xl font-bold text-primary-600 dark:text-primary-400">99%</div>
+          <div class="text-sm text-gray-600 dark:text-gray-400 mt-1">
+            {lang === 'cs' ? 'Úspěšnost doručení' : 'Delivery success'}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Scroll indicator -->
+  <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce" aria-hidden="true">
+    <a href="#about" class="text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+      </svg>
+    </a>
+  </div>
+</section>

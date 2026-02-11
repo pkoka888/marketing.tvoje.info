@@ -1,0 +1,70 @@
+# Story Template
+
+## Story Metadata
+
+- **Story ID**: `{{ story_id }}`
+- **Title**: `{{ title }}`
+- **Epic**: `{{ epic }}`
+- **Priority**: `{{ priority }}`
+- **Estimated Effort**: `{{ effort }}`
+
+## User Story
+
+As a **{{ user_type }}**, I want **{{ goal }}**, so that **{{ benefit }}**.
+
+## Acceptance Criteria
+
+{% for criterion in acceptance_criteria %}
+- [ ] {{ criterion }}
+{% endfor %}
+
+## Dependencies
+
+{% for dependency in dependencies %}
+- **{{ dependency }}** ({{ dependency_type }})
+{% endfor %}
+
+## Prerequisites
+
+{% for prerequisite in prerequisites %}
+- **{{ prerequisite }}**
+{% endfor %}
+
+## Test Hooks
+
+### Unit Tests
+{% for test in unit_tests %}
+- `{{ test }}`
+{% endfor %}
+
+### Integration Tests
+{% for test in integration_tests %}
+- `{{ test }}`
+{% endfor %}
+
+### E2E Tests
+{% for test in e2e_tests %}
+- `{{ test }}`
+{% endfor %}
+
+## Delivery Signals
+
+The story is considered **done** when:
+
+{% for signal in delivery_signals %}
+- [ ] {{ signal }}
+{% endfor %}
+
+## Architecture References
+
+{% for ref in architecture_refs %}
+- **{{ ref }}**
+{% endfor %}
+
+## Notes
+
+`{{ notes }}`
+
+## Implementation Notes
+
+`{{ implementation_notes }}`

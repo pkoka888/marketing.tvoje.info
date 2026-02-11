@@ -1,0 +1,267 @@
+---
+import type { Language } from '../../i18n/translations';
+import { getLangFromUrl, translations } from '../../i18n/translations';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang: propLang } = Astro.props;
+const lang = propLang || getLangFromUrl(Astro.url);
+const t = translations[lang];
+
+// Sample projects data - in production this would come from content collections
+const projects = [
+  {
+    slug: 'cloud-migration',
+    title: lang === 'cs' ? 'Cloud Migration' : 'Cloud Migration',
+    description: lang === 'cs' 
+      ? 'Kompletní migrace on-premise infrastruktury do AWS s využitím Terraform a Kubernetes'
+      : 'Complete migration of on-premise infrastructure to AWS using Terraform and Kubernetes',
+    image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&h=600&fit=crop',
+    tags: ['AWS', 'Terraform', 'Kubernetes', 'DevOps'],
+    category: 'devops',
+    stats: [
+      { value: '40%', label: lang === 'cs' ? 'Úspora nákladů' : 'Cost savings' },
+      { value: '99.9%', label: lang === 'cs' ? 'Dostupnost' : 'Uptime' },
+    ],
+  },
+  {
+    slug: 'ci-cd-pipeline',
+    title: lang === 'cs' ? 'CI/CD Pipeline' : 'CI/CD Pipeline',
+    description: lang === 'cs'
+      ? 'Automatizovaný deployment pipeline s GitHub Actions a Docker'
+      : 'Automated deployment pipeline with GitHub Actions and Docker',
+    image: 'https://images.unsplash.com/photo-1518432031352-d6fc5c10da5a?w=800&h=600&fit=crop',
+    tags: ['GitHub Actions', 'Docker', 'CI/CD', 'Automation'],
+    category: 'devops',
+    stats: [
+      { value: '70%', label: lang === 'cs' ? 'Rychlejší release' : 'Faster releases' },
+      { value: '0', label: lang === 'cs' ? 'Lidské chyby' : 'Human errors' },
+    ],
+  },
+  {
+    slug: 'ai-chatbot',
+    title: lang === 'cs' ? 'AI Chatbot' : 'AI Chatbot',
+    description: lang === 'cs'
+      ? 'Implementace AI chatbota pro zákaznickou podporu s využitím OpenAI'
+      : 'AI chatbot implementation for customer support using OpenAI',
+    image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=600&fit=crop',
+    tags: ['OpenAI', 'Python', 'NLP', 'AI'],
+    category: 'ai',
+    stats: [
+      { value: '60%', label: lang === 'cs' ? 'Snížení dotazů' : 'Query reduction' },
+      { value: '24/7', label: lang === 'cs' ? 'Dostupnost' : 'Availability' },
+    ],
+  },
+  {
+    slug: 'monitoring-system',
+    title: lang === 'cs' ? 'Monitoring System' : 'Monitoring System',
+    description: lang === 'cs'
+      ? 'Implementace Prometheus a Grafana pro monitoring infrastruktury'
+      : 'Prometheus and Grafana implementation for infrastructure monitoring',
+    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop',
+    tags: ['Prometheus', 'Grafana', 'Monitoring', 'DevOps'],
+    category: 'infrastructure',
+    stats: [
+      { value: '50%', label: lang === 'cs' ? 'Rychlejší detekce' : 'Faster detection' },
+      { value: '100%', label: lang === 'cs' ? 'Pokrytí' : 'Coverage' },
+    ],
+  },
+  {
+    slug: 'ml-pipeline',
+    title: lang === 'cs' ? 'ML Pipeline' : 'ML Pipeline',
+    description: lang === 'cs'
+      ? 'Automatizovaný ML pipeline pro predikci chování zákazníků'
+      : 'Automated ML pipeline for customer behavior prediction',
+    image: 'https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=800&h=600&fit=crop',
+    tags: ['ML', 'Python', 'AWS SageMaker', 'AI'],
+    category: 'ai',
+    stats: [
+      { value: '85%', label: lang === 'cs' ? 'Přesnost' : 'Accuracy' },
+      { value: '3x', label: lang === 'cs' ? 'Rychlejší inference' : 'Faster inference' },
+    ],
+  },
+  {
+    slug: 'kubernetes-cluster',
+    title: lang === 'cs' ? 'Kubernetes Cluster' : 'Kubernetes Cluster',
+    description: lang === 'cs'
+      ? 'Nastavení produkčního Kubernetes clusteru s best practices'
+      : 'Production Kubernetes cluster setup with best practices',
+    image: 'https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=800&h=600&fit=crop',
+    tags: ['Kubernetes', 'Docker', 'Cloud', 'DevOps'],
+    category: 'infrastructure',
+    stats: [
+      { value: '99.99%', label: lang === 'cs' ? 'Dostupnost' : 'Uptime' },
+      { value: '100+', label: lang === 'cs' ? 'Microservices' : 'Microservices' },
+    ],
+  },
+];
+
+const categories = [
+  { key: 'all', label: t.projects.categories.all },
+  { key: 'devops', label: t.projects.categories.devops },
+  { key: 'ai', label: t.projects.categories.ai },
+  { key: 'infrastructure', label: t.projects.categories.infrastructure },
+];
+---
+
+<section id="projects" class="section bg-gray-50 dark:bg-dark-800">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Section Header -->
+    <div class="text-center mb-16">
+      <h2 class="section-title text-gray-900 dark:text-white">
+        {t.projects.title}
+      </h2>
+      <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mt-4">
+        {t.projects.description}
+      </p>
+    </div>
+    
+    <!-- Category Filter -->
+    <div class="flex flex-wrap justify-center gap-2 mb-12" role="group" aria-label="Project categories">
+      {categories.map((category) => (
+        <button
+          type="button"
+          class="px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 category-btn"
+          data-category={category.key}
+          aria-pressed="false"
+        >
+          {category.label}
+        </button>
+      ))}
+    </div>
+    
+    <!-- Projects Grid -->
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="projects-grid">
+      {projects.map((project) => (
+        <article
+          class="card project-card group"
+          data-category={project.category}
+          data-aos="fade-up"
+        >
+          <!-- Image -->
+          <div class="relative overflow-hidden aspect-video">
+            <img
+              src={project.image}
+              alt={project.title}
+              loading="lazy"
+              class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          </div>
+          
+          <!-- Content -->
+          <div class="p-6">
+            <!-- Tags -->
+            <div class="flex flex-wrap gap-2 mb-4">
+              {project.tags.map((tag) => (
+                <span class="px-2 py-1 text-xs font-medium rounded-full bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300">
+                  {tag}
+                </span>
+              ))}
+            </div>
+            
+            <!-- Title -->
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+              {project.title}
+            </h3>
+            
+            <!-- Description -->
+            <p class="text-gray-600 dark:text-gray-300 text-sm mb-4 line-clamp-2">
+              {project.description}
+            </p>
+            
+            <!-- Stats -->
+            <div class="flex gap-4 mb-4">
+              {project.stats.map((stat) => (
+                <div class="text-center">
+                  <div class="text-lg font-bold text-primary-600 dark:text-primary-400">
+                    {stat.value}
+                  </div>
+                  <div class="text-xs text-gray-500 dark:text-gray-400">
+                    {stat.label}
+                  </div>
+                </div>
+              ))}
+            </div>
+            
+            <!-- Link -->
+            <a
+              href={lang === 'cs' ? `/cs/projects/${project.slug}` : `/projects/${project.slug}`}
+              class="inline-flex items-center text-sm font-medium text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors"
+              aria-label={`${t.projects.viewDetails}: ${project.title}`}
+            >
+              {t.projects.viewDetails}
+              <svg class="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+    
+    <!-- View All Link -->
+    <div class="text-center mt-12">
+      <a
+        href={lang === 'cs' ? '/cs/projects' : '/projects'}
+        class="btn-secondary"
+      >
+        {t.common.viewAll}
+        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Category filter functionality
+  const categoryButtons = document.querySelectorAll('.category-btn');
+  const projectCards = document.querySelectorAll('[data-category]');
+  
+  // Set active button style
+  function setActiveButton(activeBtn: Element) {
+    categoryButtons.forEach((btn) => {
+      btn.classList.remove('bg-primary-600', 'text-white');
+      btn.classList.add('bg-gray-200', 'dark:bg-dark-700', 'text-gray-700', 'dark:text-gray-300');
+      btn.setAttribute('aria-pressed', 'false');
+    });
+    activeBtn.classList.remove('bg-gray-200', 'dark:bg-dark-700', 'text-gray-700', 'dark:text-gray-300');
+    activeBtn.classList.add('bg-primary-600', 'text-white');
+    activeBtn.setAttribute('aria-pressed', 'true');
+  }
+  
+  // Initialize with 'all' button active
+  const allBtn = document.querySelector('[data-category="all"]');
+  if (allBtn) {
+    setActiveButton(allBtn);
+  }
+  
+  categoryButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const category = button.getAttribute('data-category');
+      setActiveButton(button);
+      
+      projectCards.forEach((card) => {
+        const cardCategory = card.getAttribute('data-category');
+        const htmlCard = card as HTMLElement;
+        
+        if (category === 'all' || cardCategory === category) {
+          htmlCard.style.display = 'block';
+          htmlCard.classList.add('animate-fade-in');
+        } else {
+          htmlCard.style.display = 'none';
+        }
+      });
+    });
+  });
+</script>
+
+<style>
+  .category-btn:first-child {
+    @apply bg-primary-600 text-white;
+  }
+</style>

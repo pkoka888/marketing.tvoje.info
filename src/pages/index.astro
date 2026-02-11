@@ -1,0 +1,30 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/common/Header.astro';
+import Footer from '../components/common/Footer.astro';
+import Hero from '../components/sections/Hero.astro';
+import About from '../components/sections/About.astro';
+import Projects from '../components/sections/Projects.astro';
+import Services from '../components/sections/Services.astro';
+import Testimonials from '../components/sections/Testimonials.astro';
+import Contact from '../components/sections/Contact.astro';
+---
+
+<Layout
+  title="DevOps & AI Developer"
+  description="Building scalable solutions with automation and artificial intelligence"
+  lang="en"
+>
+  <Header slot="header" lang="en" />
+  
+  <main>
+    <Hero />
+    <About />
+    <Projects />
+    <Services />
+    <Testimonials />
+    <Contact />
+  </main>
+  
+  <Footer slot="footer" lang="en" />
+</Layout>

@@ -1,0 +1,119 @@
+---
+import type { Language } from '../../i18n/translations';
+import { getLangFromUrl, translations } from '../../i18n/translations';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang: propLang } = Astro.props;
+const lang = propLang || getLangFromUrl(Astro.url);
+const t = translations[lang];
+
+const currentPath = Astro.url.pathname;
+const isCs = lang === 'cs';
+
+const navItems = [
+  { href: isCs ? '/cs' : '/', label: t.nav.home, key: 'home' },
+  { href: isCs ? '/cs/projects' : '/projects', label: t.nav.projects, key: 'projects' },
+  { href: isCs ? '/cs/services' : '/services', label: t.nav.services, key: 'services' },
+  { href: isCs ? '/cs#about' : '/#about', label: t.nav.about, key: 'about' },
+  { href: isCs ? '/cs#contact' : '/#contact', label: t.nav.contact, key: 'contact' },
+];
+
+const langSwitchHref = isCs 
+  ? currentPath.replace('/cs', '') || '/'
+  : `/cs${currentPath}`;
+---
+
+<header class="sticky top-0 z-50 bg-white/80 dark:bg-dark-900/80 backdrop-blur-md border-b border-gray-200 dark:border-dark-700">
+  <nav class="container mx-auto px-4 sm:px-6 lg:px-8" aria-label="Main navigation">
+    <div class="flex items-center justify-between h-16">
+      <!-- Logo -->
+      <a href={isCs ? '/cs' : '/'} class="flex items-center space-x-2" aria-label="Home">
+        <span class="text-xl font-bold gradient-text">
+          DevOps & AI
+        </span>
+      </a>
+      
+      <!-- Desktop Navigation -->
+      <div class="hidden md:flex items-center space-x-8">
+        {navItems.map((item) => (
+          <a
+            href={item.href}
+            class={`text-sm font-medium transition-colors duration-200 hover:text-primary-600 dark:hover:text-primary-400 ${
+              currentPath === item.href || 
+              (item.key === 'home' && (currentPath === '/' || currentPath === '/cs'))
+                ? 'text-primary-600 dark:text-primary-400'
+                : 'text-gray-600 dark:text-gray-300'
+            }`}
+            aria-current={currentPath === item.href ? 'page' : undefined}
+          >
+            {item.label}
+          </a>
+        ))}
+      </div>
+      
+      <!-- Language Toggle & Theme Toggle -->
+      <div class="flex items-center space-x-4">
+        <!-- Language Switcher -->
+        <a
+          href={langSwitchHref}
+          class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+          aria-label={isCs ? 'Switch to English' : 'Přepnout do češtiny'}
+        >
+          {isCs ? 'EN' : 'CS'}
+        </a>
+        
+        <!-- Theme Toggle -->
+        <button
+          type="button"
+          class="p-2 text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors rounded-lg hover:bg-gray-100 dark:hover:bg-dark-800"
+          aria-label="Toggle dark mode"
+          onclick="toggleTheme()"
+        >
+          <svg class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+          </svg>
+          <svg class="w-5 h-5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+          </svg>
+        </button>
+        
+        <!-- Mobile Menu Button -->
+        <button
+          type="button"
+          class="md:hidden p-2 text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors rounded-lg hover:bg-gray-100 dark:hover:bg-dark-800"
+          aria-label="Open mobile menu"
+          aria-expanded="false"
+          id="mobile-menu-button"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+    
+    <!-- Mobile Navigation -->
+    <div class="md:hidden hidden" id="mobile-menu">
+      <div class="mobile-menu-overlay" id="mobile-menu-overlay"></div>
+      <div class="mobile-menu-panel" id="mobile-menu-panel">
+        <div class="px-2 pt-2 pb-3 space-y-1">
+        {navItems.map((item) => (
+          <a
+            href={item.href}
+            class={`block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 ${
+              currentPath === item.href
+                ? 'bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400'
+                : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-dark-800'
+            }`}
+            aria-current={currentPath === item.href ? 'page' : undefined}
+          >
+            {item.label}
+          </a>
+        ))}
+      </div>
+    </div>
+  </nav>
+</header>

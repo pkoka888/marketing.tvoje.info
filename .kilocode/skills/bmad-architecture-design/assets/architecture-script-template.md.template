@@ -1,0 +1,141 @@
+# Architecture Decision Document: [Project Name]
+
+## Document Metadata
+- **Date**: [YYYY-MM-DD]
+- **Version**: 1.0
+- **Status**: [Draft | Review | Approved]
+- **Author**: [Agent Name]
+
+## 1. Executive Summary
+[Brief 2-3 sentence description of the architecture and key decisions]
+
+## 2. Architecture Drivers
+
+### 2.1 Quality Attributes
+| Attribute | Target | Measurement |
+|-----------|---------|--------------|
+| Performance | | |
+| Scalability | | |
+| Security | | |
+| Availability | | |
+| Maintainability | | |
+
+### 2.2 Constraints
+- [List technical, business, and regulatory constraints]
+
+### 2.3 Integration Points
+- [List external systems and dependencies]
+
+## 3. Architecture Overview
+
+### 3.1 System Context Diagram
+```
+[Insert or describe system context]
+```
+
+### 3.2 Component Diagram
+```
+[Insert or describe component topology]
+```
+
+### 3.3 Data Flow
+[Describe key data flows through the system]
+
+## 4. Technology Stack
+
+### 4.1 Frontend
+- **Framework**: [Technology]
+- **Reason**: [Rationale linked to drivers]
+
+### 4.2 Backend
+- **Framework**: [Technology]
+- **Reason**: [Rationale linked to drivers]
+
+### 4.3 Data Layer
+- **Database**: [Technology]
+- **Reason**: [Rationale linked to drivers]
+
+### 4.4 Infrastructure
+- **Hosting**: [Technology]
+- **Reason**: [Rationale linked to drivers]
+
+## 5. Key Architectural Decisions
+
+### DECISION-001: [Decision Title]
+- **Status**: Approved
+- **Decision**: [What was decided]
+- **Rationale**: [Why this decision]
+- **Alternatives Considered**:
+  - [Alternative 1]: [Pros/Cons]
+  - [Alternative 2]: [Pros/Cons]
+- **Trade-offs**: [What was sacrificed]
+- **Risks**: [Potential issues]
+- **Mitigation**: [How risks are addressed]
+
+### DECISION-002: [Decision Title]
+- **Status**: Approved
+- **Decision**: [What was decided]
+- **Rationale**: [Why this decision]
+- **Alternatives Considered**:
+  - [Alternative 1]: [Pros/Cons]
+  - [Alternative 2]: [Pros/Cons]
+- **Trade-offs**: [What was sacrificed]
+- **Risks**: [Potential issues]
+- **Mitigation**: [How risks are addressed]
+
+## 6. Component Details
+
+### 6.1 [Component Name]
+- **Responsibility**: [What this component does]
+- **Interfaces**: [How it communicates]
+- **Technology**: [What technologies used]
+
+### 6.2 [Component Name]
+- **Responsibility**: [What this component does]
+- **Interfaces**: [How it communicates]
+- **Technology**: [What technologies used]
+
+## 7. Security Architecture
+
+### 7.1 Authentication & Authorization
+[Describe auth strategy]
+
+### 7.2 Data Protection
+[Describe encryption, PII handling]
+
+### 7.3 Network Security
+[Describe firewall, SSL/TLS]
+
+## 8. Deployment Architecture
+
+### 8.1 Environment Strategy
+- **Development**: [Setup]
+- **Staging**: [Setup]
+- **Production**: [Setup]
+
+### 8.2 CI/CD Pipeline
+[Describe deployment pipeline]
+
+## 9. Implementation Guardrails
+
+### 9.1 Coding Standards
+- [List standards]
+
+### 9.2 Testing Requirements
+- Unit: [Coverage target]
+- Integration: [Coverage target]
+
+### 9.3 Monitoring
+- [Describe observability requirements]
+
+## 10. Open Questions & Risks
+
+| ID | Question/Risk | Owner | Status |
+|----|---------------|-------|--------|
+| OQ-001 | [Question] | [Owner] | Open |
+| RSK-001 | [Risk] | [Owner] | Mitigating |
+
+## 11. References
+- [Link to PRD]
+- [Link to UX requirements]
+- [Link to compliance docs]
