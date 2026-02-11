@@ -14,37 +14,43 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
-          
+
       - name: Install dependencies
         run: npm ci
-        
+
       - name: Build project
         run: npm run build
         env:
           PUBLIC_SITE_URL: https://portfolio.tvoje.info
-        
+
       - name: Deploy to VPS via SSH
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.VPS_IP }}
+          port: ${{ secrets.VPS_SSH_PORT || 2262 }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
-          source: "dist/"
-          target: "/var/www/portfolio"
-          
+          source: 'dist/'
+          target: '/var/www/portfolio'
+          timeout: 300s
+          command_timeout: 60s
+
       - name: SSH - Restart Application
         uses: appleboy/ssh-action@v0.1.9
         with:
           host: ${{ secrets.VPS_IP }}
+          port: ${{ secrets.VPS_SSH_PORT || 2262 }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
             cd /var/www/portfolio
             npm install --production
             pm2 restart ecosystem.config.js || npm start &
+          timeout: 300s
+          command_timeout: 60s
