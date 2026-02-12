@@ -1,0 +1,166 @@
+# Background Agent Health Check Configuration
+# This YAML defines what a background agent should verify on IDE startup
+# and on periodic intervals (cron-like within IDE or via system timers).
+#
+# Execution: Can be triggered by:
+#   1. VS Code task on workspace open (tasks.json → runOn: folderOpen)
+#   2. Kilo CLI `run` with --auto flag (non-interactive)
+#   3. Cron/systemd timer calling the check script
+#   4. LangGraph flow with Redis checkpoint
+#
+# The background agent should use a FREE model (z-ai/glm4.7 via Kilo)
+# to keep costs at $0.
+
+version: "1.0"
+name: "Project Health Monitor"
+description: "Dynamic checklist for background agent to verify project health"
+
+# ── Trigger Configuration ──
+triggers:
+  on_ide_open: true          # Run when VS Code opens this workspace
+  on_git_push: false         # Run before git push (via pre-push hook)
+  interval_minutes: 60       # Periodic check interval (0 = disabled)
+  on_demand: true            # Can be triggered manually
+
+# ── Execution Configuration ──
+execution:
+  agent: "kilo"              # Use Kilo CLI (free model)
+  model: "z-ai/glm4.7"      # Free via NVIDIA router
+  mode: "--auto"             # Non-interactive
+  timeout_seconds: 120       # Max execution time per check
+  log_path: ".agent/logs/health-check.log"
+  report_path: ".agent/reports/health-check-latest.md"
+  script_policy: "python"    # Always prefer .py over .sh/.ps1/.cmd
+
+# ── Health Checks ──
+# Each check has: name, command, expected, severity, category
+checks:
+  # ── Infrastructure ──
+  - name: "Redis Running"
+    category: "infrastructure"
+    command: "docker ps --filter name=shared-redis --format '{{.Status}}'"
+    expected: "Up"
+    severity: "critical"
+    fix_hint: "docker start shared-redis"
+
+  - name: "Docker Daemon"
+    category: "infrastructure"
+    command: "docker info --format '{{.ServerVersion}}'"
+    expected: "not empty"
+    severity: "critical"
+
+  # ── Project Health ──
+  - name: "Node Modules Exist"
+    category: "project"
+    command: "test -d node_modules && echo 'ok' || echo 'missing'"
+    expected: "ok"
+    severity: "warning"
+    fix_hint: "npm install"
+
+  - name: "Build Success"
+    category: "project"
+    command: "npm run build --silent 2>&1 | tail -1"
+    expected: "no error"
+    severity: "warning"
+
+  - name: "No Secrets in .env"
+    category: "security"
+    command: "python -c \"import re; c=open('.env').read(); print(len(re.findall(r'sk-|nvapi-|ghp_|tskey-', c)))\""
+    expected: "0"
+    severity: "critical"
+    fix_hint: "Remove real secrets from .env, use GH Secrets instead"
+
+  - name: "Git Status Clean"
+    category: "project"
+    command: "git status --porcelain | wc -l"
+    expected: "0"
+    severity: "info"
+
+  # ── BMAD Health ──
+  - name: "BMAD Config Exists"
+    category: "bmad"
+    command: "test -f _bmad/bmm/config.yaml && echo 'ok' || echo 'missing'"
+    expected: "ok"
+    severity: "warning"
+    fix_hint: "npx bmad-method install --directory . --modules bmm --tools none --yes"
+
+  - name: "BMAD Agents Compiled"
+    category: "bmad"
+    command: "ls _bmad/bmm/agents/*.md 2>/dev/null | wc -l"
+    expected: ">= 8"
+    severity: "warning"
+
+  # ── Agent Configuration ──
+  - name: "Kilocodemodes Exists"
+    category: "agents"
+    command: "test -f .kilocodemodes && echo 'ok' || echo 'missing'"
+    expected: "ok"
+    severity: "warning"
+
+  - name: "Antigravity Agents Config"
+    category: "agents"
+    command: "test -f .agent/agents.yaml && echo 'ok' || echo 'missing'"
+    expected: "ok"
+    severity: "warning"
+
+  - name: "MCP Config Valid"
+    category: "agents"
+    command: "python -c \"import json; json.load(open('.kilocode/mcp.json'))\" 2>&1 && echo 'valid' || echo 'invalid'"
+    expected: "valid"
+    severity: "warning"
+
+  # ── Server Health (remote) ──
+  - name: "s62 Reachable"
+    category: "servers"
+    command: "ssh -o ConnectTimeout=5 -o BatchMode=yes s62pa 'echo ok' 2>/dev/null || echo 'unreachable'"
+    expected: "ok"
+    severity: "info"
+    skip_on_offline: true
+
+  - name: "s62 Disk Usage"
+    category: "servers"
+    command: "ssh -o ConnectTimeout=5 s62pa 'df / --output=pcent | tail -1 | tr -d \" %\"' 2>/dev/null || echo -1"
+    expected: "< 85"
+    severity: "warning"
+    skip_on_offline: true
+
+  - name: "s61 Disk Usage"
+    category: "servers"
+    command: "ssh -o ConnectTimeout=5 s61pa 'df / --output=pcent | tail -1 | tr -d \" %\"' 2>/dev/null || echo -1"
+    expected: "< 85"
+    severity: "critical"
+    skip_on_offline: true
+
+  # ── Cost Monitoring ──
+  - name: "Gemini Usage Check"
+    category: "cost"
+    command: "echo 'manual'"
+    expected: "< $20/month"
+    severity: "critical"
+    manual: true
+    check_url: "https://console.cloud.google.com/billing"
+
+  - name: "OpenAI Usage Check"
+    category: "cost"
+    command: "echo 'manual'"
+    expected: "< $20/month"
+    severity: "critical"
+    manual: true
+    check_url: "https://platform.openai.com/usage"
+
+# ── Reporting ──
+reporting:
+  format: "markdown"
+  include_timestamp: true
+  group_by: "category"
+  notify_on_critical: true
+  summary_to_console: true
+
+# ── Update Triggers ──
+# When to regenerate this file:
+update_when:
+  - "BMAD version changes (npx bmad-method install --action update)"
+  - "New MCP server added to .kilocode/mcp.json"
+  - "New agent mode added to .kilocodemodes"
+  - "deploy.yml or ci.yml changes"
+  - "Server infrastructure changes"

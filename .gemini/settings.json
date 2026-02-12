@@ -1,0 +1,8 @@
+{
+  "contextFiles": [
+    "GEMINI.md",
+    ".agent/agents.yaml",
+    ".agent/health-checks.yaml",
+    "_bmad/bmm/config.yaml"
+  ]
+}

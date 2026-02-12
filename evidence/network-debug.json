@@ -1,0 +1,85 @@
+{
+  "timestamp": "2026-02-12T02:28:07.513019",
+  "platform": "win32",
+  "local_ip": "192.168.1.102",
+  "detected_route": "internal",
+  "tailscale": {
+    "running": false,
+    "ip": null,
+    "peers": []
+  },
+  "servers": {
+    "s60": {
+      "purpose": "Hub/Backup",
+      "methods": {
+        "tailscale": {
+          "host": "100.111.141.111",
+          "port": 20,
+          "reachable": false,
+          "alias": "s60pa"
+        },
+        "public": {
+          "host": "89.203.173.196",
+          "port": 2260,
+          "reachable": true,
+          "alias": "s60pa-pub"
+        },
+        "internal": {
+          "host": "192.168.1.60",
+          "port": 20,
+          "reachable": false,
+          "alias": "s60pa-int"
+        }
+      },
+      "best_alias": "s60pa-pub"
+    },
+    "s61": {
+      "purpose": "Gateway/Traefik",
+      "methods": {
+        "tailscale": {
+          "host": "100.111.141.112",
+          "port": 20,
+          "reachable": false,
+          "alias": "s61pa"
+        },
+        "public": {
+          "host": "89.203.173.196",
+          "port": 2261,
+          "reachable": false,
+          "alias": "s61pa-pub"
+        },
+        "internal": {
+          "host": "192.168.1.61",
+          "port": 20,
+          "reachable": false,
+          "alias": "s61pa-int"
+        }
+      },
+      "best_alias": null
+    },
+    "s62": {
+      "purpose": "Production/Web",
+      "methods": {
+        "tailscale": {
+          "host": "100.91.164.109",
+          "port": 20,
+          "reachable": true,
+          "alias": "s62pa"
+        },
+        "public": {
+          "host": "89.203.173.196",
+          "port": 2262,
+          "reachable": false,
+          "alias": "s62pa-pub"
+        },
+        "internal": {
+          "host": "192.168.1.62",
+          "port": 20,
+          "reachable": false,
+          "alias": "s62pa-int"
+        }
+      },
+      "best_alias": "s62pa"
+    }
+  }
+}

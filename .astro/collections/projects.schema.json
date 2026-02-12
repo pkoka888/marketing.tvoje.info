@@ -63,9 +63,6 @@
         "order": {
           "type": "number",
           "default": 0
-        },
-        "$schema": {
-          "type": "string"
         }
       },
       "required": [

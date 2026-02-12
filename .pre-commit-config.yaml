@@ -1,0 +1,34 @@
+# Pre-commit hooks
+# See https://pre-commit.com for more info
+# Install: pip install pre-commit && pre-commit install
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-json
+      - id: check-merge-conflict
+      - id: detect-private-key
+
+  - repo: https://github.com/pre-commit/mirrors-eslint
+    rev: v9.18.0
+    hooks:
+      - id: eslint
+        files: \.(js|mjs|ts|tsx|astro)$
+        args: ['--config', 'eslint.config.mjs']
+        additional_dependencies:
+          - eslint@9
+          - '@eslint/js'
+          - typescript-eslint
+
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v4.0.0-alpha.8
+    hooks:
+      - id: prettier
+        files: \.(js|mjs|ts|tsx|astro|css|md|json|yaml|yml)$
+        additional_dependencies:
+          - prettier
+          - prettier-plugin-astro

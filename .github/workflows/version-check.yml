@@ -1,0 +1,71 @@
+name: Version Health Check
+
+on:
+  schedule:
+    - cron: '0 6 * * 1'  # Weekly Monday 6 AM UTC
+  workflow_dispatch:
+
+env:
+  NODE_VERSION: '22'
+
+jobs:
+  version-check:
+    name: Version & Dependency Health
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check .nvmrc alignment
+        run: |
+          NVMRC=$(cat .nvmrc | tr -d '[:space:]')
+          ACTUAL=$(node -v | sed 's/v//' | cut -d. -f1)
+          echo "Expected: v${NVMRC}, Actual: v${ACTUAL}"
+          if [ "$NVMRC" != "$ACTUAL" ]; then
+            echo "::warning::Node version mismatch: .nvmrc=${NVMRC}, actual=${ACTUAL}"
+          fi
+
+      - name: Check outdated dependencies
+        run: |
+          echo "## Outdated Packages" >> $GITHUB_STEP_SUMMARY
+          npm outdated --json > /tmp/outdated.json 2>&1 || true
+          if [ -s /tmp/outdated.json ] && [ "$(cat /tmp/outdated.json)" != "{}" ]; then
+            echo '```json' >> $GITHUB_STEP_SUMMARY
+            cat /tmp/outdated.json >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+          else
+            echo "All packages up to date ✅" >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - name: Audit vulnerabilities
+        run: |
+          echo "## Security Audit" >> $GITHUB_STEP_SUMMARY
+          npm audit --json > /tmp/audit.json 2>&1 || true
+          VULNS=$(node -e "const a=require('/tmp/audit.json'); console.log(a.metadata?.vulnerabilities?.total || 0)" 2>/dev/null || echo "0")
+          echo "Total vulnerabilities: ${VULNS}" >> $GITHUB_STEP_SUMMARY
+
+      - name: Check GH Actions versions
+        run: |
+          echo "## GitHub Actions Versions" >> $GITHUB_STEP_SUMMARY
+          grep -rh 'uses:' .github/workflows/*.yml | sort -u | while read line; do
+            echo "- ${line}" >> $GITHUB_STEP_SUMMARY
+          done
+
+      - name: Build verification
+        run: npm run build
+        env:
+          PUBLIC_SITE_URL: https://portfolio.tvoje.info

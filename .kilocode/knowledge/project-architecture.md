@@ -1,6 +1,6 @@
 # Project Architecture Knowledge
 
-**Last Updated:** 2026-02-11
+**Last Updated:** 2026-02-12
 
 ## Tech Stack Summary
 
@@ -60,3 +60,4 @@
 | Antigravity | `.agent/` | Dev/build/test/deploy workflows |
 | Cline | `.clinerules/` | Project-specific rules |
 | Memory Bank | `.kilocode/rules/memory-bank/` | Persistent project context |
+| **Health Monitor** | `.agent/flows/health_monitor.py` | Adaptive server uptime & deduction |

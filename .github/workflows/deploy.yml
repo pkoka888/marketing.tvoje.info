@@ -5,9 +5,6 @@ on:
     branches: [main]
   workflow_dispatch:
 
-env:
-  NODE_VERSION: '20'
-
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -18,7 +15,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ env.NODE_VERSION }}
+          node-version-file: .nvmrc
           cache: 'npm'
 
       - name: Install dependencies
@@ -27,13 +24,13 @@ jobs:
       - name: Build project
         run: npm run build
         env:
-          PUBLIC_SITE_URL: https://portfolio.tvoje.info
+          PUBLIC_SITE_URL: ${{ secrets.PUBLIC_SITE_URL }}
 
-      - name: Deploy to VPS via SSH
+      - name: Deploy to VPS via Tailscale SSH
         uses: appleboy/scp-action@v0.1.7
         with:
-          host: ${{ secrets.VPS_IP }}
-          port: ${{ secrets.VPS_SSH_PORT || 2262 }}
+          host: 100.91.164.109
+          port: 20
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           source: 'dist/'
@@ -41,11 +38,39 @@ jobs:
           timeout: 300s
           command_timeout: 60s
 
-      - name: SSH - Restart Application
+      - name: SSH - Restart Application via Tailscale
         uses: appleboy/ssh-action@v0.1.9
         with:
-          host: ${{ secrets.VPS_IP }}
-          port: ${{ secrets.VPS_SSH_PORT || 2262 }}
+          host: 100.91.164.109
+          port: 20
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            cd /var/www/portfolio
+            npm install --production
+            pm2 restart ecosystem.config.js || npm start &
+          timeout: 300s
+          command_timeout: 60s
+
+      - name: Fallback - Deploy to VPS via Public SSH
+        if: failure()
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: 89.203.173.196
+          port: 2262
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          source: 'dist/'
+          target: '/var/www/portfolio'
+          timeout: 300s
+          command_timeout: 60s
+
+      - name: Fallback - SSH - Restart Application via Public
+        if: failure()
+        uses: appleboy/ssh-action@v0.1.9
+        with:
+          host: 89.203.173.196
+          port: 2262
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
