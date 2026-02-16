@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="1920 1080" width="1920" height="1080">
+  <defs>
+    <linearGradient id="novaHeroGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6366F1"/>
+      <stop offset="50%" style="stop-color:#A855F7"/>
+      <stop offset="100%" style="stop-color:#22D3EE"/>
+    </linearGradient>
+    <radialGradient id="orb1" cx="30%" cy="30%">
+      <stop offset="0%" stop-color="#6366F1" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#6366F1" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="orb2" cx="70%" cy="60%">
+      <stop offset="0%" stop-color="#22D3EE" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#22D3EE" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#novaHeroGrad)"/>
+  <circle cx="500" cy="300" r="400" fill="url(#orb1)"/>
+  <circle cx="1400" cy="700" r="500" fill="url(#orb2)"/>
+  <circle cx="960" cy="540" r="300" fill="#ffffff" opacity="0.1"/>
+</svg>

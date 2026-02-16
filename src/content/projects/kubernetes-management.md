@@ -1,19 +1,19 @@
 ---
-title: "Kubernetes Cluster Management"
-description: "Enterprise-grade Kubernetes platform with multi-cluster management, security hardening, and operational automation"
-image: "https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=800&h=600&fit=crop"
-tags: ["Kubernetes", "K8s", "Multi-cluster", "Security", "Helm", "Operators"]
-category: "infrastructure"
-client: "Enterprise Finance Corp."
+title: 'Kubernetes Cluster Management'
+description: 'Enterprise-grade Kubernetes platform with multi-cluster management, security hardening, and operational automation'
+image: 'https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=800&h=600&fit=crop'
+tags: ['Kubernetes', 'K8s', 'Multi-cluster', 'Security', 'Helm', 'Operators']
+category: 'infrastructure'
+client: 'Enterprise Finance Corp.'
 year: 2024
-duration: "6 months"
+duration: '6 months'
 stats:
-  - value: "99.95%"
-    label: "Platform uptime"
-  - value: "70%"
-    label: "Resource optimization"
-  - value: "90%"
-    label: "Security score"
+  - value: '99.95%'
+    label: 'Platform uptime'
+  - value: '70%'
+    label: 'Resource optimization'
+  - value: '90%'
+    label: 'Security score'
 featured: true
 order: 4
 ---
@@ -25,18 +25,21 @@ Design, implementation, and ongoing management of enterprise-grade Kubernetes pl
 ## Key Achievements
 
 ### Platform Architecture
+
 - Built multi-cluster Kubernetes platform across 3 regions
 - Implemented GitOps-based cluster management
 - Created self-service namespace provisioning
 - Deployed comprehensive observability stack
 
 ### Security Hardening
+
 - Achieved 90% security compliance score
 - Implemented zero-trust network policies
 - Created automated security scanning
 - Deployed secrets management with Vault
 
 ### Operational Excellence
+
 - Achieved 99.95% platform uptime
 - Reduced operational overhead by 60%
 - Implemented automated backup and disaster recovery
@@ -54,24 +57,28 @@ Design, implementation, and ongoing management of enterprise-grade Kubernetes pl
 ## Implementation Details
 
 ### Phase 1: Platform Design
+
 - Designed multi-region, multi-cluster architecture
 - Created networking topology with service mesh
 - Implemented storage strategy for stateful workloads
 - Set up identity and access management
 
 ### Phase 2: Cluster Deployment
+
 - Deployed Kubernetes clusters across AWS, Azure, GCP
 - Implemented cluster-api for lifecycle management
 - Created GitOps workflows for cluster configuration
 - Set up multi-cluster service mesh (Istio)
 
 ### Phase 3: Security Implementation
+
 - Deployed comprehensive security toolkit
 - Implemented network policies and zero-trust
 - Created Pod Security Standards enforcement
 - Set up automated certificate management
 
 ### Phase 4: Operations Platform
+
 - Built comprehensive observability stack
 - Created automated backup and recovery
 - Implemented cost optimization tooling

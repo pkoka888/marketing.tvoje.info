@@ -12,28 +12,28 @@ const t = translations[lang];
 
 const skills = [
   {
-    category: 'DevOps',
-    items: ['AWS', 'Azure', 'GCP', 'Kubernetes', 'Docker', 'Terraform', 'CI/CD', 'GitHub Actions'],
+    category: lang === 'cs' ? 'Strategie & Růst' : 'Strategy & Growth',
+    items: ['SEO', 'PPC', 'Analytics', 'Conversion', 'Funnel', 'A/B Testing'],
   },
   {
-    category: 'AI & ML',
-    items: ['Python', 'TensorFlow', 'PyTorch', 'OpenAI', 'NLP', 'Computer Vision', 'MLOps'],
+    category: lang === 'cs' ? 'Kreativa & Design' : 'Creative & Design',
+    items: ['Figma', 'Brand Identity', 'Landing Pages', 'Copywriting', 'AEO'],
   },
   {
-    category: 'Programming',
-    items: ['TypeScript', 'JavaScript', 'Go', 'Rust', 'Node.js', 'Astro'],
+    category: lang === 'cs' ? 'Automatizace & AI' : 'Automation & AI',
+    items: ['HubSpot', 'Klaviyo', 'AI Tools', 'CRM', 'Analytics'],
   },
   {
-    category: 'Infrastructure',
-    items: ['Linux', 'Bash', 'Ansible', 'Prometheus', 'Grafana', 'ELK Stack'],
+    category: lang === 'cs' ? 'Platformy' : 'Platforms',
+    items: ['Google Ads', 'Meta Ads', 'LinkedIn', 'E-commerce', 'WordPress'],
   },
 ];
 
 const certifications = [
-  { name: 'AWS Solutions Architect', issuer: 'Amazon', year: '2024' },
-  { name: 'Kubernetes Administrator', issuer: 'CNCF', year: '2023' },
-  { name: 'Terraform Associate', issuer: 'HashiCorp', year: '2023' },
-  { name: 'OpenAI API Developer', issuer: 'OpenAI', year: '2024' },
+  { name: lang === 'cs' ? 'Google Ads Certifikace' : 'Google Ads Certification', issuer: 'Google', year: '2024' },
+  { name: lang === 'cs' ? 'HubSpot Marketing Pro' : 'HubSpot Marketing Pro', issuer: 'HubSpot', year: '2024' },
+  { name: lang === 'cs' ? 'Meta Blueprint' : 'Meta Blueprint', issuer: 'Meta', year: '2024' },
+  { name: lang === 'cs' ? 'Google Analytics' : 'Google Analytics', issuer: 'Google', year: '2024' },
 ];
 ---
 

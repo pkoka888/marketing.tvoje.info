@@ -12,21 +12,21 @@ interface Props {
   noIndex?: boolean;
 }
 
-const { 
-  title, 
-  description, 
+const {
+  title,
+  description,
   lang = 'en',
   image = '/og-image.png',
   type = 'website',
-  noIndex = false
+  noIndex = false,
 } = Astro.props;
 
 const currentLang = lang || getLangFromUrl(Astro.url);
-const t = await import(`../i18n/translations`).then(m => m.translations[currentLang]);
+const t = await import(`../i18n/translations`).then((m) => m.translations[currentLang]);
 
-const siteName = 'DevOps & AI Developer Portfolio';
+const siteName = 'Pavel Kašpar - Marketing Portfolio';
 const fullTitle = `${title} | ${siteName}`;
-const baseUrl = import.meta.env.PUBLIC_SITE_URL || 'https://portfolio.tvoje.info';
+const baseUrl = import.meta.env.PUBLIC_SITE_URL || 'https://marketing.tvoje.info';
 const canonicalUrl = `${baseUrl}${Astro.url.pathname}`;
 
 // Hreflang URLs
@@ -40,23 +40,23 @@ const csUrl = canonicalUrl.startsWith('/cs') ? canonicalUrl : `${baseUrl}/cs${As
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#0ea5e9" />
-    
+
     <!-- Primary Meta Tags -->
     <title>{fullTitle}</title>
     <meta name="title" content={fullTitle} />
     <meta name="description" content={description || t.meta.description} />
     <meta name="keywords" content={t.meta.keywords} />
-    <meta name="author" content="DevOps & AI Developer" />
+    <meta name="author" content="Marketing & AI Specialist" />
     <meta name="robots" content={noIndex ? 'noindex, nofollow' : 'index, follow'} />
-    
+
     <!-- Canonical URL -->
     <link rel="canonical" href={canonicalUrl} />
-    
+
     <!-- Hreflang for SEO -->
     <link rel="alternate" hreflang="en" href={enUrl} />
     <link rel="alternate" hreflang="cs" href={csUrl} />
     <link rel="alternate" hreflang="x-default" href={enUrl} />
-    
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content={type} />
     <meta property="og:url" content={canonicalUrl} />
@@ -65,42 +65,56 @@ const csUrl = canonicalUrl.startsWith('/cs') ? canonicalUrl : `${baseUrl}/cs${As
     <meta property="og:image" content={`${baseUrl}${image}`} />
     <meta property="og:site_name" content={siteName} />
     <meta property="og:locale" content={currentLang === 'cs' ? 'cs_CZ' : 'en_US'} />
-    
+
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@devops_ai" />
+    <meta name="twitter:site" content="@pavel_kaspar" />
     <meta name="twitter:url" content={canonicalUrl} />
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={description || t.meta.description} />
     <meta name="twitter:image" content={`${baseUrl}${image}`} />
-    
+
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
-    
+
     <!-- RSS Feed -->
     <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="/rss.xml" />
-    
+
     <!-- Preconnect to external domains for performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    
+
     <!-- DNS prefetch for faster resource resolution -->
     <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
     <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
-    
+
     <!-- Google Fonts with display=swap for performance -->
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
+    />
     <noscript>
-      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet"
+      />
     </noscript>
-    
+
     <!-- Inline critical CSS for performance -->
     <style is:inline>
       /* Critical CSS */
-      *, *::before, *::after {
+      *,
+      *::before,
+      *::after {
         box-sizing: border-box;
       }
       html {
@@ -117,7 +131,7 @@ const csUrl = canonicalUrl.startsWith('/cs') ? canonicalUrl : `${baseUrl}/cs${As
         color-scheme: dark;
       }
     </style>
-    
+
     <!-- Dark mode script to prevent flash -->
     <script is:inline>
       // Check for saved theme preference or system preference
@@ -127,59 +141,74 @@ const csUrl = canonicalUrl.startsWith('/cs') ? canonicalUrl : `${baseUrl}/cs${As
         document.documentElement.classList.add('dark');
       }
     </script>
-    
+
     <!-- Structured Data -->
-    <script type="application/ld+json" set:html={JSON.stringify({
-      '@context': 'https://schema.org',
-      '@type': 'Person',
-      name: 'DevOps & AI Developer',
-      jobTitle: 'DevOps & AI Developer',
-      url: baseUrl,
-      sameAs: [
-        'https://github.com/yourusername',
-        'https://linkedin.com/in/yourusername'
-      ],
-      knowsAbout: ['DevOps', 'Artificial Intelligence', 'Cloud Architecture', 'Automation', 'CI/CD', 'Kubernetes']
-    })} />
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'Person',
+        name: 'Marketing & AI Specialist',
+        jobTitle: 'Marketing & AI Specialist',
+        url: 'https://marketing.tvoje.info',
+        sameAs: ['https://linkedin.com/in/pavelkaspar', 'https://github.com/pavelkaspar'],
+        knowsAbout: [
+          'Marketing Automation',
+          'Growth Strategy',
+          'AI Integration',
+          'Creative Design',
+          'Data Analytics',
+          'Conversational AI',
+        ],
+      })}
+    />
   </head>
-  <body class="bg-white dark:bg-dark-900 text-dark-900 dark:text-dark-50 antialiased min-h-screen flex flex-col">
+  <body
+    class="bg-white dark:bg-dark-900 text-dark-900 dark:text-dark-50 antialiased min-h-screen flex flex-col"
+  >
     <!-- Skip link for accessibility -->
-    <a href="#main-content" class="skip-link">
-      Skip to main content
-    </a>
-    
+    <a href="#main-content" class="skip-link"> Skip to main content </a>
+
     <!-- Header -->
-    <header class="sticky top-0 z-50 bg-white/80 dark:bg-dark-900/80 backdrop-blur-md border-b border-gray-200 dark:border-dark-700">
+    <header
+      class="sticky top-0 z-50 bg-white/80 dark:bg-dark-900/80 backdrop-blur-md border-b border-gray-200 dark:border-dark-700"
+    >
       <slot name="header" />
     </header>
-    
+
     <!-- Main content -->
     <main id="main-content" class="flex-grow">
       <slot />
     </main>
-    
+
     <!-- Footer -->
     <footer class="bg-gray-50 dark:bg-dark-800 border-t border-gray-200 dark:border-dark-700">
       <slot name="footer" />
     </footer>
-    
+
     <!-- Theme toggle script -->
     <script is:inline>
-    function toggleTheme() {
-    const html = document.documentElement;
-    const isDark = html.classList.contains('dark');
-    localStorage.setItem('theme', isDark ? 'light' : 'dark');
-    html.classList.toggle('dark');
-    }
-    
-    // Expose toggle function globally
-    window.toggleTheme = toggleTheme;
+      function toggleTheme() {
+        const html = document.documentElement;
+        const isDark = html.classList.contains('dark');
+        localStorage.setItem('theme', isDark ? 'light' : 'dark');
+        html.classList.toggle('dark');
+      }
+
+      // Expose toggle function globally
+      window.toggleTheme = toggleTheme;
     </script>
-      
+
     <!-- Interactive features script - deferred for performance -->
     <script type="module">
-      import { initMobileMenu, initProjectFiltering, initActiveSectionHighlight, initScrollToTop, initSmoothScroll } from '../scripts/interactive';
-      
+      import {
+        initMobileMenu,
+        initProjectFiltering,
+        initActiveSectionHighlight,
+        initScrollToTop,
+        initSmoothScroll,
+      } from '../scripts/interactive';
+
       // Initialize all interactive features with small delay to prioritize LCP
       setTimeout(() => {
         initMobileMenu();
@@ -189,18 +218,18 @@ const csUrl = canonicalUrl.startsWith('/cs') ? canonicalUrl : `${baseUrl}/cs${As
         initSmoothScroll();
       }, 100);
     </script>
-    
+
     <!-- Plausible Analytics -->
     <script is:inline>
-      const plausibleDomain = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN;
-      if (plausibleDomain) {
-        const plausibleApiHost = import.meta.env.PUBLIC_PLAUSIBLE_API_HOST || plausibleDomain;
-        const script = document.createElement('script');
+      // Plausible - using build-time values
+      var plausibleDomain = 'marketing.tvoje.info';
+      (function() {
+        var script = document.createElement('script');
         script.defer = true;
-        script.src = `https://${plausibleApiHost}/js/script.js`;
+        script.src = 'https://' + plausibleDomain + '/js/script.js';
         script.setAttribute('data-domain', plausibleDomain);
         document.head.appendChild(script);
-      }
+      })();
     </script>
   </body>
 </html>

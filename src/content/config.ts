@@ -7,16 +7,18 @@ const projectsCollection = defineCollection({
     description: z.string(),
     image: z.string(),
     tags: z.array(z.string()),
-    category: z.enum(['devops', 'ai', 'web', 'infrastructure']),
+    category: z.enum(['seo', 'ppc', 'web', 'infrastructure']),
     client: z.string().optional(),
     year: z.number(),
     duration: z.string().optional(),
-    stats: z.array(
-      z.object({
-        value: z.string(),
-        label: z.string(),
-      })
-    ).optional(),
+    stats: z
+      .array(
+        z.object({
+          value: z.string(),
+          label: z.string(),
+        })
+      )
+      .optional(),
     featured: z.boolean().default(false),
     order: z.number().default(0),
   }),
@@ -43,12 +45,14 @@ const servicesCollection = defineCollection({
     description: z.string(),
     icon: z.string(),
     tags: z.array(z.string()),
-    category: z.enum(['devops', 'ai', 'cloud', 'consulting']),
+    category: z.enum(['strategy', 'campaigns', 'content', 'analytics', 'ecommerce']),
     features: z.array(z.string()),
-    pricing: z.object({
-      starting: z.string(),
-      unit: z.enum(['hour', 'day', 'month', 'project']),
-    }).optional(),
+    pricing: z
+      .object({
+        starting: z.string(),
+        unit: z.enum(['hour', 'day', 'month', 'project']),
+      })
+      .optional(),
     featured: z.boolean().default(false),
     order: z.number().default(0),
   }),

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "instructions": [
+    "AGENTS.md",
+    ".kilocode/rules/memory-bank-instructions.md",
+    ".kilocode/rules/memory-bank/brief.md",
+    ".kilocode/rules/memory-bank/product.md",
+    ".kilocode/rules/memory-bank/context.md",
+    ".kilocode/rules/memory-bank/architecture.md",
+    ".kilocode/rules/memory-bank/tech.md",
+    ".kilocode/rules/memory-bank/servers.md",
+    ".kilocode/rules/memory-bank/agents-state.md",
+    ".kilocode/rules/memory-bank/tasks-queue.md",
+    ".kilocode/rules/memory-bank/verification-history.md",
+    "C:/Users/pavel/vscodeportable/agentic/ai-prompts/prompts/astro-4/rule-astro-coding-standards.md",
+    "C:/Users/pavel/vscodeportable/agentic/ai-prompts/prompts/tailwind-4/rule-tailwind-v4.md",
+    ".clinerules/98-visual-verification.md",
+    ".clinerules/validator.md",
+    ".clinerules/mcp-port-preservation.md"
+  ]
+}

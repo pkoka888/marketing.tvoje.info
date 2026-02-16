@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="1920 1080" width="1920" height="1080">
+  <rect width="1920" height="1080" fill="#FAFAFA"/>
+  <!-- Horizontal lines -->
+  <g stroke="#E5E5E5" stroke-width="1">
+    <line x1="0" y1="200" x2="1920" y2="200"/>
+    <line x1="0" y1="400" x2="1920" y2="400"/>
+    <line x1="0" y1="600" x2="1920" y2="600"/>
+    <line x1="0" y1="800" x2="1920" y2="800"/>
+    <line x1="0" y1="1000" x2="1920" y2="1000"/>
+  </g>
+  <!-- Gold accent lines -->
+  <g stroke="#B8860B" stroke-width="2">
+    <line x1="400" y1="300" x2="600" y2="300"/>
+    <line x1="1320" y1="700" x2="1520" y2="700"/>
+  </g>
+  <!-- Subtle circles -->
+  <circle cx="300" cy="500" r="200" fill="#000000" opacity="0.02"/>
+  <circle cx="1600" cy="600" r="300" fill="#B8860B" opacity="0.03"/>
+</svg>

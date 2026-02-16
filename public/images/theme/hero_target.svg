@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="1920 1080" width="1920" height="1080">
+  <defs>
+    <linearGradient id="targetHeroGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1E40AF"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+  </defs>
+  <rect width="1920" height="1080" fill="#FFFFFF"/>
+  <!-- Arrow path -->
+  <path d="M200 540 L1600 540" stroke="#EA580C" stroke-width="4" stroke-dasharray="20,10" opacity="0.5"/>
+  <!-- Target/Bullseye -->
+  <circle cx="1650" cy="540" r="120" stroke="#1E40AF" stroke-width="20" fill="none" opacity="0.3"/>
+  <circle cx="1650" cy="540" r="80" stroke="#1E40AF" stroke-width="20" fill="none" opacity="0.5"/>
+  <circle cx="1650" cy="540" r="40" fill="#EA580C"/>
+  <!-- Arrow -->
+  <path d="M400 540 L500 540" stroke="#EA580C" stroke-width="8" stroke-linecap="round"/>
+  <path d="M460 510 L500 540 L460 570" stroke="#EA580C" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Decorative elements -->
+  <circle cx="300" cy="200" r="100" fill="#1E40AF" opacity="0.1"/>
+  <circle cx="1600" cy="900" r="150" fill="#059669" opacity="0.1"/>
+</svg>

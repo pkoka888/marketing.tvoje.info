@@ -1,0 +1,47 @@
+{
+  "squad_name": "Marketing Automation Platform Squad",
+  "status": "initializing",
+  "phase": "setup",
+  "active_agents": [
+    {
+      "role": "Roadmap-Keeper",
+      "model": "groq/llama-3.3-70b-versatile",
+      "status": "pending"
+    },
+    {
+      "role": "CI/CD-Engineer",
+      "model": "groq/llama-3.3-70b-versatile",
+      "status": "pending"
+    },
+    {
+      "role": "Docs-Maintainer",
+      "model": "groq/llama-3.1-8b-instant",
+      "status": "pending"
+    },
+    {
+      "role": "Auditor",
+      "model": "gemini-1.5-pro",
+      "status": "pending"
+    },
+    {
+      "role": "Debugger",
+      "model": "groq/llama-3.3-70b-versatile",
+      "status": "pending"
+    },
+    {
+      "role": "Template-Factory",
+      "model": "groq/llama-3.3-70b-versatile",
+      "status": "pending"
+    },
+    {
+      "role": "Orchestrator",
+      "model": "claude-3-opus-20240229",
+      "status": "pending"
+    }
+  ],
+  "roadmap": {
+    "current_phase": "0",
+    "next_milestone": "Spawn Agents",
+    "last_updated": "2026-02-13T03:00:00Z"
+  }
+}

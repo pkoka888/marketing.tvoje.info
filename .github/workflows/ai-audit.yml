@@ -1,0 +1,48 @@
+name: AI Code Audit
+
+on:
+  pull_request:
+    branches: [main, develop]
+  workflow_dispatch:
+
+jobs:
+  audit:
+    name: Groq AI Audit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Dependencies
+        run: |
+          pip install litellm
+
+      - name: Run AI Audit
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          MODEL: 'groq/llama-3.3-70b-versatile'
+        run: |
+          # Simple audit logic using litellm CLI or a python script
+          # For now, we'll just verify the connection and do a basic check
+          python -c "
+          import os
+          from litellm import completion
+
+          try:
+              response = completion(
+                  model=os.environ['MODEL'],
+                  messages=[{'role': 'user', 'content': 'Perform a quick security and quality audit on the latest changes in this project.'}],
+                  api_key=os.environ['GROQ_API_KEY']
+              )
+              print('Audit Feedback:', response.choices[0].message.content)
+          except Exception as e:
+              print(f'Audit Failed: {e}')
+              exit(1)
+          "

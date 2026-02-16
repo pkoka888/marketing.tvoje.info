@@ -1,0 +1,113 @@
+{
+  "version": "1.0",
+  "last_updated": "2026-02-13T05:30:00Z",
+  "orchestrator": {
+    "name": "antigravity",
+    "model": "gemini-3-pro",
+    "status": "active",
+    "current_phase": "planning"
+  },
+  "project": {
+    "name": "marketing-automation-platform-cz",
+    "phase": "research",
+    "priority": "high"
+  },
+  "agents": {
+    "antigravity": {
+      "status": "active",
+      "role": "orchestrator",
+      "last_task": "orchestration-feedback",
+      "next_task": "market-validation-survey"
+    },
+    "kilo_code": {
+      "status": "standby",
+      "role": "executor",
+      "last_task": null,
+      "next_task": "mission-brief-execution"
+    },
+    "groq": {
+      "status": "requires_startup",
+      "role": "implementation",
+      "model": "llama-3.3-70b-versatile",
+      "last_task": null,
+      "next_task": "code-implementation"
+    },
+    "cline": {
+      "status": "standby",
+      "role": "validator",
+      "last_task": null,
+      "next_task": "code-review"
+    }
+  },
+  "tasks": {
+    "queue": [
+      {
+        "id": "T-001",
+        "name": "Market validation survey",
+        "priority": "P0",
+        "assigned_to": "antigravity",
+        "status": "pending"
+      },
+      {
+        "id": "T-002",
+        "name": "Code implementation",
+        "priority": "P1",
+        "assigned_to": "groq",
+        "status": "pending"
+      },
+      {
+        "id": "T-003",
+        "name": "Code review",
+        "priority": "P1",
+        "assigned_to": "cline",
+        "status": "pending"
+      }
+    ],
+    "in_progress": [],
+    "completed": []
+  },
+  "infrastructure": {
+    "litellm": {
+      "url": "http://localhost:4000",
+      "status": "requires_startup"
+    },
+    "redis": {
+      "url": "redis://localhost:6379",
+      "status": "healthy"
+    },
+    "docker": {
+      "status": "healthy",
+      "containers": {
+        "shared-redis": "running"
+      }
+    }
+  },
+  "metrics": {
+    "build_time_seconds": 21,
+    "test_pass_rate": 100,
+    "lint_errors": 0,
+    "last_verification": "2026-02-13T05:00:00Z"
+  },
+  "roadmap": {
+    "current_phase": 0,
+    "phase_name": "Foundation",
+    "target_completion": "2026-02-20",
+    "gates": [
+      {
+        "gate": "market_validation",
+        "status": "pending",
+        "criteria": "20+ survey responses"
+      },
+      {
+        "gate": "prd_approved",
+        "status": "pending",
+        "criteria": "Stakeholder approval"
+      },
+      {
+        "gate": "mvp_scope_defined",
+        "status": "pending",
+        "criteria": "Features documented"
+      }
+    ]
+  }
+}

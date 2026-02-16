@@ -1,102 +1,68 @@
 ---
-title: "Cloud Migration"
-description: "Complete migration of on-premise infrastructure to AWS using Terraform and Kubernetes"
-image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&h=600&fit=crop"
-tags: ["AWS", "Terraform", "Kubernetes", "Docker", "CI/CD", "Monitoring"]
-category: "devops"
-client: "TechStartup s.r.o."
+title: E-commerce růst strategie
+description: Komplexní marketingová strategie pro růst e-shopu a zvýšení tržeb
+image: https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop
+tags: [SEO, PPC, E-commerce, Analytics, Google Ads, Conversion]
+category: 'seo'
+client: TechStartup s.r.o.
 year: 2024
-duration: "6 months"
+duration: 6 měsíců
 stats:
-  - value: "40%"
-    label: "Cost savings"
-  - value: "99.9%"
-    label: "Uptime achieved"
-  - value: "3x"
-    label: "Faster deployment"
+  - value: +47%
+    label: Návštěvnost z vyhledávačů
+  - value: +62%
+    label: Konverze
+  - value: 320%
+    label: ROI z PPC
 featured: true
 order: 1
 ---
 
-## Project Overview
+## Výzva
 
-A comprehensive cloud migration project that transformed a legacy on-premise infrastructure into a modern, scalable AWS-based solution. The project focused on improving reliability, reducing costs, and enabling faster feature delivery through infrastructure as code and containerization.
+E-shop potřeboval zvýšit tržby a získat více kvalitních zákazníků. Konkurenční prostředí vyžadovalo moderní přístup k online marketingu.
 
-## Key Achievements
+## Řešení
 
-### Infrastructure Transformation
-- Migrated from bare-metal servers to AWS cloud infrastructure
-- Implemented Infrastructure as Code using Terraform
-- Containerized all applications using Docker
-- Deployed Kubernetes cluster for orchestration
+### SEO optimalizace
 
-### Cost Optimization
-- Reduced monthly infrastructure costs by 40%
-- Implemented auto-scaling to handle peak loads
-- Utilized reserved instances for predictable workloads
-- Optimized storage with lifecycle policies
+- Komplexní analýza klíčových slov pro produktové kategorie
+- Optimalizace produktových stránek a kategorií
+- Budování kvalitních zpětných odkazů
+- Technická SEO audita a opravy
 
-### Reliability Improvements
-- Achieved 99.9% uptime SLA
-- Implemented multi-AZ deployment
-- Created automated disaster recovery
-- Set up comprehensive monitoring and alerting
+### PPC kampaně
 
-## Technical Stack
+- Kampaně na Google Ads pro produktové kampaně
+- Facebook a Instagram reklamy s retargetingem
+- Dynamický remarketing pro opuštěné košíky
+- A/B testování reklam a landing pages
 
-- **Cloud Provider**: AWS (EC2, RDS, S3, Route53, CloudFront)
-- **Infrastructure**: Terraform, AWS CloudFormation
-- **Containers**: Docker, Amazon EKS
-- **CI/CD**: GitHub Actions, ArgoCD
-- **Monitoring**: Prometheus, Grafana, CloudWatch
-- **Security**: AWS IAM, Vault, WAF
+### Analytika a testování
 
-## Implementation Details
+- Implementace Google Analytics 4
+- Nastavení e-commerce měření
+- A/B testování produktových stránek
+- Pravidelné reportování a optimalizace
 
-### Phase 1: Assessment and Planning
-- Analyzed existing infrastructure
-- Created migration roadmap
-- Designed target architecture
-- Established security compliance requirements
+## Výsledky
 
-### Phase 2: Foundation Setup
-- Created AWS organization structure
-- Implemented Terraform modules
-- Set up networking (VPC, subnets, security groups)
-- Configured CI/CD pipelines
+- +47% návštěvnosti z vyhledávačů
+- +62% konverzí
+- 320% ROI z PPC kampaní
+- +38% průměrné hodnoty objednávky
 
-### Phase 3: Application Migration
-- Containerized legacy applications
-- Deployed to Kubernetes
-- Migrated databases to RDS
-- Implemented blue-green deployment
+## Co jsme dokázali
 
-### Phase 4: Optimization
-- Fine-tuned auto-scaling policies
-- Implemented cost optimization
-- Enhanced monitoring dashboards
-- Conducted disaster recovery testing
+1. Zvýšili jsme organickou návštěvnost o 47 % díky SEO
+2. Optimalizovali jsme PPC kampaně s ROI 320 %
+3. Snížili jsme cenu za akvizici zákazníka o 35 %
+4. Zvýšili jsme konverzní poměr o 62 %
 
-## Results
+## Spolupráce
 
-The migration project delivered significant improvements across all key metrics:
+Klient ocenil profesionální přístup a měřitelné výsledky. Pravidelné reportování a transparentní komunikace byly základem úspěšné spolupráce.
 
-- **Cost Reduction**: 40% monthly savings
-- **Reliability**: 99.9% uptime achieved
-- **Deployment Speed**: 3x faster releases
-- **Scalability**: Handles 10x peak loads
-- **Security**: Full compliance achieved
+> "Díky marketingové strategii jsme výrazně zvýšili tržby. Všechny kampaně jsou pečlivě měřené a optimalizované."
 
-## Client Testimonial
-
-> "The cloud migration was executed flawlessly. Our infrastructure is now more reliable, scalable, and cost-effective. The team's expertise in AWS and Kubernetes was evident throughout the project."
-> 
-> — Jan Novák, CEO, TechStartup s.r.o.
-
-## Lessons Learned
-
-1. Start with a thorough assessment before migration
-2. Implement infrastructure as code from day one
-3. Test disaster recovery procedures regularly
-4. Monitor costs continuously and optimize
-5. Document everything for future maintenance
+— Jan Novák, CEO, TechStartup s.r.o.

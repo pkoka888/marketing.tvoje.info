@@ -1,0 +1,15 @@
+http:
+  routers:
+    marketing-tvoje-info:
+      rule: 'Host(`marketing.tvoje.info`)'
+      entryPoints:
+        - websecure
+        - web
+      service: marketing-tvoje-info-svc
+      tls:
+        certResolver: le
+  services:
+    marketing-tvoje-info-svc:
+      loadBalancer:
+        servers:
+          - url: 'http://192.168.1.62:80'

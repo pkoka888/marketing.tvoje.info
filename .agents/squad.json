@@ -1,0 +1,112 @@
+{
+  "workspace": "bmad-orchestration",
+  "version": "1.0",
+  "created": "2026-02-13",
+  "agents": [
+    {
+      "id": "roadmap-keeper",
+      "name": "ROADMAP-KEEPER",
+      "model": "groq/llama-3.3-70b-versatile",
+      "role": "Monitors .agents/roadmap/phase-*.md",
+      "rules": "Update phase-X.md every 30min; notify if >12h delay",
+      "files": [".agents/roadmap/*.md"],
+      "status": "ready"
+    },
+    {
+      "id": "cicd-engineer",
+      "name": "CI/CD-ENGINEER",
+      "model": "groq/llama-3.3-70b-versatile",
+      "role": "GitHub Actions + Vercel deployment",
+      "rules": "Never touch main; feature branches only",
+      "files": [".github/workflows/*.yml", "Dockerfile", "docker-compose.yml"],
+      "status": "ready"
+    },
+    {
+      "id": "docs-maintainer",
+      "name": "DOCS-MAINTAINER",
+      "model": "groq/llama-3.1-8b-instant",
+      "role": "READMEs, API docs, changelogs",
+      "rules": "Scan git log every commit; update README.md",
+      "files": ["README.md", "docs/**/*.md", "CHANGELOG.md"],
+      "status": "ready"
+    },
+    {
+      "id": "auditor",
+      "name": "AUDITOR",
+      "model": "gemini/gemini-2-5-pro-exp-06-05",
+      "role": "Security/quality gates",
+      "rules": "Block merges on high/critical vulns; create PR with fixes",
+      "files": [".agents/templates/audit/*.md"],
+      "status": "ready",
+      "phase": "2+"
+    },
+    {
+      "id": "debugger",
+      "name": "DEBUGGER",
+      "model": "groq/llama-3.3-70b-versatile",
+      "role": "Error triage + hotfixes",
+      "rules": "Monitor CI/CD failures; auto-fix common issues",
+      "files": [".agents/templates/debug/*.md"],
+      "status": "ready"
+    },
+    {
+      "id": "template-factory",
+      "name": "TEMPLATE-FACTORY",
+      "model": "groq/llama-3.3-70b-versatile",
+      "role": "Create reusable templates",
+      "rules": "Scan project patterns; create templates for recurring tasks",
+      "files": [".agents/templates/**/*.md"],
+      "status": "ready"
+    },
+    {
+      "id": "orchestrator",
+      "name": "ORCHESTRATOR",
+      "model": "anthropic/claude-opus-4-2025-06-20",
+      "role": "Planning and escalation handling",
+      "rules": "Only for planning/escalations; not for implementation",
+      "files": ["AGENTS.md", ".agents/**/*.md"],
+      "status": "ready"
+    }
+  ],
+  "phases": {
+    "current": 0,
+    "timeline": [
+      { "phase": 0, "name": "Setup", "duration": "1 day", "agents": ["orchestrator"] },
+      {
+        "phase": 1,
+        "name": "PRD + Research",
+        "duration": "2-3 days",
+        "agents": ["researcher", "prd-specialist"]
+      },
+      {
+        "phase": 2,
+        "name": "MVP Build",
+        "duration": "5-7 days",
+        "agents": ["builder", "designer", "cicd-engineer"]
+      },
+      {
+        "phase": 3,
+        "name": "Measure + Audit",
+        "duration": "3-5 days",
+        "agents": ["auditor", "docs-maintainer"]
+      },
+      {
+        "phase": 4,
+        "name": "Amplify",
+        "duration": "5-7 days",
+        "agents": ["builder", "cicd-engineer"]
+      },
+      {
+        "phase": 5,
+        "name": "Deploy",
+        "duration": "2-3 days",
+        "agents": ["cicd-engineer", "docs-maintainer"]
+      }
+    ]
+  },
+  "budget": {
+    "groq": "<$10/month",
+    "claude_opus": "$15/month (planning only)",
+    "gemini": "Free tier (research)"
+  }
+}

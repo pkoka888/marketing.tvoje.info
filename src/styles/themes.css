@@ -1,0 +1,189 @@
+/* Visual Upgrade 2026 - 8 Themes System */
+
+:root {
+  /* DEFAULT: Google Modern (Titan) */
+  --color-primary: 66 133 244; /* #4285F4 */
+  --color-secondary: 52 168 83; /* #34A853 */
+  --color-accent: 251 188 5; /* #FBBC05 */
+  --color-background: 255 255 255;
+  --color-surface: 248 249 250; /* #F8F9FA */
+  --color-text-main: 32 33 36; /* #202124 */
+  --color-text-muted: 95 99 104; /* #5f6368 */
+}
+
+/* === LIGHT THEMES === */
+
+/* 1. Google Modern (Titan) - Default fallback */
+[data-site-theme='titan'] {
+  --color-primary: 66 133 244;
+  --color-secondary: 52 168 83;
+  --color-accent: 251 188 5;
+  --color-background: 255 255 255;
+  --color-surface: 248 249 250;
+  --color-text-main: 32 33 36;
+  --color-text-muted: 95 99 104;
+}
+
+/* 2. Glass Morphism (Nova) */
+[data-site-theme='nova'] {
+  --color-primary: 99 102 241; /* #6366F1 Indigo */
+  --color-secondary: 34 211 238; /* #22D3EE Cyan */
+  --color-accent: 168 85 247; /* #A855F7 Purple */
+  --color-background: 243 244 246; /* Light gray base for glass */
+  --color-surface: 255 255 255; /* White for glass cards */
+  --color-text-main: 17 24 39;
+  --color-text-muted: 107 114 128;
+}
+
+/* 3. Neo-Playful (Playful) */
+[data-site-theme='playful'] {
+  --color-primary: 255 111 97; /* Living Coral */
+  --color-secondary: 64 224 208; /* Turquoise */
+  --color-accent: 255 215 0; /* Gold */
+  --color-background: 255 250 240; /* Floral White */
+  --color-surface: 255 255 255;
+  --color-text-main: 45 55 72;
+  --color-text-muted: 113 128 150;
+}
+
+/* 4. Expert Minimal (Lux) */
+[data-site-theme='lux'] {
+  --color-primary: 0 0 0; /* Pure Black */
+  --color-secondary: 26 26 26; /* Dark Gray */
+  --color-accent: 184 134 11; /* #B8860B Gold */
+  --color-background: 255 255 255;
+  --color-surface: 250 250 250;
+  --color-text-main: 0 0 0;
+  --color-text-muted: 115 115 115;
+}
+
+/* 3. Target - Goal-focused (Bow & Arrow) */
+[data-site-theme='target'] {
+  --color-primary: 30 64 175; /* #1E40AF Deep Blue */
+  --color-secondary: 5 150 105; /* #059669 Emerald */
+  --color-accent: 234 88 12; /* #EA580C Orange */
+  --color-background: 255 255 255;
+  --color-surface: 248 249 250;
+  --color-text-main: 15 23 42; /* #0F172A */
+  --color-text-muted: 71 85 105;
+}
+
+/* === DARK THEMES === */
+
+/* 5. Cyber Depth (Spark) */
+[data-site-theme='spark'] {
+  --color-primary: 0 212 255; /* #00D4FF Cyan Neon */
+  --color-secondary: 255 0 128; /* #FF0080 Magenta Neon */
+  --color-accent: 251 188 4; /* #FBBC04 Yellow Neon */
+  --color-background: 10 10 10; /* #0A0A0A */
+  --color-surface: 23 23 23; /* #171717 */
+  --color-text-main: 255 255 255;
+  --color-text-muted: 163 163 163;
+}
+
+/* 6. Obsidian Glass (Obsidian) */
+[data-site-theme='obsidian'] {
+  --color-primary: 255 255 255; /* White */
+  --color-secondary: 251 188 5; /* #FBBC05 Gold */
+  --color-accent: 251 188 5;
+  --color-background: 0 0 0; /* Pure Black */
+  --color-surface: 20 20 20; /* Very dark gray */
+  --color-text-main: 255 255 255;
+  --color-text-muted: 136 136 136;
+}
+
+/* 7. Professional Dim (Pro) */
+[data-site-theme='pro'] {
+  --color-primary: 56 189 248; /* Sky 400 */
+  --color-secondary: 148 163 184; /* Slate 400 */
+  --color-accent: 56 189 248;
+  --color-background: 30 41 59; /* #1E293B Slate 800 */
+  --color-surface: 15 23 42; /* #0F172A Slate 900 */
+  --color-text-main: 241 245 249;
+  --color-text-muted: 148 163 184;
+}
+
+/* 8. Midnight Mesh (Mesh) */
+[data-site-theme='mesh'] {
+  --color-primary: 192 132 252; /* Purple 400 */
+  --color-secondary: 232 121 249; /* Fuchsia 400 */
+  --color-accent: 74 222 128; /* Green 400 */
+  --color-background: 46 16 101; /* #2E1065 Deep Purple */
+  --color-surface: 88 28 135; /* #581C87 Purple 900 */
+  --color-text-main: 253 244 255;
+  --color-text-muted: 216 180 254;
+}
+
+/* ========================================
+   THEME-SPECIFIC COMPONENT STYLES
+   ======================================== */
+
+/* NOVA Theme - Glassmorphism Cards */
+[data-site-theme='nova'] .card {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+[data-site-theme='nova'] .card:hover {
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 8px 32px rgba(99, 102, 241, 0.2);
+}
+
+/* SPARK Theme - Neon Cards */
+[data-site-theme='spark'] .card {
+  background: #171717;
+  border: 1px solid rgba(0, 212, 255, 0.3);
+}
+[data-site-theme='spark'] .card:hover {
+  border-color: #00d4ff;
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+}
+[data-site-theme='spark'] .section-title {
+  color: #fff;
+}
+
+/* LUX Theme - Minimal Cards */
+[data-site-theme='lux'] .card {
+  background: #fff;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+}
+[data-site-theme='lux'] .card:hover {
+  border-left: 3px solid #b8860b;
+}
+
+/* TARGET Theme - Sharp Cards */
+[data-site-theme='target'] .card {
+  border-radius: 4px;
+}
+[data-site-theme='target'] .card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(30, 64, 175, 0.15);
+}
+
+/* TITAN Theme - Default Cards */
+[data-site-theme='titan'] .card {
+  border-radius: 12px;
+}
+[data-site-theme='titan'] .card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(66, 133, 244, 0.15);
+}
+
+/* Theme-specific section backgrounds */
+[data-site-theme-bg] {
+  background-color: rgb(var(--color-background));
+}
+
+[data-site-theme='nova'] [data-theme-styles] {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.05) 0%, rgba(34, 211, 238, 0.05) 100%);
+}
+
+[data-site-theme='spark'] {
+  color: #fff;
+}
+[data-site-theme='spark'] .section-title,
+[data-site-theme='spark'] h2 {
+  color: #fff;
+}

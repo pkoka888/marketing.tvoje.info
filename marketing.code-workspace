@@ -1,0 +1,59 @@
+{
+  "folders": [
+    {
+      "name": "Marketing Website",
+      "path": "."
+    }
+  ],
+  "settings": {
+    "terminal.integrated.defaultProfile.windows": "PowerShell",
+    "files.associations": {
+      "*.astro": "html"
+    }
+  },
+  "tasks": {
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "Install Dependencies",
+        "type": "npm",
+        "command": "install",
+        "problemMatcher": [],
+        "group": "none",
+        "detail": "Install npm dependencies"
+      },
+      {
+        "label": "Start Dev Server",
+        "type": "npm",
+        "command": "run dev",
+        "problemMatcher": [],
+        "group": "none",
+        "detail": "Start Astro dev server on localhost:4321",
+        "dependsOn": ["Install Dependencies"]
+      },
+      {
+        "label": "Build Production",
+        "type": "npm",
+        "command": "run build",
+        "problemMatcher": [],
+        "group": "build",
+        "detail": "Build static site to dist/"
+      },
+      {
+        "label": "Lint",
+        "type": "npm",
+        "command": "run lint",
+        "problemMatcher": [],
+        "group": "test",
+        "detail": "Run ESLint"
+      }
+    ]
+  },
+  "extensions": {
+    "recommendations": [
+      "astro-build.astro-vscode",
+      "esbenp.prettier-vscode",
+      "dbaeumer.vscode-eslint"
+    ]
+  }
+}

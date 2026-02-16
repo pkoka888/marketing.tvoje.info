@@ -19,8 +19,8 @@ const projects = [
       ? 'Kompletní migrace on-premise infrastruktury do AWS s využitím Terraform a Kubernetes'
       : 'Complete migration of on-premise infrastructure to AWS using Terraform and Kubernetes',
     image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&h=600&fit=crop',
-    tags: ['AWS', 'Terraform', 'Kubernetes', 'DevOps'],
-    category: 'devops',
+    tags: ['AWS', 'Cloud', 'Migration', 'Growth'],
+    category: 'infrastructure',
     stats: [
       { value: '40%', label: lang === 'cs' ? 'Úspora nákladů' : 'Cost savings' },
       { value: '99.9%', label: lang === 'cs' ? 'Dostupnost' : 'Uptime' },
@@ -32,9 +32,9 @@ const projects = [
     description: lang === 'cs'
       ? 'Automatizovaný deployment pipeline s GitHub Actions a Docker'
       : 'Automated deployment pipeline with GitHub Actions and Docker',
-    image: 'https://images.unsplash.com/photo-1518432031352-d6fc5c10da5a?w=800&h=600&fit=crop',
-    tags: ['GitHub Actions', 'Docker', 'CI/CD', 'Automation'],
-    category: 'devops',
+    image: 'https://images.unsplash.com/photo-1518432031352-d6c5c10da5a?w=800&h=600&fit=crop',
+    tags: ['GitHub', 'Docker', 'CI/CD', 'Automation'],
+    category: 'infrastructure',
     stats: [
       { value: '70%', label: lang === 'cs' ? 'Rychlejší release' : 'Faster releases' },
       { value: '0', label: lang === 'cs' ? 'Lidské chyby' : 'Human errors' },
@@ -48,7 +48,7 @@ const projects = [
       : 'AI chatbot implementation for customer support using OpenAI',
     image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=600&fit=crop',
     tags: ['OpenAI', 'Python', 'NLP', 'AI'],
-    category: 'ai',
+    category: 'web',
     stats: [
       { value: '60%', label: lang === 'cs' ? 'Snížení dotazů' : 'Query reduction' },
       { value: '24/7', label: lang === 'cs' ? 'Dostupnost' : 'Availability' },
@@ -61,8 +61,8 @@ const projects = [
       ? 'Implementace Prometheus a Grafana pro monitoring infrastruktury'
       : 'Prometheus and Grafana implementation for infrastructure monitoring',
     image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop',
-    tags: ['Prometheus', 'Grafana', 'Monitoring', 'DevOps'],
-    category: 'infrastructure',
+    tags: ['Analytics', 'Grafana', 'Monitoring', 'Strategy'],
+    category: 'seo',
     stats: [
       { value: '50%', label: lang === 'cs' ? 'Rychlejší detekce' : 'Faster detection' },
       { value: '100%', label: lang === 'cs' ? 'Pokrytí' : 'Coverage' },
@@ -76,7 +76,7 @@ const projects = [
       : 'Automated ML pipeline for customer behavior prediction',
     image: 'https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=800&h=600&fit=crop',
     tags: ['ML', 'Python', 'AWS SageMaker', 'AI'],
-    category: 'ai',
+    category: 'web',
     stats: [
       { value: '85%', label: lang === 'cs' ? 'Přesnost' : 'Accuracy' },
       { value: '3x', label: lang === 'cs' ? 'Rychlejší inference' : 'Faster inference' },
@@ -89,7 +89,7 @@ const projects = [
       ? 'Nastavení produkčního Kubernetes clusteru s best practices'
       : 'Production Kubernetes cluster setup with best practices',
     image: 'https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=800&h=600&fit=crop',
-    tags: ['Kubernetes', 'Docker', 'Cloud', 'DevOps'],
+    tags: ['Kubernetes', 'Docker', 'Cloud', 'Growth'],
     category: 'infrastructure',
     stats: [
       { value: '99.99%', label: lang === 'cs' ? 'Dostupnost' : 'Uptime' },
@@ -100,8 +100,9 @@ const projects = [
 
 const categories = [
   { key: 'all', label: t.projects.categories.all },
-  { key: 'devops', label: t.projects.categories.devops },
-  { key: 'ai', label: t.projects.categories.ai },
+  { key: 'seo', label: t.projects.categories.seo },
+  { key: 'ppc', label: t.projects.categories.ppc },
+  { key: 'web', label: t.projects.categories.web },
   { key: 'infrastructure', label: t.projects.categories.infrastructure },
 ];
 ---

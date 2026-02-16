@@ -3,47 +3,35 @@ import tailwind from '@astrojs/tailwind';
 import sitemap from '@astrojs/sitemap';
 import mdx from '@astrojs/mdx';
 
-// https://astro.build/config
 export default defineConfig({
   site: 'https://portfolio.tvoje.info',
-  integrations: [
-    tailwind(),
-    sitemap(),
-    mdx()
-  ],
+  output: 'static',
+  integrations: [tailwind(), sitemap(), mdx()],
   i18n: {
     defaultLocale: 'en',
     locales: ['en', 'cs'],
     routing: {
-      prefixDefaultLocale: false
-    }
+      prefixDefaultLocale: false,
+    },
   },
-  // Performance optimizations
   prefetch: {
-    prefetchAll: true,
-    defaultStrategy: 'viewport',
-    prefetchPages: {
-      '/': true,
-      '/cs': true
-    }
+    prefetchAll: false,
   },
-  // Build optimizations
   build: {
     inlineStylesheets: 'auto',
-    assets: 'assets'
+    assets: 'assets',
   },
-  // Image optimization
   image: {
     service: {
-      entrypoint: 'astro/assets/services/sharp'
+      entrypoint: 'astro/assets/services/sharp',
     },
     domains: [],
-    remotePatterns: []
+    remotePatterns: [],
   },
   markdown: {
     shikiConfig: {
       theme: 'github-dark',
-      wrap: true
-    }
-  }
+      wrap: true,
+    },
+  },
 });

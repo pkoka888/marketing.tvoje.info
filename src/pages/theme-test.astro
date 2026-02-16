@@ -1,0 +1,69 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Theme Test">
+  <div class="container mx-auto py-12">
+    <h1 class="text-3xl font-bold mb-8">Theme Switcher Test</h1>
+
+    <p class="mb-4">Klikni na tlačítko nize - melo by zmenit tema.</p>
+
+    <div class="flex flex-wrap gap-4 p-4 border rounded-lg mb-8">
+      <button
+        onclick="window.setSiteTheme('titan')"
+        class="px-4 py-2 bg-blue-500 text-white rounded hover:opacity-90 transition-opacity"
+      >
+        TITAN (Google Blue)
+      </button>
+      <button
+        onclick="window.setSiteTheme('nova')"
+        class="px-4 py-2 bg-gradient-to-r from-purple-500 to-cyan-500 text-white rounded hover:opacity-90 transition-opacity"
+      >
+        NOVA (Indigo/Cyan)
+      </button>
+      <button
+        onclick="window.setSiteTheme('spark')"
+        class="px-4 py-2 bg-cyan-500 text-black rounded hover:opacity-90 transition-opacity font-bold"
+      >
+        SPARK (Neon Cyan)
+      </button>
+      <button
+        onclick="window.setSiteTheme('lux')"
+        class="px-4 py-2 bg-black text-white border border-yellow-600 rounded hover:opacity-90 transition-opacity"
+      >
+        LUX (Black/Gold)
+      </button>
+    </div>
+
+    <p>Current theme: <span id="current-theme">loading...</span></p>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const display = document.getElementById('current-theme');
+        if (display) {
+          display.textContent = document.documentElement.getAttribute('data-site-theme') || 'none';
+        }
+      });
+    </script>
+
+    <style>
+      [data-site-theme='titan'] {
+        --test-color: #4285f4;
+      }
+      [data-site-theme='nova'] {
+        --test-color: #6366f1;
+      }
+      [data-site-theme='spark'] {
+        --test-color: #00d4ff;
+      }
+      [data-site-theme='lux'] {
+        --test-color: #b8860b;
+      }
+
+      #current-theme {
+        font-weight: bold;
+        color: var(--test-color, #000);
+      }
+    </style>
+  </div>
+</Layout>

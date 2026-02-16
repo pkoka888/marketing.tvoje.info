@@ -27,8 +27,8 @@ export interface Translations {
     viewDetails: string;
     categories: {
       all: string;
-      devops: string;
-      ai: string;
+      seo: string;
+      ppc: string;
       web: string;
       infrastructure: string;
     };
@@ -36,12 +36,12 @@ export interface Translations {
   services: {
     title: string;
     subtitle: string;
-    devops: {
+    strategy: {
       title: string;
       description: string;
       items: string[];
     };
-    ai: {
+    campaigns: {
       title: string;
       description: string;
       items: string[];
@@ -104,45 +104,46 @@ export const translations: Record<Language, Translations> = {
       contact: 'Contact',
     },
     hero: {
-      title: 'DevOps & AI Developer',
-      subtitle: 'Building scalable solutions with automation and artificial intelligence',
+      title: 'Marketing & Growth Specialist',
+      subtitle: 'Building scalable growth strategies with automation and data-driven marketing',
       cta: 'View Projects',
       secondaryCta: 'Get in Touch',
     },
     about: {
-      title: 'About Me',
-      bio: `I'm a passionate DevOps and AI Developer with over 5 years of experience in building scalable, automated infrastructure solutions. My expertise lies in bridging the gap between development and operations, implementing CI/CD pipelines, and integrating AI solutions into existing workflows.\n\nI believe in the power of automation to transform businesses and am dedicated to helping organizations achieve operational excellence through modern DevOps practices and AI-powered solutions.`,
+      title: 'Marketing & AI Specialist',
+      bio: `I'm a passionate Marketing and AI Specialist with over 5 years of experience in building scalable growth strategies and automated marketing ecosystems. My expertise lies in bridging the gap between creative design and data-driven automation, implementing high-converting funnels, and integrating AI solutions into modern marketing workflows.\n\nI believe in the power of automation to transform businesses and am dedicated to helping organizations achieve exponential growth through state-of-the-art marketing practices and AI-powered solutions.`,
       skills: 'Technical Skills',
       certifications: 'Certifications',
       downloadCV: 'Download CV',
     },
     projects: {
       title: 'Featured Projects',
-      description: 'A selection of projects demonstrating expertise in DevOps, AI, and cloud infrastructure',
+      description:
+        'A selection of projects demonstrating expertise in Growth Strategy, AI, and Marketing Automation',
       viewDetails: 'View Details',
       categories: {
         all: 'All Projects',
-        devops: 'DevOps',
-        ai: 'AI & ML',
-        web: 'Web Development',
-        infrastructure: 'Infrastructure',
+        seo: 'SEO',
+        ppc: 'PPC/Ads',
+        web: 'Content',
+        infrastructure: 'Growth',
       },
     },
     services: {
       title: 'Services',
       subtitle: 'How I can help your business grow',
-      devops: {
-        title: 'DevOps & Automation',
-        description: 'Transform your development workflow with modern DevOps practices',
+      strategy: {
+        title: 'Marketing Automation',
+        description: 'Transform your customer journey with modern growth automation practices',
         items: [
-          'CI/CD Pipeline Implementation',
-          'Infrastructure as Code',
-          'Container orchestration with Kubernetes',
-          'Cloud architecture design',
-          'Monitoring & observability',
+          'Growth strategy development',
+          'Marketing funnel optimization',
+          'Lead generation campaigns',
+          'Email marketing automation',
+          'CRM integration',
         ],
       },
-      ai: {
+      campaigns: {
         title: 'AI & Machine Learning',
         description: 'Leverage the power of artificial intelligence for your business',
         items: [
@@ -170,7 +171,7 @@ export const translations: Record<Language, Translations> = {
     },
     contact: {
       title: 'Get in Touch',
-      subtitle: 'Ready to start your next project? Let\'s talk!',
+      subtitle: "Ready to start your next project? Let's talk!",
       name: 'Full Name',
       email: 'Email Address',
       company: 'Company',
@@ -202,8 +203,9 @@ export const translations: Record<Language, Translations> = {
       filter: 'Filter',
     },
     meta: {
-      description: 'DevOps & AI Developer portfolio showcasing expertise in automation, cloud infrastructure, and artificial intelligence solutions',
-      keywords: 'DevOps, AI, Machine Learning, Cloud Architecture, Automation, CI/CD, Kubernetes, Portfolio',
+      description:
+        'Marketing & AI Specialist portfolio showcasing expertise in growth strategy, creative design, and AI-powered automation solutions',
+      keywords: 'Marketing, AI, Growth Strategy, Automation, Funnels, Lead Generation, Portfolio',
     },
   },
   cs: {
@@ -215,45 +217,47 @@ export const translations: Record<Language, Translations> = {
       contact: 'Kontakt',
     },
     hero: {
-      title: 'DevOps & AI Vývojář',
-      subtitle: 'Vytvářím škálovatelná řešení s automatizací a umělou inteligencí',
+      title: 'Marketingový a růstový specialista',
+      subtitle: 'Buduji škálovatelné růstové strategie s automatizací a datově řízeným marketingem',
       cta: 'Zobrazit projekty',
       secondaryCta: 'Kontaktovat',
     },
     about: {
-      title: 'O mně',
-      bio: `Jsem nadšený DevOps a AI vývojář s více než 5 lety zkušeností v budování škálovatelných, automatizovaných infrastrukturních řešení. Moje specializace spočívá v překlenutí propasti mezi vývojem a provozem, implementaci CI/CD pipeline a integraci AI řešení do stávajících pracovních postupů.\n\nVěřím v sílu automatizace, která dokáže transformovat podniky, a jsem odhodlan pomáhat organizacím dosáhnout provozní dokonalosti pomocí moderních DevOps postupů a AI řešení.`,
+      title: 'Marketingový & AI specialista',
+      bio: `Jsem nadšený marketingový a AI specialista s více než 5 lety zkušeností v budování škálovatelných růstových strategií a automatizovaných marketingových ekosystémů. Moje specializace spočívá v propojení kreativního designu a datově řízené automatizace, implementaci vysoce konverzních funnelů a integraci AI řešení do moderních marketingových procesů.\n\nVěřím v sílu automatizace, která dokáže transformovat podniky, a jsem odhodlán pomáhat organizacím dosáhnout exponenciálního růstu pomocí špičkových marketingových postupů a AI řešení.`,
       skills: 'Technické dovednosti',
       certifications: 'Certifikace',
       downloadCV: 'Stáhnout životopis',
     },
     projects: {
       title: 'Vybrané projekty',
-      description: 'Výběr projektů demonstrujících odbornost v DevOps, AI a cloud infrastruktuře',
+      description:
+        'Výběr projektů demonstrujících odbornost v růstových strategiích, AI a automatizaci marketingu',
       viewDetails: 'Zobrazit detaily',
       categories: {
         all: 'Všechny projekty',
-        devops: 'DevOps',
-        ai: 'AI & ML',
-        web: 'Webový vývoj',
-        infrastructure: 'Infrastruktura',
+        seo: 'SEO',
+        ppc: 'PPC/Reklamy',
+        web: 'Obsah',
+        infrastructure: 'Růst',
       },
     },
     services: {
       title: 'Služby',
       subtitle: 'Jak mohu pomoci vašemu podnikání růst',
-      devops: {
-        title: 'DevOps & Automatizace',
-        description: 'Transformujte svůj vývojový workflow pomocí moderních DevOps postupů',
+      strategy: {
+        title: 'Marketingová automatizace',
+        description:
+          'Transformujte svou zákaznickou cestu pomocí moderních postupů růstové automatizace',
         items: [
-          'Implementace CI/CD pipeline',
-          'Infrastructure as Code',
-          'Orchestrace kontejnerů s Kubernetes',
-          'Návrh cloud architektury',
-          'Monitoring a pozorovatelnost',
+          'Vývoj růstové strategie',
+          'Optimalizace marketingových funnelů',
+          'Kampaně na generování leadů',
+          'Automatizace e-mailového marketingu',
+          'Integrace CRM',
         ],
       },
-      ai: {
+      campaigns: {
         title: 'AI & Strojové učení',
         description: 'Využijte sílu umělé inteligence pro váš podnik',
         items: [
@@ -313,8 +317,10 @@ export const translations: Record<Language, Translations> = {
       filter: 'Filtrovat',
     },
     meta: {
-      description: 'DevOps & AI vývojářské portfolio ukazující odbornost v automatizaci, cloud infrastruktuře a řešeních umělé inteligence',
-      keywords: 'DevOps, AI, Strojové učení, Cloud architektura, Automatizace, CI/CD, Kubernetes, Portfolio',
+      description:
+        'Portfolio marketingového a AI specialisty ukazující odbornost v růstových strategiích, kreativním designu a řešeních AI automatizace',
+      keywords:
+        'Marketing, AI, Růstová strategie, Automatizace, Funnely, Generování leadů, Portfolio',
     },
   },
 };
