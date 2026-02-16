@@ -138,3 +138,16 @@ kubectl/
 *.pid
 *.seed
 *.pid.lock
+
+src/content/docs/nul
+**/nul
+
+src/content/docs/
+
+__pycache__/
+
+evidence/
+test-results/
+.vercel/
+*.txt
+*.log
