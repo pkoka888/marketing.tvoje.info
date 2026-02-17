@@ -63,5 +63,8 @@ jobs:
           timeout: 60s
           command_timeout: 5m
           script: |
+            # Fix permissions for deployment
+            ssh sugent@192.168.1.62 -p 2262 'sudo chown -R sugent:www-data /var/www/projects/marketing.tvoje.info/'
+            # Deploy files
             scp -r -o StrictHostKeyChecking=no -P 2262 /tmp/portfolio-deploy/* sugent@192.168.1.62:/var/www/projects/marketing.tvoje.info/
             ssh sugent@192.168.1.62 -p 2262 "ls -la /var/www/projects/marketing.tvoje.info/ | head -10"
