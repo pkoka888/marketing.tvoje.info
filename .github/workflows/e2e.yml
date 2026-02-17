@@ -20,11 +20,11 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps chromium
+      - name: Verify Playwright installed
+        run: npm ls @playwright/test
 
       - name: Run Production E2E Tests
-        run: npx playwright test --project=chromium-desktop
+        run: npm run test:e2e -- --project=chromium-desktop
         env:
           BASE_URL: https://marketing.tvoje.info
           CI: true
