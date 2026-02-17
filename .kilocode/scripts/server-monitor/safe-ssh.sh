@@ -74,20 +74,20 @@ error_action() {
 # Validate command for forbidden patterns
 validate_command() {
     local cmd="$1"
-    
+
     for pattern in "${FORBIDDEN_PATTERNS[@]}"; do
         if echo "$cmd" | grep -qiE "$pattern"; then
             error_action "Forbidden pattern detected: $pattern in command: $cmd"
             return 1
         fi
     done
-    
+
     # Check for write operations
     if echo "$cmd" | grep -qiE "> /etc/|> /var/|> /root/"; then
         error_action "Write operation detected: $cmd"
         return 1
     fi
-    
+
     log_action "Command validated: $cmd"
     return 0
 }
@@ -96,25 +96,25 @@ validate_command() {
 execute_safe_ssh() {
     local server="$1"
     local command="$2"
-    
+
     # Validate server exists
     if [[ -z "${SERVERS[$server]:-}" ]]; then
         error_action "Unknown server: $server"
         return 1
     fi
-    
+
     # Validate command
     if ! validate_command "$command"; then
         error_action "Command validation failed for server: $server"
         return 1
     fi
-    
+
     log_action "Executing on $server: $command"
-    
+
     # Execute SSH command
     local ssh_opts="-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR -o BatchMode=yes"
     local server_config="${SERVERS[$server]}"
-    
+
     if ssh $ssh_opts $server_config "$command" 2>&1; then
         log_action "Successfully executed on $server"
         return 0
@@ -128,13 +128,13 @@ execute_safe_ssh() {
 main() {
     local server="$1"
     local command="${*:2}"
-    
+
     # Create evidence directory if needed
     mkdir -p "$EVIDENCE_DIR"
-    
+
     # Initialize log file
     touch "$LOG_FILE"
-    
+
     if [[ -z "$server" || -z "$command" ]]; then
         echo "Usage: $0 <server> <command>"
         echo ""
@@ -144,7 +144,7 @@ main() {
         done
         return 1
     fi
-    
+
     execute_safe_ssh "$server" "$command"
 }
 

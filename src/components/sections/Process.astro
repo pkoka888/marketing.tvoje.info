@@ -1,0 +1,113 @@
+---
+import type { Language } from '../../i18n/translations';
+import { getLangFromUrl, translations } from '../../i18n/translations';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang: propLang } = Astro.props;
+const lang = propLang || getLangFromUrl(Astro.url);
+const t = translations[lang];
+
+const steps = lang === 'cs' 
+  ? [
+      { number: 1, title: 'Analýza', description: 'Analyzujeme váš současný marketing, konkurenci a cíle.', duration: '1-2 týdny', icon: 'search' },
+      { number: 2, title: 'Strategie', description: 'Vytvoříme individuální marketingový plán s KPI a časovým plánem.', duration: '1 týden', icon: 'lightbulb' },
+      { number: 3, title: 'Implementace', description: 'Realizujeme strategii s pravidelným reportingem a optimalizací.', duration: '2-8 týdnů', icon: 'rocket' },
+      { number: 4, title: 'Optimalizace', description: 'Neustále zlepšujeme na základě dat a výsledků.', duration: 'Průběžně', icon: 'chart' }
+    ]
+  : [
+      { number: 1, title: 'Discovery', description: 'We analyze your current marketing, competitors, and goals.', duration: '1-2 weeks', icon: 'search' },
+      { number: 2, title: 'Strategy', description: 'We create a custom marketing plan with KPIs and timeline.', duration: '1 week', icon: 'lightbulb' },
+      { number: 3, title: 'Implementation', description: 'We execute the strategy with regular reporting and optimization.', duration: '2-8 weeks', icon: 'rocket' },
+      { number: 4, title: 'Optimization', description: 'We continuously improve based on data and results.', duration: 'Ongoing', icon: 'chart' }
+    ];
+
+const icons: Record<string, string> = {
+  search: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>`,
+  lightbulb: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>`,
+  rocket: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" /></svg>`,
+  chart: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>`
+};
+
+const sectionTitle = t.process?.title || (lang === 'cs' ? 'Jak pracujeme' : 'How We Work');
+---
+
+<section id="process" class="section bg-gray-50 dark:bg-dark-800 py-20">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+        {sectionTitle}
+      </h2>
+    </div>
+
+    <div class="relative">
+      <!-- Desktop: Horizontal timeline with connecting line -->
+      <div class="hidden lg:flex items-start justify-between max-w-6xl mx-auto">
+        <!-- Connecting line -->
+        <div class="absolute top-8 left-0 right-0 h-0.5 bg-gradient-to-r from-primary-200 via-primary-400 to-primary-200 dark:from-primary-800 dark:via-primary-600 dark:to-primary-800 transform -translate-y-1/2" style="width: calc(100% - 4rem); left: 2rem;"></div>
+        
+        {steps.map((step) => (
+          <div class="relative flex flex-col items-center flex-1 px-4">
+            <!-- Step number circle -->
+            <div class="relative z-10 w-16 h-16 rounded-full bg-primary-500 text-white flex items-center justify-center text-xl font-bold shadow-lg ring-4 ring-white dark:ring-dark-800 mb-6">
+              {step.number}
+            </div>
+            
+            <!-- Icon -->
+            <div class="w-12 h-12 rounded-full bg-primary-100 dark:bg-primary-900/50 flex items-center justify-center text-primary-600 dark:text-primary-400 mb-4" set:html={icons[step.icon]} />
+            
+            <!-- Content -->
+            <div class="text-center">
+              <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                {step.title}
+              </h3>
+              <p class="text-gray-600 dark:text-gray-300 text-sm mb-3 max-w-[200px]">
+                {step.description}
+              </p>
+              <span class="inline-block px-3 py-1 text-xs font-medium bg-primary-100 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300 rounded-full">
+                {step.duration}
+              </span>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Mobile: Vertical timeline -->
+      <div class="lg:hidden">
+        <div class="relative pl-8">
+          <!-- Vertical connecting line -->
+          <div class="absolute left-4 top-2 bottom-2 w-0.5 bg-gradient-to-b from-primary-200 via-primary-400 to-primary-200 dark:from-primary-800 dark:via-primary-600 dark:to-primary-800"></div>
+          
+          {steps.map((step) => (
+            <div class="relative mb-10 last:mb-0">
+              <!-- Step number circle -->
+              <div class="absolute left-0 top-0 w-8 h-8 rounded-full bg-primary-500 text-white flex items-center justify-center text-sm font-bold shadow ring-4 ring-gray-50 dark:ring-dark-800 -translate-x-1/2">
+                {step.number}
+              </div>
+              
+              <div class="bg-white dark:bg-dark-700 rounded-xl p-5 shadow-sm">
+                <div class="flex items-start gap-4">
+                  <div class="w-10 h-10 rounded-full bg-primary-100 dark:bg-primary-900/50 flex items-center justify-center text-primary-600 dark:text-primary-400 flex-shrink-0" set:html={icons[step.icon]} />
+                  
+                  <div class="flex-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-1">
+                      {step.title}
+                    </h3>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm mb-2">
+                      {step.description}
+                    </p>
+                    <span class="inline-block px-2.5 py-1 text-xs font-medium bg-primary-100 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300 rounded-full">
+                      {step.duration}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,64 @@
+---
+import type { Language } from '../../i18n/translations';
+import { getLangFromUrl, translations } from '../../i18n/translations';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang: propLang } = Astro.props;
+const lang = propLang || getLangFromUrl(Astro.url);
+const t = translations[lang];
+
+const certifications = [
+  { name: 'Google Premier Partner', year: 2025, icon: 'google', description: lang === 'cs' ? 'Nejvyšší partnerský status Google' : 'Highest Google partner status' },
+  { name: 'Google Ads Certified', year: 2024, icon: 'ads', description: lang === 'cs' ? 'Certifikace Google Ads' : 'Google Ads Certification' },
+  { name: 'HubSpot Marketing Pro', year: 2024, icon: 'hubspot', description: lang === 'cs' ? 'HubSpot Marketing Partner' : 'HubSpot Marketing Partner' },
+  { name: 'Meta Business Partner', year: 2024, icon: 'meta', description: lang === 'cs' ? 'Meta Business Partner' : 'Meta Business Partner' },
+  { name: 'Google Analytics', year: 2024, icon: 'analytics', description: lang === 'cs' ? 'Analytics Certified' : 'Analytics Certified' },
+];
+
+const getIcon = (iconName: string) => {
+  const icons: Record<string, string> = {
+    google: `<svg viewBox="0 0 24 24" class="w-8 h-8" fill="currentColor"><path d="M12.545 10.239v3.821h5.445c-.712 2.315-2.647 3.972-5.445 3.972a6.033 6.033 0 110-12.064c1.498 0 2.866.549 3.921 1.453l2.814-2.814A9.969 9.969 0 0012.545 2C7.021 2 2.543 6.477 2.543 12s4.478 10 10.002 10c8.396 0 10.249-7.85 9.426-11.748l-9.426-.013z"/></svg>`,
+    ads: `<svg viewBox="0 0 24 24" class="w-8 h-8" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>`,
+    hubspot: `<svg viewBox="0 0 24 24" class="w-8 h-8" fill="currentColor"><path d="M18.164 7.93V5.084a2.198 2.198 0 001.267-1.984 2.21 2.21 0 00-4.42 0c0 .873.516 1.627 1.257 1.984v2.846a6.16 6.16 0 00-3.422 1.576l-7.78-6.17a2.636 2.636 0 00.076-.716 2.64 2.64 0 10-2.64 2.64c.538 0 1.023-.164 1.424-.44l7.698 6.106a6.1 6.1 0 00-.61 2.838 6.13 6.13 0 003.002 1.264v3.374a2.198 2.198 0 00-1.267 1.985 2.21 2.21 0 004.42 0 2.198 2.198 0 00-1.267-1.985v-3.374a6.106 6.106 0 003.697-5.504 6.107 6.107 0 00-2.988-5.01zm-.793 10.364a2.917 2.917 0 01-2.917-2.917 2.917 2.917 0 012.917-2.917 2.917 2.917 0 012.917 2.917 2.917 2.917 0 01-2.917 2.917z"/></svg>`,
+    meta: `<svg viewBox="0 0 24 24" class="w-8 h-8" fill="currentColor"><path d="M12.001 2.001c-5.522 0-10 4.477-10 10 0 4.418 2.865 8.166 6.839 9.489.063-.69.12-1.749.453-2.501.28-.633 1.811-4.104 1.811-4.104s-.462-.924-.462-2.29c0-2.145 1.244-3.749 2.794-3.749 1.319 0 1.956.989 1.956 2.175 0 1.325-.844 3.304-1.278 5.143-.361 1.536.769 2.788 2.277 2.788 2.735 0 4.837-2.885 4.837-7.045 0-3.684-2.648-6.264-6.432-6.264-4.382 0-6.953 3.283-6.953 6.677 0 1.321.509 2.737 1.143 3.507.126.154.145.288.106.445-.06.241-.196.81-.252.976-.079.234-.318.318-.579.243-2.168-.859-3.529-4.335-3.529-6.98 0-5.685 4.131-10.916 11.914-10.916 6.254 0 11.126 4.46 11.126 10.432 0 6.221-3.921 11.225-9.369 11.225-1.83 0-3.552-.951-4.14-2.075l-1.127 4.295c-.405 1.626-1.501 3.66-2.246 4.899 1.684.519 3.466.799 5.311.799 5.522 0 10-4.477 10-10 0-5.522-4.478-10-10-10z"/></svg>`,
+    analytics: `<svg viewBox="0 0 24 24" class="w-8 h-8" fill="currentColor"><path d="M4 4h4v4H4V4zm6 0h4v4h-4V4zm6 0h4v4h-4V4zM4 10h4v4H4v-4zm6 0h4v4h-4v-4zm6 0h4v4h-4v-4zM4 16h4v4H4v-4zm6 0h4v4h-4v-4zm6 0h4v4h-4v-4z"/></svg>`,
+  };
+  return icons[iconName] || icons.google;
+};
+---
+
+<section id="certifications" class="section bg-white dark:bg-dark-800">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <h2 class="section-title text-gray-900 dark:text-white">
+        {t.certifications?.title || 'Certifications'}
+      </h2>
+    </div>
+    
+    <div class="flex flex-wrap justify-center gap-6">
+      {certifications.map((cert) => (
+        <div class="group relative px-4 py-3 bg-white dark:bg-dark-700 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-primary-500 dark:hover:border-primary-400 transition-colors duration-300">
+          <div class="flex items-center gap-3">
+            <div class="text-primary-600 dark:text-primary-400" set:html={getIcon(cert.icon)} />
+            <div>
+              <div class="font-semibold text-gray-900 dark:text-white text-sm">
+                {cert.name}
+              </div>
+              <div class="text-xs text-gray-500 dark:text-gray-400">
+                {cert.year}
+              </div>
+            </div>
+          </div>
+          
+          <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 bg-gray-900 dark:bg-gray-700 text-white text-xs rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 whitespace-nowrap z-10">
+            {cert.description}
+            <div class="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-gray-900 dark:border-t-gray-700"></div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

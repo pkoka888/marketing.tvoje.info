@@ -5,109 +5,120 @@
 agents:
   # ── BMAD Agents (delegated from _bmad/bmm/agents/) ──
   bmad-analyst:
-    name: "Business Analyst"
-    source: "_bmad/bmm/agents/analyst.md"
-    role: "Market research, competitive analysis, requirements elicitation"
-    delegate_to: "kilo"  # Free model via NVIDIA router
-    model: "z-ai/glm4.7"
+    name: 'Business Analyst'
+    source: '_bmad/bmm/agents/analyst.md'
+    role: 'Market research, competitive analysis, requirements elicitation'
+    delegate_to: 'kilo' # Free model via NVIDIA router
+    model: 'z-ai/glm4.7'
 
   bmad-architect:
-    name: "Solution Architect"
-    source: "_bmad/bmm/agents/architect.md"
-    role: "System design, tech stack, API design, architecture"
-    delegate_to: "antigravity"  # Complex decisions need paid model
-    model: "gemini-2.5-pro"
+    name: 'Solution Architect'
+    source: '_bmad/bmm/agents/architect.md'
+    role: 'System design, tech stack, API design, architecture'
+    delegate_to: 'antigravity' # Complex decisions need paid model
+    model: 'gemini-2.5-pro'
 
   bmad-dev:
-    name: "Developer"
-    source: "_bmad/bmm/agents/dev.md"
-    role: "Story implementation, test-driven development"
-    delegate_to: "kilo"  # Bulk coding on free model
-    model: "z-ai/glm4.7"
+    name: 'Developer'
+    source: '_bmad/bmm/agents/dev.md'
+    role: 'Story implementation, test-driven development'
+    delegate_to: 'kilo' # Bulk coding on free model
+    model: 'z-ai/glm4.7'
 
   bmad-pm:
-    name: "Project Manager"
-    source: "_bmad/bmm/agents/pm.md"
-    role: "Sprint planning, story creation, backlog management"
-    delegate_to: "cline"  # OpenRouter free, 50/day
-    model: "minimax/minimax-m2.1:free"
+    name: 'Project Manager'
+    source: '_bmad/bmm/agents/pm.md'
+    role: 'Sprint planning, story creation, backlog management'
+    delegate_to: 'cline' # OpenRouter free, 50/day
+    model: 'minimax/minimax-m2.1:free'
 
   bmad-qa:
-    name: "QA Engineer"
-    source: "_bmad/bmm/agents/qa.md"
-    role: "Test strategy, validation, quality gates"
-    delegate_to: "kilo"  # Free model for test generation
-    model: "z-ai/glm4.7"
+    name: 'QA Engineer'
+    source: '_bmad/bmm/agents/qa.md'
+    role: 'Test strategy, validation, quality gates'
+    delegate_to: 'kilo' # Free model for test generation
+    model: 'z-ai/glm4.7'
 
   bmad-sm:
-    name: "Scrum Master"
-    source: "_bmad/bmm/agents/sm.md"
-    role: "Agile ceremonies, process improvement"
-    delegate_to: "cline"  # Low-context, free model fine
-    model: "minimax/minimax-m2.1:free"
+    name: 'Scrum Master'
+    source: '_bmad/bmm/agents/sm.md'
+    role: 'Agile ceremonies, process improvement'
+    delegate_to: 'cline' # Low-context, free model fine
+    model: 'minimax/minimax-m2.1:free'
 
   bmad-ux:
-    name: "UX Designer"
-    source: "_bmad/bmm/agents/ux-designer.md"
-    role: "User experience, wireframes, design specs"
-    delegate_to: "antigravity"  # Visual decisions need quality
-    model: "gemini-2.5-pro"
+    name: 'UX Designer'
+    source: '_bmad/bmm/agents/ux-designer.md'
+    role: 'User experience, wireframes, design specs'
+    delegate_to: 'antigravity' # Visual decisions need quality
+    model: 'gemini-2.5-pro'
 
   bmad-solo:
-    name: "Solo Developer"
-    source: "_bmad/bmm/agents/quick-flow-solo-dev.md"
-    role: "Full BMAD pipeline in one agent (rapid prototyping)"
-    delegate_to: "kilo"
-    model: "z-ai/glm4.7"
+    name: 'Solo Developer'
+    source: '_bmad/bmm/agents/quick-flow-solo-dev.md'
+    role: 'Full BMAD pipeline in one agent (rapid prototyping)'
+    delegate_to: 'kilo'
+    model: 'z-ai/glm4.7'
+
+  groq-coder:
+    name: 'Groq Coder'
+    role: 'Fast code generation and debugging with precaching'
+    delegate_to: 'litellm'
+    model: 'groq-fast-agent'
+    instruction: 'Fast code gen/debug with precaching enabled.'
 
   # ── Operational Agents ──
   server-monitor:
-    name: "Server Monitor"
-    role: "Read-only infrastructure auditing across s60/s61/s62"
-    delegate_to: "kilo"  # Free model, evidence comparison
-    model: "z-ai/glm4.7"
-    evidence_path: "vscodeportable/servers/evidence.md"
+    name: 'Server Monitor'
+    role: 'Read-only infrastructure auditing across s60/s61/s62'
+    delegate_to: 'kilo' # Free model, evidence comparison
+    model: 'z-ai/glm4.7'
+    evidence_path: 'vscodeportable/servers/evidence.md'
     read_only: true
 
   orchestrator:
-    name: "Antigravity Orchestrator"
-    role: "Primary orchestrator — delegates to free agents, handles complex decisions"
-    delegate_to: "self"
-    model: "gemini-2.5-pro"
-    cost_tier: "paid"
+    name: 'Antigravity Orchestrator'
+    role: 'Primary orchestrator — delegates to free agents, handles complex decisions'
+    delegate_to: 'self'
+    model: 'gemini-2.5-pro'
+    cost_tier: 'paid'
 
 # ── MCP Integration ──
 # Antigravity can use these MCP servers (configured in .kilocode/mcp.json):
 mcp_servers:
-  - filesystem-projects   # R/W access to ~/projects/
-  - filesystem-agentic    # Read-only access to agentic repos
-  - memory                # In-memory knowledge graph
-  - git                   # Git operations
-  - github                # GitHub API (issues, PRs)
-  - time                  # Time/timezone
-  - fetch                 # HTTP requests
+  - filesystem-projects # R/W access to ~/projects/
+  - filesystem-agentic # Read-only access to agentic repos
+  - memory # In-memory knowledge graph
+  - git # Git operations
+  - github # GitHub API (issues, PRs)
+  - time # Time/timezone
+  - fetch # HTTP requests
 
 # ── Cost Routing Rules ──
 cost_routing:
   free_first: true
-  paid_budget: "$20/month per provider"
+  paid_budget: '$20/month per provider'
   free_providers:
-    - provider: "kilo"
-      model: "z-ai/glm4.7"
-      via: "NVIDIA router"
-      limit: "unlimited"
-    - provider: "openrouter"
-      model: "minimax/minimax-m2.1:free"
-      limit: "50 prompts/day"
-    - provider: "gemini-cli"
-      model: "gemini-2.5-flash"
-      limit: "1M tokens/day"
+    - provider: 'kilo'
+      model: 'z-ai/glm4.7'
+      via: 'NVIDIA router'
+      limit: 'unlimited'
+    - provider: 'openrouter'
+      model: 'minimax/minimax-m2.1:free'
+      limit: '200 prompts/day'
+    - provider: 'groq'
+      model: 'groq-fast-agent'
+      via: 'litellm'
+      limit: 'Tier-dependent'
+    - provider: 'gemini-cli'
+      model: 'gemini-2.5-flash'
+      limit: '1M tokens/day'
   paid_providers:
-    - provider: "gemini"
-      model: "gemini-2.5-pro"
-      agent: "antigravity"
-      budget: "$20/month"
-    - provider: "openai"
-      model: "o3, gpt-4.1"
-      agent: "codex/opencode"
-      budget: "$20/month"
+    - provider: 'gemini'
+      model: 'gemini-2.5-pro'
+      agent: 'antigravity'
+      budget: '$20/month'
+    - provider: 'openai'
+      model: 'o3, gpt-4.1'
+      agent: 'codex/opencode'
+      budget: '$20/month'

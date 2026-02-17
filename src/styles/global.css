@@ -9,34 +9,34 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
-  
+
   body {
     @apply bg-white dark:bg-dark-900 text-dark-900 dark:text-dark-50;
   }
-  
+
   /* Focus styles for accessibility */
   *:focus-visible {
     @apply outline-none ring-2 ring-primary-500 ring-offset-2 ring-offset-white dark:ring-offset-dark-900;
   }
-  
+
   /* Selection styles */
   ::selection {
     @apply bg-primary-500/20 text-primary-900 dark:text-primary-100;
   }
-  
+
   /* Scrollbar styles */
   ::-webkit-scrollbar {
     @apply w-2;
   }
-  
+
   ::-webkit-scrollbar-track {
     @apply bg-gray-100 dark:bg-dark-800;
   }
-  
+
   ::-webkit-scrollbar-thumb {
     @apply bg-gray-300 dark:bg-dark-600 rounded-full;
   }
-  
+
   ::-webkit-scrollbar-thumb:hover {
     @apply bg-gray-400 dark:bg-dark-500;
   }
@@ -47,58 +47,165 @@
   .container {
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
   }
-  
+
   .btn {
     @apply inline-flex items-center justify-center px-6 py-3 font-medium rounded-lg transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
   }
-  
+
   .btn-primary {
     @apply btn bg-primary-600 text-white hover:bg-primary-700 focus-visible:ring-primary-500;
   }
-  
+
   .btn-secondary {
     @apply btn border-2 border-primary-600 text-primary-600 dark:text-primary-400 hover:bg-primary-50 dark:hover:bg-dark-800 focus-visible:ring-primary-500;
   }
-  
+
   .btn-ghost {
     @apply btn text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-dark-800;
   }
-  
+
   .card {
     @apply bg-white dark:bg-dark-800 rounded-xl shadow-lg overflow-hidden transition-shadow duration-300 hover:shadow-xl;
   }
-  
+
   .input {
     @apply w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-dark-600 bg-white dark:bg-dark-700 text-gray-900 dark:text-dark-100 placeholder-gray-500 dark:placeholder-dark-400 focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors;
   }
-  
+
   .label {
     @apply block text-sm font-medium mb-2 text-gray-700 dark:text-dark-200;
   }
-  
+
   .section {
     @apply py-16 md:py-24;
   }
-  
+
   .section-title {
     @apply text-3xl md:text-4xl font-bold text-center mb-12;
   }
-  
+
   .gradient-text {
     @apply bg-gradient-to-r from-primary-600 to-accent-500 bg-clip-text text-transparent;
   }
-  
+
   /* Mobile menu styles */
   .mobile-menu-open {
     @apply fixed inset-0 z-50;
   }
-  
+
   .mobile-menu-overlay {
     @apply fixed inset-0 bg-black/50 backdrop-blur-sm z-40 transition-opacity duration-300;
   }
-  
+
   .mobile-menu-panel {
     @apply fixed right-0 top-0 h-full w-80 max-w-full bg-white dark:bg-dark-900 shadow-2xl z-50 transform transition-transform duration-300 ease-in-out;
+  }
+
+  /* Bento Grid Cards */
+  .bento-card {
+    @apply bg-white dark:bg-dark-800/80 backdrop-blur-sm border border-gray-200/50 dark:border-dark-700/50 shadow-lg;
+  }
+
+  /* Glassmorphism Cards */
+  .glass-card {
+    @apply bg-white/80 dark:bg-dark-800/80 backdrop-blur-md border border-gray-200/30 dark:border-dark-700/30 rounded-xl overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1;
+  }
+
+  .glass-card:hover {
+    @apply bg-white dark:bg-dark-800;
+  }
+
+  /* Micro-interactions */
+  .btn {
+    @apply transition-all duration-200 ease-out;
+  }
+
+  .btn:hover {
+    @apply scale-[1.02];
+  }
+
+  .btn:active {
+    @apply scale-[0.98];
+  }
+
+  /* Link underline animation */
+  a:not(.btn):not([class*='nav']):not([class*='logo']) {
+    @apply relative;
+  }
+
+  a:not(.btn):not([class*='nav']):not([class*='logo'])::after {
+    content: '';
+    @apply absolute left-0 -bottom-0.5 w-0 h-0.5 bg-primary-500 transition-all duration-300;
+  }
+
+  a:not(.btn):not([class*='nav']):not([class*='logo']):hover::after {
+    @apply w-full;
+  }
+
+  /* Card hover lift */
+  .card {
+    @apply transition-all duration-300 ease-out;
+  }
+
+  .card:hover {
+    @apply -translate-y-1 shadow-xl;
+  }
+
+  /* Focus ring animation */
+  *:focus-visible {
+    @apply outline-none ring-2 ring-primary-500 ring-offset-2 ring-offset-white dark:ring-offset-dark-900 transition-all duration-150;
+  }
+
+  /* Gradient Mesh Animation */
+  .gradient-mesh-orb {
+    @apply absolute rounded-full blur-3xl opacity-40;
+    animation: gradient-mesh 20s ease-in-out infinite;
+  }
+
+  .gradient-mesh-orb-1 {
+    @apply w-96 h-96 bg-gradient-to-r from-primary-400 to-accent-400;
+    top: 10%;
+    left: 10%;
+    animation-delay: 0s;
+  }
+
+  .gradient-mesh-orb-2 {
+    @apply w-80 h-80 bg-gradient-to-r from-purple-400 to-pink-400;
+    top: 50%;
+    right: 10%;
+    animation-delay: -5s;
+  }
+
+  .gradient-mesh-orb-3 {
+    @apply w-72 h-72 bg-gradient-to-r from-blue-400 to-cyan-400;
+    bottom: 10%;
+    left: 30%;
+    animation-delay: -10s;
+  }
+
+  @keyframes gradient-mesh {
+    0%,
+    100% {
+      transform: translate(0, 0) scale(1);
+      opacity: 0.4;
+    }
+    25% {
+      transform: translate(30px, -30px) scale(1.1);
+      opacity: 0.5;
+    }
+    50% {
+      transform: translate(-20px, 20px) scale(0.9);
+      opacity: 0.3;
+    }
+    75% {
+      transform: translate(20px, 10px) scale(1.05);
+      opacity: 0.45;
+    }
+  }
+
+  /* Dark mode gradient mesh */
+  .dark .gradient-mesh-orb {
+    opacity: 0.25;
   }
 }
 
@@ -107,49 +214,49 @@
   .text-balance {
     text-wrap: balance;
   }
-  
+
   .animate-delay-100 {
     animation-delay: 100ms;
   }
-  
+
   .animate-delay-200 {
     animation-delay: 200ms;
   }
-  
+
   .animate-delay-300 {
     animation-delay: 300ms;
   }
-  
+
   .animate-delay-400 {
     animation-delay: 400ms;
   }
-  
+
   .animate-delay-500 {
     animation-delay: 500ms;
   }
-  
+
   /* Skip link for accessibility */
   .skip-link {
     @apply sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary-600 focus:text-white focus:rounded-lg;
   }
-  
+
   /* Animation utilities */
   .animate-slide-in {
     animation: slideIn 0.3s ease-out forwards;
   }
-  
+
   .animate-fade-in {
     animation: fadeIn 0.3s ease-out forwards;
   }
-  
+
   .animate-fade-out {
     animation: fadeOut 0.3s ease-out forwards;
   }
-  
+
   .animate-scale-in {
     animation: scaleIn 0.2s ease-out forwards;
   }
-  
+
   @keyframes slideIn {
     from {
       opacity: 0;
@@ -160,7 +267,7 @@
       transform: translateY(0);
     }
   }
-  
+
   @keyframes fadeIn {
     from {
       opacity: 0;
@@ -169,7 +276,7 @@
       opacity: 1;
     }
   }
-  
+
   @keyframes fadeOut {
     from {
       opacity: 1;
@@ -178,7 +285,7 @@
       opacity: 0;
     }
   }
-  
+
   @keyframes scaleIn {
     from {
       opacity: 0;
@@ -189,27 +296,86 @@
       transform: scale(1);
     }
   }
-  
+
   /* Scroll to top button visibility */
   .scroll-to-top-visible {
     @apply opacity-100 translate-y-0;
   }
-  
+
   .scroll-to-top-hidden {
     @apply opacity-0 translate-y-10 pointer-events-none;
   }
-  
+
   /* Section highlight */
   .section-active {
     @apply text-primary-600 dark:text-primary-400 font-semibold;
   }
-  
+
   /* Project card states */
   .project-hidden {
     @apply hidden;
   }
-  
+
   .project-visible {
     @apply block animate-fade-in;
   }
+}
+
+/* ========================================
+   NEW BUTTON STYLES
+   ======================================== */
+
+.btn {
+  @apply inline-flex items-center justify-center font-medium rounded-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2;
+}
+
+.btn-primary {
+  background-color: rgb(var(--color-primary));
+  color: rgb(var(--color-primary-foreground));
+}
+.btn-primary:hover {
+  opacity: 0.9;
+}
+
+.btn-secondary {
+  background-color: rgb(var(--color-secondary));
+  color: rgb(var(--color-text-main));
+}
+.btn-secondary:hover {
+  opacity: 0.9;
+}
+
+.btn-outline {
+  border: 1px solid rgb(var(--color-primary));
+  color: rgb(var(--color-primary));
+}
+.btn-outline:hover {
+  background-color: rgb(var(--color-primary));
+  color: rgb(var(--color-primary-foreground));
+}
+
+.btn-ghost {
+  color: rgb(var(--color-text-main));
+}
+.btn-ghost:hover {
+  background-color: rgb(var(--color-surface));
+}
+
+.btn-danger {
+  background-color: #dc2626; /* Red-600 */
+  color: white;
+}
+.btn-danger:hover {
+  background-color: #b91c1c; /* Red-700 */
+}
+
+/* Sizes */
+.btn-sm {
+  @apply px-3 py-1.5 text-sm;
+}
+.btn-md {
+  @apply px-4 py-2 text-base;
+}
+.btn-lg {
+  @apply px-6 py-3 text-lg;
 }

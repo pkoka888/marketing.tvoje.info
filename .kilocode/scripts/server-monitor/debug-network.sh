@@ -50,14 +50,14 @@ if command -v tailscale &> /dev/null; then
     else
         echo -e "Tailscale Service: ${RED}Not Running${NC}"
     fi
-    
+
     TS_IP=$(tailscale ip 2>/dev/null || echo "")
     if [[ -n "$TS_IP" ]]; then
         echo -e "Tailscale IP: ${GREEN}${TS_IP}${NC}"
     else
         echo -e "Tailscale IP: ${YELLOW}Not assigned${NC}"
     fi
-    
+
     TS_STATUS=$(tailscale status 2>/dev/null || echo "Unable to get status")
     echo "Tailscale Status:"
     echo "$TS_STATUS" | head -20

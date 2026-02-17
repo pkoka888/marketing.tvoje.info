@@ -1,11 +1,11 @@
 {
-  "name": "portfolio",
+  "name": "marketing-portfolio",
   "type": "module",
   "version": "1.0.0",
-  "description": "DevOps & AI Developer Portfolio - Built with Astro 5.0, Tailwind CSS 4.0, and TypeScript",
+  "description": "Marketing Portfolio - Built with Astro 5.0, Tailwind CSS, TypeScript",
   "scripts": {
     "dev": "astro dev",
-    "start": "astro dev",
+    "start": "astro preview",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
@@ -41,11 +41,10 @@
   "keywords": [
     "astro",
     "portfolio",
-    "devops",
-    "ai",
+    "marketing",
     "tailwindcss",
     "typescript"
   ],
-  "author": "DevOps & AI Developer",
+  "author": "Pavel Kašpar",
   "license": "MIT"
 }

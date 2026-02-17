@@ -1,6 +1,7 @@
 ---
 import type { Language } from '../../i18n/translations';
 import { getLangFromUrl, translations } from '../../i18n/translations';
+import ThemeSelector from './ThemeSelector.astro';
 
 interface Props {
   lang?: Language;
@@ -32,7 +33,7 @@ const langSwitchHref = isCs
       <!-- Logo -->
       <a href={isCs ? '/cs' : '/'} class="flex items-center space-x-2" aria-label="Home">
         <span class="text-xl font-bold gradient-text">
-          DevOps & AI
+          Pavel Kašpar
         </span>
       </a>
       
@@ -65,7 +66,10 @@ const langSwitchHref = isCs
           {isCs ? 'EN' : 'CS'}
         </a>
         
-        <!-- Theme Toggle -->
+        <!-- Theme Selector (Dropdown) -->
+        <ThemeSelector lang={lang} />
+        
+        <!-- Dark Mode Toggle (Legacy - keep for quick toggle) -->
         <button
           type="button"
           class="p-2 text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors rounded-lg hover:bg-gray-100 dark:hover:bg-dark-800"

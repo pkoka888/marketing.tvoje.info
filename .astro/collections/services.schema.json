@@ -4,29 +4,11 @@
     "services": {
       "type": "object",
       "properties": {
-        "title": {
+        "name": {
           "type": "string"
         },
         "description": {
           "type": "string"
-        },
-        "icon": {
-          "type": "string"
-        },
-        "tags": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "category": {
-          "type": "string",
-          "enum": [
-            "devops",
-            "ai",
-            "cloud",
-            "consulting"
-          ]
         },
         "features": {
           "type": "array",
@@ -34,44 +16,25 @@
             "type": "string"
           }
         },
-        "pricing": {
-          "type": "object",
-          "properties": {
-            "starting": {
-              "type": "string"
-            },
-            "unit": {
-              "type": "string",
-              "enum": [
-                "hour",
-                "day",
-                "month",
-                "project"
-              ]
-            }
-          },
-          "required": [
-            "starting",
-            "unit"
-          ],
-          "additionalProperties": false
+        "icon": {
+          "type": "string"
         },
-        "featured": {
+        "price": {
+          "type": "string"
+        },
+        "popular": {
           "type": "boolean",
           "default": false
         },
-        "order": {
-          "type": "number",
-          "default": 0
+        "$schema": {
+          "type": "string"
         }
       },
       "required": [
-        "title",
+        "name",
         "description",
-        "icon",
-        "tags",
-        "category",
-        "features"
+        "features",
+        "icon"
       ],
       "additionalProperties": false
     }

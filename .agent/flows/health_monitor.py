@@ -453,7 +453,7 @@ def run_health_check(targets: Optional[List[str]] = None) -> Dict[str, Any]:
 
     Graph flow:
       HTTP probe → TCP probe → SSH probe → Evidence → Alerts
-    
+
     Each step is conditional — if HTTP confirms service is up,
     we can skip SSH for that check cycle (saves rate limit budget).
     """

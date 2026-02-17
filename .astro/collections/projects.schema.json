@@ -10,8 +10,21 @@
         "description": {
           "type": "string"
         },
-        "image": {
-          "type": "string"
+        "publishDate": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "string",
+              "format": "date"
+            },
+            {
+              "type": "integer",
+              "format": "unix-time"
+            }
+          ]
         },
         "tags": {
           "type": "array",
@@ -20,21 +33,12 @@
           }
         },
         "category": {
-          "type": "string",
-          "enum": [
-            "devops",
-            "ai",
-            "web",
-            "infrastructure"
-          ]
-        },
-        "client": {
           "type": "string"
         },
         "year": {
           "type": "number"
         },
-        "duration": {
+        "image": {
           "type": "string"
         },
         "stats": {
@@ -56,22 +60,24 @@
             "additionalProperties": false
           }
         },
-        "featured": {
-          "type": "boolean",
-          "default": false
+        "client": {
+          "type": "string"
         },
-        "order": {
-          "type": "number",
-          "default": 0
+        "clientRole": {
+          "type": "string"
+        },
+        "$schema": {
+          "type": "string"
         }
       },
       "required": [
         "title",
         "description",
-        "image",
         "tags",
         "category",
-        "year"
+        "year",
+        "image",
+        "stats"
       ],
       "additionalProperties": false
     }

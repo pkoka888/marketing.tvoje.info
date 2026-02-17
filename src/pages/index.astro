@@ -4,31 +4,33 @@ import Header from '../components/common/Header.astro';
 import Footer from '../components/common/Footer.astro';
 import Hero from '../components/sections/Hero.astro';
 import About from '../components/sections/About.astro';
+import ClientLogos from '../components/sections/ClientLogos.astro';
 import Projects from '../components/sections/Projects.astro';
 import Services from '../components/sections/Services.astro';
+import Process from '../components/sections/Process.astro';
 import Testimonials from '../components/sections/Testimonials.astro';
+import Certifications from '../components/sections/Certifications.astro';
 import Contact from '../components/sections/Contact.astro';
-
----
-
-<!-- Last updated: February 11, 2026 - Testing deployment pipeline -->
 ---
 
 <Layout
-  title="DevOps & AI Developer"
-  description="Building scalable solutions with automation and artificial intelligence"
+  title="Pavel Kašpar - Marketing Expert"
+  description="Marketing portfolio showcasing growth strategy, creative design, and AI-powered automation for modern businesses"
   lang="en"
 >
   <Header slot="header" lang="en" />
-  
+
   <main>
     <Hero />
     <About />
+    <ClientLogos lang="en" />
     <Projects />
     <Services />
+    <Process lang="en" />
     <Testimonials />
+    <Certifications lang="en" />
     <Contact />
   </main>
-  
+
   <Footer slot="footer" lang="en" />
 </Layout>

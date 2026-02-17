@@ -5,6 +5,7 @@ This document provides safe SSH command wrappers for the server-monitor mode. Th
 ## Overview
 
 The safe SSH wrappers enforce read-only operations by:
+
 1. Validating commands before execution
 2. Preventing dangerous command patterns
 3. Logging all operations for audit
@@ -43,11 +44,11 @@ SSH wrapper that only allows read-only commands to be executed on remote servers
 
 ### Server Aliases
 
-| Alias | Host | Port | Purpose |
-|-------|------|------|---------|
+| Alias    | Host              | Port | Purpose            |
+| -------- | ----------------- | ---- | ------------------ |
 | server60 | root@192.168.1.60 | 2260 | Infrastructure/VPS |
-| server61 | root@192.168.1.61 | 2261 | Gateway/Traefik |
-| server62 | root@192.168.1.62 | 2262 | Production/Web |
+| server61 | root@192.168.1.61 | 2261 | Gateway/Traefik    |
+| server62 | root@192.168.1.62 | 2262 | Production/Web     |
 
 ### Implementation
 
@@ -128,20 +129,20 @@ error_action() {
 # Validate command for forbidden patterns
 validate_command() {
     local cmd="$1"
-    
+
     for pattern in "${FORBIDDEN_PATTERNS[@]}"; do
         if echo "$cmd" | grep -qiE "$pattern"; then
             error_action "Forbidden pattern detected: $pattern in command: $cmd"
             return 1
         fi
     done
-    
+
     # Check for write operations
     if echo "$cmd" | grep -qiE "> /etc/|> /var/|> /root/"; then
         error_action "Write operation detected: $cmd"
         return 1
     fi
-    
+
     log_action "Command validated: $cmd"
     return 0
 }
@@ -150,25 +151,25 @@ validate_command() {
 execute_safe_ssh() {
     local server="$1"
     local command="$2"
-    
+
     # Validate server exists
     if [[ -z "${SERVERS[$server]:-}" ]]; then
         error_action "Unknown server: $server"
         return 1
     fi
-    
+
     # Validate command
     if ! validate_command "$command"; then
         error_action "Command validation failed for server: $server"
         return 1
     fi
-    
+
     log_action "Executing on $server: $command"
-    
+
     # Execute SSH command
     local ssh_opts="-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR -o BatchMode=yes"
     local server_config="${SERVERS[$server]}"
-    
+
     if ssh $ssh_opts $server_config "$command" 2>&1; then
         log_action "Successfully executed on $server"
         return 0
@@ -182,13 +183,13 @@ execute_safe_ssh() {
 main() {
     local server="$1"
     local command="${*:2}"
-    
+
     # Create evidence directory if needed
     mkdir -p "$EVIDENCE_DIR"
-    
+
     # Initialize log file
     touch "$LOG_FILE"
-    
+
     if [[ -z "$server" || -z "$command" ]]; then
         echo "Usage: $0 <server> <command>"
         echo ""
@@ -198,7 +199,7 @@ main() {
         done
         return 1
     fi
-    
+
     execute_safe_ssh "$server" "$command"
 }
 
@@ -274,33 +275,33 @@ main() {
     local server="$1"
     local remote_path="$2"
     local local_path="${3:-${EVIDENCE_DIR}/${server}/latest}"
-    
+
     # Create local directory
     mkdir -p "$local_path"
-    
+
     # Initialize log
     touch "$LOG_FILE"
-    
+
     if [[ -z "$server" || -z "$remote_path" ]]; then
         echo "Usage: $0 <server> <remote_path> [local_path]"
         echo ""
         echo "Download remote files to local evidence directory"
         return 1
     fi
-    
+
     log_action "Downloading $remote_path from $server to $local_path"
-    
+
     # SCP options
     local scp_opts="-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR -o BatchMode=yes"
     local server_config="${SERVERS[$server]:-}"
-    
+
     # Execute SCP (download only)
     if scp $scp_opts $server_config:"$remote_path" "$local_path/" 2>&1; then
         log_action "Successfully downloaded $remote_path"
-        
+
         # Set read-only permissions on downloaded file
         chmod 444 "$local_path/$(basename "$remote_path")" 2>/dev/null || true
-        
+
         return 0
     else
         log_action "Failed to download $remote_path"
@@ -384,7 +385,7 @@ ssh_exec() {
     local server="$1"
     local cmd="$2"
     local server_config="${SERVERS[$server]:-}"
-    
+
     ssh $SSH_OPTS $server_config "$cmd" 2>&1 || true
 }
 
@@ -392,9 +393,9 @@ ssh_exec() {
 collect_system_info() {
     local server="$1"
     local output_dir="$2"
-    
+
     log "Collecting system info from $server..."
-    
+
     {
         echo "=== SYSTEM INFORMATION ==="
         echo "Timestamp: ${TIMESTAMP}"
@@ -421,7 +422,7 @@ collect_system_info() {
         echo "--- CPU Info ---"
         ssh_exec "$server" "cat /proc/cpuinfo | head -20"
     } > "${output_dir}/system-info.txt"
-    
+
     log "System info collected"
 }
 
@@ -429,9 +430,9 @@ collect_system_info() {
 collect_packages() {
     local server="$1"
     local output_dir="$2"
-    
+
     log "Collecting package inventory from $server..."
-    
+
     {
         echo "=== PACKAGE INVENTORY ==="
         echo "Timestamp: ${TIMESTAMP}"
@@ -446,7 +447,7 @@ collect_packages() {
         echo "--- PM2 Processes ---"
         ssh_exec "$server" "pm2 jlist 2>/dev/null || echo 'PM2 not available'"
     } > "${output_dir}/packages.txt"
-    
+
     log "Package inventory collected"
 }
 
@@ -454,9 +455,9 @@ collect_packages() {
 collect_services() {
     local server="$1"
     local output_dir="$2"
-    
+
     log "Collecting service status from $server..."
-    
+
     {
         echo "=== SERVICE STATUS ==="
         echo "Timestamp: ${TIMESTAMP}"
@@ -471,7 +472,7 @@ collect_services() {
         echo "--- Process List ---"
         ssh_exec "$server" "ps aux"
     } > "${output_dir}/services.txt"
-    
+
     log "Service status collected"
 }
 
@@ -479,9 +480,9 @@ collect_services() {
 collect_network() {
     local server="$1"
     local output_dir="$2"
-    
+
     log "Collecting network configuration from $server..."
-    
+
     {
         echo "=== NETWORK CONFIGURATION ==="
         echo "Timestamp: ${TIMESTAMP}"
@@ -499,7 +500,7 @@ collect_network() {
         echo "--- DNS Configuration ---"
         ssh_exec "$server" "cat /etc/resolv.conf"
     } > "${output_dir}/network.txt"
-    
+
     log "Network configuration collected"
 }
 
@@ -508,18 +509,18 @@ collect_configs() {
     local server="$1"
     local output_dir="$2"
     local configs_dir="${output_dir}/configs"
-    
+
     mkdir -p "$configs_dir"
-    
+
     log "Collecting configuration files from $server..."
-    
+
     # Collect configs
     ssh_exec "$server" "cat /etc/nginx/nginx.conf" > "${configs_dir}/nginx.conf" 2>/dev/null || true
     ssh_exec "$server" "cat /etc/ssh/sshd_config" > "${configs_dir}/sshd_config" 2>/dev/null || true
     ssh_exec "$server" "ufw status" > "${configs_dir}/ufw.status" 2>/dev/null || true
     ssh_exec "$server" "cat /var/www/portfolio/.env 2>/dev/null" > "${configs_dir}/app.env" 2>/dev/null || true
     ssh_exec "$server" "cat ecosystem.config.js 2>/dev/null" > "${configs_dir}/ecosystem.config.js" 2>/dev/null || true
-    
+
     log "Configuration files collected"
 }
 
@@ -528,16 +529,16 @@ collect_logs() {
     local server="$1"
     local output_dir="$2"
     local logs_dir="${output_dir}/logs"
-    
+
     mkdir -p "$logs_dir"
-    
+
     log "Collecting log files from $server..."
-    
+
     # Collect logs (last 50-100 lines)
     ssh_exec "$server" "tail -n 50 /var/log/nginx/access.log" > "${logs_dir}/access.log" 2>/dev/null || true
     ssh_exec "$server" "tail -n 50 /var/log/nginx/error.log" > "${logs_dir}/error.log" 2>/dev/null || true
     ssh_exec "$server" "tail -n 100 /var/log/auth.log" > "${logs_dir}/auth.log" 2>/dev/null || true
-    
+
     log "Log files collected"
 }
 
@@ -545,7 +546,7 @@ collect_logs() {
 generate_summary() {
     local server="$1"
     local evidence_dir="$2"
-    
+
     {
         echo "=== EVIDENCE COLLECTION SUMMARY ==="
         echo "Server: $server"
@@ -567,7 +568,7 @@ generate_summary() {
 # Main function
 main() {
     local server="$1"
-    
+
     if [[ -z "$server" ]]; then
         echo "Usage: $0 <server>"
         echo ""
@@ -577,23 +578,23 @@ main() {
         done
         return 1
     fi
-    
+
     # Check server exists
     if [[ -z "${SERVERS[$server]:-}" ]]; then
         echo "Unknown server: $server"
         return 1
     fi
-    
+
     # Create evidence directory
     local evidence_dir="${EVIDENCE_BASE}/${server}/${TIMESTAMP}"
     mkdir -p "$evidence_dir"
-    
+
     # Initialize log
     mkdir -p "$EVIDENCE_BASE"
     touch "$LOG_FILE"
-    
+
     log "=== Starting evidence collection for $server ==="
-    
+
     # Collect all evidence
     collect_system_info "$server" "$evidence_dir"
     collect_packages "$server" "$evidence_dir"
@@ -601,19 +602,19 @@ main() {
     collect_network "$server" "$evidence_dir"
     collect_configs "$server" "$evidence_dir"
     collect_logs "$server" "$evidence_dir"
-    
+
     # Generate summary
     generate_summary "$server" "$evidence_dir"
-    
+
     # Create latest symlink
     local latest_link="${EVIDENCE_BASE}/${server}/latest"
     rm -f "$latest_link" 2>/dev/null || true
     ln -s "$TIMESTAMP" "$latest_link"
-    
+
     log "=== Evidence collection completed for $server ==="
     log "Evidence saved to: $evidence_dir"
     log "Latest symlink: $latest_link"
-    
+
     echo ""
     echo "Evidence collection complete for $server"
     echo "Location: $evidence_dir"
@@ -643,9 +644,9 @@ for server in server60 server61 server62; do
     echo "========================================="
     echo "Collecting evidence from $server"
     echo "========================================="
-    
+
     ./collect-evidence.sh "$server"
-    
+
     echo ""
 done
 

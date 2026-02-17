@@ -3,8 +3,8 @@
  * OptimizedImage - Performance-optimized image component
  * 
  * Features:
- * - Uses Astro's optimized image service (Sharp)
- * - Generates WebP/AVIF formats automatically
+ * - Uses Astro's optimized image service (Sharp) for local images
+ * - Fallback to standard img tag for remote images
  * - Explicit width/height to prevent CLS
  * - Lazy loading for below-fold images
  * - Loading="eager" for LCP candidates (above fold)
@@ -51,24 +51,10 @@ const {
   preload = false
 } = Astro.props;
 
-// Generate srcset for responsive images
-const srcset = width
-  ? `${width}w`
-  : '';
-
-// Handle remote images differently
+// Check if local or remote
 const isRemote = typeof src === 'string';
-const imgProps = {
-  src: isRemote ? src : (src as ImageMetadata),
-  alt,
-  width: width || 800,
-  height: height || 600,
-  loading,
-  decoding,
-  class: className,
-  sizes,
-  id
-};
+const resolvedWidth = width || 800;
+const resolvedHeight = height || 600;
 
 // Add preload link for LCP candidates
 const shouldPreload = preload || loading === 'eager';
@@ -79,10 +65,32 @@ const shouldPreload = preload || loading === 'eager';
     rel="preload" 
     as="image" 
     href={isRemote ? src : (src as ImageMetadata).src}
-    {...(width && { media: `(max-width: ${width}px)` })}
+    media={`(max-width: ${resolvedWidth}px)`}
   />
 )}
 
-<Image
-  {...imgProps}
-/>
+{isRemote ? (
+  <img
+    src={src as string}
+    alt={alt}
+    width={resolvedWidth}
+    height={resolvedHeight}
+    loading={loading}
+    decoding={decoding}
+    class={className}
+    sizes={sizes}
+    id={id}
+  />
+) : (
+  <Image
+    src={src as ImageMetadata}
+    alt={alt}
+    width={resolvedWidth}
+    height={resolvedHeight}
+    loading={loading}
+    decoding={decoding}
+    class={className}
+    sizes={sizes}
+    id={id}
+  />
+)}

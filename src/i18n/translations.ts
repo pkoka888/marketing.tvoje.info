@@ -55,6 +55,27 @@ export interface Translations {
   testimonials: {
     title: string;
   };
+  clients: {
+    title: string;
+    subtitle: string;
+  };
+  team: {
+    title: string;
+    subtitle: string;
+  };
+  process: {
+    title: string;
+    subtitle: string;
+  };
+  blog: {
+    title: string;
+    subtitle: string;
+    readMore: string;
+    recentPosts: string;
+  };
+  certifications: {
+    title: string;
+  };
   contact: {
     title: string;
     subtitle: string;
@@ -169,6 +190,27 @@ export const translations: Record<Language, Translations> = {
     testimonials: {
       title: 'What Clients Say',
     },
+    clients: {
+      title: 'Trusted By',
+      subtitle: "Companies we've worked with",
+    },
+    team: {
+      title: 'Our Team',
+      subtitle: 'Meet the experts behind your success',
+    },
+    process: {
+      title: 'How We Work',
+      subtitle: 'A proven process for delivering results',
+    },
+    blog: {
+      title: 'Latest Insights',
+      subtitle: 'Tips and trends from the marketing world',
+      readMore: 'Read More',
+      recentPosts: 'Recent Posts',
+    },
+    certifications: {
+      title: 'Certifications',
+    },
     contact: {
       title: 'Get in Touch',
       subtitle: "Ready to start your next project? Let's talk!",
@@ -282,6 +324,27 @@ export const translations: Record<Language, Translations> = {
     },
     testimonials: {
       title: 'Co říkají klienti',
+    },
+    clients: {
+      title: 'Spolupracujeme s',
+      subtitle: 'Společnosti, se kterými jsme pracovali',
+    },
+    team: {
+      title: 'Náš tým',
+      subtitle: 'Poznejte experty za vaším úspěchem',
+    },
+    process: {
+      title: 'Jak pracujeme',
+      subtitle: 'Osvědčený proces pro dosažení výsledků',
+    },
+    blog: {
+      title: 'Nejnovější insighty',
+      subtitle: 'Tipy a trendy ze světa marketingu',
+      readMore: 'Číst více',
+      recentPosts: 'Nejnovější články',
+    },
+    certifications: {
+      title: 'Certifikace',
     },
     contact: {
       title: 'Kontaktujte mě',

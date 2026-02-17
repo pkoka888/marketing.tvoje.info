@@ -4,7 +4,7 @@ import sitemap from '@astrojs/sitemap';
 import mdx from '@astrojs/mdx';
 
 export default defineConfig({
-  site: 'https://portfolio.tvoje.info',
+  site: 'https://marketing.tvoje.info',
   output: 'static',
   integrations: [tailwind(), sitemap(), mdx()],
   i18n: {

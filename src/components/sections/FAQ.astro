@@ -1,0 +1,115 @@
+---
+import type { Language } from '../../i18n/translations';
+import { getLangFromUrl, translations } from '../../i18n/translations';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang: propLang } = Astro.props;
+const lang = propLang || getLangFromUrl(Astro.url);
+const t = translations[lang];
+
+const faqItems = [
+  {
+    q: lang === 'cs' ? 'Jak dlouho trvá SEO optimalizace?' : 'How long does SEO optimization take?',
+    a: lang === 'cs' 
+      ? 'První výsledky jsou obvykle viditelné za 1-2 měsíce. Plný efekt SEO se projeví za 3-6 měsíců pravidelné práce. SEO je běh na dlouhou trať, ale přináší trvalé výsledky.'
+      : 'First results are usually visible in 1-2 months. The full effect of SEO appears after 3-6 months of regular work. SEO is a long-term effort but delivers lasting results.',
+  },
+  {
+    q: lang === 'cs' ? 'Kolik stojí PPC reklama?' : 'How much does PPC advertising cost?',
+    a: lang === 'cs'
+      ? 'Náklady na PPC závisí na konkurenci v oboru a klíčových slovech. Průměrně doporučujeme rozpočet 10 000-50 000 Kč měsíčně na reklamní kampaně plus naši správu 15-20%.'
+      : 'PPC costs depend on industry competition and keywords. On average, we recommend a budget of 10,000-50,000 CZK monthly for advertising campaigns plus our management fee of 15-20%.',
+  },
+  {
+    q: lang === 'cs' ? 'Pracujete i s e-shopy?' : 'Do you work with e-shops?',
+    a: lang === 'cs'
+      ? 'Ano, máme rozsáhlé zkušenosti s e-commerce platformami včetně Mall.cz, Heureka.cz, Google Merchant a dalších. Optimalizujeme produktové stránky, strukturu a propagaci.'
+      : 'Yes, we have extensive experience with e-commerce platforms including Mall.cz, Heureka.cz, Google Merchant and others. We optimize product pages, structure and promotion.',
+  },
+  {
+    q: lang === 'cs' ? 'Jak měříte výsledky?' : 'How do you measure results?',
+    a: lang === 'cs'
+      ? 'Poskytujeme pravidelné reporty s přehledem o návštěvnosti, pozicích ve vyhledávání, konverzích a ROI. Používáme Google Analytics, Search Console a další nástroje.'
+      : 'We provide regular reports with overview of traffic, search positions, conversions and ROI. We use Google Analytics, Search Console and other tools.',
+  },
+  {
+    q: lang === 'cs' ? 'Mohu kdykoli ukončit spolupráci?' : 'Can I cancel cooperation anytime?',
+    a: lang === 'cs'
+      ? 'Ano, spolupráci můžete ukončit. Doporučujeme však minimální závazek 3-6 měsíců pro dosažení udržitelných výsledků. Výpovědní lhůta je 30 dní.'
+      : 'Yes, you can terminate cooperation. However, we recommend a minimum commitment of 3-6 months for sustainable results. Notice period is 30 days.',
+  },
+  {
+    q: lang === 'cs' ? 'Co je zahrnuto v měsíční správě?' : 'What is included in monthly management?',
+    a: lang === 'cs'
+      ? 'Měsíční správa zahrnuje monitoring kampaní, pravidelné optimalizace, měsíční reporty a konzultace. Všechny změny provádíme po vašem schválení.'
+      : 'Monthly management includes campaign monitoring, regular optimizations, monthly reports and consultations. All changes are made after your approval.',
+  },
+];
+---
+
+<section class="py-16 md:py-24 bg-white dark:bg-dark-900">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Header -->
+    <div class="text-center mb-16">
+      <h1 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+        {lang === 'cs' ? 'Časté dotazy' : 'Frequently Asked Questions'}
+      </h1>
+      <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+        {lang === 'cs' 
+          ? 'Odpovědi na nejčastější otázky našich klientů'
+          : 'Answers to the most common questions from our clients'}
+      </p>
+    </div>
+
+    <!-- FAQ Grid -->
+    <div class="max-w-3xl mx-auto space-y-4">
+      {faqItems.map((item, index) => (
+        <div class="faq-item border border-gray-200 dark:border-dark-700 rounded-xl overflow-hidden">
+          <button
+            type="button"
+            class="faq-toggle w-full flex items-center justify-between p-6 text-left bg-gray-50 dark:bg-dark-800 hover:bg-gray-100 dark:hover:bg-dark-700 transition-colors"
+            aria-expanded="false"
+          >
+            <span class="font-medium text-gray-900 dark:text-white pr-4">{item.q}</span>
+            <svg class="faq-icon w-5 h-5 text-gray-500 flex-shrink-0 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden bg-white dark:bg-dark-900">
+            <p class="p-6 pt-0 text-gray-600 dark:text-gray-300">{item.a}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Contact CTA -->
+    <div class="text-center mt-12">
+      <p class="text-gray-600 dark:text-gray-400 mb-4">
+        {lang === 'cs' ? 'Máte další otázky?' : 'Have more questions?'}
+      </p>
+      <a
+        href={lang === 'cs' ? '/cs#contact' : '/#contact'}
+        class="inline-block px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors"
+      >
+        {lang === 'cs' ? 'Kontaktovat' : 'Contact Us'}
+      </a>
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  document.querySelectorAll('.faq-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      const content = btn.nextElementSibling;
+      const icon = btn.querySelector('.faq-icon');
+      
+      btn.setAttribute('aria-expanded', !expanded);
+      content.classList.toggle('hidden');
+      icon.classList.toggle('rotate-180');
+    });
+  });
+</script>

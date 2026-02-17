@@ -12,14 +12,14 @@ This report provides a baseline comparison of the three servers in the marketing
 
 ### Key Findings
 
-| Aspect | Status |
-|--------|--------|
-| Overall Consistency | ✅ Consistent |
-| Operating System | ✅ All Debian 13 |
-| Security Services | ✅ UFW active, Fail2ban missing (all) |
-| Node.js Version | ✅ All Node.js 20+ |
-| SSH Hardening | ✅ Consistent across servers |
-| Unique Services | ⚠️ Role differentiation present |
+| Aspect              | Status                                |
+| ------------------- | ------------------------------------- |
+| Overall Consistency | ✅ Consistent                         |
+| Operating System    | ✅ All Debian 13                      |
+| Security Services   | ✅ UFW active, Fail2ban missing (all) |
+| Node.js Version     | ✅ All Node.js 20+                    |
+| SSH Hardening       | ✅ Consistent across servers          |
+| Unique Services     | ⚠️ Role differentiation present       |
 
 ---
 
@@ -27,15 +27,16 @@ This report provides a baseline comparison of the three servers in the marketing
 
 ### OS Versions
 
-| Server | OS | Version | Architecture |
-|--------|-----|---------|--------------|
-| Server60 | Debian | 13 (Trixie) | x86_64 |
-| Server61 | Debian | 13 (Trixie) | x86_64 |
-| Server62 | Debian | 13 (Trixie) | x86_64 |
+| Server   | OS     | Version     | Architecture |
+| -------- | ------ | ----------- | ------------ |
+| Server60 | Debian | 13 (Trixie) | x86_64       |
+| Server61 | Debian | 13 (Trixie) | x86_64       |
+| Server62 | Debian | 13 (Trixie) | x86_64       |
 
 **Status**: ✅ **IDENTICAL** - All servers running the same OS version
 
 ### Analysis
+
 - All servers are running Debian 13 (Trixie), the latest stable Debian release
 - Consistent architecture (x86_64) across all servers
 - This provides a uniform base for operations and security management
@@ -46,22 +47,24 @@ This report provides a baseline comparison of the three servers in the marketing
 
 ### Core Packages
 
-| Package | Server60 | Server61 | Server62 | Status |
-|---------|----------|----------|----------|--------|
-| PM2 | ✅ | ❌ | ✅ | Role-specific |
-| Nginx | ✅ | ✅ | ✅ | IDENTICAL |
-| Docker | ✅ | ✅ | ✅ | IDENTICAL |
-| Node.js 20+ | ✅ | ❌ | ✅ | Role-specific |
-| Traefik | ❌ | ✅ | ❌ | Role-specific |
+| Package     | Server60 | Server61 | Server62 | Status        |
+| ----------- | -------- | -------- | -------- | ------------- |
+| PM2         | ✅       | ❌       | ✅       | Role-specific |
+| Nginx       | ✅       | ✅       | ✅       | IDENTICAL     |
+| Docker      | ✅       | ✅       | ✅       | IDENTICAL     |
+| Node.js 20+ | ✅       | ❌       | ✅       | Role-specific |
+| Traefik     | ❌       | ✅       | ❌       | Role-specific |
 
 ### Package Analysis
 
 #### Identical Packages (All Servers)
+
 - **Nginx**: Web server on all three servers
 - **Docker**: Container runtime on all three servers
 - **UFW**: Firewall active on all servers
 
 #### Role-Specific Packages
+
 - **Server60**: PM2, Node.js 20+ (Infrastructure/VPS role)
 - **Server61**: Traefik (Gateway/Traefik role)
 - **Server62**: PM2, Node.js 20+ (Production/Web role)
@@ -74,27 +77,30 @@ This report provides a baseline comparison of the three servers in the marketing
 
 ### Service Matrix
 
-| Service | Server60 | Server61 | Server62 | Notes |
-|---------|----------|----------|----------|-------|
-| PM2 | ✅ | ❌ | ✅ | Process manager |
-| Nginx | ✅ | ✅ | ✅ | Web server |
-| Docker | ✅ | ✅ | ✅ | Container runtime |
-| Traefik | ❌ | ✅ | ❌ | Reverse proxy |
-| SSH | ✅ | ✅ | ✅ | Remote access |
+| Service | Server60 | Server61 | Server62 | Notes             |
+| ------- | -------- | -------- | -------- | ----------------- |
+| PM2     | ✅       | ❌       | ✅       | Process manager   |
+| Nginx   | ✅       | ✅       | ✅       | Web server        |
+| Docker  | ✅       | ✅       | ✅       | Container runtime |
+| Traefik | ❌       | ✅       | ❌       | Reverse proxy     |
+| SSH     | ✅       | ✅       | ✅       | Remote access     |
 
 ### Service Analysis
 
 **Server60 (Infrastructure/VPS)**:
+
 - Primary: PM2 for process management
 - Web: Nginx for reverse proxy
 - Container: Docker for isolation
 
 **Server61 (Gateway/Traefik)**:
+
 - Primary: Traefik for gateway/reverse proxy
 - Web: Nginx (possibly as backup or specific config)
 - Container: Docker for Traefik and related services
 
 **Server62 (Production/Web)**:
+
 - Primary: PM2 for portfolio application
 - Web: Nginx for reverse proxy
 - Container: Docker for application isolation
@@ -107,29 +113,29 @@ This report provides a baseline comparison of the three servers in the marketing
 
 ### IP Addressing
 
-| Server | Hostname | Internal IP | Tailscale IP | Purpose |
-|--------|----------|-------------|--------------|---------|
-| Server60 | server60 | 192.168.1.60 | 100.91.x.x | Infrastructure |
-| Server61 | server61 | 192.168.1.61 | 100.91.x.x | Gateway |
-| Server62 | server62 | 192.168.1.62 | 100.91.x.x | Production |
+| Server   | Hostname | Internal IP  | Tailscale IP | Purpose        |
+| -------- | -------- | ------------ | ------------ | -------------- |
+| Server60 | server60 | 192.168.1.60 | 100.91.x.x   | Infrastructure |
+| Server61 | server61 | 192.168.1.61 | 100.91.x.x   | Gateway        |
+| Server62 | server62 | 192.168.1.62 | 100.91.x.x   | Production     |
 
 ### SSH Configuration
 
-| Setting | Server60 | Server61 | Server62 | Status |
-|---------|----------|----------|----------|--------|
-| SSH Port (Internal) | 2260 | 2261 | 2262 | Unique |
-| SSH Port (Tailscale) | 20 | 20 | 20 | IDENTICAL |
-| Root Login | Disabled | Disabled | Disabled | IDENTICAL |
-| Key Auth | Enabled | Enabled | Enabled | IDENTICAL |
+| Setting              | Server60 | Server61 | Server62 | Status    |
+| -------------------- | -------- | -------- | -------- | --------- |
+| SSH Port (Internal)  | 2260     | 2261     | 2262     | Unique    |
+| SSH Port (Tailscale) | 20       | 20       | 20       | IDENTICAL |
+| Root Login           | Disabled | Disabled | Disabled | IDENTICAL |
+| Key Auth             | Enabled  | Enabled  | Enabled  | IDENTICAL |
 
 ### Port Analysis
 
-| Port | Server60 | Server61 | Server62 | Notes |
-|------|----------|----------|----------|-------|
-| 2260 | ✅ | ❌ | ❌ | Server60 SSH (internal) |
-| 2261 | ❌ | ✅ | ❌ | Server61 SSH (internal) |
-| 2262 | ❌ | ❌ | ✅ | Server62 SSH (internal) |
-| 20 | ✅ | ✅ | ✅ | SSH (Tailscale) |
+| Port | Server60 | Server61 | Server62 | Notes                   |
+| ---- | -------- | -------- | -------- | ----------------------- |
+| 2260 | ✅       | ❌       | ❌       | Server60 SSH (internal) |
+| 2261 | ❌       | ✅       | ❌       | Server61 SSH (internal) |
+| 2262 | ❌       | ❌       | ✅       | Server62 SSH (internal) |
+| 20   | ✅       | ✅       | ✅       | SSH (Tailscale)         |
 
 **Status**: ✅ **SECURE** - Non-standard SSH ports, consistent security settings
 
@@ -139,25 +145,25 @@ This report provides a baseline comparison of the three servers in the marketing
 
 ### Firewall Status (UFW)
 
-| Rule | Server60 | Server61 | Server62 |
-|------|----------|----------|----------|
-| UFW Active | ✅ | ✅ | ✅ |
-| SSH (2260) | ✅ | ❌ | ❌ |
-| SSH (2261) | ❌ | ✅ | ❌ |
-| SSH (2262) | ❌ | ❌ | ✅ |
-| SSH (20/Tailscale) | ✅ | ✅ | ✅ |
-| HTTP (80) | ✅ | ✅ | ✅ |
-| HTTPS (443) | ✅ | ✅ | ✅ |
+| Rule               | Server60 | Server61 | Server62 |
+| ------------------ | -------- | -------- | -------- |
+| UFW Active         | ✅       | ✅       | ✅       |
+| SSH (2260)         | ✅       | ❌       | ❌       |
+| SSH (2261)         | ❌       | ✅       | ❌       |
+| SSH (2262)         | ❌       | ❌       | ✅       |
+| SSH (20/Tailscale) | ✅       | ✅       | ✅       |
+| HTTP (80)          | ✅       | ✅       | ✅       |
+| HTTPS (443)        | ✅       | ✅       | ✅       |
 
 ### Security Analysis
 
-| Security Feature | Status | Notes |
-|-----------------|--------|-------|
-| UFW Active | ✅ All | Firewall enabled on all servers |
-| SSH Key Auth | ✅ All | Key-based authentication |
-| Root Login | ✅ Disabled | Consistent security |
-| Fail2ban | ❌ All | NOT INSTALLED (security gap) |
-| iptables | ✅ All | Additional layer configured |
+| Security Feature | Status      | Notes                           |
+| ---------------- | ----------- | ------------------------------- |
+| UFW Active       | ✅ All      | Firewall enabled on all servers |
+| SSH Key Auth     | ✅ All      | Key-based authentication        |
+| Root Login       | ✅ Disabled | Consistent security             |
+| Fail2ban         | ❌ All      | NOT INSTALLED (security gap)    |
+| iptables         | ✅ All      | Additional layer configured     |
 
 **Security Gaps Identified**:
 
@@ -178,25 +184,28 @@ This report provides a baseline comparison of the three servers in the marketing
 
 ### Server Roles
 
-| Server | Primary Role | Unique Services | Shared Services |
-|--------|--------------|-----------------|-----------------|
-| Server60 | Infrastructure/VPS | PM2, Node.js | Nginx, Docker |
-| Server61 | Gateway/Traefik | Traefik | Nginx, Docker |
-| Server62 | Production/Web | PM2, Node.js, Portfolio | Nginx, Docker |
+| Server   | Primary Role       | Unique Services         | Shared Services |
+| -------- | ------------------ | ----------------------- | --------------- |
+| Server60 | Infrastructure/VPS | PM2, Node.js            | Nginx, Docker   |
+| Server61 | Gateway/Traefik    | Traefik                 | Nginx, Docker   |
+| Server62 | Production/Web     | PM2, Node.js, Portfolio | Nginx, Docker   |
 
 ### Role Assessment
 
 **Server60 - Infrastructure/VPS**:
+
 - ✅ Appropriate for build processes and infrastructure tasks
 - ✅ PM2 ready for any Node.js services
 - ✅ Docker for containerized tooling
 
 **Server61 - Gateway/Traefik**:
+
 - ✅ Proper role for Traefik reverse proxy
 - ✅ Single point of entry for traffic routing
 - ⚠️ Ensure Nginx doesn't conflict with Traefik
 
 **Server62 - Production/Web**:
+
 - ✅ Hosts the portfolio application
 - ✅ PM2 for application lifecycle management
 - ✅ Nginx for serving static content
@@ -209,17 +218,18 @@ This report provides a baseline comparison of the three servers in the marketing
 
 ### Potential Drift Areas
 
-| Configuration | Drift Risk | Mitigation |
-|--------------|------------|------------|
-| OS Updates | Medium | Automated patch management |
-| Package Versions | Medium | Pin versions in deployment |
-| UFW Rules | Low | Document and version control |
-| SSH Config | Low | Standardized templates |
-| Node.js Version | Low | Use .nvmrc |
+| Configuration    | Drift Risk | Mitigation                   |
+| ---------------- | ---------- | ---------------------------- |
+| OS Updates       | Medium     | Automated patch management   |
+| Package Versions | Medium     | Pin versions in deployment   |
+| UFW Rules        | Low        | Document and version control |
+| SSH Config       | Low        | Standardized templates       |
+| Node.js Version  | Low        | Use .nvmrc                   |
 
 ### Drift Detection Strategy
 
 To detect configuration drift:
+
 1. Run evidence collection scripts regularly
 2. Compare against this baseline report
 3. Alert on significant deviations
@@ -234,6 +244,7 @@ To detect configuration drift:
 ### Immediate Actions
 
 1. **Install Fail2ban** (Critical)
+
    ```bash
    sudo apt install fail2ban
    sudo systemctl enable fail2ban
@@ -285,23 +296,23 @@ bash .kilocode/scripts/server-monitor/collect-evidence.sh all
 
 ## Appendix B: Server Access Matrix
 
-| Server | Internal IP | SSH Port | User | Access Method |
-|--------|-------------|----------|------|---------------|
-| Server60 | 192.168.1.60 | 2260 | admin | Internal Network |
-| Server61 | 192.168.1.61 | 2261 | admin | Internal Network |
-| Server62 | 192.168.1.62 | 2262 | admin | Internal Network |
-| All | 100.91.x.x | 20 | admin | Tailscale VPN |
+| Server   | Internal IP  | SSH Port | User  | Access Method    |
+| -------- | ------------ | -------- | ----- | ---------------- |
+| Server60 | 192.168.1.60 | 2260     | admin | Internal Network |
+| Server61 | 192.168.1.61 | 2261     | admin | Internal Network |
+| Server62 | 192.168.1.62 | 2262     | admin | Internal Network |
+| All      | 100.91.x.x   | 20       | admin | Tailscale VPN    |
 
 ---
 
 ## Appendix C: Related Documentation
 
-| Document | Location |
-|----------|----------|
-| Memory Bank - Servers | `.kilocode/rules/memory-bank/servers.md` |
-| Collection Status | `evidence/collection-status.md` |
-| Collection Script | `.kilocode/scripts/server-monitor/collect-evidence.sh` |
-| Debug Script | `.kilocode/scripts/server-monitor/debug-network.sh` |
+| Document              | Location                                               |
+| --------------------- | ------------------------------------------------------ |
+| Memory Bank - Servers | `.kilocode/rules/memory-bank/servers.md`               |
+| Collection Status     | `evidence/collection-status.md`                        |
+| Collection Script     | `.kilocode/scripts/server-monitor/collect-evidence.sh` |
+| Debug Script          | `.kilocode/scripts/server-monitor/debug-network.sh`    |
 
 ---
 

@@ -46,8 +46,13 @@ export default {
         }
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        sans: ['Inter var', 'system-ui', 'sans-serif'],
         mono: ['JetBrains Mono', 'monospace'],
+      },
+      borderRadius: {
+        sm: '0.25rem',
+        md: '0.5rem',
+        lg: '0.75rem',
       },
       animation: {
         'fade-in': 'fadeIn 0.5s ease-out',

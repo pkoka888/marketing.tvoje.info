@@ -18,6 +18,7 @@ const services = [
     description: t.services.strategy.description,
     items: t.services.strategy.items,
     color: 'primary',
+    size: 'large', // spans 2 cols
   },
   {
     key: 'campaigns',
@@ -26,6 +27,7 @@ const services = [
     description: t.services.campaigns.description,
     items: t.services.campaigns.items,
     color: 'accent',
+    size: 'normal',
   },
   {
     key: 'consulting',
@@ -33,7 +35,8 @@ const services = [
     title: t.services.consulting.title,
     description: t.services.consulting.description,
     items: t.services.consulting.items,
-    color: 'primary',
+    color: 'purple',
+    size: 'normal',
   },
 ];
 ---
@@ -50,55 +53,66 @@ const services = [
       </p>
     </div>
     
-    <!-- Services Grid -->
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <!-- Bento Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-auto">
       {services.map((service, index) => (
         <div
-          class="card p-8 group hover:shadow-xl transition-all duration-300"
+          class={`bento-card group relative overflow-hidden rounded-2xl p-8 transition-all duration-500 hover:scale-[1.02] ${
+            service.size === 'large' ? 'md:col-span-2 lg:col-span-2' : ''
+          }`}
           data-aos="fade-up"
           data-aos-delay={index * 100}
         >
-          <!-- Icon -->
-          <div class={`w-16 h-16 rounded-xl bg-${service.color}-100 dark:bg-${service.color}-900/20 flex items-center justify-center mb-6 text-${service.color}-600 dark:text-${service.color}-400 group-hover:scale-110 transition-transform duration-300`}>
-            <Fragment set:html={service.icon} />
-          </div>
+          <!-- Gradient Background -->
+          <div class="absolute inset-0 bg-gradient-to-br from-primary-50 to-accent-50 dark:from-primary-900/20 dark:to-accent-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
           
-          <!-- Title -->
-          <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">
-            {service.title}
-          </h3>
-          
-          <!-- Description -->
-          <p class="text-gray-600 dark:text-gray-300 mb-6">
-            {service.description}
-          </p>
-          
-          <!-- Features List -->
-          <ul class="space-y-3">
-            {service.items.map((item) => (
-              <li class="flex items-start gap-3">
-                <svg class="w-5 h-5 text-accent-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+          <!-- Content -->
+          <div class="relative z-10">
+            <!-- Icon -->
+            <div class={`w-14 h-14 rounded-xl bg-${service.color}-100 dark:bg-${service.color}-900/30 flex items-center justify-center mb-5 text-${service.color}-600 dark:text-${service.color}-400 group-hover:scale-110 transition-transform duration-300`}>
+              <Fragment set:html={service.icon} />
+            </div>
+            
+            <!-- Title -->
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">
+              {service.title}
+            </h3>
+            
+            <!-- Description -->
+            <p class="text-gray-600 dark:text-gray-300 mb-5">
+              {service.description}
+            </p>
+            
+            <!-- Features List -->
+            <ul class="space-y-2.5">
+              {service.items.slice(0, 4).map((item) => (
+                <li class="flex items-start gap-2.5">
+                  <svg class="w-4 h-4 text-accent-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span class="text-gray-600 dark:text-gray-400 text-sm">
+                    {item}
+                  </span>
+                </li>
+              ))}
+            </ul>
+            
+            <!-- CTA -->
+            <div class="mt-6 pt-5 border-t border-gray-200/50 dark:border-gray-700/50">
+              <a
+                href={lang === 'cs' ? '/cs#contact' : '/#contact'}
+                class="inline-flex items-center text-sm font-medium text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors group/link"
+              >
+                {lang === 'cs' ? 'Zjistit více' : 'Learn more'}
+                <svg class="w-4 h-4 ml-1 transform group-hover/link:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                 </svg>
-                <span class="text-gray-600 dark:text-gray-400 text-sm">
-                  {item}
-                </span>
-              </li>
-            ))}
-          </ul>
-          
-          <!-- CTA -->
-          <div class="mt-8 pt-6 border-t border-gray-200 dark:border-dark-700">
-            <a
-              href={lang === 'cs' ? '/cs#contact' : '/#contact'}
-              class="inline-flex items-center text-sm font-medium text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors"
-            >
-              {lang === 'cs' ? 'Zjistit více' : 'Learn more'}
-              <svg class="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-              </svg>
-            </a>
+              </a>
+            </div>
           </div>
+          
+          <!-- Corner Accent -->
+          <div class="absolute -top-4 -right-4 w-24 h-24 bg-gradient-to-bl from-primary-500/10 to-transparent rounded-full blur-2xl group-hover:scale-150 transition-transform duration-500"></div>
         </div>
       ))}
     </div>

@@ -4,11 +4,11 @@ This document provides a comprehensive list of commands for collecting evidence 
 
 ## Server Inventory
 
-| Server | Hostname | IP Address | SSH Port | Purpose |
-|--------|----------|------------|----------|---------|
+| Server   | Hostname | IP Address   | SSH Port                        | Purpose            |
+| -------- | -------- | ------------ | ------------------------------- | ------------------ |
 | server60 | server60 | 192.168.1.60 | 2260 (internal), 20 (Tailscale) | Infrastructure/VPS |
-| server61 | server61 | 192.168.1.61 | 2261 (internal), 20 (Tailscale) | Gateway/Traefik |
-| server62 | server62 | 192.168.1.62 | 2262 (internal), 20 (Tailscale) | Production/Web |
+| server61 | server61 | 192.168.1.61 | 2261 (internal), 20 (Tailscale) | Gateway/Traefik    |
+| server62 | server62 | 192.168.1.62 | 2262 (internal), 20 (Tailscale) | Production/Web     |
 
 ## SSH Access
 
@@ -27,6 +27,7 @@ ssh admin@192.168.1.62 -p 20
 ## System Information Commands
 
 ### Basic System Info
+
 ```bash
 # Hostname and OS details
 hostnamectl
@@ -49,6 +50,7 @@ timedatectl
 ```
 
 ### Hardware Information
+
 ```bash
 # CPU information
 cat /proc/cpuinfo
@@ -70,6 +72,7 @@ cat /proc/loadavg
 ## Package Inventory Commands
 
 ### System Packages (Debian/Ubuntu)
+
 ```bash
 # List all installed packages
 dpkg -l
@@ -82,6 +85,7 @@ dpkg -l | grep -E "(nginx|docker|nodejs|pm2|ssh)"
 ```
 
 ### Node.js Packages
+
 ```bash
 # Global npm packages
 npm list -g --depth=0
@@ -97,6 +101,7 @@ pm2 info all
 ```
 
 ### Python Packages (if applicable)
+
 ```bash
 # pip list if Python is installed
 pip list 2>/dev/null || pip3 list 2>/dev/null || echo "pip not available"
@@ -105,6 +110,7 @@ pip list 2>/dev/null || pip3 list 2>/dev/null || echo "pip not available"
 ## Service Status Commands
 
 ### Systemd Services
+
 ```bash
 # Running services
 systemctl list-units --type=service --state=running
@@ -124,6 +130,7 @@ systemctl --failed --type=service
 ```
 
 ### Process Information
+
 ```bash
 # All running processes
 ps aux
@@ -138,6 +145,7 @@ pm2 desc <process_id>  # Process details
 ```
 
 ### Docker Containers
+
 ```bash
 # Running containers
 docker ps
@@ -156,6 +164,7 @@ docker info
 ## Network Configuration Commands
 
 ### Network Interfaces
+
 ```bash
 # IP addresses
 ip addr
@@ -173,6 +182,7 @@ ip neigh
 ```
 
 ### Port and Socket Information
+
 ```bash
 # Listening ports
 ss -tulpn
@@ -191,6 +201,7 @@ ufw verbose
 ```
 
 ### DNS Configuration
+
 ```bash
 # DNS resolvers
 cat /etc/resolv.conf
@@ -204,6 +215,7 @@ host google.com 2>/dev/null || echo "host not available"
 ## Configuration File Commands
 
 ### Nginx Configuration
+
 ```bash
 # Main nginx configuration
 cat /etc/nginx/nginx.conf
@@ -218,6 +230,7 @@ nginx -T  # Show all configuration
 ```
 
 ### SSH Configuration
+
 ```bash
 # SSH daemon configuration
 cat /etc/ssh/sshd_config
@@ -231,6 +244,7 @@ ls -la ~/.ssh/ 2>/dev/null || echo ".ssh directory not found"
 ```
 
 ### Firewall Configuration
+
 ```bash
 # UFW status
 ufw status
@@ -244,6 +258,7 @@ iptables -S
 ```
 
 ### PM2 Configuration
+
 ```bash
 # PM2 ecosystem config
 cat /var/www/portfolio/ecosystem.config.js 2>/dev/null || echo "Ecosystem config not found in default location"
@@ -255,6 +270,7 @@ ls -la /var/www/portfolio/.pm2/logs/ 2>/dev/null || echo "PM2 logs not found"
 ## Log File Commands
 
 ### Authentication Logs
+
 ```bash
 # SSH authentication attempts
 tail -n 100 /var/log/auth.log
@@ -267,6 +283,7 @@ lastlog
 ```
 
 ### Nginx Logs
+
 ```bash
 # Access log
 tail -n 100 /var/log/nginx/access.log
@@ -282,6 +299,7 @@ tail -n 100 /var/log/apache2/error.log 2>/dev/null || echo "Apache not installed
 ```
 
 ### Application Logs
+
 ```bash
 # PM2 logs
 tail -n 100 /var/www/portfolio/.pm2/logs/pm2-out.log
@@ -292,6 +310,7 @@ ls -la /var/www/portfolio/logs/ 2>/dev/null || echo "Application logs directory 
 ```
 
 ### System Logs
+
 ```bash
 # System journal
 journalctl -xe --no-pager -n 50
@@ -307,6 +326,7 @@ tail -n 100 /var/log/messages 2>/dev/null || echo "Messages not available"
 ## Performance Metrics Commands
 
 ### Disk Usage
+
 ```bash
 # Disk usage by filesystem
 df -h
@@ -318,6 +338,7 @@ du -sh /var/www/portfolio/* 2>/dev/null | sort -hr | head -20
 ```
 
 ### Memory Usage
+
 ```bash
 # Memory and swap usage
 free -h
@@ -330,6 +351,7 @@ ps aux --sort=-%mem | head -15
 ```
 
 ### CPU Usage
+
 ```bash
 # CPU load averages
 cat /proc/loadavg
@@ -340,6 +362,7 @@ lscpu 2>/dev/null || cat /proc/cpuinfo | head -20
 ```
 
 ### I/O Statistics
+
 ```bash
 # I/O statistics
 iostat 2>/dev/null || echo "iostat not available"
@@ -352,6 +375,7 @@ cat /proc/diskstats
 ## Security Commands
 
 ### User Management
+
 ```bash
 # List users
 cat /etc/passwd | grep -v nologin
@@ -368,6 +392,7 @@ w
 ```
 
 ### File Permissions
+
 ```bash
 # Critical file permissions
 ls -la /etc/passwd /etc/shadow /etc/group
@@ -379,6 +404,7 @@ find / -type f -perm -4000 2>/dev/null | head -10
 ```
 
 ### OpenSSL/Security
+
 ```bash
 # SSL certificate info
 openssl x509 -in /etc/ssl/certs/server.crt -text -noout 2>/dev/null || echo "Server cert not found"
@@ -391,6 +417,7 @@ apt list --upgradable 2>/dev/null | grep security
 ## Docker-Specific Commands
 
 ### Container Management
+
 ```bash
 # List all containers with status
 docker ps -a --format "table {{.ID}}\t{{.Image}}\t{{.Status}}\t{{.Ports}}"
@@ -406,6 +433,7 @@ docker inspect <container_name_or_id>
 ```
 
 ### Image Management
+
 ```bash
 # List all images with sizes
 docker images --format "table {{.Repository}}\t{{.Tag}}\t{{.Size}}\t{{.CreatedSince}}"
@@ -417,6 +445,7 @@ docker system df -v
 ## Collection Script
 
 ### Automated Collection (if available)
+
 ```bash
 # If the collection script is deployed
 ./collect-evidence.sh <server_hostname>
@@ -448,6 +477,7 @@ systemctl list-units --type=service --all --no-pager > services.txt
 ## File Transfer Commands
 
 ### SCP (Secure Copy)
+
 ```bash
 # Download evidence from server
 scp -P 2260 admin@192.168.1.60:/path/to/evidence.txt ./evidence/
@@ -455,6 +485,7 @@ scp -P 2260 admin@192.168.1.60:/var/log/nginx/access.log ./evidence/
 ```
 
 ### Rsync (for larger transfers)
+
 ```bash
 # Sync evidence directory
 rsync -avz -e "ssh -p 2260" admin@192.168.1.60:/path/to/evidence/ ./evidence/

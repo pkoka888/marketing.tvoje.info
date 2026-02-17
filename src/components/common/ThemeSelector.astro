@@ -1,0 +1,204 @@
+---
+interface Props {
+  lang?: 'en' | 'cs';
+}
+
+const { lang = 'en' } = Astro.props;
+
+const themes = [
+  {
+    id: 'titan',
+    name: lang === 'cs' ? 'Titan' : 'Titan',
+    desc: lang === 'cs' ? 'Přímý, profesionální' : 'Direct, Professional',
+    color: '#4285F4',
+    gradient: 'linear-gradient(135deg, #4285F4, #0ea5e9)',
+  },
+  {
+    id: 'nova',
+    name: lang === 'cs' ? 'Nova' : 'Nova',
+    desc: lang === 'cs' ? 'Přátelský, partnerský' : 'Friendly, Partner',
+    gradient: 'linear-gradient(135deg, #6366F1, #22D3EE)',
+  },
+  {
+    id: 'target',
+    name: lang === 'cs' ? 'Target' : 'Target',
+    desc: lang === 'cs' ? 'Cílově orientovaný' : 'Goal-focused',
+    gradient: 'linear-gradient(135deg, #1E40AF, #EA580C)',
+  },
+  {
+    id: 'spark',
+    name: lang === 'cs' ? 'Spark' : 'Spark',
+    desc: lang === 'cs' ? 'Odvážný, provokativní' : 'Bold, Provocative',
+    gradient: 'linear-gradient(135deg, #0A0A0A, #00D4FF)',
+  },
+  {
+    id: 'lux',
+    name: lang === 'cs' ? 'Lux' : 'Lux',
+    desc: lang === 'cs' ? 'Premium, minimalistický' : 'Premium, Minimal',
+    gradient: 'linear-gradient(135deg, #F5F5F5, #B8860B)',
+  },
+];
+---
+
+<div class="theme-selector-wrapper relative" id="theme-selector-wrapper">
+  <!-- Dropdown Trigger -->
+  <button
+    type="button"
+    class="theme-selector-trigger flex items-center gap-2 px-3 py-2 rounded-lg bg-gray-100 dark:bg-dark-800 hover:bg-gray-200 dark:hover:bg-dark-700 transition-all duration-200"
+    id="theme-selector-trigger"
+    aria-expanded="false"
+    aria-haspopup="listbox"
+    aria-label={lang === 'cs' ? 'Vybrat téma' : 'Select theme'}
+  >
+    <span class="theme-current-preview w-5 h-5 rounded-md" id="theme-current-preview"></span>
+    <span class="theme-current-name text-sm font-medium text-gray-700 dark:text-gray-200" id="theme-current-name">
+      Titan
+    </span>
+    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400 chevron transition-transform" id="theme-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+    </svg>
+  </button>
+
+  <!-- Dropdown Panel -->
+  <div
+    class="theme-dropdown absolute right-0 mt-2 w-72 rounded-xl bg-white dark:bg-dark-800 shadow-xl border border-gray-200 dark:border-dark-700 overflow-hidden hidden z-50"
+    id="theme-dropdown"
+    role="listbox"
+    aria-label="Theme options"
+  >
+    <div class="p-3">
+      <p class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3 px-2">
+        {lang === 'cs' ? 'Vyberte téma' : 'Choose theme'}
+      </p>
+      <div class="space-y-1">
+        {themes.map((theme) => (
+          <button
+            type="button"
+            class="theme-option w-full flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-gray-100 dark:hover:bg-dark-700 transition-colors"
+            data-theme={theme.id}
+            role="option"
+            aria-selected="false"
+          >
+            <div
+              class="theme-preview w-8 h-8 rounded-lg flex-shrink-0"
+              style={`background: ${theme.gradient}`}
+            ></div>
+            <div class="flex-1 text-left">
+              <div class="text-sm font-medium text-gray-900 dark:text-white">{theme.name}</div>
+              <div class="text-xs text-gray-500 dark:text-gray-400">{theme.desc}</div>
+            </div>
+          </button>
+        ))}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  (function() {
+    const trigger = document.getElementById('theme-selector-trigger');
+    const dropdown = document.getElementById('theme-dropdown');
+    const preview = document.getElementById('theme-current-preview');
+    const nameEl = document.getElementById('theme-current-name');
+    const chevron = document.getElementById('theme-chevron');
+    
+    const themes = {
+      titan: { name: 'Titan', gradient: 'linear-gradient(135deg, #4285F4, #0ea5e9)' },
+      nova: { name: 'Nova', gradient: 'linear-gradient(135deg, #6366F1, #22D3EE)' },
+      target: { name: 'Target', gradient: 'linear-gradient(135deg, #1E40AF, #EA580C)' },
+      spark: { name: 'Spark', gradient: 'linear-gradient(135deg, #0A0A0A, #00D4FF)' },
+      lux: { name: 'Lux', gradient: 'linear-gradient(135deg, #F5F5F5, #B8860B)' }
+    };
+
+    // Initialize from localStorage
+    function initTheme() {
+      const saved = localStorage.getItem('siteTheme') || 'titan';
+      const theme = themes[saved] || themes.titan;
+      if (preview) preview.style.background = theme.gradient;
+      if (nameEl) nameEl.textContent = theme.name;
+      
+      // Update option states
+      document.querySelectorAll('.theme-option').forEach(opt => {
+        const isSelected = opt.dataset.theme === saved;
+        opt.classList.toggle('bg-primary-50', isSelected);
+        opt.classList.toggle('dark:bg-primary-900/20', isSelected);
+        opt.setAttribute('aria-selected', isSelected);
+      });
+    }
+
+    // Toggle dropdown
+    function toggleDropdown() {
+      const isOpen = !dropdown.classList.contains('hidden');
+      if (isOpen) {
+        dropdown.classList.add('hidden');
+        trigger.classList.remove('ring-2', 'ring-primary-500');
+        chevron.classList.remove('rotate-180');
+      } else {
+        dropdown.classList.remove('hidden');
+        trigger.classList.add('ring-2', 'ring-primary-500');
+        chevron.classList.add('rotate-180');
+      }
+      trigger.setAttribute('aria-expanded', !isOpen);
+    }
+
+    // Close dropdown
+    function closeDropdown() {
+      dropdown.classList.add('hidden');
+      trigger.classList.remove('ring-2', 'ring-primary-500');
+      chevron.classList.remove('rotate-180');
+      trigger.setAttribute('aria-expanded', 'false');
+    }
+
+    // Select theme
+    function selectTheme(themeId) {
+      const theme = themes[themeId];
+      if (!theme) return;
+      
+      // Update preview
+      if (preview) preview.style.background = theme.gradient;
+      if (nameEl) nameEl.textContent = theme.name;
+      
+      // Save to localStorage
+      localStorage.setItem('siteTheme', themeId);
+      
+      // Apply theme to document
+      document.documentElement.setAttribute('data-site-theme', themeId);
+      
+      // Update option states
+      document.querySelectorAll('.theme-option').forEach(opt => {
+        const isSelected = opt.dataset.theme === themeId;
+        opt.classList.toggle('bg-primary-50', isSelected);
+        opt.classList.toggle('dark:bg-primary-900/20', isSelected);
+        opt.setAttribute('aria-selected', isSelected);
+      });
+      
+      closeDropdown();
+    }
+
+    // Event listeners
+    if (trigger) {
+      trigger.addEventListener('click', toggleDropdown);
+    }
+
+    document.querySelectorAll('.theme-option').forEach(option => {
+      option.addEventListener('click', () => {
+        selectTheme(option.dataset.theme);
+      });
+    });
+
+    // Close on outside click
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('#theme-selector-wrapper')) {
+        closeDropdown();
+      }
+    });
+
+    // Close on ESC
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeDropdown();
+    });
+
+    // Initialize
+    initTheme();
+  })();
+</script>

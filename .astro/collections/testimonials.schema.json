@@ -19,19 +19,16 @@
         "avatar": {
           "type": "string"
         },
-        "rating": {
-          "type": "number",
-          "minimum": 1,
-          "maximum": 5,
-          "default": 5
+        "lang": {
+          "type": "string",
+          "enum": [
+            "en",
+            "cs"
+          ],
+          "default": "en"
         },
-        "featured": {
-          "type": "boolean",
-          "default": false
-        },
-        "order": {
-          "type": "number",
-          "default": 0
+        "$schema": {
+          "type": "string"
         }
       },
       "required": [

@@ -34,33 +34,33 @@ main() {
     local server="$1"
     local remote_path="$2"
     local local_path="${3:-${EVIDENCE_DIR}/${server}/latest}"
-    
+
     # Create local directory
     mkdir -p "$local_path"
-    
+
     # Initialize log
     touch "$LOG_FILE"
-    
+
     if [[ -z "$server" || -z "$remote_path" ]]; then
         echo "Usage: $0 <server> <remote_path> [local_path]"
         echo ""
         echo "Download remote files to local evidence directory"
         return 1
     fi
-    
+
     log_action "Downloading $remote_path from $server to $local_path"
-    
+
     # SCP options
     local scp_opts="-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR -o BatchMode=yes"
     local server_config="${SERVERS[$server]:-}"
-    
+
     # Execute SCP (download only)
     if scp $scp_opts $server_config:"$remote_path" "$local_path/" 2>&1; then
         log_action "Successfully downloaded $remote_path"
-        
+
         # Set read-only permissions on downloaded file
         chmod 444 "$local_path/$(basename "$remote_path")" 2>/dev/null || true
-        
+
         return 0
     else
         log_action "Failed to download $remote_path"

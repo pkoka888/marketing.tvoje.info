@@ -11,11 +11,11 @@ The evidence collection system now includes automatic network detection:
 
 The scripts automatically detect your local IP and select the best connection method:
 
-| Local IP Range | Network Type | SSH Port Used |
-|----------------|--------------|---------------|
-| 100.64.0.0/10  | Tailscale VPN | 20 |
-| 192.168.1.0/24 | Internal Network | 2260/2261/2262 |
-| Other          | External (fallback) | May not work |
+| Local IP Range | Network Type        | SSH Port Used  |
+| -------------- | ------------------- | -------------- |
+| 100.64.0.0/10  | Tailscale VPN       | 20             |
+| 192.168.1.0/24 | Internal Network    | 2260/2261/2262 |
+| Other          | External (fallback) | May not work   |
 
 ### New Commands
 
@@ -34,6 +34,7 @@ bash .kilocode/scripts/server-monitor/debug-network.sh
 ## Network Debugging Script
 
 A new `debug-network.sh` script provides:
+
 - Local IP detection
 - Tailscale status check
 - Internal network connectivity test
@@ -55,13 +56,14 @@ bash .kilocode/scripts/server-monitor/debug-network.sh /tmp/my-debug.json
 
 ### Server Access Matrix
 
-| Server | Internal IP | Tailscale IP | Internal Port | Tailscale Port |
-|--------|-------------|--------------|---------------|----------------|
-| server60 | 192.168.1.60 | (configure) | 2260 | 20 |
-| server61 | 192.168.1.61 | (configure) | 2261 | 20 |
-| server62 | 192.168.1.62 | (configure) | 2262 | 20 |
+| Server   | Internal IP  | Tailscale IP | Internal Port | Tailscale Port |
+| -------- | ------------ | ------------ | ------------- | -------------- |
+| server60 | 192.168.1.60 | (configure)  | 2260          | 20             |
+| server61 | 192.168.1.61 | (configure)  | 2261          | 20             |
+| server62 | 192.168.1.62 | (configure)  | 2262          | 20             |
 
 ### SSH User
+
 All servers use `admin` user with SSH key authentication.
 
 ## Scripts Available
@@ -74,21 +76,25 @@ All servers use `admin` user with SSH key authentication.
 ## Usage Examples
 
 ### Auto-detect network and collect all
+
 ```bash
 bash .kilocode/scripts/server-monitor/collect-evidence.sh all
 ```
 
 ### Collect from specific server
+
 ```bash
 bash .kilocode/scripts/server-monitor/collect-evidence.sh server60
 ```
 
 ### Debug network issues
+
 ```bash
 bash .kilocode/scripts/server-monitor/debug-network.sh
 ```
 
 ### Force Tailscale mode
+
 ```bash
 bash .kilocode/scripts/server-monitor/collect-evidence.sh all --network tailscale
 ```
@@ -126,6 +132,7 @@ evidence/
 ## Collection Commands Reference
 
 ### System Information
+
 ```bash
 hostnamectl
 uname -a
@@ -137,6 +144,7 @@ cat /proc/cpuinfo
 ```
 
 ### Package Inventory
+
 ```bash
 dpkg -l
 npm list -g --depth=0
@@ -144,6 +152,7 @@ pm2 jlist
 ```
 
 ### Service Status
+
 ```bash
 systemctl list-units --type=service --state=running
 systemctl list-units --type=service --all
@@ -151,6 +160,7 @@ ps aux
 ```
 
 ### Network Configuration
+
 ```bash
 ip addr
 ss -tulpn
@@ -159,6 +169,7 @@ cat /etc/resolv.conf
 ```
 
 ### Configuration Files
+
 ```bash
 cat /etc/nginx/nginx.conf
 cat /etc/ssh/sshd_config
@@ -167,6 +178,7 @@ cat ecosystem.config.js
 ```
 
 ### Log Files
+
 ```bash
 tail -n 50 /var/log/nginx/access.log
 tail -n 50 /var/log/nginx/error.log

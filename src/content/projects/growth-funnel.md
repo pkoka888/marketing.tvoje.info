@@ -6,6 +6,13 @@ tags: ['Growth', 'Meta Ads', 'CRM Automation', 'ROI']
 category: 'ppc'
 year: 2025
 image: '/images/projects/growth-funnel.jpg'
+stats:
+  - value: '312%'
+    label: ROI
+  - value: '45%'
+    label: CAC Reduction
+  - value: '120%'
+    label: Lead Volume
 ---
 
 ## The Challenge

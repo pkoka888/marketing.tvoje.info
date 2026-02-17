@@ -2,7 +2,7 @@ name: Version Health Check
 
 on:
   schedule:
-    - cron: '0 6 * * 1'  # Weekly Monday 6 AM UTC
+    - cron: '0 6 * * 1' # Weekly Monday 6 AM UTC
   workflow_dispatch:
 
 env:

@@ -2,7 +2,7 @@ import { defineConfig, devices } from '@playwright/test';
 
 /**
  * Playwright configuration for E2E testing
- * Enhanced with Chromium debugging and visual verification
+ * Enhanced with parallel execution, sharding, and visual regression
  * @see https://playwright.dev/docs/test-configuration
  */
 export default defineConfig({
@@ -10,27 +10,56 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
-  reporter: [['html', { outputFolder: 'playwright-report' }], ['list']],
+  workers: process.env.CI ? 4 : undefined,
+
+  reporter: [
+    ['html', { outputFolder: 'playwright-report' }],
+    ['list'],
+    ['json', { outputFile: 'playwright-report/test-results.json' }],
+  ],
+
   use: {
-    baseURL: 'http://localhost:4321',
+    baseURL: process.env.BASE_URL || 'http://localhost:4321',
     trace: 'on-first-retry',
     video: 'on-first-retry',
     screenshot: 'only-on-failure',
 
-    // Browser context options for visual verification
+    // Browser context options
     contextOptions: {
       viewport: { width: 1280, height: 720 },
       deviceScaleFactor: 1,
     },
+
+    // Accessibility settings
+    actionTimeout: 10000,
+    navigationTimeout: 30000,
   },
+
   projects: [
+    // Desktop browsers
     {
-      name: 'chromium',
+      name: 'chromium-desktop',
       use: {
         ...devices['Desktop Chrome'],
+        viewport: { width: 1920, height: 1080 },
       },
     },
+    {
+      name: 'firefox-desktop',
+      use: {
+        ...devices['Desktop Firefox'],
+        viewport: { width: 1920, height: 1080 },
+      },
+    },
+    {
+      name: 'webkit-desktop',
+      use: {
+        ...devices['Desktop Safari'],
+        viewport: { width: 1920, height: 1080 },
+      },
+    },
+
+    // Mobile browsers
     {
       name: 'chromium-mobile',
       use: {
@@ -38,17 +67,23 @@ export default defineConfig({
       },
     },
     {
-      name: 'chromium-debug',
+      name: 'iphone-12',
       use: {
-        ...devices['Desktop Chrome'],
-        launchOptions: {
-          headless: false,
-        },
+        ...devices['iPhone 12'],
+      },
+    },
+
+    // Tablet
+    {
+      name: 'ipad-pro',
+      use: {
+        ...devices['iPad Pro 11'],
       },
     },
   ],
+
   webServer: {
-    command: 'npm run dev',
+    command: process.env.CI ? 'npm run preview' : 'npm run dev',
     url: 'http://localhost:4321',
     reuseExistingServer: !process.env.CI,
     timeout: 120000,
@@ -57,9 +92,17 @@ export default defineConfig({
   // Timeout configurations
   timeout: 30000,
   expect: {
-    timeout: 5000,
+    timeout: 10000,
   },
 
   // Output directories
-  outputDir: 'playwright-output',
+  outputDir: 'test-results',
+
+  // Sharding
+  shard: process.env.SHARD
+    ? {
+        current: parseInt(process.env.SHARD.split('/')[0]),
+        total: parseInt(process.env.SHARD.split('/')[1]),
+      }
+    : undefined,
 });

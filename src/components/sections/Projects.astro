@@ -1,6 +1,7 @@
 ---
 import type { Language } from '../../i18n/translations';
 import { getLangFromUrl, translations } from '../../i18n/translations';
+import { getCollection } from 'astro:content';
 
 interface Props {
   lang?: Language;
@@ -10,100 +11,39 @@ const { lang: propLang } = Astro.props;
 const lang = propLang || getLangFromUrl(Astro.url);
 const t = translations[lang];
 
-// Sample projects data - in production this would come from content collections
-const projects = [
-  {
-    slug: 'cloud-migration',
-    title: lang === 'cs' ? 'Cloud Migration' : 'Cloud Migration',
-    description: lang === 'cs' 
-      ? 'Kompletní migrace on-premise infrastruktury do AWS s využitím Terraform a Kubernetes'
-      : 'Complete migration of on-premise infrastructure to AWS using Terraform and Kubernetes',
-    image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&h=600&fit=crop',
-    tags: ['AWS', 'Cloud', 'Migration', 'Growth'],
-    category: 'infrastructure',
-    stats: [
-      { value: '40%', label: lang === 'cs' ? 'Úspora nákladů' : 'Cost savings' },
-      { value: '99.9%', label: lang === 'cs' ? 'Dostupnost' : 'Uptime' },
-    ],
-  },
-  {
-    slug: 'ci-cd-pipeline',
-    title: lang === 'cs' ? 'CI/CD Pipeline' : 'CI/CD Pipeline',
-    description: lang === 'cs'
-      ? 'Automatizovaný deployment pipeline s GitHub Actions a Docker'
-      : 'Automated deployment pipeline with GitHub Actions and Docker',
-    image: 'https://images.unsplash.com/photo-1518432031352-d6c5c10da5a?w=800&h=600&fit=crop',
-    tags: ['GitHub', 'Docker', 'CI/CD', 'Automation'],
-    category: 'infrastructure',
-    stats: [
-      { value: '70%', label: lang === 'cs' ? 'Rychlejší release' : 'Faster releases' },
-      { value: '0', label: lang === 'cs' ? 'Lidské chyby' : 'Human errors' },
-    ],
-  },
-  {
-    slug: 'ai-chatbot',
-    title: lang === 'cs' ? 'AI Chatbot' : 'AI Chatbot',
-    description: lang === 'cs'
-      ? 'Implementace AI chatbota pro zákaznickou podporu s využitím OpenAI'
-      : 'AI chatbot implementation for customer support using OpenAI',
-    image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=600&fit=crop',
-    tags: ['OpenAI', 'Python', 'NLP', 'AI'],
-    category: 'web',
-    stats: [
-      { value: '60%', label: lang === 'cs' ? 'Snížení dotazů' : 'Query reduction' },
-      { value: '24/7', label: lang === 'cs' ? 'Dostupnost' : 'Availability' },
-    ],
-  },
-  {
-    slug: 'monitoring-system',
-    title: lang === 'cs' ? 'Monitoring System' : 'Monitoring System',
-    description: lang === 'cs'
-      ? 'Implementace Prometheus a Grafana pro monitoring infrastruktury'
-      : 'Prometheus and Grafana implementation for infrastructure monitoring',
-    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop',
-    tags: ['Analytics', 'Grafana', 'Monitoring', 'Strategy'],
-    category: 'seo',
-    stats: [
-      { value: '50%', label: lang === 'cs' ? 'Rychlejší detekce' : 'Faster detection' },
-      { value: '100%', label: lang === 'cs' ? 'Pokrytí' : 'Coverage' },
-    ],
-  },
-  {
-    slug: 'ml-pipeline',
-    title: lang === 'cs' ? 'ML Pipeline' : 'ML Pipeline',
-    description: lang === 'cs'
-      ? 'Automatizovaný ML pipeline pro predikci chování zákazníků'
-      : 'Automated ML pipeline for customer behavior prediction',
-    image: 'https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=800&h=600&fit=crop',
-    tags: ['ML', 'Python', 'AWS SageMaker', 'AI'],
-    category: 'web',
-    stats: [
-      { value: '85%', label: lang === 'cs' ? 'Přesnost' : 'Accuracy' },
-      { value: '3x', label: lang === 'cs' ? 'Rychlejší inference' : 'Faster inference' },
-    ],
-  },
-  {
-    slug: 'kubernetes-cluster',
-    title: lang === 'cs' ? 'Kubernetes Cluster' : 'Kubernetes Cluster',
-    description: lang === 'cs'
-      ? 'Nastavení produkčního Kubernetes clusteru s best practices'
-      : 'Production Kubernetes cluster setup with best practices',
-    image: 'https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=800&h=600&fit=crop',
-    tags: ['Kubernetes', 'Docker', 'Cloud', 'Growth'],
-    category: 'infrastructure',
-    stats: [
-      { value: '99.99%', label: lang === 'cs' ? 'Dostupnost' : 'Uptime' },
-      { value: '100+', label: lang === 'cs' ? 'Microservices' : 'Microservices' },
-    ],
-  },
-];
+// Get projects from content collections
+const allProjects = await getCollection('projects');
+interface ProjectStats {
+  value: string;
+  label: string;
+}
+interface Project {
+  slug: string;
+  title: string;
+  description: string;
+  image: string;
+  tags: string[];
+  category: string;
+  stats: ProjectStats[];
+}
+const projects: Project[] = allProjects.map((project: { id: string; data: { title: string; description: string; image: string; tags: string[]; category: string; stats: ProjectStats[] } }) => ({
+  slug: project.id.replace('.md', ''),
+  title: project.data.title,
+  description: project.data.description,
+  image: project.data.image,
+  tags: project.data.tags,
+  category: project.data.category,
+  stats: project.data.stats,
+}));
 
-const categories = [
+const categories: { key: string; label: string }[] = [
   { key: 'all', label: t.projects.categories.all },
   { key: 'seo', label: t.projects.categories.seo },
   { key: 'ppc', label: t.projects.categories.ppc },
   { key: 'web', label: t.projects.categories.web },
-  { key: 'infrastructure', label: t.projects.categories.infrastructure },
+  { key: 'creative', label: 'Creative' },
+  { key: 'automation', label: 'Automation' },
+  { key: 'ai', label: 'AI' },
 ];
 ---
 
@@ -137,7 +77,7 @@ const categories = [
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="projects-grid">
       {projects.map((project) => (
         <article
-          class="card project-card group"
+          class="glass-card project-card group"
           data-category={project.category}
           data-aos="fade-up"
         >

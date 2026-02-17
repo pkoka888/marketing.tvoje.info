@@ -1,0 +1,239 @@
+---
+interface Props {
+  lang?: 'en' | 'cs';
+}
+
+const { lang = 'en' } = Astro.props;
+
+const themes = [
+  {
+    id: 'titan',
+    name: lang === 'cs' ? 'Titan' : 'Titan',
+    desc: lang === 'cs' ? 'Přímý, profesionální vzhled' : 'Direct, professional look',
+    gradient: 'linear-gradient(135deg, #4285F4, #0ea5e9)',
+  },
+  {
+    id: 'nova',
+    name: lang === 'cs' ? 'Nova' : 'Nova',
+    desc: lang === 'cs' ? 'Přátelský a moderní' : 'Friendly and modern',
+    gradient: 'linear-gradient(135deg, #6366F1, #22D3EE)',
+  },
+  {
+    id: 'target',
+    name: lang === 'cs' ? 'Target' : 'Target',
+    desc: lang === 'cs' ? 'Cílově orientovaný' : 'Goal-focused',
+    gradient: 'linear-gradient(135deg, #1E40AF, #EA580C)',
+  },
+  {
+    id: 'spark',
+    name: lang === 'cs' ? 'Spark' : 'Spark',
+    desc: lang === 'cs' ? 'Odvážný a výrazný' : 'Bold and striking',
+    gradient: 'linear-gradient(135deg, #0A0A0A, #00D4FF)',
+  },
+  {
+    id: 'lux',
+    name: lang === 'cs' ? 'Lux' : 'Lux',
+    desc: lang === 'cs' ? 'Premium a minimalistický' : 'Premium and minimal',
+    gradient: 'linear-gradient(135deg, #F5F5F5, #B8860B)',
+  },
+];
+
+const headlines = {
+  en: 'Find Your Perfect Look!',
+  cs: 'Najděte svůj ideální vzhled!',
+};
+
+const subheads = {
+  en: 'Choose a theme that matches your style and keep exploring',
+  cs: 'Vyberte téma, které odpovídá vašemu stylu, a pokračujte v prohlížení',
+};
+
+const continueBtn = {
+  en: 'Continue Browsing',
+  cs: 'Pokračovat v prohlížení',
+};
+---
+
+<div
+  class="theme-popup-wrapper hidden fixed inset-0 z-50"
+  id="theme-popup-wrapper"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="theme-popup-title"
+>
+  <!-- Backdrop -->
+  <div
+    class="theme-popup-backdrop absolute inset-0 bg-black/50 backdrop-blur-sm animate-fade-in"
+    id="theme-popup-backdrop"
+  ></div>
+
+  <!-- Modal Content -->
+  <div class="flex min-h-full items-center justify-center p-4">
+    <div
+      class="theme-popup-content relative w-full max-w-2xl rounded-2xl bg-white dark:bg-dark-900 shadow-2xl border border-gray-200 dark:border-dark-700 overflow-hidden animate-scale-in"
+    >
+      <!-- Close Button -->
+      <button
+        type="button"
+        class="absolute top-4 right-4 p-2 rounded-full hover:bg-gray-100 dark:hover:bg-dark-800 transition-colors z-10"
+        id="theme-popup-close"
+        aria-label={lang === 'cs' ? 'Zavřít' : 'Close'}
+      >
+        <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+
+      <!-- Header -->
+      <div class="p-8 pb-6 text-center border-b border-gray-100 dark:border-dark-800">
+        <h2
+          id="theme-popup-title"
+          class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2"
+        >
+          {headlines[lang]}
+        </h2>
+        <p class="text-gray-600 dark:text-gray-300">
+          {subheads[lang]}
+        </p>
+      </div>
+
+      <!-- Theme Grid -->
+      <div class="p-6 md:p-8">
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+          {themes.map((theme) => (
+            <button
+              type="button"
+              class="theme-popup-option group flex flex-col items-center p-4 rounded-xl border-2 border-transparent hover:border-gray-200 dark:hover:border-dark-600 hover:bg-gray-50 dark:hover:bg-dark-800 transition-all"
+              data-theme={theme.id}
+            >
+              <div
+                class="theme-popup-preview w-14 h-14 rounded-xl mb-3 shadow-md transition-transform group-hover:scale-110"
+                style={`background: ${theme.gradient}`}
+              ></div>
+              <span class="text-sm font-semibold text-gray-900 dark:text-white">
+                {theme.name}
+              </span>
+              <span class="text-xs text-gray-500 dark:text-gray-400 text-center mt-1">
+                {theme.desc}
+              </span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="px-8 pb-8 pt-4 flex justify-center">
+        <button
+          type="button"
+          class="theme-popup-continue px-8 py-3 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors"
+        >
+          {continueBtn[lang]}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes scale-in {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .animate-fade-in {
+    animation: fade-in 0.3s ease-out;
+  }
+
+  .animate-scale-in {
+    animation: scale-in 0.3s ease-out;
+  }
+</style>
+
+<script is:inline>
+  (function() {
+    const wrapper = document.getElementById('theme-popup-wrapper');
+    const backdrop = document.getElementById('theme-popup-backdrop');
+    const closeBtn = document.getElementById('theme-popup-close');
+    const continueBtn = document.querySelector('.theme-popup-continue');
+    
+    const themes = {
+      titan: { name: 'Titan', gradient: 'linear-gradient(135deg, #4285F4, #0ea5e9)' },
+      nova: { name: 'Nova', gradient: 'linear-gradient(135deg, #6366F1, #22D3EE)' },
+      target: { name: 'Target', gradient: 'linear-gradient(135deg, #1E40AF, #EA580C)' },
+      spark: { name: 'Spark', gradient: 'linear-gradient(135deg, #0A0A0A, #00D4FF)' },
+      lux: { name: 'Lux', gradient: 'linear-gradient(135deg, #F5F5F5, #B8860B)' }
+    };
+
+    let shown = false;
+
+    function showPopup() {
+      if (shown) return;
+      shown = true;
+      
+      // Don't show if already selected
+      if (localStorage.getItem('siteTheme')) return;
+      
+      wrapper.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+      
+      // Mark as shown in session
+      sessionStorage.setItem('themePopupShown', 'true');
+    }
+
+    function hidePopup() {
+      wrapper.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    function selectTheme(themeId) {
+      const theme = themes[themeId];
+      if (!theme) return;
+      
+      localStorage.setItem('siteTheme', themeId);
+      localStorage.setItem('themeSelected', 'true');
+      document.documentElement.setAttribute('data-site-theme', themeId);
+      
+      hidePopup();
+    }
+
+    // Event listeners
+    if (closeBtn) closeBtn.addEventListener('click', hidePopup);
+    if (backdrop) backdrop.addEventListener('click', hidePopup);
+    if (continueBtn) continueBtn.addEventListener('click', hidePopup);
+
+    // Theme options
+    document.querySelectorAll('.theme-popup-option').forEach(option => {
+      option.addEventListener('click', () => {
+        selectTheme(option.dataset.theme);
+      });
+    });
+
+    // ESC to close
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !wrapper.classList.contains('hidden')) {
+        hidePopup();
+      }
+    });
+
+    // Timing: Show after 60 seconds
+    setTimeout(showPopup, 60000);
+
+    // Exit intent
+    document.addEventListener('mouseleave', (e) => {
+      if (e.clientY <= 0) {
+        showPopup();
+      }
+    });
+  })();
+</script>

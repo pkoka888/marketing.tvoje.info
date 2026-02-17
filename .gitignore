@@ -139,12 +139,58 @@ kubectl/
 *.seed
 *.pid.lock
 
+# Agent Session data & Reports
+.bmad-task/
+.agent/plans/
+.agent/reports/
+.agent/reports-archived/
+ignored_files.txt
+full_status.txt
+porcelain_status.txt
+true_porcelain_status.txt
+diff_stat.txt
+diff_cached_stat.txt
+build.log
+build_v2.log
+system_uptime.txt
+docker_ps.txt
+mysql_processlist.txt
+nginx_error.txt
+okamih_nginx.txt
+s61_backup_b64.txt
+s61_backup_script_b64.txt
+s61_backup_script_num.txt
+s61_root_crontab.txt
+s61_sshd_config.txt
+s61_traefik_logs.txt
+
+# Testing & Playwright
+playwright-output/
+test-results/
+playwright-report/
+.firebase/
+.firecrawl/
+
+
 src/content/docs/nul
 **/nul
 
 src/content/docs/
 
+# Python Environment
+.venv/
 __pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+python3.cmd
+py.cmd
 
 evidence/
 test-results/

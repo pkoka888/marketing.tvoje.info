@@ -2,7 +2,7 @@
 
 /**
  * sync-memory-bank.js
- * 
+ *
  * Validates and synchronizes the Memory Bank structure (.kilocode/rules/memory-bank).
  * Used by Antigravity and Kilo to ensure knowledge base consistency.
  */
@@ -33,7 +33,7 @@ if (!fs.existsSync(MEMORY_BANK_DIR)) {
 let missingFiles = [];
 let emptyFiles = [];
 
-CORE_FILES.forEach(file => {
+CORE_FILES.forEach((file) => {
   const filePath = path.join(MEMORY_BANK_DIR, file);
   if (!fs.existsSync(filePath)) {
     missingFiles.push(file);
@@ -60,8 +60,8 @@ const contextPath = path.join(MEMORY_BANK_DIR, 'context.md');
 if (fs.existsSync(contextPath)) {
   const content = fs.readFileSync(contextPath, 'utf8');
   const requiredSections = ['## Current State', '## Recent Changes', '## Next Steps'];
-  const missingSections = requiredSections.filter(s => !content.includes(s));
-  
+  const missingSections = requiredSections.filter((s) => !content.includes(s));
+
   if (missingSections.length > 0) {
     console.log(`❌ context.md is missing sections: ${missingSections.join(', ')}`);
   } else {
@@ -70,12 +70,12 @@ if (fs.existsSync(contextPath)) {
 }
 
 // 4. Summary
-const status = (missingFiles.length === 0 && emptyFiles.length === 0) ? 'HEALTHY' : 'NEEDS ATTENTION';
+const status = missingFiles.length === 0 && emptyFiles.length === 0 ? 'HEALTHY' : 'NEEDS ATTENTION';
 console.log(`\nMemory Bank Status: [${status}]`);
 
 if (status === 'HEALTHY') {
-    // Determine active context mode
-    console.log('\n[Memory Bank: Active] - Ready for Agent use.');
+  // Determine active context mode
+  console.log('\n[Memory Bank: Active] - Ready for Agent use.');
 } else {
-    process.exit(1);
+  process.exit(1);
 }

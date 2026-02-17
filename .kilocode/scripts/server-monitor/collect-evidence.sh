@@ -51,9 +51,9 @@ log() {
 detect_network() {
     local local_ip
     local_ip=$(ip route get 1.1.1.1 2>/dev/null | grep -oP 'src \K[0-9.]+' | head -1) || local_ip="unknown"
-    
+
     log "Detected local IP: ${local_ip}"
-    
+
     if [[ "$local_ip" == 100.64.* ]] || [[ "$local_ip" == 100.65.* ]] || [[ "$local_ip" == 100.66.* ]] || \
        [[ "$local_ip" == 100.67.* ]] || [[ "$local_ip" == 100.68.* ]] || [[ "$local_ip" == 100.69.* ]] || \
        [[ "$local_ip" == 100.70.* ]] || [[ "$local_ip" == 100.71.* ]] || [[ "$local_ip" == 100.72.* ]] || \
@@ -77,7 +77,7 @@ detect_network() {
 get_ssh_host() {
     local server=$1
     local network=$2
-    
+
     if [[ "$network" == "tailscale" ]] && [[ -n "${TAILSCALE_IPS[$server]:-}" ]]; then
         echo "${TAILSCALE_IPS[$server]}"
     else
@@ -89,7 +89,7 @@ get_ssh_host() {
 get_ssh_port() {
     local server=$1
     local network=$2
-    
+
     if [[ "$network" == "tailscale" ]]; then
         # Tailscale typically uses standard SSH port 20
         echo "20"
@@ -118,11 +118,11 @@ ssh_exec() {
     local host
     local port
     local user
-    
+
     host=$(get_ssh_host "$server" "$network")
     port=$(get_ssh_port "$server" "$network")
     user=$(get_ssh_user "$server")
-    
+
     ssh $SSH_OPTS -p $port ${user}@${host} "$cmd" 2>&1 || true
 }
 
@@ -132,10 +132,10 @@ check_server() {
     local network="${2:-$(detect_network)}"
     local host
     local port
-    
+
     host=$(get_ssh_host "$server" "$network")
     port=$(get_ssh_port "$server" "$network")
-    
+
     if nc -z -w 2 "$host" "$port" 2>/dev/null; then
         return 0
     else
@@ -148,9 +148,9 @@ collect_system_info() {
     local server="$1"
     local output_dir="$2"
     local network="${3:-$(detect_network)}"
-    
+
     log "Collecting system info from $server (network: $network)..."
-    
+
     {
         echo "=== SYSTEM INFORMATION ==="
         echo "Timestamp: ${TIMESTAMP}"
@@ -178,7 +178,7 @@ collect_system_info() {
         echo "--- CPU Info ---"
         ssh_exec "$server" "cat /proc/cpuinfo | head -20" "$network"
     } > "${output_dir}/system-info.txt"
-    
+
     log "System info collected"
 }
 
@@ -187,9 +187,9 @@ collect_packages() {
     local server="$1"
     local output_dir="$2"
     local network="${3:-$(detect_network)}"
-    
+
     log "Collecting package inventory from $server..."
-    
+
     {
         echo "=== PACKAGE INVENTORY ==="
         echo "Timestamp: ${TIMESTAMP}"
@@ -205,7 +205,7 @@ collect_packages() {
         echo "--- PM2 Processes ---"
         ssh_exec "$server" "pm2 jlist 2>/dev/null || echo 'PM2 not available'" "$network"
     } > "${output_dir}/packages.txt"
-    
+
     log "Package inventory collected"
 }
 
@@ -214,9 +214,9 @@ collect_services() {
     local server="$1"
     local output_dir="$2"
     local network="${3:-$(detect_network)}"
-    
+
     log "Collecting service status from $server..."
-    
+
     {
         echo "=== SERVICE STATUS ==="
         echo "Timestamp: ${TIMESTAMP}"
@@ -232,7 +232,7 @@ collect_services() {
         echo "--- Process List ---"
         ssh_exec "$server" "ps aux" "$network"
     } > "${output_dir}/services.txt"
-    
+
     log "Service status collected"
 }
 
@@ -241,9 +241,9 @@ collect_network() {
     local server="$1"
     local output_dir="$2"
     local network="${3:-$(detect_network)}"
-    
+
     log "Collecting network configuration from $server..."
-    
+
     {
         echo "=== NETWORK CONFIGURATION ==="
         echo "Timestamp: ${TIMESTAMP}"
@@ -262,7 +262,7 @@ collect_network() {
         echo "--- DNS Configuration ---"
         ssh_exec "$server" "cat /etc/resolv.conf" "$network"
     } > "${output_dir}/network.txt"
-    
+
     log "Network configuration collected"
 }
 
@@ -272,18 +272,18 @@ collect_configs() {
     local output_dir="$2"
     local configs_dir="${output_dir}/configs"
     local network="${3:-$(detect_network)}"
-    
+
     mkdir -p "$configs_dir"
-    
+
     log "Collecting configuration files from $server..."
-    
+
     # Collect configs
     ssh_exec "$server" "cat /etc/nginx/nginx.conf" "$network" > "${configs_dir}/nginx.conf" 2>/dev/null || true
     ssh_exec "$server" "cat /etc/ssh/sshd_config" "$network" > "${configs_dir}/sshd_config" 2>/dev/null || true
     ssh_exec "$server" "ufw status" "$network" > "${configs_dir}/ufw.status" 2>/dev/null || true
     ssh_exec "$server" "cat /var/www/portfolio/.env 2>/dev/null" "$network" > "${configs_dir}/app.env" 2>/dev/null || true
     ssh_exec "$server" "cat ecosystem.config.js 2>/dev/null" "$network" > "${configs_dir}/ecosystem.config.js" 2>/dev/null || true
-    
+
     log "Configuration files collected"
 }
 
@@ -293,16 +293,16 @@ collect_logs() {
     local output_dir="$2"
     local logs_dir="${output_dir}/logs"
     local network="${3:-$(detect_network)}"
-    
+
     mkdir -p "$logs_dir"
-    
+
     log "Collecting log files from $server..."
-    
+
     # Collect logs (last 50-100 lines)
     ssh_exec "$server" "tail -n 50 /var/log/nginx/access.log" "$network" > "${logs_dir}/access.log" 2>/dev/null || true
     ssh_exec "$server" "tail -n 50 /var/log/nginx/error.log" "$network" > "${logs_dir}/error.log" 2>/dev/null || true
     ssh_exec "$server" "tail -n 100 /var/log/auth.log" "$network" > "${logs_dir}/auth.log" 2>/dev/null || true
-    
+
     log "Log files collected"
 }
 
@@ -311,9 +311,9 @@ generate_summary() {
     local server="$1"
     local evidence_dir="$2"
     local network="${3:-$(detect_network)}"
-    
+
     log "Generating summary for $server..."
-    
+
     {
         echo "=== EVIDENCE COLLECTION SUMMARY ==="
         echo "Server: $server"
@@ -335,27 +335,27 @@ collect_server() {
     local network="${2:-$(detect_network)}"
     local host
     local port
-    
+
     host=$(get_ssh_host "$server" "$network")
     port=$(get_ssh_port "$server" "$network")
-    
+
     log "=== Starting evidence collection for $server ==="
     log "Network: $network"
     log "Connection: ${host}:${port}"
-    
+
     # Create output directory
     local output_dir="${EVIDENCE_BASE}/${server}/${TIMESTAMP}"
     mkdir -p "$output_dir"
     mkdir -p "${output_dir}/configs"
     mkdir -p "${output_dir}/logs"
-    
+
     # Check if server is reachable
     if ! check_server "$server" "$network"; then
         log "WARNING: Server $server not reachable at ${host}:${port}"
         echo "Server unreachable - skipping detailed collection" > "${output_dir}/error.txt"
         return 1
     fi
-    
+
     # Collect all evidence
     collect_system_info "$server" "$output_dir" "$network"
     collect_packages "$server" "$output_dir" "$network"
@@ -364,7 +364,7 @@ collect_server() {
     collect_configs "$server" "$output_dir" "$network"
     collect_logs "$server" "$output_dir" "$network"
     generate_summary "$server" "$output_dir" "$network"
-    
+
     log "Evidence collection complete for $server"
     log "Output: ${output_dir}"
 }
@@ -395,7 +395,7 @@ usage() {
 main() {
     local target_server="${1:-}"
     local forced_network=""
-    
+
     # Parse arguments
     while [[ $# -gt 0 ]]; do
         case $1 in
@@ -413,10 +413,10 @@ main() {
                 ;;
         esac
     done
-    
+
     # Ensure evidence directory exists
     mkdir -p "$EVIDENCE_BASE"
-    
+
     # Detect or use forced network
     local network
     if [[ -n "$forced_network" ]]; then
@@ -425,11 +425,11 @@ main() {
     else
         network=$(detect_network)
     fi
-    
+
     log "=== Server Evidence Collection Started ==="
     log "Network detected: $network"
     log "Timestamp: $TIMESTAMP"
-    
+
     # Handle different commands
     case "${target_server}" in
         detect)
@@ -465,7 +465,7 @@ main() {
             exit 1
             ;;
     esac
-    
+
     log "=== Server Evidence Collection Complete ==="
 }
 

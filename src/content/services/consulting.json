@@ -1,0 +1,13 @@
+{
+  "name": "Strategic Consulting",
+  "description": "Strategic guidance for your marketing initiatives",
+  "features": [
+    "Marketing strategy",
+    "Team augmentation",
+    "Campaign optimization",
+    "Best practices implementation"
+  ],
+  "icon": "consulting",
+  "price": "9,900 Kč",
+  "popular": false
+}

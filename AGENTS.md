@@ -7,12 +7,12 @@ Format follows the [AGENTS.md standard](https://agents.md).
 
 ## Agent Registry
 
-| Agent | Role | Config | Model |
-|-------|------|--------|-------|
-| **Antigravity** (OpenCode CLI) | Architect, planner, auditor | `GEMINI.md` | MiniMax-M2.1:free |
-| **Kilo Code** (VS Code ext) | Developer, implementer, keeper | `.kilocode/` | MiniMax-M2.1:free |
-| **Cline** (CLI headless) | Validator, tester, debugger | `.clinerules/` | MiniMax-M2.1:free |
-| **OpenCode** (fallback) | Backup executor | `cli/opencode/` | Default |
+| Agent                          | Role                           | Config          | Model             |
+| ------------------------------ | ------------------------------ | --------------- | ----------------- |
+| **Antigravity** (OpenCode CLI) | Architect, planner, auditor    | `GEMINI.md`     | MiniMax-M2.1:free |
+| **Kilo Code** (VS Code ext)    | Developer, implementer, keeper | `.kilocode/`    | MiniMax-M2.1:free |
+| **Cline** (CLI headless)       | Validator, tester, debugger    | `.clinerules/`  | MiniMax-M2.1:free |
+| **OpenCode** (fallback)        | Backup executor                | `cli/opencode/` | Default           |
 
 ---
 
@@ -45,20 +45,21 @@ npm run preview      # Preview production build
 
 ## Shared Knowledge Locations
 
-| Location | Purpose | Writable By |
-|----------|---------|-------------|
-| `AGENTS.md` | Agent registry & instructions | All agents (with approval) |
-| `GEMINI.md` | Antigravity-specific instructions | Antigravity |
-| `.kilocode/knowledge/` | Project architecture & patterns | Kilo Code, Keeper |
-| `.kilocode/rules/memory-bank/` | Persistent project context | Kilo Code |
-| `.clinerules/` | Cline coding & validation rules | Cline |
-| `plans/agent-shared/` | Cross-agent plans & reports | All agents |
+| Location                       | Purpose                           | Writable By                |
+| ------------------------------ | --------------------------------- | -------------------------- |
+| `AGENTS.md`                    | Agent registry & instructions     | All agents (with approval) |
+| `GEMINI.md`                    | Antigravity-specific instructions | Antigravity                |
+| `.kilocode/knowledge/`         | Project architecture & patterns   | Kilo Code, Keeper          |
+| `.kilocode/rules/memory-bank/` | Persistent project context        | Kilo Code                  |
+| `.clinerules/`                 | Cline coding & validation rules   | Cline                      |
+| `plans/agent-shared/`          | Cross-agent plans & reports       | All agents                 |
 
 ---
 
 ## Validation Checklist
 
 Before committing changes, verify:
+
 - [ ] `npm run build` passes (exit 0)
 - [ ] `npm run test` passes
 - [ ] `npm run format:check` passes
@@ -71,14 +72,12 @@ Before committing changes, verify:
 
 ## Error Log Locations
 
-| Source | How to Check |
-|--------|-------------|
-| Astro build | `npm run build 2>&1` |
-| Vitest | `npm run test 2>&1` |
-| ESLint | `npx eslint src/ --config eslint.config.mjs 2>&1` |
-| Docker | `docker compose logs --tail=50` |
-| MCP servers | Check terminal for npx spawn errors |
-| GitHub Actions | `.github/workflows/` → GitHub Actions tab |
+| Source         | How to Check                                      |
+| -------------- | ------------------------------------------------- |
+| Astro build    | `npm run build 2>&1`                              |
+| Vitest         | `npm run test 2>&1`                               |
+| ESLint         | `npx eslint src/ --config eslint.config.mjs 2>&1` |
+| GitHub Actions | `.github/workflows/` → GitHub Actions tab         |
 
 ---
 
@@ -90,7 +89,8 @@ Before committing changes, verify:
 - **Content**: MDX collections (`src/content/projects/`)
 - **i18n**: EN (default, no prefix) + CS (`/cs/` prefix)
 - **Translations**: `src/i18n/translations.ts`
-- **Deployment**: Vercel (auto-deploy on push to main)
+- **Deployment**: VPS s62 via GitHub Actions (static files to Nginx)
+- **URL**: https://marketing.tvoje.info
 - **CI/CD**: GitHub Actions (`.github/workflows/`)
 - **Testing**: Vitest (`vitest.config.ts`)
 - **Analytics**: Plausible (cookie-free)

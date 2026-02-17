@@ -1,0 +1,44 @@
+---
+import type { Language } from '../../i18n/translations';
+import { getLangFromUrl, translations } from '../../i18n/translations';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang: propLang } = Astro.props;
+const lang = propLang || getLangFromUrl(Astro.url);
+const t = translations[lang];
+
+const clients = [
+  { name: 'Kooperativa', logo: 'https://placehold.co/200x80/1e293b/ffffff?text=Kooperativa' },
+  { name: 'inSPORTline', logo: 'https://placehold.co/200x80/1e293b/ffffff?text=inSPORTline' },
+  { name: 'JTI', logo: 'https://placehold.co/200x80/1e293b/ffffff?text=JTI' },
+  { name: 'L\'Occitane', logo: 'https://placehold.co/200x80/1e293b/ffffff?text=L\'Occitane' },
+  { name: 'CCC', logo: 'https://placehold.co/200x80/1e293b/ffffff?text=CCC' },
+  { name: 'DHL', logo: 'https://placehold.co/200x80/1e293b/ffffff?text=DHL' },
+];
+---
+
+<section class="py-12 bg-gray-50 dark:bg-dark-800 border-y border-gray-200 dark:border-dark-700">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    {t.clients?.title && (
+      <h2 class="text-2xl md:text-3xl font-bold text-center text-gray-900 dark:text-white mb-8">
+        {t.clients.title}
+      </h2>
+    )}
+    
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center">
+      {clients.map((client) => (
+        <div class="flex items-center justify-center">
+          <img
+            src={client.logo}
+            alt={client.name}
+            class="h-12 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+            loading="lazy"
+          />
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

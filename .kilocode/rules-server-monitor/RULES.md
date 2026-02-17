@@ -233,6 +233,7 @@ du -sh /var/log/* 2>/dev/null
 ## STRICTLY FORBIDDEN COMMANDS
 
 ### File System Destruction
+
 ```bash
 # These are ALWAYS forbidden
 rm -rf /
@@ -248,6 +249,7 @@ shred
 ```
 
 ### Package Management
+
 ```bash
 # Forbidden - these modify the system
 sudo apt install
@@ -275,6 +277,7 @@ sudo systemctl stop apt*
 ```
 
 ### Service Management
+
 ```bash
 # Forbidden - these modify service state
 systemctl restart
@@ -298,6 +301,7 @@ pm2 resurrect
 ```
 
 ### System Operations
+
 ```bash
 # Forbidden - these affect the system
 reboot
@@ -319,6 +323,7 @@ modprobe -r
 ```
 
 ### Permission Changes
+
 ```bash
 # Forbidden - these change permissions
 chmod
@@ -335,6 +340,7 @@ chown -R /var/www/
 ```
 
 ### Configuration Editing
+
 ```bash
 # Any command that writes to config files
 echo "..." > /etc/*
@@ -355,6 +361,7 @@ echo "..." >> /etc/cron.d/*
 ```
 
 ### User Management
+
 ```bash
 # Forbidden - these modify users/groups
 useradd
@@ -372,6 +379,7 @@ vigr
 ```
 
 ### Network Modifications
+
 ```bash
 # Forbidden - these change network state
 ip addr add
@@ -397,6 +405,7 @@ ssh-copy-id
 ```
 
 ### Database Operations
+
 ```bash
 # Forbidden database commands
 DROP DATABASE
@@ -410,6 +419,7 @@ DROP TABLE
 ```
 
 ### Process Killing
+
 ```bash
 # Forbidden - these can disrupt services
 kill -9 (any PID)
@@ -422,6 +432,7 @@ kill -TERM (for graceful shutdown of non-critical processes)
 ```
 
 ### Script Execution
+
 ```bash
 # Scripts from untrusted sources
 curl | bash
@@ -465,11 +476,11 @@ function validateCommand(command):
         "useradd", "usermod", "userdel", "groupadd", "groupmod",
         "-i", "-w"
     ]
-    
+
     for keyword in forbidden:
         if keyword in command:
             return false, "Command contains forbidden keyword: ${keyword}"
-    
+
     # Additional checks for specific patterns
     if matchesPattern(command, "* > /etc/*"):
         return false, "Cannot write to /etc/"
@@ -479,7 +490,7 @@ function validateCommand(command):
         return false, "Cannot append to /etc/"
     if matchesPattern(command, "* >> /var/www/*"):
         return false, "Cannot append to /var/www/"
-    
+
     return true, "Command is valid"
 ```
 

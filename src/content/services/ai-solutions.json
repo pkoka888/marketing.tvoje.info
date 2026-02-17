@@ -1,0 +1,13 @@
+{
+  "name": "AI & Machine Learning",
+  "description": "Leverage the power of artificial intelligence for your business",
+  "features": [
+    "AI solution integration",
+    "Machine learning pipelines",
+    "Natural language processing",
+    "Computer vision applications"
+  ],
+  "icon": "ai",
+  "price": "49,900 Kč",
+  "popular": false
+}
