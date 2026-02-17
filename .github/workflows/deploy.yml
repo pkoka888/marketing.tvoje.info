@@ -26,17 +26,43 @@ jobs:
         env:
           PUBLIC_SITE_URL: ${{ secrets.PUBLIC_SITE_URL }}
 
-      # Method 1: Direct to s60 (works!) then jumphost to s62
-      - name: Deploy via s60 jumphost to s62
+      # Step 1: Copy dist to s60
+      - name: Deploy to s60 (temp)
         uses: appleboy/ssh-action@v1
         with:
           host: 100.111.141.111
           port: 22
           username: sugent
           key: ${{ secrets.VPS_SSH_KEY }}
-          command_timeout: 10m
+          command_timeout: 5m
           script: |
-            scp -r -o StrictHostKeyChecking=no -P 2262 dist/* sugent@192.168.1.62:/var/www/portfolio/
+            mkdir -p /tmp/portfolio-deploy
+            rm -rf /tmp/portfolio-deploy/*
+            echo "Ready to receive files"
+
+      - name: Copy dist to s60 via scp
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: 100.111.141.111
+          port: 22
+          username: sugent
+          key: ${{ secrets.VPS_SSH_KEY }}
+          source: 'dist/'
+          target: '/tmp/portfolio-deploy'
+          timeout: 300s
+          strip_components: 1
+
+      # Step 2: From s60 to s62
+      - name: Deploy from s60 to s62
+        uses: appleboy/ssh-action@v1
+        with:
+          host: 100.111.141.111
+          port: 22
+          username: sugent
+          key: ${{ secrets.VPS_SSH_KEY }}
+          command_timeout: 5m
+          script: |
+            scp -r -o StrictHostKeyChecking=no -P 2262 /tmp/portfolio-deploy/* sugent@192.168.1.62:/var/www/portfolio/
             ssh sugent@192.168.1.62 -p 2262 "ls -la /var/www/portfolio/ | head -10"
 
       # Fallback: Direct public IP (requires port forwarding)
