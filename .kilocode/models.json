@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Agentic Platform Model Configuration",
+  "description": "Centralized model definitions for all agents. Update here to propagate across all configs.",
+  "version": "1.0.0",
+  "last_updated": "2026-02-17",
+
+  "tier1_free_primary": {
+    "description": "Primary free models for everyday tasks",
+    "kilo_bulk": {
+      "model": "x-ai/grok-code-fast-1:optimized:free",
+      "use": "Bulk coding, internal search, file operations",
+      "provider": "xAI via Kilo Code"
+    },
+    "opencode_standard": {
+      "model": "big-pickle",
+      "use": "Standard tasks, code generation, general work",
+      "provider": "OpenCode Zen"
+    },
+    "cline_routine": {
+      "model": "minimax-m2.1:free",
+      "use": "Routine fixes, small edits, VS Code integration",
+      "provider": "OpenRouter"
+    }
+  },
+
+  "tier2_free_complex": {
+    "description": "Free models for complex tasks requiring more reasoning",
+    "gemini_analysis": {
+      "model": "gemini-2.5-pro:free",
+      "use": "Complex architecture, high-context reasoning, external research",
+      "provider": "Google AI Studio",
+      "limit": "1M TPD"
+    }
+  },
+
+  "tier3_free_emergency": {
+    "description": "Additional free models available when primary unavailable",
+    "openrouter_fallback": {
+      "model": "openrouter/z-ai/glm4.7",
+      "use": "Emergency fallback for Kilo/OpenCode",
+      "provider": "OpenRouter"
+    },
+    "openrouter_minimax": {
+      "model": "openrouter/minimax/minimax-m2.1:free",
+      "use": "Secondary fallback",
+      "provider": "OpenRouter"
+    }
+  },
+
+  "tier4_paid_last_resort": {
+    "description": "Paid models - use only when all free options exhausted",
+    "groq_fallback": {
+      "model": "llama-3.3-70b",
+      "use": "Last resort only - when T1-T3 all fail",
+      "provider": "Groq",
+      "cost": "$0.59/$0.79 per 1M tokens"
+    }
+  },
+
+  "available_models": {
+    "description": "All currently available free models by provider",
+
+    "kilo_code": [
+      "x-ai/grok-code-fast-1:optimized:free",
+      "minimax-m2.1:free",
+      "arcee-ai/trinity-large-preview:free",
+      "giga-potato:free"
+    ],
+
+    "opencode_zen": ["big-pickle", "grok-code-fast-1"],
+
+    "cline_openrouter": [
+      "minimax/minimax-m2.1:free",
+      "minimax/minimax-m2.5",
+      "z-ai/glm-5",
+      "z-ai/glm4.7",
+      "arcee-ai/trinity-large-preview:free"
+    ],
+
+    "gemini_google": ["gemini-2.5-pro:free", "gemini-2.5-flash:free"]
+  },
+
+  "routing_rules": {
+    "internal_search": "NEVER use Gemini - use grok-code-fast-1:optimized:free",
+    "external_research": "Use Gemini 2.5 Pro/Flash (1M TPD quota)",
+    "resource_conservation": "Google quota is valuable - conserve for external only"
+  },
+
+  "update_instructions": [
+    "1. Update this file with new model definitions",
+    "2. Sync to opencode.json agent configurations",
+    "3. Sync to AGENTS.md Model Priority Order table",
+    "4. Sync to all cost-optimization files in agent directories",
+    "5. Run: python scripts/verify_agentic_platform.py"
+  ]
+}

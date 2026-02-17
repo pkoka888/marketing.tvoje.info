@@ -1,0 +1,110 @@
+[
+  {
+    "model": "free-fast",
+    "tier": "T1-FREE",
+    "status": "FAIL",
+    "latency_ms": 6777,
+    "response": "",
+    "error": "litellm.APIError: APIError: OpenrouterException - {\"error\":{\"message\":\"Failed to authenticate request with Clerk\",\"code\":502}}. Received Model Group=free-fast\nAvailable Model Group Fallbacks=None",
+    "http_status": 502
+  },
+  {
+    "model": "free-bulk",
+    "tier": "T1-FREE",
+    "status": "FAIL",
+    "latency_ms": 6742,
+    "response": "",
+    "error": "litellm.APIError: APIError: OpenrouterException - {\"error\":{\"message\":\"Failed to authenticate request with Clerk\",\"code\":502}}. Received Model Group=free-bulk\nAvailable Model Group Fallbacks=None",
+    "http_status": 502
+  },
+  {
+    "model": "free-small",
+    "tier": "T1-FREE",
+    "status": "FAIL",
+    "latency_ms": 7265,
+    "response": "",
+    "error": "litellm.APIError: APIError: OpenrouterException - {\"error\":{\"message\":\"Failed to authenticate request with Clerk\",\"code\":502}}. Received Model Group=free-small\nAvailable Model Group Fallbacks=None",
+    "http_status": 502
+  },
+  {
+    "model": "free-complex",
+    "tier": "T2-FREE",
+    "status": "FAIL",
+    "latency_ms": 2497,
+    "response": "",
+    "error": "litellm.AuthenticationError: GeminiException - {\n  \"error\": {\n    \"code\": 400,\n    \"message\": \"API key not valid. Please pass a valid API key.\",\n    \"status\": \"INVALID_ARGUMENT\",\n    \"details\": [\n    ",
+    "http_status": 401
+  },
+  {
+    "model": "paid-openai",
+    "tier": "T3-PAID",
+    "status": "FAIL",
+    "latency_ms": 6709,
+    "response": "",
+    "error": "litellm.RateLimitError: RateLimitError: OpenAIException - You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platfo",
+    "http_status": 429
+  },
+  {
+    "model": "paid-openai-latest",
+    "tier": "T3-PAID",
+    "status": "FAIL",
+    "latency_ms": 7408,
+    "response": "",
+    "error": "litellm.RateLimitError: RateLimitError: OpenAIException - You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platfo",
+    "http_status": 429
+  },
+  {
+    "model": "paid-gemini-pro",
+    "tier": "T3-PAID",
+    "status": "FAIL",
+    "latency_ms": 2289,
+    "response": "",
+    "error": "litellm.AuthenticationError: GeminiException - {\n  \"error\": {\n    \"code\": 400,\n    \"message\": \"API key not valid. Please pass a valid API key.\",\n    \"status\": \"INVALID_ARGUMENT\",\n    \"details\": [\n    ",
+    "http_status": 401
+  },
+  {
+    "model": "groq-last-resort",
+    "tier": "T4-LAST",
+    "status": "PASS",
+    "latency_ms": 2203,
+    "response": "OK",
+    "error": "",
+    "http_status": 200
+  },
+  {
+    "model": "gpt-4o-mini",
+    "tier": "LEGACY",
+    "status": "FAIL",
+    "latency_ms": 7123,
+    "response": "",
+    "error": "litellm.RateLimitError: RateLimitError: OpenAIException - You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platfo",
+    "http_status": 429
+  },
+  {
+    "model": "claude-3-haiku",
+    "tier": "LEGACY",
+    "status": "FAIL",
+    "latency_ms": 2168,
+    "response": "",
+    "error": "litellm.AuthenticationError: Missing Anthropic API Key - A call is being made to anthropic but no key is set either in the environment variables or via params. Please set `ANTHROPIC_API_KEY` in your e",
+    "http_status": 401
+  },
+  {
+    "model": "gemini-flash",
+    "tier": "LEGACY",
+    "status": "FAIL",
+    "latency_ms": 2376,
+    "response": "",
+    "error": "litellm.AuthenticationError: GeminiException - {\n  \"error\": {\n    \"code\": 400,\n    \"message\": \"API key not valid. Please pass a valid API key.\",\n    \"status\": \"INVALID_ARGUMENT\",\n    \"details\": [\n    ",
+    "http_status": 401
+  },
+  {
+    "model": "groq/llama-3.3-70b-versatile",
+    "tier": "LEGACY-GROQ",
+    "status": "PASS",
+    "latency_ms": 2169,
+    "response": "OK",
+    "error": "",
+    "http_status": 200
+  }
+]

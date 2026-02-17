@@ -215,35 +215,35 @@ export function assert(
 
 /**
  * Debounce utility for function calls
+ * @param fn - Function to debounce
+ * @param delay - Delay in milliseconds
+ * @returns Debounced function
  */
-export function debounce<T extends (...args: unknown[]) => unknown>(
-  fn: T,
-  delay: number
-): (...args: Parameters<T>) => void {
+export function debounce(fn: (...args: unknown[]) => void, delay: number): typeof fn {
   let timeoutId: ReturnType<typeof setTimeout>;
-
-  return (...args: Parameters<T>) => {
+  return function (this: unknown, ...args: unknown[]) {
+    void this;
     clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => fn(...args), delay);
-  };
+    timeoutId = setTimeout(() => fn.apply(this, args), delay);
+  } as typeof fn;
 }
 
 /**
  * Throttle utility for function calls
+ * @param fn - Function to throttle
+ * @param limit - Time limit in milliseconds
+ * @returns Throttled function
  */
-export function throttle<T extends (...args: unknown[]) => unknown>(
-  fn: T,
-  limit: number
-): (...args: Parameters<T>) => void {
+export function throttle(fn: (...args: unknown[]) => void, limit: number): typeof fn {
   let inThrottle = false;
-
-  return (...args: Parameters<T>) => {
+  return function (this: unknown, ...args: unknown[]) {
+    void this;
     if (!inThrottle) {
-      fn(...args);
+      fn.apply(this, args);
       inThrottle = true;
       setTimeout(() => (inThrottle = false), limit);
     }
-  };
+  } as typeof fn;
 }
 
 /**

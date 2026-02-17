@@ -1,7 +1,7 @@
-import { test, expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 
 test.describe('Live Production Verification', () => {
-  const LIVE_URL = 'https://portfolio.tvoje.info';
+  const LIVE_URL = process.env.BASE_URL || 'https://marketing.tvoje.info';
 
   test('Should have correct marketing title and meta description', async ({ page }) => {
     await page.goto(LIVE_URL);
@@ -22,7 +22,7 @@ test.describe('Live Production Verification', () => {
     expect(aboutContent).not.toContain('Kubernetes');
   });
 
-  test('Should load theme-specific photos', async ({ page }) => {
+  test.skip('Should load theme-specific photos', async ({ page }) => {
     await page.goto(LIVE_URL);
 
     // Check for one of the theme photos

@@ -6,7 +6,7 @@
     {
       "id": "roadmap-keeper",
       "name": "ROADMAP-KEEPER",
-      "model": "groq/llama-3.3-70b-versatile",
+      "model": "openrouter/minimax/minimax-m2.1:free",
       "role": "Monitors .agents/roadmap/phase-*.md",
       "rules": "Update phase-X.md every 30min; notify if >12h delay",
       "files": [".agents/roadmap/*.md"],
@@ -15,7 +15,7 @@
     {
       "id": "cicd-engineer",
       "name": "CI/CD-ENGINEER",
-      "model": "groq/llama-3.3-70b-versatile",
+      "model": "openrouter/minimax/minimax-m2.1:free",
       "role": "GitHub Actions + Vercel deployment",
       "rules": "Never touch main; feature branches only",
       "files": [".github/workflows/*.yml", "Dockerfile", "docker-compose.yml"],
@@ -24,7 +24,7 @@
     {
       "id": "docs-maintainer",
       "name": "DOCS-MAINTAINER",
-      "model": "groq/llama-3.1-8b-instant",
+      "model": "openrouter/google/gemma-3-1b-it:free",
       "role": "READMEs, API docs, changelogs",
       "rules": "Scan git log every commit; update README.md",
       "files": ["README.md", "docs/**/*.md", "CHANGELOG.md"],
@@ -33,7 +33,7 @@
     {
       "id": "auditor",
       "name": "AUDITOR",
-      "model": "gemini/gemini-2-5-pro-exp-06-05",
+      "model": "gemini/gemini-2.5-pro",
       "role": "Security/quality gates",
       "rules": "Block merges on high/critical vulns; create PR with fixes",
       "files": [".agents/templates/audit/*.md"],
@@ -43,7 +43,7 @@
     {
       "id": "debugger",
       "name": "DEBUGGER",
-      "model": "groq/llama-3.3-70b-versatile",
+      "model": "openrouter/minimax/minimax-m2.1:free",
       "role": "Error triage + hotfixes",
       "rules": "Monitor CI/CD failures; auto-fix common issues",
       "files": [".agents/templates/debug/*.md"],
@@ -52,7 +52,7 @@
     {
       "id": "template-factory",
       "name": "TEMPLATE-FACTORY",
-      "model": "groq/llama-3.3-70b-versatile",
+      "model": "openrouter/minimax/minimax-m2.1:free",
       "role": "Create reusable templates",
       "rules": "Scan project patterns; create templates for recurring tasks",
       "files": [".agents/templates/**/*.md"],
@@ -105,8 +105,9 @@
     ]
   },
   "budget": {
-    "groq": "<$10/month",
-    "claude_opus": "$15/month (planning only)",
-    "gemini": "Free tier (research)"
+    "openrouter_free": "$0 (T1 primary — minimax, z-ai/glm4.7, gemma)",
+    "gemini_free": "$0 (T2 complex — 250 RPD free tier)",
+    "paid_cap": "$20/month per provider (OpenAI, Anthropic, Gemini Pro)",
+    "groq": "T4 last resort — pay-per-token, avoid unless all free tiers exhausted"
   }
 }

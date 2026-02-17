@@ -1,10 +1,30 @@
 # Plan E: MVP Implementation
 
-**Document Type:** Implementation Plan  
-**Status:** Draft  
-**Version:** 1.0  
-**Created:** 2026-02-11  
-**Project Phase:** MVP Implementation (Phase 5)  
+**Document Type:** Implementation Plan
+**Status:** Active — Phases 1-4 largely complete; Phase 6 is current blocker
+**Version:** 1.1
+**Created:** 2026-02-11 | **Updated:** 2026-02-17
+**Project Phase:** MVP Implementation (Phase 5)
+
+---
+
+## Status as of 2026-02-17
+
+| Phase | Status | Notes |
+|-------|--------|-------|
+| Phase 1: Template Import | ✅ Done | Skills imported; Keeper Agent verified |
+| Phase 2: Content Population | ✅ Done | 5 sections live (themes: Titan/Spark/Nova/Lux/Target) |
+| Phase 3: Feature Implementation | ✅ Done | Dark mode, mobile nav, filtering implemented |
+| Phase 4: Performance Optimization | ✅ Done | LCP 484ms, CLS 0.00 (docs/plans/phase4-performance-optimization-plan.md) |
+| Phase 5: Testing & QA | ✅ Done | 23/23 TITAN tests passing; E2E suite active |
+| Phase 6: Deployment | ⏳ BLOCKED | GitHub Secrets (VPS_IP, VPS_USER, SSH_PRIVATE_KEY) not set |
+| Phase 7: Monitoring | ⏳ Pending | Depends on Phase 6 |
+
+**Absorbed plans (archived):**
+- `parallel-subagents-audit-mcp-playwright.md` → testing framework now in Phase 5
+- `github-setup-plan.md` → deployment runbook in Phase 6
+
+---
 
 ---
 
@@ -512,15 +532,15 @@ const isDark = false; // Will be reactive
   // Dark mode logic
   const toggle = document.getElementById('dark-mode-toggle');
   const html = document.documentElement;
-  
+
   // Check system preference
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
   const savedTheme = localStorage.getItem('theme');
-  
+
   if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
     html.classList.add('dark');
   }
-  
+
   toggle?.addEventListener('click', () => {
     html.classList.toggle('dark');
     localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
@@ -566,7 +586,7 @@ const languages = [
 <script>
   // Language toggle logic
   const buttons = document.querySelectorAll('[data-lang]');
-  
+
   buttons.forEach(btn => {
     btn.addEventListener('click', () => {
       const lang = btn.dataset.lang;
@@ -609,7 +629,7 @@ const formEndpoint = import.meta.env.FORMSPREE_ENDPOINT || 'https://formspree.io
       class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
     />
   </div>
-  
+
   <div>
     <label for="email" class="block text-sm font-medium mb-2">
       Email
@@ -622,7 +642,7 @@ const formEndpoint = import.meta.env.FORMSPREE_ENDPOINT || 'https://formspree.io
       class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
     />
   </div>
-  
+
   <div>
     <label for="message" class="block text-sm font-medium mb-2">
       Message / Zpráva
@@ -635,7 +655,7 @@ const formEndpoint = import.meta.env.FORMSPREE_ENDPOINT || 'https://formspree.io
       class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
     ></textarea>
   </div>
-  
+
   <div>
     <label class="flex items-start gap-2">
       <input
@@ -650,7 +670,7 @@ const formEndpoint = import.meta.env.FORMSPREE_ENDPOINT || 'https://formspree.io
       </span>
     </label>
   </div>
-  
+
   <button
     type="submit"
     class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors"
@@ -706,15 +726,15 @@ const categories = ['All', ...new Set(projects.map(p => p.data.category))];
   // Filtering logic
   const filterBtns = document.querySelectorAll('.filter-btn');
   const projectCards = document.querySelectorAll('.project-card');
-  
+
   filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       const category = btn.dataset.category;
-      
+
       // Update active button
       filterBtns.forEach(b => b.classList.remove('bg-blue-600', 'text-white'));
       btn.classList.add('bg-blue-600', 'text-white');
-      
+
       // Filter projects
       projectCards.forEach(card => {
         if (category === 'All' || card.dataset.category === category) {
@@ -774,7 +794,7 @@ const isOpen = false;
 <script>
   const toggle = document.getElementById('mobile-menu-toggle');
   const menu = document.getElementById('mobile-menu');
-  
+
   toggle?.addEventListener('click', () => {
     menu?.classList.toggle('hidden');
   });
@@ -1122,9 +1142,9 @@ describe('Language Toggle Integration', () => {
   it('switches language on click', () => {
     const { getByLabelText } = render(LanguageToggle);
     const csButton = getByLabelText('Switch to CS');
-    
+
     fireEvent.click(csButton);
-    
+
     expect(localStorage.getItem('language')).toBe('cs');
   });
 
@@ -1132,7 +1152,7 @@ describe('Language Toggle Integration', () => {
     localStorage.setItem('language', 'cs');
     const { getByLabelText } = render(LanguageToggle);
     const csButton = getByLabelText('Switch to CS');
-    
+
     expect(csButton).toHaveClass('bg-blue-600');
   });
 });
@@ -1156,25 +1176,25 @@ import { test, expect } from '@playwright/test';
 test.describe('User Journey', () => {
   test('complete user flow from landing to contact', async ({ page }) => {
     await page.goto('/');
-    
+
     // Navigate to projects
     await page.click('text=Projects');
     await expect(page).toHaveURL('/projects');
-    
+
     // View project details
     await page.click('text=Cloud Migration');
     await expect(page.locator('h1')).toContainText('Enterprise Cloud Migration');
-    
+
     // Navigate to contact
     await page.click('text=Contact');
     await expect(page).toHaveURL('/#contact');
-    
+
     // Fill form
     await page.fill('input[name="name"]', 'Test User');
     await page.fill('input[name="email"]', 'test@example.com');
     await page.fill('textarea[name="message"]', 'Test message');
     await page.check('input[name="gdpr-consent"]');
-    
+
     // Submit form
     await page.click('button[type="submit"]');
     await expect(page.locator('.success-message')).toBeVisible();
@@ -1205,19 +1225,19 @@ import AxeBuilder from '@axe-core/playwright';
 test.describe('Accessibility', () => {
   test('homepage has no accessibility violations', async ({ page }) => {
     await page.goto('/');
-    
+
     const accessibilityScanResults = await new AxeBuilder({ page })
       .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
       .analyze();
-    
+
     expect(accessibilityScanResults.violations).toEqual([]);
   });
 
   test('all interactive elements are keyboard accessible', async ({ page }) => {
     await page.goto('/');
-    
+
     const buttons = await page.$$('button, a, input, select, textarea');
-    
+
     for (const button of buttons) {
       await button.focus();
       expect(await button.evaluate(el => document.activeElement === el)).toBe(true);
@@ -1246,7 +1266,7 @@ import { test, expect } from '@playwright/test';
 test.describe('Performance', () => {
   test('homepage meets Lighthouse performance targets', async ({ page }) => {
     await page.goto('/');
-    
+
     const metrics = await page.evaluate(() => {
       return {
         lcp: performance.getEntriesByType('largest-contentful-paint')[0]?.startTime,
@@ -1255,7 +1275,7 @@ test.describe('Performance', () => {
           .reduce((sum, entry) => sum + (entry.value || 0), 0),
       };
     });
-    
+
     expect(metrics.lcp).toBeLessThan(2000);
     expect(metrics.fid).toBeLessThan(100);
     expect(metrics.cls).toBeLessThan(0.1);
@@ -1286,10 +1306,10 @@ describe('Security', () => {
   it('has no high-severity vulnerabilities', () => {
     const result = execSync('npm audit --json', { encoding: 'utf-8' });
     const audit = JSON.parse(result);
-    
+
     const highVulns = audit.vulnerabilities?.high || 0;
     const criticalVulns = audit.vulnerabilities?.critical || 0;
-    
+
     expect(highVulns).toBe(0);
     expect(criticalVulns).toBe(0);
   });
@@ -1596,27 +1616,27 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '20'
-      
+
       - name: Install dependencies
         run: npm ci
-      
+
       - name: Run tests
         run: npm test
-      
+
       - name: Build application
         run: npm run build
         env:
           PUBLIC_SITE_URL: https://marketing.tvoje.info
-      
+
       - name: Deploy to VPS
         uses: appleboy/ssh-action@master
         with:
@@ -2010,8 +2030,8 @@ Phase 7 (Monitoring & Analytics)
 
 **Description:** Keeper Agent fails to import templates from agentic directory.
 
-**Probability:** Low  
-**Impact:** High  
+**Probability:** Low
+**Impact:** High
 **Severity:** Medium
 
 **Mitigation:**
@@ -2029,8 +2049,8 @@ Phase 7 (Monitoring & Analytics)
 
 **Description:** Czech translations contain errors or cultural misunderstandings.
 
-**Probability:** Medium  
-**Impact:** Medium  
+**Probability:** Medium
+**Impact:** Medium
 **Severity:** Medium
 
 **Mitigation:**
@@ -2048,8 +2068,8 @@ Phase 7 (Monitoring & Analytics)
 
 **Description:** Lighthouse scores below 95 or Core Web Vitals not met.
 
-**Probability:** Medium  
-**Impact:** High  
+**Probability:** Medium
+**Impact:** High
 **Severity:** High
 
 **Mitigation:**
@@ -2067,8 +2087,8 @@ Phase 7 (Monitoring & Analytics)
 
 **Description:** Tests fail blocking deployment.
 
-**Probability:** Medium  
-**Impact:** Medium  
+**Probability:** Medium
+**Impact:** Medium
 **Severity:** Medium
 
 **Mitigation:**
@@ -2086,8 +2106,8 @@ Phase 7 (Monitoring & Analytics)
 
 **Description:** Deployment to VPS fails or causes downtime.
 
-**Probability:** Low  
-**Impact:** High  
+**Probability:** Low
+**Impact:** High
 **Severity:** Medium
 
 **Mitigation:**
@@ -2105,8 +2125,8 @@ Phase 7 (Monitoring & Analytics)
 
 **Description:** VPS experiences extended downtime.
 
-**Probability:** Low  
-**Impact:** High  
+**Probability:** Low
+**Impact:** High
 **Severity:** Medium
 
 **Mitigation:**
@@ -2124,8 +2144,8 @@ Phase 7 (Monitoring & Analytics)
 
 **Description:** Security vulnerabilities discovered in dependencies or code.
 
-**Probability:** Low  
-**Impact:** High  
+**Probability:** Low
+**Impact:** High
 **Severity:** Medium
 
 **Mitigation:**
@@ -2143,8 +2163,8 @@ Phase 7 (Monitoring & Analytics)
 
 **Description:** Plausible analytics not tracking correctly.
 
-**Probability:** Low  
-**Impact:** Medium  
+**Probability:** Low
+**Impact:** Medium
 **Severity:** Low
 
 **Mitigation:**
@@ -2162,8 +2182,8 @@ Phase 7 (Monitoring & Analytics)
 
 **Description:** Formspree or Plausible experiences outage.
 
-**Probability:** Low  
-**Impact:** Medium  
+**Probability:** Low
+**Impact:** Medium
 **Severity:** Low
 
 **Mitigation:**
@@ -2181,8 +2201,8 @@ Phase 7 (Monitoring & Analytics)
 
 **Description:** Additional features requested during implementation.
 
-**Probability:** Medium  
-**Impact:** Medium  
+**Probability:** Medium
+**Impact:** Medium
 **Severity:** Medium
 
 **Mitigation:**
@@ -2383,9 +2403,9 @@ PLAUSIBLE_API_KEY=<your-plausible-api-key>
 
 ### E. Contact Information
 
-**Project Lead:** [Your Name]  
-**Email:** admin@tvoje.info  
-**GitHub:** https://github.com/pkoka888/marketing.tvoje.info  
+**Project Lead:** [Your Name]
+**Email:** admin@tvoje.info
+**GitHub:** https://github.com/pkoka888/marketing.tvoje.info
 **VPS:** marketing.tvoje.info
 
 ---

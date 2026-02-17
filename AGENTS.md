@@ -66,7 +66,7 @@ All agentic configurations MUST follow this unified hierarchy:
 
 ### 7. OpenCode Configuration (`opencode.json` + `.opencode/`)
 
-- **`opencode.json`**: Project-level config — free-model-first (`groq/llama-3.3-70b-versatile`), 4 MCP servers, 6 agent model overrides.
+- **`opencode.json`**: Project-level config — free-model-first (`big-pickle`), 8 MCP servers, 6 agent model overrides.
 - **`.opencode/agent/`**: Sub-agent persona definitions (`coder.md`, `researcher.md`, `reviewer.md`, `orchestrator.md`, `architect.md`, `codex.md`).
 - **`.opencode/command/`**: Slash commands (`audit.md`, `deploy.md`, `sync-rules.md`, `free-status.md`).
 - **`.opencode/skill/`**: Skill definitions (`astro-portfolio/SKILL.md`, `server-ops/SKILL.md`).
@@ -82,15 +82,14 @@ All agents follow the **ASSESS→SPLIT→ASSIGN→AGGREGATE→VALIDATE** pattern
 
 ### Model Priority Order
 
-| Priority | Model                             | Provider    | Limit       | Use For                                               |
-| -------- | --------------------------------- | ----------- | ----------- | ----------------------------------------------------- |
-| 1 (FREE) | **Gemini CLI** (Gemini 2.5/3 Pro) | Google      | 1M TPD      | **Primary**: High context, complex logic, research    |
-| 2 (FREE) | **OpenCode Default**              | OpenCode    | Daily Limit | **Primary**: Code generation, standard tasks          |
-| 3 (FREE) | **Kilo** (`z-ai/glm4.7`)          | Kilo/NVIDIA | Unlimited   | **Fallback**: Bulk coding, always-on availability     |
-| 4 (FREE) | **Cline Provider**                | Cline       | -           | **Fallback**: Routine tasks, extension integration    |
-| 5 (FREE) | **NVIDIA / OpenRouter**           | Mixed       | Varied      | **Fallback**: Extra capacity when others exhausted    |
-| 6 (PAID) | **OpenAI** (`o3`)                 | OpenAI      | Paid        | **Complex**: Hard algorithms, critical reasoning only |
-| 7 (PAID) | **Groq** (`llama-3.3-70b`)        | Groq        | Paid/Limit  | **Fallback**: Logic/Reasoning (demoted from free)     |
+| Priority | Model                      | Provider     | Limit      | Use For                                                 |
+| -------- | -------------------------- | ------------ | ---------- | ------------------------------------------------------- |
+| 1 (FREE) | **Kilo Code**              | xAI          | Unlimited  | **Bulk Coding**: `x-ai/grok-code-fast-1:optimized:free` |
+| 2 (FREE) | **OpenCode**               | OpenCode Zen | Unlimited  | **Standard**: `big-pickle`                              |
+| 3 (FREE) | **Cline**                  | OpenRouter   | Unlimited  | **Routine**: `minimax-m2.1:free`                        |
+| 4 (FREE) | **Gemini CLI**             | Google       | 1M TPD     | **Analysis**: `gemini-2.5-pro` (free tier)              |
+| 5 (PAID) | **OpenAI** (`o3`)          | OpenAI       | $20 cap    | **Complex**: Hard algorithms, critical reasoning only   |
+| 6 (PAID) | **Groq** (`llama-3.3-70b`) | Groq         | Paid/Limit | **Fallback**: Logic/Reasoning (Last Resort)             |
 
 **Cost guard**: Log all paid usage in `.kilocode/rules/cost-optimization`. Cap: $20/month per provider.
 
@@ -115,17 +114,17 @@ All agents follow the **ASSESS→SPLIT→ASSIGN→AGGREGATE→VALIDATE** pattern
 
 ### Agent Routing Matrix
 
-| Task Type       | Agent                  | Model              | Justification       |
-| --------------- | ---------------------- | ------------------ | ------------------- |
-| Bulk coding     | Kilo `bmad-dev`        | z-ai/glm4.7        | Free, unlimited     |
-| Research        | OpenCode `@researcher` | groq/llama-3.3-70b | Free, 100K TPD      |
-| Code review     | OpenCode `@reviewer`   | groq/llama-3.1-8b  | Free, 500K TPD      |
-| PM/planning     | Cline `bmad-pm`        | minimax:free       | Free                |
-| Server ops      | Kilo `sysadmin`        | minimax:free       | Read-only, free     |
-| Large context   | Gemini CLI             | gemini-2.5-flash   | Free, 1M tokens     |
-| Architecture    | Antigravity            | gemini-2.5-pro     | PAID — document why |
-| Hard algorithms | OpenCode `@codex`      | openai/o3          | PAID — document why |
-| Deep audit      | Claude Code            | claude-sonnet-4-5  | PAID — document why |
+| Task Type       | Agent                  | Model                                | Justification       |
+| --------------- | ---------------------- | ------------------------------------ | ------------------- |
+| Bulk coding     | Kilo `bmad-dev`        | x-ai/grok-code-fast-1:optimized:free | Free, unlimited     |
+| Research        | OpenCode `@researcher` | big-pickle                           | Free, 200K context  |
+| Code review     | OpenCode `@reviewer`   | x-ai/grok-code-fast-1:optimized:free | Free, unlimited     |
+| PM/planning     | Cline `bmad-pm`        | minimax-m2.1:free                    | Free                |
+| Server ops      | Kilo `sysadmin`        | minimax-m2.1:free                    | Read-only, free     |
+| Large context   | Gemini CLI             | gemini-2.5-pro                       | Free, 1M tokens     |
+| Architecture    | Antigravity            | gemini-2.5-pro                       | PAID — document why |
+| Hard algorithms | OpenCode `@codex`      | x-ai/grok-code-fast-1:optimized:free | Free - use first    |
+| Deep audit      | Claude Code            | claude-sonnet-4-5                    | PAID — document why |
 
 See `.clinerules/workflows/orchestrate-parallel.md` for full canonical workflow.
 

@@ -1,12 +1,58 @@
-# Design Enhancement Plan - Parallel Agent Orchestration
+# Task Plan: Design Enhancement
 
-**Created**: 2026-02-16
-**Status**: Active
-**Orchestrator**: OpenCode (with parallel subagents)
+**Date**: 2026-02-17
+**Agent**: Cline (Batch Template Migration)
+
+## 1. Goal
+
+Implement 5 design enhancements from React boilerplates research in parallel using subagents.
+
+## 2. Context & Constraints
+
+- **Files**: `src/components/sections/Hero.astro`, `src/components/sections/Services.astro`, `src/components/common/ThemeSwitcher.astro`, `src/components/ui/Card.astro`, `src/components/ui/Button.astro`, `src/styles/themes.css`, `src/styles/global.css`
+- **Rules**: Maintain accessibility (WCAG 2.2 AA), keep Astro philosophy (minimal JS), preserve bilingual support (EN/CS)
+- **Budget**: Free (using existing components and CSS)
+
+## 3. Implementation Steps
+
+1.  **Bento Grid Layout**
+    - [ ] Replace linear service cards with bento grid
+    - [ ] Add varying card sizes (1x1, 2x1, 1x2)
+    - [ ] Add hover effects with scale/glow
+
+2.  **Minimal Dark/Light Toggle**
+    - [ ] Simplify toggle to minimal icon switch
+    - [ ] Add smooth transition animation
+    - [ ] Add system preference detection
+    - [ ] Persist to localStorage
+
+3.  **Animated Gradient Mesh**
+    - [ ] Create CSS gradient animation keyframes
+    - [ ] Add mesh blur effect
+    - [ ] Apply to hero background
+    - [ ] Support light/dark variants
+
+4.  **Glassmorphism Cards**
+    - [ ] Add backdrop-filter: blur
+    - [ ] Add semi-transparent background
+    - [ ] Add subtle border
+    - [ ] Add hover lift effect
+
+5.  **Micro-interactions**
+    - [ ] Button hover scale (1.02)
+    - [ ] Button active scale (0.98)
+    - [ ] Focus ring animation
+    - [ ] Link underline animation
+    - [ ] Card hover lift
+
+## 4. Verification
+
+- [ ] Automated Test: `npm run build && npm run test`
+- [ ] Manual Check: Lighthouse score check (target: 95+)
 
 ---
 
-## Goal
+### Original Document: Goal
 
 Implement 5 design enhancements from React boilerplates research in parallel using subagents:
 

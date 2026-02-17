@@ -103,6 +103,7 @@ def check_rule_parity():
         ".kilocode/rules",
         ".agents/rules",
         ".clinerules/skills",
+        ".gemini/rules",
     ]
     issues = []
     for rule in critical_rules:
@@ -127,7 +128,10 @@ def check_opencode_setup():
         (".opencode/agent/coder.md", ".opencode/agent/coder.md"),
         (".opencode/agent/orchestrator.md", ".opencode/agent/orchestrator.md"),
         (".opencode/command/audit.md", ".opencode/command/audit.md"),
-        (".opencode/skill/astro-portfolio/SKILL.md", ".opencode/skill/astro-portfolio/SKILL.md"),
+        (
+            ".opencode/skill/astro-portfolio/SKILL.md",
+            ".opencode/skill/astro-portfolio/SKILL.md",
+        ),
     ]
     for path, label in required:
         exists = os.path.isfile(path)
@@ -144,7 +148,9 @@ def check_opencode_setup():
             paid_prefixes = ("anthropic/", "openai/")
             if any(model.startswith(p) for p in paid_prefixes):
                 print(f"  ❌ opencode.json default model is PAID: {model}")
-                issues.append(f"opencode.json: default model should be free, got: {model}")
+                issues.append(
+                    f"opencode.json: default model should be free, got: {model}"
+                )
             else:
                 print(f"  ✅ opencode.json default model is free: {model}")
         except Exception as e:

@@ -30,8 +30,10 @@ coverage/
 *.test.js.snap
 __tests__/coverage/
 
-# IDE
+# IDE - KEEP .vscode for team settings
 .vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
 .idea/
 *.swp
 *.swo
@@ -165,9 +167,9 @@ s61_sshd_config.txt
 s61_traefik_logs.txt
 
 # Testing & Playwright
-playwright-output/
-test-results/
-playwright-report/
+# KEEP these for CI/CD visibility
+# playwright-output/    # Uncomment if needed for local debugging only
+!.gitkeep
 .firebase/
 .firecrawl/
 
@@ -193,7 +195,6 @@ python3.cmd
 py.cmd
 
 evidence/
-test-results/
 .vercel/
 *.txt
 *.log

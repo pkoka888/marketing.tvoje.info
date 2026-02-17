@@ -1,6 +1,6 @@
 ---
 import type { Language } from '../../i18n/translations';
-import { getLangFromUrl, translations } from '../../i18n/translations';
+import { getLangFromUrl } from '../../i18n/translations';
 
 interface Props {
   lang?: Language;
@@ -8,7 +8,6 @@ interface Props {
 
 const { lang: propLang } = Astro.props;
 const lang = propLang || getLangFromUrl(Astro.url);
-const t = translations[lang];
 
 const packages = [
   {

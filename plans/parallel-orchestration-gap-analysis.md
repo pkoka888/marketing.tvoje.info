@@ -1,40 +1,38 @@
-# Parallel Orchestration Gap Analysis
+# Gap Analysis: Parallel Orchestration
 
-## Goal
+**Date**: 2026-02-17
+**Agent**: Cline (Batch Template Migration)
+**Target State**: Fully autonomous parallel execution of sub-agents (Kilo, OpenCode, Cline) orchestrated by Antigravity (Gemini Pro), using Redis for state coordination and a 7-layer model hierarchy.
 
-Achieve fully autonomous parallel execution of sub-agents (Kilo, OpenCode, Cline) orchestrated by Antigravity (Gemini Pro), using Redis for state coordination and a 7-layer model hierarchy.
+## 1. Executive Summary
 
-## Current State Analysis (Phase 3 Start)
+High-level comparison of current vs. target state for parallel orchestration capability.
 
-### ✅ Strengths
+## 2. Gap Matrix
 
-- **Governance**: `AGENTS.md` and `opencode.json` are aligned with 2026 standards.
-- **Model Hierarchy**: 7-layer priority (Gemini/Free first) is defined.
-- **Infrastructure**: Redis verification script and hooks are implemented.
-- **Agent Definitions**: BMAD squad and OpenCode agents are defined.
+| Feature / Requirement   | Current State                                                              | Target State                                                                                               | Severity |
+| ----------------------- | -------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- | -------- |
+| Swarm Runner            | No executable script to spawn agents in parallel                           | `scripts/swarm_runner.py` or `kilo run swarm` that spins up multiple CLI sessions                          | High     |
+| Redis State Schema      | Redis verified exists, but no defined schema for inter-agent communication | Defined JSON schema for `marketing_tvoje_info:shared_state` with structured keys (e.g., `task:123:status`) | High     |
+| Sub-Agent Feedback Loop | No mechanism to detect Kilo failures                                       | Agents write strict status logs to `plans/agent-shared/` or update Redis keys that Orchestrator monitors   | Medium   |
+| Model Hierarchy         | 7-layer priority defined                                                   | Fully implemented and enforced                                                                             | Low      |
 
-### ⚠️ Gaps (To Be Addressed)
+## 3. Root Causes
 
-#### 1. Lack of "Swarm" Runner
+- **Cause 1**: Orchestration remains manual (User copy-pasting instructions) - no executable orchestration script exists.
+- **Cause 2**: Agents might overwrite each other's data even with namespaces if keys aren't structured.
+- **Cause 3**: Silent failures in background agents - no status reporting mechanism.
 
-- **Issue**: We have `orchestrator-parallel.md` (workflow/doc) but no executable script to _spawn_ these agents in parallel.
-- **Risk**: Orchestration remains manual (User copy-pasting instructions).
-- **Solution**: Need a `scripts/swarm_runner.py` or `kilo run swarm` capability that can spin up multiple CLI sessions (e.g., `cline --task "..."` or `opencode --task "..."`) in background threads/processes.
+## 4. Remediation Plan
 
-#### 2. Redis State Schema
+### Immediate (P0)
 
-- **Issue**: We verify Redis exists, but we haven't defined the _schema_ for inter-agent communication.
-- **Risk**: Agents might overwrite each other's data even with namespaces if keys aren't structured (e.g., `task:123:status`).
-- **Solution**: Define a JSON schema for `marketing_tvoje_info:shared_state` in `.kilocode/rules/memory-bank/agents-state.md`.
+- [ ] Define Shared State Schema: Create strict JSON structure for Redis keys in `.kilocode/rules/memory-bank/agents-state.md`
+- [ ] Create Swarm CLI: Implement `python scripts/orchestrate.py --plan phase3.md`
+- [ ] Implement Status Reporting: Agents write `completion.json` at end of task
 
-#### 3. Sub-Agent Feedback Loop
+### Strategic (P1)
 
-- **Issue**: If Kilo fails a task, how does Antigravity know?
-- **Risk**: Silent failures in background agents.
-- **Solution**: Agents must write strict status logs to `plans/agent-shared/` or update Redis keys that the Orchestrator monitors.
-
-## Action Plan (Next Parallel Plan)
-
-1.  **Define Shared State Schema**: Create strict JSON structure for Redis keys.
-2.  **Create Swarm CLI**: e.g., `python scripts/orchestrate.py --plan phase3.md`.
-3.  **Implement Status Reporting**: Agents write `completion.json` at end of task.
+- [ ] Integrate with Antigravity orchestrator
+- [ ] Add failure detection and alerting
+- [ ] Document usage in `orchestrator-parallel.md`

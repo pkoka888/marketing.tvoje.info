@@ -25,7 +25,7 @@ const formspreeId = import.meta.env.PUBLIC_FORMSPREE_ID || 'your-form-id';
           {t.contact.subtitle}
         </p>
       </div>
-      
+
       <!-- Contact Form -->
       <form
         action={`https://formspree.io/f/${formspreeId}`}
@@ -36,15 +36,16 @@ const formspreeId = import.meta.env.PUBLIC_FORMSPREE_ID || 'your-form-id';
       >
         <!-- Honeypot field (hidden) -->
         <input type="text" name="_gotcha" style="display: none;" tabindex="-1" autocomplete="off" />
-        
+
         <!-- Language field -->
         <input type="hidden" name="_language" value={lang} />
-        
+
         <div class="grid md:grid-cols-2 gap-6 mb-6">
           <!-- Name -->
           <div>
             <label for="name" class="label">
-              {t.contact.name} <span class="text-red-500" aria-hidden="true">*</span>
+              {t.contact.name}
+              <span class="text-red-500" aria-hidden="true">*</span>
             </label>
             <input
               type="text"
@@ -60,11 +61,12 @@ const formspreeId = import.meta.env.PUBLIC_FORMSPREE_ID || 'your-form-id';
               {t.contact.required}
             </p>
           </div>
-          
+
           <!-- Email -->
           <div>
             <label for="email" class="label">
-              {t.contact.email} <span class="text-red-500" aria-hidden="true">*</span>
+              {t.contact.email}
+              <span class="text-red-500" aria-hidden="true">*</span>
             </label>
             <input
               type="email"
@@ -81,7 +83,7 @@ const formspreeId = import.meta.env.PUBLIC_FORMSPREE_ID || 'your-form-id';
             </p>
           </div>
         </div>
-        
+
         <div class="grid md:grid-cols-2 gap-6 mb-6">
           <!-- Company -->
           <div>
@@ -96,11 +98,12 @@ const formspreeId = import.meta.env.PUBLIC_FORMSPREE_ID || 'your-form-id';
               placeholder={t.contact.company}
             />
           </div>
-          
+
           <!-- Subject -->
           <div>
             <label for="subject" class="label">
-              {t.contact.subject} <span class="text-red-500" aria-hidden="true">*</span>
+              {t.contact.subject}
+              <span class="text-red-500" aria-hidden="true">*</span>
             </label>
             <input
               type="text"
@@ -117,17 +120,13 @@ const formspreeId = import.meta.env.PUBLIC_FORMSPREE_ID || 'your-form-id';
             </p>
           </div>
         </div>
-        
+
         <!-- Budget -->
         <div class="mb-6">
           <label for="budget" class="label">
             {t.contact.budget}
           </label>
-          <select
-            id="budget"
-            name="budget"
-            class="input"
-          >
+          <select id="budget" name="budget" class="input">
             <option value="">{lang === 'cs' ? 'Vyberte rozpočet' : 'Select budget range'}</option>
             <option value="under-1000">{lang === 'cs' ? 'Do 1 000 €' : 'Under 1,000 €'}</option>
             <option value="1000-5000">1,000 - 5,000 €</option>
@@ -135,11 +134,12 @@ const formspreeId = import.meta.env.PUBLIC_FORMSPREE_ID || 'your-form-id';
             <option value="over-10000">{lang === 'cs' ? 'Nad 10 000 €' : 'Over 10,000 €'}</option>
           </select>
         </div>
-        
+
         <!-- Message -->
         <div class="mb-6">
           <label for="message" class="label">
-            {t.contact.message} <span class="text-red-500" aria-hidden="true">*</span>
+            {t.contact.message}
+            <span class="text-red-500" aria-hidden="true">*</span>
           </label>
           <textarea
             id="message"
@@ -149,13 +149,12 @@ const formspreeId = import.meta.env.PUBLIC_FORMSPREE_ID || 'your-form-id';
             class="input"
             placeholder={t.contact.message}
             aria-required="true"
-            aria-describedby="message-error"
-          ></textarea>
+            aria-describedby="message-error"></textarea>
           <p id="message-error" class="mt-1 text-sm text-red-500 hidden" role="alert">
             {t.contact.required}
           </p>
         </div>
-        
+
         <!-- GDPR Consent -->
         <div class="mb-8">
           <label class="flex items-start gap-3 cursor-pointer">
@@ -167,45 +166,88 @@ const formspreeId = import.meta.env.PUBLIC_FORMSPREE_ID || 'your-form-id';
               aria-required="true"
             />
             <span class="text-sm text-gray-600 dark:text-gray-400">
-              {lang === 'cs'
-                ? 'Souhlasím se zpracováním osobních údajů za účelem kontaktování. Přečetl jsem si <a href="/privacy" class="text-primary-600 hover:text-primary-700">zásady ochrany osobních údajů</a>.'
-                : 'I consent to the processing of personal data for the purpose of contact. I have read the <a href="/privacy" class="text-primary-600 hover:text-primary-700">privacy policy</a>.'}
+              {
+                lang === 'cs'
+                  ? 'Souhlasím se zpracováním osobních údajů za účelem kontaktování. Přečetl jsem si <a href="/privacy" class="text-primary-600 hover:text-primary-700">zásady ochrany osobních údajů</a>.'
+                  : 'I consent to the processing of personal data for the purpose of contact. I have read the <a href="/privacy" class="text-primary-600 hover:text-primary-700">privacy policy</a>.'
+              }
             </span>
           </label>
         </div>
-        
+
         <!-- Submit Button -->
         <div class="text-center">
-          <button
-            type="submit"
-            class="btn-primary w-full md:w-auto px-12"
-          >
+          <button type="submit" class="btn-primary w-full md:w-auto px-12">
             <span class="btn-text">{t.contact.submit}</span>
             <span class="btn-loading hidden">
-              <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true">
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              <svg
+                class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <circle
+                  class="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  stroke-width="4"></circle>
+                <path
+                  class="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                ></path>
               </svg>
               {t.common.loading}
             </span>
           </button>
         </div>
-        
+
         <!-- Success Message -->
-        <div id="form-success" class="hidden mt-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg" role="status">
+        <div
+          id="form-success"
+          class="hidden mt-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg"
+          role="status"
+        >
           <div class="flex items-center gap-3">
-            <svg class="w-6 h-6 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            <svg
+              class="w-6 h-6 text-green-500 flex-shrink-0"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
             </svg>
             <p class="text-green-700 dark:text-green-300">{t.contact.success}</p>
           </div>
         </div>
-        
+
         <!-- Error Message -->
-        <div id="form-error" class="hidden mt-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg" role="alert">
+        <div
+          id="form-error"
+          class="hidden mt-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg"
+          role="alert"
+        >
           <div class="flex items-center gap-3">
-            <svg class="w-6 h-6 text-red-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            <svg
+              class="w-6 h-6 text-red-500 flex-shrink-0"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
             </svg>
             <p class="text-red-700 dark:text-red-300">{t.contact.error}</p>
           </div>
@@ -222,38 +264,38 @@ const formspreeId = import.meta.env.PUBLIC_FORMSPREE_ID || 'your-form-id';
   const btnLoading = submitBtn?.querySelector('.btn-loading') as HTMLElement;
   const successMessage = document.getElementById('form-success');
   const errorMessage = document.getElementById('form-error');
-  
+
   form?.addEventListener('submit', async (e) => {
     e.preventDefault();
-    
+
     // Show loading state
     if (submitBtn && btnText && btnLoading) {
       btnText.classList.add('hidden');
       btnLoading.classList.remove('hidden');
       submitBtn.disabled = true;
     }
-    
+
     // Hide messages
     successMessage?.classList.add('hidden');
     errorMessage?.classList.add('hidden');
-    
+
     try {
       const formData = new FormData(form);
       const response = await fetch(form.action, {
         method: 'POST',
         body: formData,
         headers: {
-          'Accept': 'application/json'
-        }
+          Accept: 'application/json',
+        },
       });
-      
+
       if (response.ok) {
         successMessage?.classList.remove('hidden');
         form.reset();
       } else {
         throw new Error('Form submission failed');
       }
-    } catch (error) {
+    } catch {
       errorMessage?.classList.remove('hidden');
     } finally {
       // Reset button state
@@ -264,7 +306,7 @@ const formspreeId = import.meta.env.PUBLIC_FORMSPREE_ID || 'your-form-id';
       }
     }
   });
-  
+
   // Client-side validation
   const inputs = form?.querySelectorAll('input[required], textarea[required]');
   inputs?.forEach((input) => {
@@ -272,7 +314,7 @@ const formspreeId = import.meta.env.PUBLIC_FORMSPREE_ID || 'your-form-id';
       const inputElement = input as HTMLInputElement | HTMLTextAreaElement;
       const errorId = `${inputElement.id}-error`;
       const errorElement = document.getElementById(errorId);
-      
+
       if (!inputElement.validity.valid) {
         errorElement?.classList.remove('hidden');
         inputElement.setAttribute('aria-invalid', 'true');
@@ -281,7 +323,7 @@ const formspreeId = import.meta.env.PUBLIC_FORMSPREE_ID || 'your-form-id';
         inputElement.setAttribute('aria-invalid', 'false');
       }
     });
-    
+
     input.addEventListener('input', () => {
       const inputElement = input as HTMLInputElement | HTMLTextAreaElement;
       if (inputElement.validity.valid) {

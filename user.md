@@ -1,50 +1,85 @@
 # User Manual: Agentic Platform 2026
 
-## 1. Quick Start
+## 1. Quick Start - Model Selection
 
-- **Bulk Coding**: Use Kilo `z-ai/glm4.7` (Free/Unlimited).
-- **High Context / Research**: Use Gemini CLI (1M tokens free).
-- **Architecture / Orchestration**: Use Antigravity (Gemini Pro).
-- **Complex Logic**: Use OpenCode (`@codex`) with OpenAI o3 (Paid).
+| Task              | Tool       | Model                             | Command            |
+| ----------------- | ---------- | --------------------------------- | ------------------ |
+| Bulk Coding       | Kilo       | `grok-code-fast-1:optimized:free` | Use Kilo extension |
+| Standard Tasks    | OpenCode   | `big-pickle`                      | `opencode` CLI     |
+| Routine Fixes     | Cline      | `minimax-m2.1:free`               | Cmd+K in VS Code   |
+| Complex Analysis  | Gemini CLI | `gemini-2.5-pro`                  | `gemini` CLI       |
+| External Research | Gemini     | `gemini-2.5-flash`                | Conserve quota!    |
+
+**Resource Rule**: NEVER use Gemini for internal searches. Use grok-code-fast-1.
 
 ## 2. Orchestration & Parallel Agents
 
-How to run agents in parallel for maximum efficiency:
+### Quick Agent Templates
 
-### The "Swarms" Approach
+Use these simplified prompts:
 
-When you have a complex feature, do NOT ask one agent to do it all.
+#### Run Research (OpenCode @researcher)
 
-1. **Architect** (Antigravity): "Plan the feature. Break it into 3 sub-tasks: Frontend, Backend, Database."
-2. **Assign**:
-   - "Kilo, take the Database schema task."
-   - "OpenCode, take the Backend API task."
-   - "Cline, take the Frontend Component task."
-3. **Review**:
-   - "OpenCode `@reviewer`, review the PRs from Kilo and Cline."
-4. **Merge**:
-   - "Antigravity, verify integration and merge."
+```
+@researcher Research [TOPIC] in [FILES/FOLDER]. Focus on [WHAT TO FIND]. Deliver: [OUTPUT FORMAT]
+```
+
+#### Run Code Audit (OpenCode @codex)
+
+```
+@codex Audit [FILE/FOLDER] for [ISSUE TYPE]. Do NOT fix - just identify. Deliver: findings list
+```
+
+#### Run Code Review (OpenCode @reviewer)
+
+```
+@reviewer Review [FILE] for [CRITERIA]. Focus on [WHAT TO CHECK]. Deliver: approved/issues
+```
+
+#### Run Multiple in Parallel
+
+```
+[PARALLEL EXECUTION]
+@researcher: Research [topic]
+@codex: Audit [file]
+@reviewer: Review [file]
+AGGREGATE: Combine findings into [OUTPUT FILE]
+```
+
+#### Use BMAD Flow
+
+```
+Use BMAD flow:
+1. Analyst: Research [requirements] → plans/reqs/[feature].md
+2. Architect: Design [solution] → plans/arch/[feature].md
+3. Dev: Implement
+4. QA: Test
+GATE: Each phase passes before next
+```
 
 ### Prompting Strategies
 
 **Bad**: "Fix the bugs in the app."
-**Good**: "Scan the `src/libs` folder for TypeScript errors. Fix only the `any` type usage issues. Do not change logic."
+**Good**: "Scan `src/libs/` for TypeScript errors. Fix only `any` type issues. Do NOT change logic."
 
 **Bad**: "Make it look better."
-**Good**: "Apply the 'Neon Future' design language from `design-system.md` to the `Hero` component. Use Tailwind classes `bg-slate-900` and `text-teal-400`."
+**Good**: "Apply Neon Future design from `design-system.md` to Hero. Use Tailwind `bg-slate-900 text-teal-400`."
+
+---
 
 ## 3. Advanced Prompting Strategies (2026)
 
 ### Parallel Swarms
 
-Use this pattern to orchestrate multiple agents simultaneously:
+Use this pattern:
 
-> **"Run 3 agents in PARALLEL:**
->
-> - **@researcher**: Research Tailwind CSS 4.0 best practices for 'Glassmorphism'.
-> - **@codex**: Audit `src/components/Hero.astro` for current implementation gaps.
-> - **@reviewer**: Identify accessibility (a11y) issues in the current Hero.
->   **AGGREGATE**: Summarize findings into a single `plans/implementation/hero-upgrade.md`."
+```
+Run 3 agents in PARALLEL:
+- @researcher: Research [topic]
+- @codex: Audit [file]
+- @reviewer: Identify a11y issues
+AGGREGATE: Combine into plans/hero-upgrade.md
+```
 
 ### Complex Feature Flow (BMAD)
 
@@ -119,9 +154,13 @@ git diff --stat  # Review what changed
 
 ## 5. Troubleshooting
 
-- **"Agent Context Full"**: Switch to Gemini CLI or start a new session.
-- **"Redis Connection Fail"**: Run `python scripts/verify_redis.py`.
-- **"Deployment Failed"**: Check GitHub Actions logs. If Vercel fails, ignore (we use VPS).
+| Issue                   | Solution                                                     |
+| ----------------------- | ------------------------------------------------------------ |
+| "Agent Context Full"    | Switch to Gemini CLI or start new session                    |
+| "Redis Connection Fail" | Run `python scripts/verify_redis.py`                         |
+| "Deployment Failed"     | Check GitHub Actions logs. Vercel fail = ignore (we use VPS) |
+| Model Not Found         | Check `.kilocode/models.json` for valid model names          |
+| MCP Server Error        | Run `python scripts/verify_agentic_platform.py`              |
 
 ## 6. Parallel Task Orchestration
 

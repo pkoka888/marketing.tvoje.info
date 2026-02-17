@@ -70,3 +70,32 @@ jobs:
             # Reload nginx to pick up new files
             ssh sugent@192.168.1.62 -p 2262 'sudo systemctl reload nginx'
             ssh sugent@192.168.1.62 -p 2262 "ls -la /var/www/projects/marketing.tvoje.info/ | head -10"
+
+  verify-deployment:
+    needs: build-and-deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+
+      - name: Run Live Verification
+        run: npx playwright test tests/e2e/live-verification.spec.ts
+        env:
+          BASE_URL: https://marketing.tvoje.info
+          CI: true
+
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: verification-report
+          path: playwright-report/
+          retention-days: 7

@@ -18,7 +18,10 @@
       "Bash(else)",
       "Bash(ls:*)",
       "Bash(for ref in \"_bmad/bmm/agents/analyst.md\" \"_bmad/bmm/agents/architect.md\" \"_bmad/bmm/agents/dev.md\" \"_bmad/bmm/agents/pm.md\" \"_bmad/bmm/agents/qa.md\" \"_bmad/bmm/agents/sm.md\" \"_bmad/bmm/agents/ux-designer.md\" \"_bmad/bmm/agents/quick-flow-solo-dev.md\")",
-      "Bash(file=\"/c/Users/pavel/projects/marketing.tvoje.info/$ref\")"
+      "Bash(file=\"/c/Users/pavel/projects/marketing.tvoje.info/$ref\")",
+      "Bash(cat:*)",
+      "Bash(curl:*)",
+      "Bash(pkill:*)"
     ]
   }
 }

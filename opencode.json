@@ -1,7 +1,46 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "model": "gemini/gemini-1.5-flash",
-  "small_model": "kilo/z-ai/glm4.7",
+  "model": "big-pickle",
+  "small_model": "grok-code-fast-1",
+  "provider": {
+    "openrouter": {
+      "options": {
+        "apiKey": "{env:OPENROUTER_API_KEY}"
+      }
+    }
+  },
+  "theme": "opencode",
+  "autoupdate": true,
+  "default_agent": "plan",
+  "agent": {
+    "coder": {
+      "model": "x-ai/grok-code-fast-1:optimized:free",
+      "fallback": "big-pickle"
+    },
+    "researcher": {
+      "model": "big-pickle",
+      "fallback": "x-ai/grok-code-fast-1:optimized:free"
+    },
+    "reviewer": {
+      "model": "x-ai/grok-code-fast-1:optimized:free",
+      "fallback": "big-pickle"
+    },
+    "orchestrator": {
+      "model": "big-pickle",
+      "fallback": "x-ai/grok-code-fast-1:optimized:free"
+    },
+    "architect": {
+      "model": "gemini-2.5-pro:free",
+      "fallback": "big-pickle"
+    },
+    "codex": {
+      "model": "x-ai/grok-code-fast-1:optimized:free",
+      "fallback": "big-pickle"
+    },
+    "fallback": {
+      "model": "big-pickle"
+    }
+  },
   "instructions": [
     "AGENTS.md",
     ".kilocode/rules/memory-bank-instructions.md",
@@ -25,71 +64,73 @@
     ".kilocode/rules/cost-optimization",
     ".kilocode/rules/server-preservation"
   ],
-  "agent": {
-    "coder": {
-      "model": "gemini/gemini-1.5-flash",
-      "fallback": "openrouter/nvidia/llama-3.1-405b-instruct:free"
-    },
-    "researcher": {
-      "model": "gemini/gemini-1.5-flash",
-      "fallback": "kilo/z-ai/glm4.7"
-    },
-    "reviewer": {
-      "model": "gemini/gemini-1.5-flash",
-      "fallback": "openrouter/google/gemini-2.0-flash-exp:free"
-    },
-    "orchestrator": {
-      "model": "gemini/gemini-2.5-pro"
-    },
-    "architect": {
-      "model": "anthropic/claude-sonnet-4-5-20250929"
-    },
-    "codex": {
-      "model": "openai/o3"
-    },
-    "fallback": {
-      "model": "groq/llama-3.3-70b-versatile"
-    }
-  },
+
   "mcp": {
     "filesystem-projects": {
-      "command": "node",
-      "args": [
+      "type": "local",
+      "command": [
+        "node",
         "C:/nvm4w/nodejs/node_modules/@modelcontextprotocol/server-filesystem/dist/index.js",
         "C:/Users/pavel/projects"
-      ]
+      ],
+      "environment": {}
     },
     "memory": {
-      "command": "node",
-      "args": ["C:/nvm4w/nodejs/node_modules/@modelcontextprotocol/server-memory/dist/index.js"]
+      "type": "local",
+      "command": [
+        "node",
+        "C:/nvm4w/nodejs/node_modules/@modelcontextprotocol/server-memory/dist/index.js"
+      ],
+      "environment": {}
     },
     "git": {
-      "command": "node",
-      "args": ["C:/nvm4w/nodejs/node_modules/git-mcp/dist/index.js"]
+      "type": "local",
+      "command": ["node", "C:/nvm4w/nodejs/node_modules/git-mcp/dist/index.js"],
+      "environment": {}
     },
     "fetch": {
-      "command": "uvx",
-      "args": ["mcp-server-fetch"]
+      "type": "local",
+      "command": ["uvx", "mcp-server-fetch"],
+      "environment": {}
     },
     "redis": {
-      "command": "docker",
-      "args": ["run", "-i", "--rm", "mcp/redis", "redis://host.docker.internal:6379"]
+      "type": "local",
+      "command": ["cmd", "/c", "npx", "-y", "@modelcontextprotocol/server-redis"],
+      "environment": {
+        "REDIS_URL": "redis://host.docker.internal:36379",
+        "REDIS_HOST": "host.docker.internal",
+        "REDIS_PORT": "36379",
+        "REDIS_NAMESPACE": "marketing_tvoje_info"
+      }
     },
     "bmad-mcp": {
-      "command": "python",
-      "args": ["-m", "bmad_mcp"]
+      "type": "local",
+      "command": ["python", "-m", "bmad_mcp"],
+      "environment": {
+        "PROJECT_ROOT": "."
+      }
     },
     "github": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-github"]
+      "type": "local",
+      "command": ["cmd", "/c", "npx", "-y", "@modelcontextprotocol/server-github"],
+      "environment": {}
     },
     "filesystem-agentic": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-filesystem", "C:/Users/pavel/vscodeportable"]
+      "type": "local",
+      "command": [
+        "node",
+        "C:/nvm4w/nodejs/node_modules/@modelcontextprotocol/server-filesystem/dist/index.js",
+        "C:/Users/pavel/vscodeportable"
+      ],
+      "environment": {}
     }
   },
   "permission": {
     "edit": "ask",
     "bash": "ask"
+  },
+  "tools": {
+    "write": true,
+    "bash": true
   }
 }

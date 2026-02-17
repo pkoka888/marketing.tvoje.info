@@ -3,6 +3,10 @@ import json
 import sys
 
 AGENT_DIRS = [".kilocode/", ".clinerules/", ".agent/", ".agents/", ".claude/", ".gemini/"]
+TEMPLATE_NOTE = (
+    "\n- PLANS DIR DETECTED: Use templates from plans/templates/ for complex outputs. "
+    "Templates: AUDIT_REPORT.md, RESEARCH_FINDINGS.md, TASK_PLAN.md, GAP_ANALYSIS.md"
+)
 SYNC_NOTE = (
     "\n- AGENT CONFIG DIR DETECTED: Read canonical .kilocode/rules/ first. "
     "After change, sync equivalent files in ALL other agent dirs. "
@@ -24,6 +28,9 @@ def main():
 
     if tool_name in ("write_to_file", "replace_in_file", "create_file") and path and any(d in path for d in AGENT_DIRS):
         context_mod += SYNC_NOTE
+
+    if tool_name in ("write_to_file", "replace_in_file", "create_file") and path and "plans/" in path:
+        context_mod += TEMPLATE_NOTE
 
     response = {
         "cancel": False,

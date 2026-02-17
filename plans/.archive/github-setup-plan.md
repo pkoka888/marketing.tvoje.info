@@ -1,11 +1,11 @@
 # GitHub Repository Setup and GitHub Actions Plan
 
-**Document Type**: Implementation Plan  
-**Status**: Draft  
-**Version**: 1.0  
-**Date**: 2026-02-11  
-**Project**: marketing.tvoje.info (DevOps & AI Developer Portfolio)  
-**Repository**: https://github.com/pkoka888/marketing.tvoje.info.git  
+**Document Type**: Implementation Plan
+**Status**: Draft
+**Version**: 1.0
+**Date**: 2026-02-11
+**Project**: marketing.tvoje.info (DevOps & AI Developer Portfolio)
+**Repository**: https://github.com/pkoka888/marketing.tvoje.info.git
 **Deployment Target**: Debian 13 VPS (not Vercel)
 
 ---
@@ -15,11 +15,13 @@
 This plan documents the setup of the GitHub repository for the DevOps & AI Developer Portfolio. The project uses **Astro 5.0**, **Tailwind CSS 4.0**, and **TypeScript** for a performant, accessible, bilingual portfolio website.
 
 **Deployment Strategy:**
+
 - **Local Development**: Windows testing with `npm run dev`
 - **Production**: Debian 13 VPS with PM2 and Nginx
 - **CI/CD**: GitHub Actions for builds and security scanning
 
 **Key Differences from Original Plan:**
+
 - ❌ Vercel deployment **REMOVED**
 - ✅ VPS deployment via SSH
 - ❌ Snyk token **REMOVED** (using GitHub's built-in security)
@@ -29,17 +31,17 @@ This plan documents the setup of the GitHub repository for the DevOps & AI Devel
 
 ## 1. Technology Stack Summary
 
-| Component | Version | Purpose |
-|-----------|---------|---------|
-| **Framework** | Astro 5.0 | Static site generation |
-| **Styling** | Tailwind CSS 4.0 | Utility-first CSS |
-| **Language** | TypeScript 5.7 | Type safety |
-| **Hosting** | Debian 13 VPS | Custom server |
-| **Process Manager** | PM2 | Node.js application management |
-| **Web Server** | Nginx | Reverse proxy (optional) |
-| **Forms** | Formspree | Contact form backend |
-| **Analytics** | Plausible | Privacy-focused analytics |
-| **CI/CD** | GitHub Actions | Automation |
+| Component           | Version          | Purpose                        |
+| ------------------- | ---------------- | ------------------------------ |
+| **Framework**       | Astro 5.0        | Static site generation         |
+| **Styling**         | Tailwind CSS 4.0 | Utility-first CSS              |
+| **Language**        | TypeScript 5.7   | Type safety                    |
+| **Hosting**         | Debian 13 VPS    | Custom server                  |
+| **Process Manager** | PM2              | Node.js application management |
+| **Web Server**      | Nginx            | Reverse proxy (optional)       |
+| **Forms**           | Formspree        | Contact form backend           |
+| **Analytics**       | Plausible        | Privacy-focused analytics      |
+| **CI/CD**           | GitHub Actions   | Automation                     |
 
 ---
 
@@ -67,22 +69,22 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
-          
+
       - name: Install dependencies
         run: npm ci
-        
+
       - name: Check formatting
         run: npm run format:check
-        
+
       - name: Run linter
         run: npm run lint
-        
+
       - name: Run type check
         run: npm run typecheck
 
@@ -92,21 +94,21 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
-          
+
       - name: Install dependencies
         run: npm ci
-        
+
       - name: Build project
         run: npm run build
         env:
           PUBLIC_SITE_URL: https://portfolio.tvoje.info
-      
+
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
@@ -120,19 +122,19 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
-          
+
       - name: Install dependencies
         run: npm ci
-        
+
       - name: Build project
         run: npm run build
-        
+
       - name: Run accessibility audit
         uses: treosh/lighthouse-ci-action@v11
         with:
@@ -165,30 +167,30 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
-          
+
       - name: Install dependencies
         run: npm ci
-        
+
       - name: Build project
         run: npm run build
         env:
           PUBLIC_SITE_URL: https://portfolio.tvoje.info
-        
+
       - name: Deploy to VPS via SSH
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.VPS_IP }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
-          source: "dist/"
-          target: "/var/www/portfolio"
-          
+          source: 'dist/'
+          target: '/var/www/portfolio'
+
       - name: SSH - Restart Application
         uses: appleboy/ssh-action@v0.1.9
         with:
@@ -230,7 +232,7 @@ jobs:
           target-branch: 'main'
           commit-message: 'Bump npm dependencies'
           open-pull-requests-limit: 10
-      
+
       - name: Create pull request for updates
         uses: peter-evans/create-pull-request@v7
         with:
@@ -248,16 +250,16 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        
+
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v3
         with:
           languages: javascript
           queries: security-extended
-          
+
       - name: Build
         run: npm ci && npm run build
-        
+
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
         with:
@@ -269,7 +271,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        
+
       - name: Run npm audit
         run: npm audit --production --audit-level=high
 ```
@@ -282,12 +284,12 @@ jobs:
 
 Configure these in **GitHub Repository → Settings → Secrets and variables → Actions**:
 
-| Secret Name | Description | How to Get |
-|------------|-------------|------------|
-| `VPS_IP` | IP address of your VPS | From your hosting provider |
-| `VPS_USER` | SSH username (e.g., root, admin) | Your VPS SSH user |
-| `VPS_SSH_KEY` | SSH private key | `ssh-keygen -t ed25519` on local machine |
-| `GITHUB_TOKEN` | Automatic (GitHub provides) | No action needed |
+| Secret Name    | Description                      | How to Get                               |
+| -------------- | -------------------------------- | ---------------------------------------- |
+| `VPS_IP`       | IP address of your VPS           | From your hosting provider               |
+| `VPS_USER`     | SSH username (e.g., root, admin) | Your VPS SSH user                        |
+| `VPS_SSH_KEY`  | SSH private key                  | `ssh-keygen -t ed25519` on local machine |
+| `GITHUB_TOKEN` | Automatic (GitHub provides)      | No action needed                         |
 
 **How to generate SSH key for VPS deployment:**
 
@@ -331,10 +333,7 @@ PUBLIC_PLAUSIBLE_API_HOST=https://plausible.io
     "collect": {
       "numberOfRuns": 3,
       "settings": {
-        "url": [
-          "https://portfolio.tvoje.info",
-          "https://portfolio.tvoje.info/cs"
-        ]
+        "url": ["https://portfolio.tvoje.info", "https://portfolio.tvoje.info/cs"]
       }
     },
     "assert": {
@@ -422,7 +421,7 @@ pm2 startup
 sudo cat > /etc/nginx/sites-available/portfolio << 'EOF'
 server {
     server_name portfolio.tvoje.info www.portfolio.tvoje.info;
-    
+
     location / {
         proxy_pass http://localhost:4321;
         proxy_http_version 1.1;
@@ -478,15 +477,15 @@ npm run dev
 
 ### 6.3 Available Scripts
 
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start development server |
-| `npm run build` | Build for production |
-| `npm run preview` | Preview production build |
-| `npm run lint` | Run ESLint |
-| `npm run typecheck` | Run TypeScript checks |
-| `npm run format` | Format code with Prettier |
-| `npm run format:check` | Check code formatting |
+| Command                | Description               |
+| ---------------------- | ------------------------- |
+| `npm run dev`          | Start development server  |
+| `npm run build`        | Build for production      |
+| `npm run preview`      | Preview production build  |
+| `npm run lint`         | Run ESLint                |
+| `npm run typecheck`    | Run TypeScript checks     |
+| `npm run format`       | Format code with Prettier |
+| `npm run format:check` | Check code formatting     |
 
 ---
 
@@ -524,32 +523,35 @@ pm2 restart all
 
 ## 8. Performance Targets
 
-| Metric | Target | Tool |
-|--------|--------|------|
-| Lighthouse Performance | ≥95 | Lighthouse CI |
-| Lighthouse Accessibility | ≥95 | Lighthouse CI |
-| Lighthouse Best Practices | ≥95 | Lighthouse CI |
-| Lighthouse SEO | ≥95 | Lighthouse CI |
-| LCP | <2.5s | PageSpeed Insights |
-| FID | <100ms | PageSpeed Insights |
-| CLS | <0.1 | PageSpeed Insights |
+| Metric                    | Target | Tool               |
+| ------------------------- | ------ | ------------------ |
+| Lighthouse Performance    | ≥95    | Lighthouse CI      |
+| Lighthouse Accessibility  | ≥95    | Lighthouse CI      |
+| Lighthouse Best Practices | ≥95    | Lighthouse CI      |
+| Lighthouse SEO            | ≥95    | Lighthouse CI      |
+| LCP                       | <2.5s  | PageSpeed Insights |
+| FID                       | <100ms | PageSpeed Insights |
+| CLS                       | <0.1   | PageSpeed Insights |
 
 ---
 
 ## 9. Implementation Checklist
 
 ### Phase 1: Local Setup ✅
+
 - [x] Repository cloned
 - [x] Dependencies installed
 - [x] Development server running
 - [x] Code formatting configured
 
 ### Phase 2: GitHub Configuration ⏳
+
 - [ ] Configure GitHub Secrets (VPS_IP, VPS_USER, VPS_SSH_KEY)
 - [ ] Verify CI workflow runs successfully
 - [ ] Verify deployment workflow works
 
 ### Phase 3: VPS Setup ⏳
+
 - [ ] Prepare Debian 13 server
 - [ ] Install Node.js and PM2
 - [ ] Create deployment directory
@@ -558,6 +560,7 @@ pm2 restart all
 - [ ] Get SSL certificate (optional)
 
 ### Phase 4: Testing ⏳
+
 - [ ] Test deployment workflow
 - [ ] Verify site accessible at portfolio.tvoje.info
 - [ ] Test contact form submission
@@ -613,23 +616,23 @@ npx lighthouse https://portfolio.tvoje.info --output json
 
 ## 11. References
 
-| Resource | URL |
-|----------|-----|
-| Astro Documentation | https://docs.astro.build/ |
-| Tailwind CSS | https://tailwindcss.com/docs |
-| PM2 Documentation | https://pm2.keymetrics.io/docs/usage/quick-start/ |
-| Nginx Documentation | https://nginx.org/en/docs/ |
-| GitHub Actions | https://docs.github.com/en/actions |
-| Lighthouse CI | https://github.com/marketplace/actions/lighthouse-ci-action |
-| Formspree | https://formspree.io/docs |
-| Plausible | https://plausible.io/docs |
-| TypeScript | https://www.typescriptlang.org/docs |
+| Resource            | URL                                                         |
+| ------------------- | ----------------------------------------------------------- |
+| Astro Documentation | https://docs.astro.build/                                   |
+| Tailwind CSS        | https://tailwindcss.com/docs                                |
+| PM2 Documentation   | https://pm2.keymetrics.io/docs/usage/quick-start/           |
+| Nginx Documentation | https://nginx.org/en/docs/                                  |
+| GitHub Actions      | https://docs.github.com/en/actions                          |
+| Lighthouse CI       | https://github.com/marketplace/actions/lighthouse-ci-action |
+| Formspree           | https://formspree.io/docs                                   |
+| Plausible           | https://plausible.io/docs                                   |
+| TypeScript          | https://www.typescriptlang.org/docs                         |
 
 ---
 
-**Document Version**: 1.0  
-**Created**: 2026-02-11  
-**Status**: Ready for Implementation  
+**Document Version**: 1.0
+**Created**: 2026-02-11
+**Status**: Ready for Implementation
 **Deployment Target**: Debian 13 VPS
 
 ## Next Steps
