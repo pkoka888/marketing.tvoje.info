@@ -26,26 +26,34 @@ jobs:
         env:
           PUBLIC_SITE_URL: ${{ secrets.PUBLIC_SITE_URL }}
 
-      - name: Deploy to VPS via Tailscale SSH
-        uses: appleboy/scp-action@v0.1.7
+      # Method 1: Tailscale - Connect to tailnet then SSH via jumphost
+      - name: Connect to Tailscale
+        uses: tailscale/github-action@v4
         with:
-          host: 100.91.164.109
-          port: 20
-          username: ${{ secrets.VPS_USER }}
-          key: ${{ secrets.VPS_SSH_KEY }}
-          source: 'dist/'
-          target: '/var/www/portfolio'
-          timeout: 300s
-          command_timeout: 60s
-          strip_components: 1
+          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+          tags: tag:app-ci
 
-      - name: Fallback - Deploy to VPS via Public SSH
+      - name: Deploy via Tailscale with Jumphost (s60 → s62)
+        uses: appleboy/ssh-action@v1
+        with:
+          host: 100.111.141.111
+          port: 22
+          username: sugent
+          key: ${{ secrets.VPS_SSH_KEY }}
+          command_timeout: 10m
+          script: |
+            scp -r -P 2262 dist/* sugent@192.168.1.62:/var/www/portfolio/
+            ssh sugent@192.168.1.62 -p 2262 "ls -la /var/www/portfolio/ | head -10"
+
+      # Fallback: Direct to s62 if Tailscale fails (requires port forwarding)
+      - name: Fallback - Deploy via Public IP
         if: failure()
         uses: appleboy/scp-action@v0.1.7
         with:
           host: 89.203.173.196
           port: 2262
-          username: ${{ secrets.VPS_USER }}
+          username: sugent
           key: ${{ secrets.VPS_SSH_KEY }}
           source: 'dist/'
           target: '/var/www/portfolio'
