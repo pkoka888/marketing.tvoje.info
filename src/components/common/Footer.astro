@@ -47,64 +47,87 @@ const footerLinks = [
             <span class="text-xl font-bold gradient-text">Pavel Kašpar</span>
           </a>
           <p class="text-gray-600 dark:text-gray-400 max-w-md mb-6">
-          {lang === 'cs' 
-               ? 'Marketing, co funguje. Víc zákazníků, měřitelné výsledky.'
-               : 'Marketing that works. More customers, measurable results.'}
+            {
+              lang === 'cs'
+                ? 'Marketing, co funguje. Víc zákazníků, měřitelné výsledky.'
+                : 'Marketing that works. More customers, measurable results.'
+            }
           </p>
-          
+
           <!-- Social Links -->
           <div class="flex space-x-4">
-            {socialLinks.map((social) => (
-              <a
-                href={social.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
-                aria-label={social.name}
-              >
-                <Fragment set:html={social.icon} />
-              </a>
-            ))}
+            {
+              socialLinks.map((social) => (
+                <a
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+                  aria-label={social.name}
+                >
+                  <Fragment set:html={social.icon} />
+                </a>
+              ))
+            }
           </div>
         </div>
-        
+
         <!-- Quick Links -->
         <div>
-          <h3 class="text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider mb-4">
+          <h3
+            class="text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider mb-4"
+          >
             {lang === 'cs' ? 'Odkazy' : 'Quick Links'}
           </h3>
           <ul class="space-y-3">
             <li>
-              <a href={lang === 'cs' ? '/cs/projects' : '/projects'} class="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+              <a
+                href={lang === 'cs' ? '/cs/projects' : '/projects'}
+                class="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+              >
                 {t.nav.projects}
               </a>
             </li>
             <li>
-              <a href={lang === 'cs' ? '/cs/services' : '/services'} class="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+              <a
+                href={lang === 'cs' ? '/cs/services' : '/services'}
+                class="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+              >
                 {t.nav.services}
               </a>
             </li>
             <li>
-              <a href={lang === 'cs' ? '/cs#about' : '/#about'} class="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+              <a
+                href={lang === 'cs' ? '/cs#about' : '/#about'}
+                class="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+              >
                 {t.nav.about}
               </a>
             </li>
             <li>
-              <a href={lang === 'cs' ? '/cs#contact' : '/#contact'} class="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+              <a
+                href={lang === 'cs' ? '/cs#contact' : '/#contact'}
+                class="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+              >
                 {t.nav.contact}
               </a>
             </li>
           </ul>
         </div>
-        
+
         <!-- Contact Info -->
         <div>
-          <h3 class="text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider mb-4">
+          <h3
+            class="text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider mb-4"
+          >
             {lang === 'cs' ? 'Kontakt' : 'Contact'}
           </h3>
           <ul class="space-y-3 text-gray-600 dark:text-gray-400">
             <li>
-              <a href="mailto:hello@marketing.tvoje.info" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+              <a
+                href="mailto:hello@marketing.tvoje.info"
+                class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+              >
                 hello@marketing.tvoje.info
               </a>
             </li>
@@ -116,23 +139,25 @@ const footerLinks = [
           </ul>
         </div>
       </div>
-      
+
       <!-- Bottom Bar -->
       <div class="mt-12 pt-8 border-t border-gray-200 dark:border-dark-700">
         <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
           <p class="text-sm text-gray-500 dark:text-gray-400">
             {t.footer.copyright.replace('{year}', currentYear.toString())}
           </p>
-          
+
           <div class="flex space-x-6">
-            {footerLinks.map((link) => (
-              <a
-                href={link.href}
-                class="text-sm text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
-              >
-                {link.label}
-              </a>
-            ))}
+            {
+              footerLinks.map((link) => (
+                <a
+                  href={link.href}
+                  class="text-sm text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+                >
+                  {link.label}
+                </a>
+              ))
+            }
           </div>
         </div>
       </div>

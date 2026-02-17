@@ -53,10 +53,7 @@
                 "type": "string"
               }
             },
-            "required": [
-              "value",
-              "label"
-            ],
+            "required": ["value", "label"],
             "additionalProperties": false
           }
         },
@@ -70,15 +67,7 @@
           "type": "string"
         }
       },
-      "required": [
-        "title",
-        "description",
-        "tags",
-        "category",
-        "year",
-        "image",
-        "stats"
-      ],
+      "required": ["title", "description", "tags", "category", "year", "image", "stats"],
       "additionalProperties": false
     }
   },

@@ -1,13 +1,16 @@
 # Services Migration Prompt
 
 ## Task
+
 Migrate services content from DevOps to Marketing focus.
 
 ## Files to Update
+
 1. `src/i18n/translations.ts` - Replace `devops` service translations
 2. `src/components/sections/Services.astro` - Replace devops service card
 
 ## Tone of Voice
+
 - **Primary: Czech (CZ)**, Secondary: English (EN)
 - Use customer language: "E-commerce marketing", "Online reklama", "PPC"
 - Avoid: technical jargon, "My jsme nejlepší"
@@ -15,6 +18,7 @@ Migrate services content from DevOps to Marketing focus.
 ## Changes Required
 
 ### translations.ts
+
 Replace the `devops` service object with marketing services:
 
 ```typescript
@@ -54,11 +58,15 @@ content: {
 ```
 
 ### Services.astro
+
 Replace the devops service card with marketing services:
+
 - Remove devops service entry
 - Add 4 marketing service cards (or update existing to show marketing services)
 
 ## Verification
+
 After changes:
+
 1. `npm run build` - must pass
 2. Check CZ and EN versions work

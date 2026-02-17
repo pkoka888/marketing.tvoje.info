@@ -1,13 +1,16 @@
 # Project Content Migration Prompt
 
 ## Task
+
 Rewrite DevOps project files as Marketing projects.
 
 ## Files to Update
+
 1. `src/content/projects/cloud-migration.md` - Rewrite as marketing project
 2. `src/content/projects/cicd-automation.md` - Rewrite as marketing project
 
 ## Tone of Voice
+
 - **Primary: Czech (CZ)**, Secondary: English (EN)
 - Use customer language: "E-commerce", "Online reklama", "PPC"
 - Focus on business outcomes, not technical processes
@@ -75,6 +78,7 @@ E-shop měl nízkou retenci zákazníků a málo opakovaných nákupů.
 ```
 
 ## Key Changes
+
 - Replace technical tags (AWS, Kubernetes, Docker) with marketing tags (SEO, PPC, Analytics)
 - Replace `category: "devops"` with marketing categories
 - Replace technical descriptions with business outcomes
@@ -82,7 +86,9 @@ E-shop měl nízkou retenci zákazníků a málo opakovaných nákupů.
 - Use Czech language with marketing focus
 
 ## Verification
+
 After changes:
+
 1. `npm run build` - must pass
 2. Verify category is marketing (not devops)
 3. Check all tags are marketing-related

@@ -21,11 +21,7 @@
           "type": "string"
         }
       },
-      "required": [
-        "question",
-        "answer",
-        "category"
-      ],
+      "required": ["question", "answer", "category"],
       "additionalProperties": false
     }
   },

@@ -17,12 +17,15 @@ const packages = [
     price: '9,900',
     unit: 'Kč',
     period: lang === 'cs' ? '+ DPH' : '+ VAT',
-    description: lang === 'cs' 
-      ? 'Pro malé podniky a lokální firmy' 
-      : 'For small businesses and local companies',
+    description:
+      lang === 'cs'
+        ? 'Pro malé podniky a lokální firmy'
+        : 'For small businesses and local companies',
     features: [
       lang === 'cs' ? 'SEO audit + základní optimalizace' : 'SEO audit + basic optimization',
-      lang === 'cs' ? 'Nastavení Google Ads (až 10 000 Kč kredit)' : 'Google Ads setup (up to 10,000 CZK credit)',
+      lang === 'cs'
+        ? 'Nastavení Google Ads (až 10 000 Kč kredit)'
+        : 'Google Ads setup (up to 10,000 CZK credit)',
       lang === 'cs' ? 'Měsíční report' : 'Monthly report',
       lang === 'cs' ? '3měsíční závazek' : '3-month commitment',
     ],
@@ -35,9 +38,7 @@ const packages = [
     price: '24,900',
     unit: 'Kč',
     period: lang === 'cs' ? '+ DPH' : '+ VAT',
-    description: lang === 'cs' 
-      ? 'Pro rostoucí firmy' 
-      : 'For growing companies',
+    description: lang === 'cs' ? 'Pro rostoucí firmy' : 'For growing companies',
     features: [
       lang === 'cs' ? 'Kompletní SEO strategie' : 'Complete SEO strategy',
       lang === 'cs' ? 'PPC správa (Google Ads, Sklik)' : 'PPC management (Google Ads, Sklik)',
@@ -54,9 +55,7 @@ const packages = [
     price: '49,900',
     unit: 'Kč',
     period: lang === 'cs' ? '+ DPH' : '+ VAT',
-    description: lang === 'cs' 
-      ? 'Pro velké podniky' 
-      : 'For enterprises',
+    description: lang === 'cs' ? 'Pro velké podniky' : 'For enterprises',
     features: [
       lang === 'cs' ? 'Kompletní digitální marketing' : 'Complete digital marketing',
       lang === 'cs' ? 'Dedikovaný account manager' : 'Dedicated account manager',
@@ -72,27 +71,31 @@ const packages = [
 const faqItems = [
   {
     q: lang === 'cs' ? 'Co je zahrnuto v ceně?' : 'What is included in the price?',
-    a: lang === 'cs' 
-      ? 'Všechny ceny zahrnují práci, nastavení a měsíční správu. Reklamní rozpočet (Google Ads, Sklik) není zahrnut a platíte pouze prokliky.'
-      : 'All prices include work, setup and monthly management. Advertising budget (Google Ads, Sklik) is not included and you only pay for clicks.',
+    a:
+      lang === 'cs'
+        ? 'Všechny ceny zahrnují práci, nastavení a měsíční správu. Reklamní rozpočet (Google Ads, Sklik) není zahrnut a platíte pouze prokliky.'
+        : 'All prices include work, setup and monthly management. Advertising budget (Google Ads, Sklik) is not included and you only pay for clicks.',
   },
   {
     q: lang === 'cs' ? 'Jak dlouho trvá, než uvidím výsledky?' : 'How long until I see results?',
-    a: lang === 'cs'
-      ? 'První výsledky obvykle vidíme za 1-2 měsíce. SEO je běh na dlouhou trať - plné efekty se projeví za 3-6 měsíců.'
-      : 'First results are usually visible in 1-2 months. SEO is a long-term effort - full effects appear in 3-6 months.',
+    a:
+      lang === 'cs'
+        ? 'První výsledky obvykle vidíme za 1-2 měsíce. SEO je běh na dlouhou trať - plné efekty se projeví za 3-6 měsíců.'
+        : 'First results are usually visible in 1-2 months. SEO is a long-term effort - full effects appear in 3-6 months.',
   },
   {
     q: lang === 'cs' ? 'Můžu kdykoli zrušit?' : 'Can I cancel anytime?',
-    a: lang === 'cs'
-      ? 'Ano, ale počítejte s tím, že kampaň potřebuje čas na nastavení. Doporučujeme minimální závazek dle vybraného balíčku.'
-      : 'Yes, but keep in mind campaigns need time to set up. We recommend minimum commitment according to selected package.',
+    a:
+      lang === 'cs'
+        ? 'Ano, ale počítejte s tím, že kampaň potřebuje čas na nastavení. Doporučujeme minimální závazek dle vybraného balíčku.'
+        : 'Yes, but keep in mind campaigns need time to set up. We recommend minimum commitment according to selected package.',
   },
   {
     q: lang === 'cs' ? 'Pracujete i s e-shopy?' : 'Do you work with e-shops?',
-    a: lang === 'cs'
-      ? 'Ano, máme zkušenosti s mall.cz, heureka.cz, google merchants a dalšími platformami.'
-      : 'Yes, we have experience with mall.cz, heureka.cz, google merchants and other platforms.',
+    a:
+      lang === 'cs'
+        ? 'Ano, máme zkušenosti s mall.cz, heureka.cz, google merchants a dalšími platformami.'
+        : 'Yes, we have experience with mall.cz, heureka.cz, google merchants and other platforms.',
   },
 ];
 ---
@@ -105,66 +108,82 @@ const faqItems = [
         {lang === 'cs' ? 'Ceník služeb' : 'Service Pricing'}
       </h2>
       <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-        {lang === 'cs' 
-          ? '透明ní ceny bez skrytých poplatků. Vyberte si balíček, který nejlépe odpovídá vašim potřebám.'
-          : 'Transparent prices without hidden fees. Choose the package that best fits your needs.'}
+        {
+          lang === 'cs'
+            ? '透明ní ceny bez skrytých poplatků. Vyberte si balíček, který nejlépe odpovídá vašim potřebám.'
+            : 'Transparent prices without hidden fees. Choose the package that best fits your needs.'
+        }
       </p>
     </div>
 
     <!-- Pricing Cards -->
     <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-16">
-      {packages.map((pkg) => (
-        <div class={`pricing-card relative rounded-2xl p-8 ${pkg.highlighted ? 'bg-primary-50 dark:bg-primary-900/20 border-2 border-primary-500' : 'bg-gray-50 dark:bg-dark-800 border border-gray-200 dark:border-dark-700'}`}>
-          {pkg.highlighted && (
-            <div class="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-primary-500 text-white text-sm font-medium rounded-full">
-              {lang === 'cs' ? 'Nejoblíbenější' : 'Most Popular'}
-            </div>
-          )}
-          
-          <div class="text-center mb-6">
-            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">{pkg.name}</h3>
-            <p class="text-sm text-gray-600 dark:text-gray-400">{pkg.description}</p>
-          </div>
-          
-          <div class="text-center mb-6">
-            <div class="flex items-baseline justify-center">
-              <span class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white">{pkg.price}</span>
-              <span class="text-lg text-gray-600 dark:text-gray-400 ml-1">{pkg.unit}</span>
-            </div>
-            <p class="text-sm text-gray-500 dark:text-gray-500 mt-1">{pkg.period}</p>
-          </div>
-          
-          <ul class="space-y-3 mb-8">
-            {pkg.features.map((feature) => (
-              <li class="flex items-start gap-2 text-sm text-gray-600 dark:text-gray-300">
-                <svg class="w-5 h-5 text-primary-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                </svg>
-                {feature}
-              </li>
-            ))}
-          </ul>
-          
-          <a
-            href={lang === 'cs' ? '/cs#contact' : '/#contact'}
-            class={`block w-full py-3 px-6 text-center font-medium rounded-lg transition-all ${
-              pkg.highlighted
-                ? 'bg-primary-600 hover:bg-primary-700 text-white'
-                : 'bg-gray-900 hover:bg-gray-800 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-100 text-white'
-            }`}
+      {
+        packages.map((pkg) => (
+          <div
+            class={`pricing-card relative rounded-2xl p-8 ${pkg.highlighted ? 'bg-primary-50 dark:bg-primary-900/20 border-2 border-primary-500' : 'bg-gray-50 dark:bg-dark-800 border border-gray-200 dark:border-dark-700'}`}
           >
-            {pkg.cta}
-          </a>
-        </div>
-      ))}
+            {pkg.highlighted && (
+              <div class="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-primary-500 text-white text-sm font-medium rounded-full">
+                {lang === 'cs' ? 'Nejoblíbenější' : 'Most Popular'}
+              </div>
+            )}
+
+            <div class="text-center mb-6">
+              <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">{pkg.name}</h3>
+              <p class="text-sm text-gray-600 dark:text-gray-400">{pkg.description}</p>
+            </div>
+
+            <div class="text-center mb-6">
+              <div class="flex items-baseline justify-center">
+                <span class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white">
+                  {pkg.price}
+                </span>
+                <span class="text-lg text-gray-600 dark:text-gray-400 ml-1">{pkg.unit}</span>
+              </div>
+              <p class="text-sm text-gray-500 dark:text-gray-500 mt-1">{pkg.period}</p>
+            </div>
+
+            <ul class="space-y-3 mb-8">
+              {pkg.features.map((feature) => (
+                <li class="flex items-start gap-2 text-sm text-gray-600 dark:text-gray-300">
+                  <svg
+                    class="w-5 h-5 text-primary-500 flex-shrink-0 mt-0.5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                  {feature}
+                </li>
+              ))}
+            </ul>
+
+            <a
+              href={lang === 'cs' ? '/cs#contact' : '/#contact'}
+              class={`block w-full py-3 px-6 text-center font-medium rounded-lg transition-all ${
+                pkg.highlighted
+                  ? 'bg-primary-600 hover:bg-primary-700 text-white'
+                  : 'bg-gray-900 hover:bg-gray-800 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-100 text-white'
+              }`}
+            >
+              {pkg.cta}
+            </a>
+          </div>
+        ))
+      }
     </div>
 
     <!-- Monthly Add-on -->
     <div class="text-center mb-16">
       <p class="text-gray-600 dark:text-gray-400">
-        {lang === 'cs' 
-          ? 'Měsíční správa již od' 
-          : 'Monthly management starting from'}{' '}
+        {lang === 'cs' ? 'Měsíční správa již od' : 'Monthly management starting from'}{' '}
         <span class="font-bold text-primary-600 dark:text-primary-400">4,900 Kč</span>
         {lang === 'cs' ? '/měsíc' : '/month'}
       </p>
@@ -175,37 +194,49 @@ const faqItems = [
       <h3 class="text-2xl font-bold text-center text-gray-900 dark:text-white mb-8">
         {lang === 'cs' ? 'Časté dotazy' : 'Frequently Asked Questions'}
       </h3>
-      
+
       <div class="space-y-4">
-        {faqItems.map((item) => (
-          <div class="faq-item border border-gray-200 dark:border-dark-700 rounded-xl overflow-hidden">
-            <button
-              type="button"
-              class="faq-toggle w-full flex items-center justify-between p-4 text-left bg-gray-50 dark:bg-dark-800 hover:bg-gray-100 dark:hover:bg-dark-700 transition-colors"
-              aria-expanded="false"
-            >
-              <span class="font-medium text-gray-900 dark:text-white">{item.q}</span>
-              <svg class="faq-icon w-5 h-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-              </svg>
-            </button>
-            <div class="faq-content hidden p-4 bg-white dark:bg-dark-900">
-              <p class="text-gray-600 dark:text-gray-300">{item.a}</p>
+        {
+          faqItems.map((item) => (
+            <div class="faq-item border border-gray-200 dark:border-dark-700 rounded-xl overflow-hidden">
+              <button
+                type="button"
+                class="faq-toggle w-full flex items-center justify-between p-4 text-left bg-gray-50 dark:bg-dark-800 hover:bg-gray-100 dark:hover:bg-dark-700 transition-colors"
+                aria-expanded="false"
+              >
+                <span class="font-medium text-gray-900 dark:text-white">{item.q}</span>
+                <svg
+                  class="faq-icon w-5 h-5 text-gray-500 transform transition-transform"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M19 9l-7 7-7-7"
+                  />
+                </svg>
+              </button>
+              <div class="faq-content hidden p-4 bg-white dark:bg-dark-900">
+                <p class="text-gray-600 dark:text-gray-300">{item.a}</p>
+              </div>
             </div>
-          </div>
-        ))}
+          ))
+        }
       </div>
     </div>
   </div>
 </section>
 
 <script is:inline>
-  document.querySelectorAll('.faq-toggle').forEach(btn => {
+  document.querySelectorAll('.faq-toggle').forEach((btn) => {
     btn.addEventListener('click', () => {
       const expanded = btn.getAttribute('aria-expanded') === 'true';
       const content = btn.nextElementSibling;
       const icon = btn.querySelector('.faq-icon');
-      
+
       btn.setAttribute('aria-expanded', !expanded);
       content.classList.toggle('hidden');
       icon.classList.toggle('rotate-180');

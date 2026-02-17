@@ -11,11 +11,37 @@ const lang = propLang || getLangFromUrl(Astro.url);
 const t = translations[lang];
 
 const certifications = [
-  { name: 'Google Premier Partner', year: 2025, icon: 'google', description: lang === 'cs' ? 'Nejvyšší partnerský status Google' : 'Highest Google partner status' },
-  { name: 'Google Ads Certified', year: 2024, icon: 'ads', description: lang === 'cs' ? 'Certifikace Google Ads' : 'Google Ads Certification' },
-  { name: 'HubSpot Marketing Pro', year: 2024, icon: 'hubspot', description: lang === 'cs' ? 'HubSpot Marketing Partner' : 'HubSpot Marketing Partner' },
-  { name: 'Meta Business Partner', year: 2024, icon: 'meta', description: lang === 'cs' ? 'Meta Business Partner' : 'Meta Business Partner' },
-  { name: 'Google Analytics', year: 2024, icon: 'analytics', description: lang === 'cs' ? 'Analytics Certified' : 'Analytics Certified' },
+  {
+    name: 'Google Premier Partner',
+    year: 2025,
+    icon: 'google',
+    description:
+      lang === 'cs' ? 'Nejvyšší partnerský status Google' : 'Highest Google partner status',
+  },
+  {
+    name: 'Google Ads Certified',
+    year: 2024,
+    icon: 'ads',
+    description: lang === 'cs' ? 'Certifikace Google Ads' : 'Google Ads Certification',
+  },
+  {
+    name: 'HubSpot Marketing Pro',
+    year: 2024,
+    icon: 'hubspot',
+    description: lang === 'cs' ? 'HubSpot Marketing Partner' : 'HubSpot Marketing Partner',
+  },
+  {
+    name: 'Meta Business Partner',
+    year: 2024,
+    icon: 'meta',
+    description: lang === 'cs' ? 'Meta Business Partner' : 'Meta Business Partner',
+  },
+  {
+    name: 'Google Analytics',
+    year: 2024,
+    icon: 'analytics',
+    description: lang === 'cs' ? 'Analytics Certified' : 'Analytics Certified',
+  },
 ];
 
 const getIcon = (iconName: string) => {
@@ -37,28 +63,26 @@ const getIcon = (iconName: string) => {
         {t.certifications?.title || 'Certifications'}
       </h2>
     </div>
-    
+
     <div class="flex flex-wrap justify-center gap-6">
-      {certifications.map((cert) => (
-        <div class="group relative px-4 py-3 bg-white dark:bg-dark-700 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-primary-500 dark:hover:border-primary-400 transition-colors duration-300">
-          <div class="flex items-center gap-3">
-            <div class="text-primary-600 dark:text-primary-400" set:html={getIcon(cert.icon)} />
-            <div>
-              <div class="font-semibold text-gray-900 dark:text-white text-sm">
-                {cert.name}
-              </div>
-              <div class="text-xs text-gray-500 dark:text-gray-400">
-                {cert.year}
+      {
+        certifications.map((cert) => (
+          <div class="group relative px-4 py-3 bg-white dark:bg-dark-700 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-primary-500 dark:hover:border-primary-400 transition-colors duration-300">
+            <div class="flex items-center gap-3">
+              <div class="text-primary-600 dark:text-primary-400" set:html={getIcon(cert.icon)} />
+              <div>
+                <div class="font-semibold text-gray-900 dark:text-white text-sm">{cert.name}</div>
+                <div class="text-xs text-gray-500 dark:text-gray-400">{cert.year}</div>
               </div>
             </div>
+
+            <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 bg-gray-900 dark:bg-gray-700 text-white text-xs rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 whitespace-nowrap z-10">
+              {cert.description}
+              <div class="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-gray-900 dark:border-t-gray-700" />
+            </div>
           </div>
-          
-          <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 bg-gray-900 dark:bg-gray-700 text-white text-xs rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 whitespace-nowrap z-10">
-            {cert.description}
-            <div class="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-gray-900 dark:border-t-gray-700"></div>
-          </div>
-        </div>
-      ))}
+        ))
+      }
     </div>
   </div>
 </section>

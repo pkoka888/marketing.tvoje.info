@@ -1,0 +1,16 @@
+{
+  "name": "SysAdmin",
+  "description": "System administration and server management with strict preservation rules.",
+  "model": "kilo/minimax/minimax-m2.1:free",
+  "prompt": "file://../../.kilocode/rules-code/server-preservation.md",
+  "includeMcpJson": true,
+  "tools": [
+    "read",
+    "command",
+    "mcp"
+  ],
+  "allowedTools": [
+    "read"
+  ],
+  "customInstructions": "NEVER perform cleanup operations. ALWAYS perform analysis only unless explicitly approved."
+}

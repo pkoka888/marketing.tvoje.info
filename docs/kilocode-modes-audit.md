@@ -14,12 +14,12 @@ The audit reveals a **critical format mismatch** between current mode implementa
 
 ### Key Findings
 
-| Finding | Severity | Impact |
-|---------|----------|--------|
-| Format Mismatch | Critical | Modes are not loadable by Kilo Code |
-| Missing Required Fields | Critical | Configuration incomplete |
-| Missing `custom_modes.yaml` | High | Referenced file does not exist |
-| Platform Migration Context | Medium | Kilo transitioning VS Code extension → CLI |
+| Finding                     | Severity | Impact                                     |
+| --------------------------- | -------- | ------------------------------------------ |
+| Format Mismatch             | Critical | Modes are not loadable by Kilo Code        |
+| Missing Required Fields     | Critical | Configuration incomplete                   |
+| Missing `custom_modes.yaml` | High     | Referenced file does not exist             |
+| Platform Migration Context  | Medium   | Kilo transitioning VS Code extension → CLI |
 
 ---
 
@@ -40,28 +40,30 @@ The audit reveals a **critical format mismatch** between current mode implementa
 
 #### 1. `README.md`
 
-| Property | Value |
-|----------|-------|
-| Type | Documentation |
-| Lines | 22 |
-| Purpose | Directory documentation |
-| Issue | References non-existent `custom_modes.yaml` |
+| Property | Value                                       |
+| -------- | ------------------------------------------- |
+| Type     | Documentation                               |
+| Lines    | 22                                          |
+| Purpose  | Directory documentation                     |
+| Issue    | References non-existent `custom_modes.yaml` |
 
 **Content Summary**:
+
 - Describes custom modes directory purpose
 - References `.kilocode/custom_modes.yaml` in global configuration (does not exist)
 - Documents a "prompt consultant" mode not present in directory
 
 #### 2. `server-monitor/MODE.md`
 
-| Property | Value |
-|----------|-------|
-| Type | Documentation (Markdown) |
-| Lines | 152 |
-| Format | Markdown with headers |
-| Required Fields | ❌ None present |
+| Property        | Value                    |
+| --------------- | ------------------------ |
+| Type            | Documentation (Markdown) |
+| Lines           | 152                      |
+| Format          | Markdown with headers    |
+| Required Fields | ❌ None present          |
 
 **Content Summary**:
+
 - Mode Name: `server-monitor` (documented, not configured)
 - Role: Read-only server monitoring and evidence collection
 - Capabilities: System info, package inventory, service status, network config
@@ -70,14 +72,15 @@ The audit reveals a **critical format mismatch** between current mode implementa
 
 #### 3. `sysadmin/MODE.md`
 
-| Property | Value |
-|----------|-------|
-| Type | Documentation (Markdown with YAML frontmatter) |
-| Lines | 115 |
-| Format | YAML frontmatter + Markdown body |
-| Required Fields | ❌ Partial frontmatter only |
+| Property        | Value                                          |
+| --------------- | ---------------------------------------------- |
+| Type            | Documentation (Markdown with YAML frontmatter) |
+| Lines           | 115                                            |
+| Format          | YAML frontmatter + Markdown body               |
+| Required Fields | ❌ Partial frontmatter only                    |
 
 **Frontmatter Present**:
+
 ```yaml
 ---
 description: SysAdmin mode for server management and system administration
@@ -89,6 +92,7 @@ tags: [sysadmin, server, operations, monitoring]
 ```
 
 **Content Summary**:
+
 - Purpose: System administration and server management
 - Capabilities: Server monitoring, evidence collection, command execution
 - Rules: Server preservation rule with allowed/prohibited operations
@@ -103,32 +107,32 @@ tags: [sysadmin, server, operations, monitoring]
 According to official Kilo Code documentation, a valid mode configuration requires:
 
 ```yaml
-slug: mode-identifier          # REQUIRED: Unique identifier
-name: Display Name             # REQUIRED: Human-readable name
-model: model-assignment        # REQUIRED: Model assignment
-tool_format: native            # REQUIRED: Tool format (usually "native")
-role: Role description         # REQUIRED: Role definition
-custom_instructions: Optional  # OPTIONAL: Additional instructions
+slug: mode-identifier # REQUIRED: Unique identifier
+name: Display Name # REQUIRED: Human-readable name
+model: model-assignment # REQUIRED: Model assignment
+tool_format: native # REQUIRED: Tool format (usually "native")
+role: Role description # REQUIRED: Role definition
+custom_instructions: Optional # OPTIONAL: Additional instructions
 ```
 
 ### Field Compliance Matrix
 
-| Field | Required | server-monitor | sysadmin | README |
-|-------|----------|----------------|----------|--------|
-| `slug` | ✅ Yes | ❌ Missing | ❌ Missing | N/A |
-| `name` | ✅ Yes | ❌ Missing | ❌ Missing | N/A |
-| `model` | ✅ Yes | ❌ Missing | ❌ Missing | N/A |
-| `tool_format` | ✅ Yes | ❌ Missing | ❌ Missing | N/A |
-| `role` | ✅ Yes | ❌ Missing | ❌ Missing | N/A |
-| `custom_instructions` | Optional | ❌ Missing | ❌ Missing | N/A |
+| Field                 | Required | server-monitor | sysadmin   | README |
+| --------------------- | -------- | -------------- | ---------- | ------ |
+| `slug`                | ✅ Yes   | ❌ Missing     | ❌ Missing | N/A    |
+| `name`                | ✅ Yes   | ❌ Missing     | ❌ Missing | N/A    |
+| `model`               | ✅ Yes   | ❌ Missing     | ❌ Missing | N/A    |
+| `tool_format`         | ✅ Yes   | ❌ Missing     | ❌ Missing | N/A    |
+| `role`                | ✅ Yes   | ❌ Missing     | ❌ Missing | N/A    |
+| `custom_instructions` | Optional | ❌ Missing     | ❌ Missing | N/A    |
 
 ### Compliance Score per File
 
-| File | Required Fields Present | Score |
-|------|------------------------|-------|
-| `server-monitor/MODE.md` | 0/5 | 0% |
-| `sysadmin/MODE.md` | 0/5 | 0% |
-| `custom_modes.yaml` | File not found | N/A |
+| File                     | Required Fields Present | Score |
+| ------------------------ | ----------------------- | ----- |
+| `server-monitor/MODE.md` | 0/5                     | 0%    |
+| `sysadmin/MODE.md`       | 0/5                     | 0%    |
+| `custom_modes.yaml`      | File not found          | N/A   |
 
 ---
 
@@ -171,10 +175,10 @@ custom_instructions: Optional  # OPTIONAL: Additional instructions
 
 ### Platform Migration Context
 
-| Platform | Mode System | Status |
-|----------|-------------|--------|
-| VS Code Extension | Custom modes via YAML | Current implementation target |
-| Kilo CLI | Agents (converted from modes) | Migration in progress |
+| Platform          | Mode System                   | Status                        |
+| ----------------- | ----------------------------- | ----------------------------- |
+| VS Code Extension | Custom modes via YAML         | Current implementation target |
+| Kilo CLI          | Agents (converted from modes) | Migration in progress         |
 
 **Note**: Kilo is transitioning from VS Code extension to CLI, with "Custom modes → Converted to agents". This may affect the long-term viability of current mode configurations.
 
@@ -204,14 +208,14 @@ custom_instructions: |
   - Network configuration audit
   - Configuration file inspection
   - Log analysis
-  
+
   ## Restrictions (STRICTLY FORBIDDEN)
   - No file modifications (rm, del, erase)
   - No package installations
   - No service modifications
   - No system changes
   - No permission changes
-  
+
   ## Target Servers
   - Server60 (192.168.1.60:2260) - Infrastructure/VPS
   - Server61 (192.168.1.61:2261) - Gateway/Traefik
@@ -226,21 +230,21 @@ name: SysAdmin
 model: z-ai/glm-5:free
 tool_format: native
 role: |
-  System administration and server management capabilities with read-only and 
+  System administration and server management capabilities with read-only and
   command execution support. Follows strict server preservation rules.
 custom_instructions: |
   ## Server Preservation Rule
   - NEVER perform cleanup operations (delete, remove, prune, purge)
   - ALWAYS perform analysis only unless explicitly approved
   - Document findings but do NOT modify server state
-  
+
   ## Allowed Operations
   - docker ps, docker logs, docker inspect
   - systemctl status
   - journalctl
   - cat, less, tail
   - diff
-  
+
   ## Prohibited Operations
   - docker rm, docker rmi, docker prune
   - systemctl stop, systemctl disable
@@ -253,7 +257,7 @@ custom_instructions: |
 modes:
   - slug: server-monitor
     path: ./modes/server-monitor.yaml
-    
+
   - slug: sysadmin
     path: ./modes/sysadmin.yaml
 ```
@@ -280,6 +284,7 @@ tools:
 Read-only server monitoring and evidence collection agent.
 
 ## Capabilities
+
 [... same as Option 1 ...]
 ```
 
@@ -372,23 +377,23 @@ The current `.kilocode/modes/` directory contains valuable documentation content
 
 ### server-monitor Mode
 
-| Aspect | Details |
-|--------|---------|
-| Purpose | Read-only server monitoring and evidence collection |
+| Aspect       | Details                                                 |
+| ------------ | ------------------------------------------------------- |
+| Purpose      | Read-only server monitoring and evidence collection     |
 | Capabilities | System info, packages, services, network, configs, logs |
-| Restrictions | No modifications, installations, or deletions |
-| Servers | Server60, Server61, Server62 |
-| Output | Evidence stored in `evidence/` directory |
+| Restrictions | No modifications, installations, or deletions           |
+| Servers      | Server60, Server61, Server62                            |
+| Output       | Evidence stored in `evidence/` directory                |
 
 ### sysadmin Mode
 
-| Aspect | Details |
-|--------|---------|
-| Purpose | System administration and server management |
+| Aspect       | Details                                            |
+| ------------ | -------------------------------------------------- |
+| Purpose      | System administration and server management        |
 | Capabilities | Monitoring, evidence collection, command execution |
-| Restrictions | Server preservation rule - analysis only |
-| Servers | Server60, Server61, Server62 |
-| Permissions | read, command, mcp groups |
+| Restrictions | Server preservation rule - analysis only           |
+| Servers      | Server60, Server61, Server62                       |
+| Permissions  | read, command, mcp groups                          |
 
 ---
 

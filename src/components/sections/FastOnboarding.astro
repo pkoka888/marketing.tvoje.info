@@ -11,7 +11,9 @@ const lang = propLang || getLangFromUrl(Astro.url);
 const t = translations[lang];
 ---
 
-<section class="py-16 md:py-24 bg-gradient-to-br from-primary-50 to-accent-50 dark:from-dark-900 dark:to-dark-800">
+<section
+  class="py-16 md:py-24 bg-gradient-to-br from-primary-50 to-accent-50 dark:from-dark-900 dark:to-dark-800"
+>
   <div class="container mx-auto px-4 sm:px-6 lg:px-8">
     <div class="max-w-2xl mx-auto">
       <!-- Header -->
@@ -20,14 +22,16 @@ const t = translations[lang];
           {lang === 'cs' ? 'Rychlá poptávka' : 'Quick Request'}
         </h1>
         <p class="text-lg text-gray-600 dark:text-gray-300">
-          {lang === 'cs' 
-            ? 'Vyplňte základní údaje a my se vám ozveme do 24 hodin.'
-            : 'Fill in the basic details and we will get back to you within 24 hours.'}
+          {
+            lang === 'cs'
+              ? 'Vyplňte základní údaje a my se vám ozveme do 24 hodin.'
+              : 'Fill in the basic details and we will get back to you within 24 hours.'
+          }
         </p>
       </div>
 
       <!-- Form -->
-      <form 
+      <form
         class="bg-white dark:bg-dark-800 rounded-2xl shadow-xl p-8"
         action="https://formspree.io/f/xpwzgvry"
         method="POST"
@@ -35,7 +39,10 @@ const t = translations[lang];
         <div class="space-y-6">
           <!-- Project Type -->
           <div>
-            <label for="project-type" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label
+              for="project-type"
+              class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+            >
               {lang === 'cs' ? 'Typ projektu *' : 'Project Type *'}
             </label>
             <select
@@ -44,18 +51,31 @@ const t = translations[lang];
               required
               class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-dark-600 bg-white dark:bg-dark-700 text-gray-900 dark:text-dark-100 focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
             >
-              <option value="">{lang === 'cs' ? 'Vyberte typ projektu' : 'Select project type'}</option>
+              <option value=""
+                >{lang === 'cs' ? 'Vyberte typ projektu' : 'Select project type'}</option
+              >
               <option value="seo">{lang === 'cs' ? 'SEO optimalizace' : 'SEO Optimization'}</option>
-              <option value="ppc">{lang === 'cs' ? 'PPC kampaně (Google, Sklik)' : 'PPC Campaigns (Google, Sklik)'}</option>
+              <option value="ppc"
+                >{
+                  lang === 'cs' ? 'PPC kampaně (Google, Sklik)' : 'PPC Campaigns (Google, Sklik)'
+                }</option
+              >
               <option value="web">{lang === 'cs' ? 'Webové stránky' : 'Website'}</option>
-              <option value="content">{lang === 'cs' ? 'Content marketing' : 'Content Marketing'}</option>
-              <option value="full">{lang === 'cs' ? 'Kompletní marketing' : 'Full Marketing'}</option>
+              <option value="content"
+                >{lang === 'cs' ? 'Content marketing' : 'Content Marketing'}</option
+              >
+              <option value="full"
+                >{lang === 'cs' ? 'Kompletní marketing' : 'Full Marketing'}</option
+              >
             </select>
           </div>
 
           <!-- Budget -->
           <div>
-            <label for="budget" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label
+              for="budget"
+              class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+            >
               {lang === 'cs' ? 'Rozpočet *' : 'Budget *'}
             </label>
             <select
@@ -66,16 +86,25 @@ const t = translations[lang];
             >
               <option value="">{lang === 'cs' ? 'Vyberte rozpočet' : 'Select budget'}</option>
               <option value="do-10k">{lang === 'cs' ? 'Do 10 000 Kč' : 'Up to 10,000 CZK'}</option>
-              <option value="10-25k">{lang === 'cs' ? '10 000 - 25 000 Kč' : '10,000 - 25,000 CZK'}</option>
-              <option value="25-50k">{lang === 'cs' ? '25 000 - 50 000 Kč' : '25,000 - 50,000 CZK'}</option>
-              <option value="50-100k">{lang === 'cs' ? '50 000 - 100 000 Kč' : '50,000 - 100,000 CZK'}</option>
+              <option value="10-25k"
+                >{lang === 'cs' ? '10 000 - 25 000 Kč' : '10,000 - 25,000 CZK'}</option
+              >
+              <option value="25-50k"
+                >{lang === 'cs' ? '25 000 - 50 000 Kč' : '25,000 - 50,000 CZK'}</option
+              >
+              <option value="50-100k"
+                >{lang === 'cs' ? '50 000 - 100 000 Kč' : '50,000 - 100,000 CZK'}</option
+              >
               <option value="100k+">{lang === 'cs' ? 'Nad 100 000 Kč' : 'Over 100,000 CZK'}</option>
             </select>
           </div>
 
           <!-- Timeline -->
           <div>
-            <label for="timeline" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label
+              for="timeline"
+              class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+            >
               {lang === 'cs' ? 'Časový rámec' : 'Timeline'}
             </label>
             <select
@@ -93,7 +122,10 @@ const t = translations[lang];
 
           <!-- Company Size -->
           <div>
-            <label for="company-size" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label
+              for="company-size"
+              class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+            >
               {lang === 'cs' ? 'Velikost firmy' : 'Company Size'}
             </label>
             <select
@@ -102,17 +134,28 @@ const t = translations[lang];
               class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-dark-600 bg-white dark:bg-dark-700 text-gray-900 dark:text-dark-100 focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
             >
               <option value="">{lang === 'cs' ? 'Vyberte velikost' : 'Select size'}</option>
-              <option value="startup">{lang === 'cs' ? 'Startup (1-10 zaměstnanců)' : 'Startup (1-10 employees)'}</option>
-              <option value="smb">{lang === 'cs' ? 'Malá firma (11-50)' : 'Small business (11-50)'}</option>
-              <option value="mid">{lang === 'cs' ? 'Střední firma (51-200)' : 'Medium business (51-200)'}</option>
-              <option value="enterprise">{lang === 'cs' ? 'Velká firma (200+)' : 'Enterprise (200+)'}</option>
+              <option value="startup"
+                >{lang === 'cs' ? 'Startup (1-10 zaměstnanců)' : 'Startup (1-10 employees)'}</option
+              >
+              <option value="smb"
+                >{lang === 'cs' ? 'Malá firma (11-50)' : 'Small business (11-50)'}</option
+              >
+              <option value="mid"
+                >{lang === 'cs' ? 'Střední firma (51-200)' : 'Medium business (51-200)'}</option
+              >
+              <option value="enterprise"
+                >{lang === 'cs' ? 'Velká firma (200+)' : 'Enterprise (200+)'}</option
+              >
             </select>
           </div>
 
           <!-- Contact Info -->
           <div class="grid md:grid-cols-2 gap-6">
             <div>
-              <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label
+                for="name"
+                class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+              >
                 {lang === 'cs' ? 'Jméno *' : 'Name *'}
               </label>
               <input
@@ -125,7 +168,10 @@ const t = translations[lang];
               />
             </div>
             <div>
-              <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label
+                for="email"
+                class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+              >
                 {lang === 'cs' ? 'Email *' : 'Email *'}
               </label>
               <input
@@ -141,7 +187,10 @@ const t = translations[lang];
 
           <!-- Company -->
           <div>
-            <label for="company" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label
+              for="company"
+              class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+            >
               {lang === 'cs' ? 'Název firmy' : 'Company Name'}
             </label>
             <input
@@ -155,7 +204,10 @@ const t = translations[lang];
 
           <!-- Message -->
           <div>
-            <label for="message" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label
+              for="message"
+              class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+            >
               {lang === 'cs' ? 'Zpráva (nepovinné)' : 'Message (optional)'}
             </label>
             <textarea
@@ -177,9 +229,11 @@ const t = translations[lang];
               class="mt-1 w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500"
             />
             <label for="gdpr" class="text-sm text-gray-600 dark:text-gray-400">
-              {lang === 'cs' 
-                ? 'Souhlasím se zpracováním osobních údajů dle GDPR. Odesláním formuláře souhlasíte s našimi zásadami ochrany osobních údajů.'
-                : 'I agree to the processing of personal data according to GDPR. By submitting the form you agree to our privacy policy.'}
+              {
+                lang === 'cs'
+                  ? 'Souhlasím se zpracováním osobních údajů dle GDPR. Odesláním formuláře souhlasíte s našimi zásadami ochrany osobních údajů.'
+                  : 'I agree to the processing of personal data according to GDPR. By submitting the form you agree to our privacy policy.'
+              }
             </label>
           </div>
 

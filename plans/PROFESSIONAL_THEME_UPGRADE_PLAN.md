@@ -15,16 +15,16 @@ This phase establishes the foundational aesthetic for the new themes.
 
 ### 1.1. Update Tailwind Configuration (`tailwind.config.mjs`)
 
--   **Fonts:** Update the sans-serif font stack to a modern, system-ui based stack.
-    -   **Action:** Change `fontFamily` to `['Inter var', 'system-ui', 'sans-serif']`.
--   **Border Radius:** Standardize border-radius values to be more subtle and consistent with ShadCN/UI's look.
-    -   **Action:** Add/modify the `borderRadius` theme object to include specific values like `sm: '0.25rem'`, `md: '0.5rem'`, `lg: '0.75rem'`. Cards and buttons will primarily use `md`.
--   **Keyframes:** Add subtle animations for components.
-    -   **Action:** Add keyframes for `fadeIn` and `slideUp` to be used in popups and on page load.
+- **Fonts:** Update the sans-serif font stack to a modern, system-ui based stack.
+  - **Action:** Change `fontFamily` to `['Inter var', 'system-ui', 'sans-serif']`.
+- **Border Radius:** Standardize border-radius values to be more subtle and consistent with ShadCN/UI's look.
+  - **Action:** Add/modify the `borderRadius` theme object to include specific values like `sm: '0.25rem'`, `md: '0.5rem'`, `lg: '0.75rem'`. Cards and buttons will primarily use `md`.
+- **Keyframes:** Add subtle animations for components.
+  - **Action:** Add keyframes for `fadeIn` and `slideUp` to be used in popups and on page load.
 
 ### 1.2. Define New Theme Palettes (`src/styles/themes.css`)
 
--   **Action:** Add the color definitions for `[data-site-theme='shad-light']` and `[data-site-theme='shad-dark']` to the top of the file with the other themes.
+- **Action:** Add the color definitions for `[data-site-theme='shad-light']` and `[data-site-theme='shad-dark']` to the top of the file with the other themes.
 
 #### `shad-light` Palette (Inspired by ShadCN/UI default)
 
@@ -60,8 +60,8 @@ This phase applies the new aesthetic to specific components when the new themes 
 
 ### 2.1. Update Card Component Styles
 
--   **Action:** Add new rules to `src/styles/themes.css` for `.card` components under the `shad-light` and `shad-dark` themes.
--   **Style:** Remove box-shadow, add a 1px solid border, and use the new standardized border-radius.
+- **Action:** Add new rules to `src/styles/themes.css` for `.card` components under the `shad-light` and `shad-dark` themes.
+- **Style:** Remove box-shadow, add a 1px solid border, and use the new standardized border-radius.
 
 ```css
 /* ShadCN Inspired Cards */
@@ -81,15 +81,15 @@ This phase applies the new aesthetic to specific components when the new themes 
 
 ### 2.2. Update Button Component Styles
 
--   **Action:** Modify the base `Button.astro` component to use the new theme variables and styles for a more modern look (solid background, no pill shape). The component should be adapted to use Tailwind classes that reflect this.
+- **Action:** Modify the base `Button.astro` component to use the new theme variables and styles for a more modern look (solid background, no pill shape). The component should be adapted to use Tailwind classes that reflect this.
 
 ### 2.3. Update Theme Switcher
 
--   **Action:** Add `shad-light` and `shad-dark` to the list of available themes in the `ThemeSwitcher.astro` and/or `ThemeSelector.astro` component.
+- **Action:** Add `shad-light` and `shad-dark` to the list of available themes in the `ThemeSwitcher.astro` and/or `ThemeSelector.astro` component.
 
 ## Phase 3: Implementation & Verification
 
--   **Task 1:** Implement all Phase 1 changes (Tailwind config, CSS variables).
--   **Task 2:** Implement Phase 2 changes (Component style overrides).
--   **Task 3:** Update the theme selection UI to include the new themes.
--   **Task 4:** Manually test the new themes across all pages to ensure consistency and fix any visual regressions.
+- **Task 1:** Implement all Phase 1 changes (Tailwind config, CSS variables).
+- **Task 2:** Implement Phase 2 changes (Component style overrides).
+- **Task 3:** Update the theme selection UI to include the new themes.
+- **Task 4:** Manually test the new themes across all pages to ensure consistency and fix any visual regressions.

@@ -1,7 +1,7 @@
 ---
 /**
  * OptimizedImage - Performance-optimized image component
- * 
+ *
  * Features:
  * - Uses Astro's optimized image service (Sharp) for local images
  * - Fallback to standard img tag for remote images
@@ -10,12 +10,12 @@
  * - Loading="eager" for LCP candidates (above fold)
  * - Async decoding for faster page rendering
  * - Proper alt text for accessibility
- * 
+ *
  * Usage:
- * <OptimizedImage 
- *   src={imagePath} 
- *   alt="Description" 
- *   width={800} 
+ * <OptimizedImage
+ *   src={imagePath}
+ *   alt="Description"
+ *   width={800}
  *   height={600}
  *   loading="eager" | "lazy"  // Default: "lazy"
  *   class="custom-class"
@@ -48,7 +48,7 @@ const {
   class: className = '',
   id = '',
   sizes = '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw',
-  preload = false
+  preload = false,
 } = Astro.props;
 
 // Check if local or remote
@@ -60,37 +60,41 @@ const resolvedHeight = height || 600;
 const shouldPreload = preload || loading === 'eager';
 ---
 
-{shouldPreload && (
-  <link 
-    rel="preload" 
-    as="image" 
-    href={isRemote ? src : (src as ImageMetadata).src}
-    media={`(max-width: ${resolvedWidth}px)`}
-  />
-)}
+{
+  shouldPreload && (
+    <link
+      rel="preload"
+      as="image"
+      href={isRemote ? src : (src as ImageMetadata).src}
+      media={`(max-width: ${resolvedWidth}px)`}
+    />
+  )
+}
 
-{isRemote ? (
-  <img
-    src={src as string}
-    alt={alt}
-    width={resolvedWidth}
-    height={resolvedHeight}
-    loading={loading}
-    decoding={decoding}
-    class={className}
-    sizes={sizes}
-    id={id}
-  />
-) : (
-  <Image
-    src={src as ImageMetadata}
-    alt={alt}
-    width={resolvedWidth}
-    height={resolvedHeight}
-    loading={loading}
-    decoding={decoding}
-    class={className}
-    sizes={sizes}
-    id={id}
-  />
-)}
+{
+  isRemote ? (
+    <img
+      src={src as string}
+      alt={alt}
+      width={resolvedWidth}
+      height={resolvedHeight}
+      loading={loading}
+      decoding={decoding}
+      class={className}
+      sizes={sizes}
+      id={id}
+    />
+  ) : (
+    <Image
+      src={src as ImageMetadata}
+      alt={alt}
+      width={resolvedWidth}
+      height={resolvedHeight}
+      loading={loading}
+      decoding={decoding}
+      class={className}
+      sizes={sizes}
+      id={id}
+    />
+  )
+}

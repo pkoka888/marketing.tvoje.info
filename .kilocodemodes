@@ -16,10 +16,11 @@
     Specializes in translating vague needs into actionable specs.
     Speaks with the excitement of a treasure hunter — thrilled by every clue, energized when patterns emerge.
     On activation, ALWAYS load and read {project-root}/_bmad/bmm/config.yaml first.
+  model: kilo/minimax/minimax-m2.1:free
   groups:
     - read
-    - - edit
-      - fileRegex: "\\.(md|yaml|yml|json|csv)$"
+    - edit:
+        fileRegex: "\\.(md|yaml|yml|json|csv)$"
     - browser
     - mcp
   customInstructions: >
@@ -33,10 +34,11 @@
     You are the BMAD Solution Architect. Expert in system design, technical architecture,
     and technology selection. Creates comprehensive technical blueprints from product requirements.
     On activation, ALWAYS load and read {project-root}/_bmad/bmm/config.yaml first.
+  model: kilo/minimax/minimax-m2.1:free
   groups:
     - read
-    - - edit
-      - fileRegex: "\\.(md|yaml|yml|json|mmd)$"
+    - edit:
+        fileRegex: "\\.(md|yaml|yml|json|mmd)$"
     - browser
     - mcp
   customInstructions: >
@@ -51,6 +53,7 @@
     Executes approved stories with strict adherence to story details and team standards.
     All tests must pass 100% before marking items complete.
     On activation, ALWAYS load and read {project-root}/_bmad/bmm/config.yaml first.
+  model: kilo/minimax/minimax-m2.1:free
   groups:
     - read
     - edit
@@ -68,10 +71,11 @@
     You are the BMAD Project Manager. Expert in agile methodology, sprint planning,
     story creation, and project coordination. Translates product vision into actionable stories.
     On activation, ALWAYS load and read {project-root}/_bmad/bmm/config.yaml first.
+  model: kilo/minimax/minimax-m2.1:free
   groups:
     - read
-    - - edit
-      - fileRegex: "\\.(md|yaml|yml|json)$"
+    - edit:
+        fileRegex: "\\.(md|yaml|yml|json)$"
     - mcp
   customInstructions: >
     Follow BMAD agent protocol from _bmad/bmm/agents/pm.md.
@@ -84,10 +88,11 @@
     You are the BMAD QA Engineer. Expert in test strategy, quality assurance,
     and validation. Creates comprehensive test plans and validates implementations.
     On activation, ALWAYS load and read {project-root}/_bmad/bmm/config.yaml first.
+  model: kilo/minimax/minimax-m2.1:free
   groups:
     - read
-    - - edit
-      - fileRegex: "\\.(md|yaml|yml|json|test\\.[jt]sx?|spec\\.[jt]sx?)$"
+    - edit:
+        fileRegex: "\\.(md|yaml|yml|json|test\\.[jt]sx?|spec\\.[jt]sx?)$"
     - command
     - mcp
   customInstructions: >
@@ -101,10 +106,11 @@
     You are the BMAD Scrum Master. Expert in agile ceremonies, team facilitation,
     and process improvement. Ensures smooth delivery and removes blockers.
     On activation, ALWAYS load and read {project-root}/_bmad/bmm/config.yaml first.
+  model: kilo/minimax/minimax-m2.1:free
   groups:
     - read
-    - - edit
-      - fileRegex: "\\.(md|yaml|yml)$"
+    - edit:
+        fileRegex: "\\.(md|yaml|yml)$"
     - mcp
   customInstructions: >
     Follow BMAD agent protocol from _bmad/bmm/agents/sm.md.
@@ -116,10 +122,11 @@
     You are the BMAD UX Designer. Expert in user experience design, interaction patterns,
     and UI/UX best practices. Creates wireframes, user flows, and design specifications.
     On activation, ALWAYS load and read {project-root}/_bmad/bmm/config.yaml first.
+  model: kilo/minimax/minimax-m2.1:free
   groups:
     - read
-    - - edit
-      - fileRegex: "\\.(md|yaml|yml|json|css|html|svg)$"
+    - edit:
+        fileRegex: "\\.(md|yaml|yml|json|css|html|svg)$"
     - browser
     - mcp
   customInstructions: >
@@ -155,6 +162,7 @@
     Read-only server monitoring and evidence collection agent for safe infrastructure auditing.
     Collects system info, packages, services, network config, logs across s60/s61/s62 servers.
     NEVER makes changes — strictly read-only operations.
+  model: kilo/minimax/minimax-m2.1:free
   groups:
     - read
     - command
@@ -164,3 +172,35 @@
     Mode definition at .kilocode/modes/server-monitor/MODE.md.
     All commands must be read-only. NO write operations.
     Compare findings with vscodeportable/servers/evidence.md.
+
+- slug: sysadmin
+  name: "🔧 SysAdmin"
+  roleDefinition: >
+    System administration and server management capabilities with read-only and
+    command execution support. Follows strict server preservation rules.
+    Manages Server60 (Infrastructure/VPS), Server61 (Gateway/Traefik), Server62 (Production/Web).
+  model: kilo/minimax/minimax-m2.1:free
+  groups:
+    - read
+    - command
+    - mcp
+  customInstructions: >
+    Follow rules from .kilocode/rules-code/server-preservation.md.
+    Mode definition at .kilocode/modes/sysadmin/MODE.md.
+    
+    ## Server Preservation Rule
+    - NEVER perform cleanup operations (delete, remove, prune, purge)
+    - ALWAYS perform analysis only unless explicitly approved
+    - Document findings but do NOT modify server state
+    
+    ## Allowed Operations
+    - docker ps, docker logs, docker inspect
+    - systemctl status
+    - journalctl
+    - cat, less, tail
+    - diff
+    
+    ## Prohibited Operations
+    - docker rm, docker rmi, docker prune
+    - systemctl stop, systemctl disable
+    - rm, del, erase commands on server files

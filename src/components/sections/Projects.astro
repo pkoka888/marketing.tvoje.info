@@ -58,7 +58,7 @@ const categories: { key: string; label: string }[] = [
         {t.projects.description}
       </p>
     </div>
-    
+
     <!-- Category Filter -->
     <div class="flex flex-wrap justify-center gap-2 mb-12" role="group" aria-label="Project categories">
       {categories.map((category) => (
@@ -72,7 +72,7 @@ const categories: { key: string; label: string }[] = [
         </button>
       ))}
     </div>
-    
+
     <!-- Projects Grid -->
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="projects-grid">
       {projects.map((project) => (
@@ -91,7 +91,7 @@ const categories: { key: string; label: string }[] = [
             />
             <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           </div>
-          
+
           <!-- Content -->
           <div class="p-6">
             <!-- Tags -->
@@ -102,17 +102,17 @@ const categories: { key: string; label: string }[] = [
                 </span>
               ))}
             </div>
-            
+
             <!-- Title -->
             <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
               {project.title}
             </h3>
-            
+
             <!-- Description -->
             <p class="text-gray-600 dark:text-gray-300 text-sm mb-4 line-clamp-2">
               {project.description}
             </p>
-            
+
             <!-- Stats -->
             <div class="flex gap-4 mb-4">
               {project.stats.map((stat) => (
@@ -126,7 +126,7 @@ const categories: { key: string; label: string }[] = [
                 </div>
               ))}
             </div>
-            
+
             <!-- Link -->
             <a
               href={lang === 'cs' ? `/cs/projects/${project.slug}` : `/projects/${project.slug}`}
@@ -142,7 +142,7 @@ const categories: { key: string; label: string }[] = [
         </article>
       ))}
     </div>
-    
+
     <!-- View All Link -->
     <div class="text-center mt-12">
       <a
@@ -162,7 +162,7 @@ const categories: { key: string; label: string }[] = [
   // Category filter functionality
   const categoryButtons = document.querySelectorAll('.category-btn');
   const projectCards = document.querySelectorAll('[data-category]');
-  
+
   // Set active button style
   function setActiveButton(activeBtn: Element) {
     categoryButtons.forEach((btn) => {
@@ -174,22 +174,22 @@ const categories: { key: string; label: string }[] = [
     activeBtn.classList.add('bg-primary-600', 'text-white');
     activeBtn.setAttribute('aria-pressed', 'true');
   }
-  
+
   // Initialize with 'all' button active
   const allBtn = document.querySelector('[data-category="all"]');
   if (allBtn) {
     setActiveButton(allBtn);
   }
-  
+
   categoryButtons.forEach((button) => {
     button.addEventListener('click', () => {
       const category = button.getAttribute('data-category');
       setActiveButton(button);
-      
+
       projectCards.forEach((card) => {
         const cardCategory = card.getAttribute('data-category');
         const htmlCard = card as HTMLElement;
-        
+
         if (category === 'all' || cardCategory === category) {
           htmlCard.style.display = 'block';
           htmlCard.classList.add('animate-fade-in');

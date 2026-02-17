@@ -13,12 +13,14 @@ Migrate content from DevOps-focused to Marketing-focused using proper copywritin
 Based on `docs/guides/copywriting-prompting-guide.md`:
 
 ### ✅ USE (Customer Language)
+
 - "E-commerce marketing", "Online reklama", "PPC"
 - "Potřebujete více zákazníků?"
 - Concrete numbers: "+30%", "60k/měsíc"
 - **Primary: Czech (CZ)**, Secondary: English (EN)
 
 ### ❌ AVOID
+
 - Technical jargon: "MLOps", "AEO", "ROAS", "prémiový"
 - "My jsme nejlepší"
 - Long paragraphs (max 3 sentences)
@@ -26,14 +28,17 @@ Based on `docs/guides/copywriting-prompting-guide.md`:
 ## Files to Migrate
 
 ### Group 1: Services + Translations
+
 - `src/i18n/translations.ts` - Replace `devops` service with marketing services
 - `src/components/sections/Services.astro` - Replace devops service card
 
 ### Group 2: Schema + Filters
+
 - `src/content/config.ts` - Update category schema from devops to marketing
 - `src/components/sections/Projects.astro` - Update filter categories
 
 ### Group 3: Project Content
+
 - `src/content/projects/cloud-migration.md` - Rewrite as marketing project
 - `src/content/projects/cicd-automation.md` - Rewrite as marketing project
 
@@ -41,7 +46,7 @@ Based on `docs/guides/copywriting-prompting-guide.md`:
 
 ```
 devops → strategy
-ai → campaigns  
+ai → campaigns
 web → content
 infrastructure → analytics
 ```
@@ -49,6 +54,7 @@ infrastructure → analytics
 ## Services Replacement
 
 Replace devops service with marketing services:
+
 - SEO optimalizace
 - PPC kampaně
 - E-commerce marketing
@@ -57,6 +63,7 @@ Replace devops service with marketing services:
 ## Verification
 
 After migration:
+
 1. Run `npm run build` - must pass
 2. Run `grep -r "devops" dist/` - should return empty
 3. Verify bilingual (CZ + EN) content

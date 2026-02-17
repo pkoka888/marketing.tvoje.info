@@ -151,14 +151,14 @@ document.addEventListener('mouseleave', (e) => {
 
 ```css
 .theme-selector-trigger {
-  @apply flex items-center gap-2 px-3 py-2 rounded-lg 
-         bg-gray-100 dark:bg-dark-800 hover:bg-gray-200 
+  @apply flex items-center gap-2 px-3 py-2 rounded-lg
+         bg-gray-100 dark:bg-dark-800 hover:bg-gray-200
          dark:hover:bg-dark-700 transition-all duration-200;
 }
 
 .theme-dropdown {
-  @apply absolute right-0 mt-2 w-64 rounded-xl 
-         bg-white dark:bg-dark-800 shadow-xl 
+  @apply absolute right-0 mt-2 w-64 rounded-xl
+         bg-white dark:bg-dark-800 shadow-xl
          border border-gray-200 dark:border-dark-700 overflow-hidden;
   animation: dropdown-open 0.2s ease-out;
 }
@@ -174,8 +174,8 @@ document.addEventListener('mouseleave', (e) => {
 }
 
 .theme-popup-content {
-  @apply relative max-w-2xl w-full mx-4 rounded-2xl 
-         bg-white dark:bg-dark-900 shadow-2xl 
+  @apply relative max-w-2xl w-full mx-4 rounded-2xl
+         bg-white dark:bg-dark-900 shadow-2xl
          border border-gray-200 dark:border-dark-700 overflow-hidden;
   animation: popup-scale 0.3s ease-out;
 }

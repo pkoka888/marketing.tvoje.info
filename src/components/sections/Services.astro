@@ -52,7 +52,7 @@ const services = [
         {t.services.subtitle}
       </p>
     </div>
-    
+
     <!-- Bento Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-auto">
       {services.map((service, index) => (
@@ -65,24 +65,24 @@ const services = [
         >
           <!-- Gradient Background -->
           <div class="absolute inset-0 bg-gradient-to-br from-primary-50 to-accent-50 dark:from-primary-900/20 dark:to-accent-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-          
+
           <!-- Content -->
           <div class="relative z-10">
             <!-- Icon -->
             <div class={`w-14 h-14 rounded-xl bg-${service.color}-100 dark:bg-${service.color}-900/30 flex items-center justify-center mb-5 text-${service.color}-600 dark:text-${service.color}-400 group-hover:scale-110 transition-transform duration-300`}>
               <Fragment set:html={service.icon} />
             </div>
-            
+
             <!-- Title -->
             <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">
               {service.title}
             </h3>
-            
+
             <!-- Description -->
             <p class="text-gray-600 dark:text-gray-300 mb-5">
               {service.description}
             </p>
-            
+
             <!-- Features List -->
             <ul class="space-y-2.5">
               {service.items.slice(0, 4).map((item) => (
@@ -96,7 +96,7 @@ const services = [
                 </li>
               ))}
             </ul>
-            
+
             <!-- CTA -->
             <div class="mt-6 pt-5 border-t border-gray-200/50 dark:border-gray-700/50">
               <a
@@ -110,7 +110,7 @@ const services = [
               </a>
             </div>
           </div>
-          
+
           <!-- Corner Accent -->
           <div class="absolute -top-4 -right-4 w-24 h-24 bg-gradient-to-bl from-primary-500/10 to-transparent rounded-full blur-2xl group-hover:scale-150 transition-transform duration-500"></div>
         </div>

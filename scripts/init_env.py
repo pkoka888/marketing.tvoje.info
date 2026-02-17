@@ -20,7 +20,7 @@ def init_env():
 
     # 1. Check Python version
     print(f"Using Python: {sys.executable}")
-    
+
     # 2. Create Virtual Environment
     if not os.path.exists(".venv"):
         print("Creating virtual environment...")

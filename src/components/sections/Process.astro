@@ -10,7 +10,7 @@ const { lang: propLang } = Astro.props;
 const lang = propLang || getLangFromUrl(Astro.url);
 const t = translations[lang];
 
-const steps = lang === 'cs' 
+const steps = lang === 'cs'
   ? [
       { number: 1, title: 'Analýza', description: 'Analyzujeme váš současný marketing, konkurenci a cíle.', duration: '1-2 týdny', icon: 'search' },
       { number: 2, title: 'Strategie', description: 'Vytvoříme individuální marketingový plán s KPI a časovým plánem.', duration: '1 týden', icon: 'lightbulb' },
@@ -47,17 +47,17 @@ const sectionTitle = t.process?.title || (lang === 'cs' ? 'Jak pracujeme' : 'How
       <div class="hidden lg:flex items-start justify-between max-w-6xl mx-auto">
         <!-- Connecting line -->
         <div class="absolute top-8 left-0 right-0 h-0.5 bg-gradient-to-r from-primary-200 via-primary-400 to-primary-200 dark:from-primary-800 dark:via-primary-600 dark:to-primary-800 transform -translate-y-1/2" style="width: calc(100% - 4rem); left: 2rem;"></div>
-        
+
         {steps.map((step) => (
           <div class="relative flex flex-col items-center flex-1 px-4">
             <!-- Step number circle -->
             <div class="relative z-10 w-16 h-16 rounded-full bg-primary-500 text-white flex items-center justify-center text-xl font-bold shadow-lg ring-4 ring-white dark:ring-dark-800 mb-6">
               {step.number}
             </div>
-            
+
             <!-- Icon -->
             <div class="w-12 h-12 rounded-full bg-primary-100 dark:bg-primary-900/50 flex items-center justify-center text-primary-600 dark:text-primary-400 mb-4" set:html={icons[step.icon]} />
-            
+
             <!-- Content -->
             <div class="text-center">
               <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
@@ -79,18 +79,18 @@ const sectionTitle = t.process?.title || (lang === 'cs' ? 'Jak pracujeme' : 'How
         <div class="relative pl-8">
           <!-- Vertical connecting line -->
           <div class="absolute left-4 top-2 bottom-2 w-0.5 bg-gradient-to-b from-primary-200 via-primary-400 to-primary-200 dark:from-primary-800 dark:via-primary-600 dark:to-primary-800"></div>
-          
+
           {steps.map((step) => (
             <div class="relative mb-10 last:mb-0">
               <!-- Step number circle -->
               <div class="absolute left-0 top-0 w-8 h-8 rounded-full bg-primary-500 text-white flex items-center justify-center text-sm font-bold shadow ring-4 ring-gray-50 dark:ring-dark-800 -translate-x-1/2">
                 {step.number}
               </div>
-              
+
               <div class="bg-white dark:bg-dark-700 rounded-xl p-5 shadow-sm">
                 <div class="flex items-start gap-4">
                   <div class="w-10 h-10 rounded-full bg-primary-100 dark:bg-primary-900/50 flex items-center justify-center text-primary-600 dark:text-primary-400 flex-shrink-0" set:html={icons[step.icon]} />
-                  
+
                   <div class="flex-1">
                     <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-1">
                       {step.title}

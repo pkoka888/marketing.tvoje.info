@@ -224,7 +224,7 @@ const csUrl = canonicalUrl.startsWith('/cs') ? canonicalUrl : `${baseUrl}/cs${As
     <script is:inline>
       // Plausible - using build-time values
       var plausibleDomain = 'marketing.tvoje.info';
-      (function() {
+      (function () {
         var script = document.createElement('script');
         script.defer = true;
         script.src = 'https://' + plausibleDomain + '/js/script.js';
@@ -232,7 +232,7 @@ const csUrl = canonicalUrl.startsWith('/cs') ? canonicalUrl : `${baseUrl}/cs${As
         document.head.appendChild(script);
       })();
     </script>
-    
+
     <!-- Theme Popup (shows after 60s or exit intent) -->
     <ThemePopup lang={currentLang} />
   </body>

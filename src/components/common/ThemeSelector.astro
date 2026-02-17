@@ -51,11 +51,21 @@ const themes = [
     aria-label={lang === 'cs' ? 'Vybrat téma' : 'Select theme'}
   >
     <span class="theme-current-preview w-5 h-5 rounded-md" id="theme-current-preview"></span>
-    <span class="theme-current-name text-sm font-medium text-gray-700 dark:text-gray-200" id="theme-current-name">
+    <span
+      class="theme-current-name text-sm font-medium text-gray-700 dark:text-gray-200"
+      id="theme-current-name"
+    >
       Titan
     </span>
-    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400 chevron transition-transform" id="theme-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+    <svg
+      class="w-4 h-4 text-gray-500 dark:text-gray-400 chevron transition-transform"
+      id="theme-chevron"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+    >
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"
+      ></path>
     </svg>
   </button>
 
@@ -67,47 +77,51 @@ const themes = [
     aria-label="Theme options"
   >
     <div class="p-3">
-      <p class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3 px-2">
+      <p
+        class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3 px-2"
+      >
         {lang === 'cs' ? 'Vyberte téma' : 'Choose theme'}
       </p>
       <div class="space-y-1">
-        {themes.map((theme) => (
-          <button
-            type="button"
-            class="theme-option w-full flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-gray-100 dark:hover:bg-dark-700 transition-colors"
-            data-theme={theme.id}
-            role="option"
-            aria-selected="false"
-          >
-            <div
-              class="theme-preview w-8 h-8 rounded-lg flex-shrink-0"
-              style={`background: ${theme.gradient}`}
-            ></div>
-            <div class="flex-1 text-left">
-              <div class="text-sm font-medium text-gray-900 dark:text-white">{theme.name}</div>
-              <div class="text-xs text-gray-500 dark:text-gray-400">{theme.desc}</div>
-            </div>
-          </button>
-        ))}
+        {
+          themes.map((theme) => (
+            <button
+              type="button"
+              class="theme-option w-full flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-gray-100 dark:hover:bg-dark-700 transition-colors"
+              data-theme={theme.id}
+              role="option"
+              aria-selected="false"
+            >
+              <div
+                class="theme-preview w-8 h-8 rounded-lg flex-shrink-0"
+                style={`background: ${theme.gradient}`}
+              />
+              <div class="flex-1 text-left">
+                <div class="text-sm font-medium text-gray-900 dark:text-white">{theme.name}</div>
+                <div class="text-xs text-gray-500 dark:text-gray-400">{theme.desc}</div>
+              </div>
+            </button>
+          ))
+        }
       </div>
     </div>
   </div>
 </div>
 
 <script is:inline>
-  (function() {
+  (function () {
     const trigger = document.getElementById('theme-selector-trigger');
     const dropdown = document.getElementById('theme-dropdown');
     const preview = document.getElementById('theme-current-preview');
     const nameEl = document.getElementById('theme-current-name');
     const chevron = document.getElementById('theme-chevron');
-    
+
     const themes = {
       titan: { name: 'Titan', gradient: 'linear-gradient(135deg, #4285F4, #0ea5e9)' },
       nova: { name: 'Nova', gradient: 'linear-gradient(135deg, #6366F1, #22D3EE)' },
       target: { name: 'Target', gradient: 'linear-gradient(135deg, #1E40AF, #EA580C)' },
       spark: { name: 'Spark', gradient: 'linear-gradient(135deg, #0A0A0A, #00D4FF)' },
-      lux: { name: 'Lux', gradient: 'linear-gradient(135deg, #F5F5F5, #B8860B)' }
+      lux: { name: 'Lux', gradient: 'linear-gradient(135deg, #F5F5F5, #B8860B)' },
     };
 
     // Initialize from localStorage
@@ -116,9 +130,9 @@ const themes = [
       const theme = themes[saved] || themes.titan;
       if (preview) preview.style.background = theme.gradient;
       if (nameEl) nameEl.textContent = theme.name;
-      
+
       // Update option states
-      document.querySelectorAll('.theme-option').forEach(opt => {
+      document.querySelectorAll('.theme-option').forEach((opt) => {
         const isSelected = opt.dataset.theme === saved;
         opt.classList.toggle('bg-primary-50', isSelected);
         opt.classList.toggle('dark:bg-primary-900/20', isSelected);
@@ -153,25 +167,25 @@ const themes = [
     function selectTheme(themeId) {
       const theme = themes[themeId];
       if (!theme) return;
-      
+
       // Update preview
       if (preview) preview.style.background = theme.gradient;
       if (nameEl) nameEl.textContent = theme.name;
-      
+
       // Save to localStorage
       localStorage.setItem('siteTheme', themeId);
-      
+
       // Apply theme to document
       document.documentElement.setAttribute('data-site-theme', themeId);
-      
+
       // Update option states
-      document.querySelectorAll('.theme-option').forEach(opt => {
+      document.querySelectorAll('.theme-option').forEach((opt) => {
         const isSelected = opt.dataset.theme === themeId;
         opt.classList.toggle('bg-primary-50', isSelected);
         opt.classList.toggle('dark:bg-primary-900/20', isSelected);
         opt.setAttribute('aria-selected', isSelected);
       });
-      
+
       closeDropdown();
     }
 
@@ -180,7 +194,7 @@ const themes = [
       trigger.addEventListener('click', toggleDropdown);
     }
 
-    document.querySelectorAll('.theme-option').forEach(option => {
+    document.querySelectorAll('.theme-option').forEach((option) => {
       option.addEventListener('click', () => {
         selectTheme(option.dataset.theme);
       });

@@ -30,12 +30,7 @@
           "type": "string"
         }
       },
-      "required": [
-        "name",
-        "description",
-        "features",
-        "icon"
-      ],
+      "required": ["name", "description", "features", "icon"],
       "additionalProperties": false
     }
   },
