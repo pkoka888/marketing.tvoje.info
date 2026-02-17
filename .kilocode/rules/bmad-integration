@@ -1,0 +1,53 @@
+# AGENTS.md
+# BMAD v6 Integration Rule — Canonical Version
+# All other agent dirs reference or mirror this file.
+
+## BMAD Structure (v6.0.0-Beta.8)
+
+| Path                    | Contents                                               |
+| ----------------------- | ------------------------------------------------------ |
+| `_bmad/bmm/config.yaml` | Project config (user_name, language, output_folder)    |
+| `_bmad/bmm/agents/`     | 8 compiled agent personas                              |
+| `_bmad/bmm/workflows/`  | 25 workflows (analysis → planning → implementation)    |
+| `_bmad-output/`         | Generated artifacts output                             |
+
+## Agent Activation
+
+1. Load `_bmad/bmm/config.yaml` first
+2. Select agent from `_bmad/bmm/agents/` matching task type
+3. Follow agent activation steps exactly
+4. Output artifacts to `_bmad-output/`
+
+## Auto-Detection Keywords
+
+| Keyword Pattern                    | Agent               |
+| ---------------------------------- | ------------------- |
+| market research, competitive, SWOT | analyst             |
+| architecture, system design, API   | architect           |
+| implement, code, build             | dev                 |
+| sprint, backlog, story planning    | pm                  |
+| test, QA, validation               | qa                  |
+| UX, wireframe, user flow           | ux-designer         |
+| rapid prototype, solo, quick       | quick-flow-solo-dev |
+
+## Delegation Rules (Cost-Aware)
+
+| Agent     | CLI         | Model             | Cost |
+| --------- | ----------- | ----------------- | ---- |
+| analyst   | Kilo CLI    | z-ai/glm4.7       | Free |
+| architect | Antigravity | Gemini 2.5 Pro    | Paid |
+| dev       | Kilo CLI    | z-ai/glm4.7       | Free |
+| pm        | Cline CLI   | minimax-m2.1:free | Free |
+| qa        | Kilo CLI    | z-ai/glm4.7       | Free |
+
+## After BMAD Update
+
+After `npx bmad-method install --action update`:
+- Re-check `_bmad/bmm/agents/` for new/changed agents
+- Update `.kilocodemodes` if new agents added
+- Update `.agent/agents.yaml` for Antigravity alignment
+
+## References
+
+- `.agents/rules/bmad-integration.md` (BMAD Squad mirror)
+- `.clinerules/skills/bmad-integration.md` (Cline mirror)

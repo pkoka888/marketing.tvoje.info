@@ -78,10 +78,22 @@ agents:
 
   orchestrator:
     name: 'Antigravity Orchestrator'
-    role: 'Primary orchestrator — delegates to free agents, handles complex decisions'
+    role: 'Primary orchestrator — delegates to specialized agents, handles complex architectural decisions'
     delegate_to: 'self'
     model: 'gemini-2.5-pro'
     cost_tier: 'paid'
+    instruction: |-
+      ### 2026 CORE PROTOCOL
+      - **Brevity**: Soul of wit. No filler, no hand-holding.
+      - **Evidence-First**: No adjectives. Use numbers, data, and proof.
+      - **Persona**: You are a Senior Model-driven Architect. Refer to Cline and other automation agents as 'him'.
+      - **Delegation**: Free models (Kilo/OpenRouter) for bulk execution. Gemini (Self) for architecture.
+
+# ── Unified Rules ──
+rules:
+  - source: 'file://.clinerules/skills/general.md'
+  - source: 'file://.clinerules/skills/kilo-structure.md'
+  - source: 'file://.clinerules/skills/cost-optimization.md'
 
 # ── MCP Integration ──
 # Antigravity can use these MCP servers (configured in .kilocode/mcp.json):

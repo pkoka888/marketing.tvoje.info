@@ -1,0 +1,38 @@
+# AGENTS.md
+# Python Preferred Rule — Canonical Version
+# All other agent dirs reference or mirror this file.
+# Reference: .kilocode/PYTHON_PREFERRED.md (full version)
+
+## Mandate
+
+All new automation scripts MUST use Python (.py).
+Python 3.10+ required (type hints support).
+
+## Exceptions
+
+- npm scripts in package.json (Node.js ecosystem)
+- CI/CD workflows (GitHub Actions YAML)
+- Git hooks (pre-commit)
+- One-liners in documentation
+
+## Required Libraries
+
+- `paramiko` — SSH client functionality
+- `psutil` — System monitoring
+- `subprocess` (stdlib) — Shell command execution
+
+## Migration Status
+
+- [x] collect-evidence.sh → collect_evidence.py
+- [x] safe-ssh.sh → safe_ssh.py
+- [x] debug-network.sh → debug_network.py
+
+## Scripts Location
+
+`.kilocode/scripts/server-monitor/` — Python server monitoring scripts
+
+## References
+
+- `.agents/rules/python-preferred.md` (BMAD Squad mirror)
+- `.clinerules/skills/python-preferred.md` (Cline mirror)
+- `.kilocode/PYTHON_PREFERRED.md` (extended documentation)

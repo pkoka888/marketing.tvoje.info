@@ -4,15 +4,7 @@
   "model": "kilo/minimax/minimax-m2.1:free",
   "prompt": "file://../../_bmad/bmm/agents/quick-flow-solo-dev.md",
   "includeMcpJson": true,
-  "tools": [
-    "read",
-    "edit",
-    "command",
-    "browser",
-    "mcp"
-  ],
-  "allowedTools": [
-    "read"
-  ],
+  "tools": ["read", "edit", "command", "browser", "mcp"],
+  "allowedTools": ["read"],
   "customInstructions": "Follow BMAD agent protocol. Load _bmad/bmm/config.yaml on activation."
 }

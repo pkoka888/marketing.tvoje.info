@@ -1,6 +1,25 @@
 # Server Monitor Skills
 
-This document defines the skills available in the server-monitor mode for safe server evidence gathering and comparison.
+Read-only server monitoring and evidence collection agent for safe infrastructure auditing. Designed for comprehensive system auditing without making any changes to servers, ensuring operational safety during troubleshooting, security audits, and configuration comparisons.
+
+## Target Servers
+
+| Server   | Host         | Port | Purpose            |
+| -------- | ------------ | ---- | ------------------ |
+| Server60 | 192.168.1.60 | 2260 | Infrastructure/VPS |
+| Server61 | 192.168.1.61 | 2261 | Gateway/Traefik    |
+| Server62 | 192.168.1.62 | 2262 | Production/Web     |
+
+## Restrictions
+
+### Strictly Forbidden Operations
+
+- **No file modifications**: No `rm`, `del`, `erase`, `mkfs`, or any delete operations
+- **No package installations**: Blocked `apt install`, `npm install -g`, `pip install`
+- **No service modifications**: Blocked `systemctl restart`, `start`, `stop`
+- **No system changes**: Blocked `reboot`, `shutdown`, `halt`, `poweroff`
+- **No permission changes**: Blocked `chmod`, `chown` operations
+- **No configuration edits**: Reading allowed, writing blocked
 
 ## Skill Overview
 

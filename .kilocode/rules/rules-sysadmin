@@ -1,0 +1,55 @@
+# AGENTS.md
+# SysAdmin Agent Rules — Canonical Version
+# Source of truth. All other agent dirs reference or mirror this file.
+# Cross-references: .agents/rules/server-preservation.md, .gemini/rules/server-preservation.md
+
+## Server Preservation (MANDATORY)
+
+When working with server infrastructure:
+
+- **NEVER perform any cleanup operations** (delete, remove, prune, cleanup, purge commands)
+- **ALWAYS perform analysis only** (inspect, gather evidence, read logs, check status, diff configurations)
+- Document findings but do NOT modify server state
+
+## Scope
+
+Applies to: server60 (192.168.1.60), server61 (192.168.1.61), server62 (192.168.1.62)
+Access methods: Tailscale VPN (primary), internal network (backup)
+
+## Allowed Operations (Analysis Only)
+
+- `docker ps` / `docker ps -a` (list containers)
+- `docker logs` (read logs — no flags that modify state)
+- `docker inspect` (read container metadata)
+- `systemctl status` (read service status)
+- `journalctl` (read logs)
+- `cat`, `less`, `tail` (read files)
+- `diff` (compare configurations)
+
+## Prohibited Operations
+
+- `docker rm`, `docker rmi`, `docker prune`
+- `systemctl stop`, `systemctl disable`
+- `rm`, `del`, `erase` on server files
+- Any command with cleanup, remove, delete, or purge intent
+
+## Emergency Override
+
+If cleanup is required (e.g., security incident):
+1. Document rationale in the commit/message
+2. Get explicit user approval BEFORE execution
+3. Document the change in `evidence/` folder
+4. Update relevant documentation
+
+## Python Preferred
+
+Use Python scripts (`.kilocode/scripts/server-monitor/`) over shell scripts for:
+- Evidence collection
+- Network debugging
+- Safe SSH wrappers
+
+## Access Pattern
+
+Primary: Tailscale VPN (sudo required on Windows host)
+Jumphost: s60 (server60) for SSH forwarding to s61/s62
+Scripts: `.kilocode/scripts/server-monitor/safe_ssh.py`

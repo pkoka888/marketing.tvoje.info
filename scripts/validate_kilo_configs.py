@@ -26,11 +26,11 @@ def validate_json(file_path):
 if __name__ == "__main__":
     success = True
     project_root = "."
-    
+
     # Check .kilocodemodes
     if not validate_yaml(".kilocodemodes"):
         success = False
-        
+
     # Check agents
     agent_dir = ".kilocode/agents"
     if os.path.exists(agent_dir):

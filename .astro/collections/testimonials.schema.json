@@ -21,14 +21,22 @@
         },
         "lang": {
           "type": "string",
-          "enum": ["en", "cs"],
+          "enum": [
+            "en",
+            "cs"
+          ],
           "default": "en"
         },
         "$schema": {
           "type": "string"
         }
       },
-      "required": ["name", "role", "company", "content"],
+      "required": [
+        "name",
+        "role",
+        "company",
+        "content"
+      ],
       "additionalProperties": false
     }
   },

@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(wc:*)",
+      "Bash(# Verify the new .kilocode/rules/ structure vs what agent JSONs reference # server-monitor.json: file://../../.kilocode/rules-server-monitor/RULES.md # From .kilocode/agents/, ../../ goes UP to project root then .kilocode/rules-server-monitor/RULES.md # That means it''s looking for: project_root/.kilocode/rules-server-monitor/RULES.md # But the actual file is at: project_root/.kilocode/rules/rules-server-monitor ls /c/Users/pavel/projects/marketing.tvoje.info/.kilocode/rules/rules-server-monitor)",
+      "Bash(# Check if any CLAUDE.md pattern exists in vscodeportable find /c/Users/pavel/vscodeportable/agentic/ -name \"\"CLAUDE.md\"\")",
+      "Bash(# Check if CLAUDE.md exists at project root ls /c/Users/pavel/projects/marketing.tvoje.info/CLAUDE.md && echo \"\"CLAUDE.md EXISTS\"\" || echo \"\"CLAUDE.md NOT FOUND\"\" # Also check what files are at root for agent/AI guidance ls /c/Users/pavel/projects/marketing.tvoje.info/*.md)",
+      "Bash(python:*)",
+      "Bash(fi:*)",
+      "Bash(done)",
+      "Bash(grep:*)",
+      "Bash(for agent in analyst architect dev pm qa sm ux-designer quick-flow-solo-dev graphic-designer)",
+      "Bash(do)",
+      "Bash(file=\"/c/Users/pavel/projects/marketing.tvoje.info/_bmad/bmm/agents/$agent.md\")",
+      "Bash(if [ -f \"$file\" ])",
+      "Bash(then)",
+      "Bash(echo:*)",
+      "Bash(else)",
+      "Bash(ls:*)",
+      "Bash(for ref in \"_bmad/bmm/agents/analyst.md\" \"_bmad/bmm/agents/architect.md\" \"_bmad/bmm/agents/dev.md\" \"_bmad/bmm/agents/pm.md\" \"_bmad/bmm/agents/qa.md\" \"_bmad/bmm/agents/sm.md\" \"_bmad/bmm/agents/ux-designer.md\" \"_bmad/bmm/agents/quick-flow-solo-dev.md\")",
+      "Bash(file=\"/c/Users/pavel/projects/marketing.tvoje.info/$ref\")"
+    ]
+  }
+}

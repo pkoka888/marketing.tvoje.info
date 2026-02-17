@@ -24,9 +24,10 @@ from pathlib import Path
 SCRIPT_DIR = Path(__file__).resolve().parent
 PROJECT_ROOT = SCRIPT_DIR.parent.parent  # workflows -> agent -> project root
 RULES_DIRS = [
-    PROJECT_ROOT / ".kilocode" / "rules-code",
+    PROJECT_ROOT / ".kilocode" / "rules",
     PROJECT_ROOT / ".agents" / "rules",
     PROJECT_ROOT / ".gemini" / "rules",
+    PROJECT_ROOT / ".clinerules" / "skills",
 ]
 CRITICAL_RULES = [
     "server-preservation",
@@ -213,11 +214,13 @@ def generate_report(checks: dict) -> str:
     else:
         report += "- ✅ All critical rules present in all directories\n"
 
+    header_cols = " | ".join(d.name for d in RULES_DIRS)
+    separator_cols = "|------|" * len(RULES_DIRS)
     report += f"""
 ### Details
 
-| Rule | {RULES_DIRS[0].name} | {RULES_DIRS[1].name} | {RULES_DIRS[2].name} |
-|------|------|------|------|
+| Rule | {header_cols} |
+|------{separator_cols}
 """
 
     for rule, locations in checks["rules"]["details"].items():

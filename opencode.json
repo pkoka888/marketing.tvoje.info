@@ -1,5 +1,7 @@
 {
   "$schema": "https://opencode.ai/config.json",
+  "model": "gemini/gemini-1.5-flash",
+  "small_model": "kilo/z-ai/glm4.7",
   "instructions": [
     "AGENTS.md",
     ".kilocode/rules/memory-bank-instructions.md",
@@ -14,8 +16,80 @@
     ".kilocode/rules/memory-bank/verification-history.md",
     "C:/Users/pavel/vscodeportable/agentic/ai-prompts/prompts/astro-4/rule-astro-coding-standards.md",
     "C:/Users/pavel/vscodeportable/agentic/ai-prompts/prompts/tailwind-4/rule-tailwind-v4.md",
+    ".clinerules/skills/general.md",
+    ".clinerules/skills/kilo-structure.md",
+    ".clinerules/skills/python-preferred.md",
     ".clinerules/98-visual-verification.md",
     ".clinerules/validator.md",
-    ".clinerules/mcp-port-preservation.md"
-  ]
+    ".clinerules/mcp-port-preservation.md",
+    ".kilocode/rules/cost-optimization",
+    ".kilocode/rules/server-preservation"
+  ],
+  "agent": {
+    "coder": {
+      "model": "gemini/gemini-1.5-flash",
+      "fallback": "openrouter/nvidia/llama-3.1-405b-instruct:free"
+    },
+    "researcher": {
+      "model": "gemini/gemini-1.5-flash",
+      "fallback": "kilo/z-ai/glm4.7"
+    },
+    "reviewer": {
+      "model": "gemini/gemini-1.5-flash",
+      "fallback": "openrouter/google/gemini-2.0-flash-exp:free"
+    },
+    "orchestrator": {
+      "model": "gemini/gemini-2.5-pro"
+    },
+    "architect": {
+      "model": "anthropic/claude-sonnet-4-5-20250929"
+    },
+    "codex": {
+      "model": "openai/o3"
+    },
+    "fallback": {
+      "model": "groq/llama-3.3-70b-versatile"
+    }
+  },
+  "mcp": {
+    "filesystem-projects": {
+      "command": "node",
+      "args": [
+        "C:/nvm4w/nodejs/node_modules/@modelcontextprotocol/server-filesystem/dist/index.js",
+        "C:/Users/pavel/projects"
+      ]
+    },
+    "memory": {
+      "command": "node",
+      "args": ["C:/nvm4w/nodejs/node_modules/@modelcontextprotocol/server-memory/dist/index.js"]
+    },
+    "git": {
+      "command": "node",
+      "args": ["C:/nvm4w/nodejs/node_modules/git-mcp/dist/index.js"]
+    },
+    "fetch": {
+      "command": "uvx",
+      "args": ["mcp-server-fetch"]
+    },
+    "redis": {
+      "command": "docker",
+      "args": ["run", "-i", "--rm", "mcp/redis", "redis://host.docker.internal:6379"]
+    },
+    "bmad-mcp": {
+      "command": "python",
+      "args": ["-m", "bmad_mcp"]
+    },
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"]
+    },
+    "filesystem-agentic": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "C:/Users/pavel/vscodeportable"]
+    }
+  },
+  "permission": {
+    "edit": "ask",
+    "bash": "ask"
+  }
 }

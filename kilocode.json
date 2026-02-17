@@ -1,0 +1,68 @@
+{
+  "project": "marketing.tvoje.info",
+  "version": "2026.2",
+  "defaultModel": "kilo/minimax/minimax-m2.1:free",
+  "modes": {
+    "architect": {
+      "model": "gemini-2.5-pro",
+      "groups": ["read", "edit", "command", "browser", "mcp", "condense"]
+    },
+    "maintenance": {
+      "model": "kilo/minimax/minimax-m2.1:free",
+      "groups": ["read", "command", "mcp", "condense"]
+    },
+    "bmad-analyst": {
+      "model": "kilo/minimax/minimax-m2.1:free",
+      "groups": ["read", "edit", "browser", "mcp"]
+    },
+    "bmad-architect": {
+      "model": "kilo/minimax/minimax-m2.1:free",
+      "groups": ["read", "edit", "browser", "mcp", "condense"]
+    },
+    "bmad-dev": {
+      "model": "kilo/minimax/minimax-m2.1:free",
+      "groups": ["read", "edit", "command", "mcp"]
+    },
+    "bmad-pm": {
+      "model": "kilo/minimax/minimax-m2.1:free",
+      "groups": ["read", "edit", "mcp"]
+    },
+    "bmad-qa": {
+      "model": "kilo/minimax/minimax-m2.1:free",
+      "groups": ["read", "edit", "command", "mcp"]
+    },
+    "bmad-sm": {
+      "model": "kilo/minimax/minimax-m2.1:free",
+      "groups": ["read", "edit", "mcp"]
+    },
+    "bmad-ux": {
+      "model": "kilo/minimax/minimax-m2.1:free",
+      "groups": ["read", "edit", "browser", "mcp"]
+    },
+    "bmad-solo": {
+      "model": "kilo/minimax/minimax-m2.1:free",
+      "groups": ["read", "edit", "command", "browser", "mcp"]
+    },
+    "server-monitor": {
+      "model": "kilo/minimax/minimax-m2.1:free",
+      "groups": ["read", "command", "mcp"]
+    },
+    "sysadmin": {
+      "model": "kilo/minimax/minimax-m2.1:free",
+      "groups": ["read", "command", "mcp"]
+    }
+  },
+  "settings": {
+    "preferredLanguage": "English",
+    "autoCondenseThreshold": 0.8,
+    "batchFileReads": true,
+    "enforceAgentsMd": true
+  },
+  "mcpServers": [
+    "filesystem-projects",
+    "memory",
+    "git",
+    "github",
+    "fetch"
+  ]
+}

@@ -1,0 +1,36 @@
+#!/usr/bin/env python3
+import json
+import sys
+
+AGENT_DIRS = [".kilocode/", ".clinerules/", ".agent/", ".agents/", ".claude/", ".gemini/"]
+SYNC_NOTE = (
+    "\n- AGENT CONFIG DIR DETECTED: Read canonical .kilocode/rules/ first. "
+    "After change, sync equivalent files in ALL other agent dirs. "
+    "Run: python scripts/verify_agentic_platform.py"
+)
+
+def main():
+    try:
+        input_data = json.load(sys.stdin)
+    except EOFError:
+        input_data = {}
+
+    # Current Cline hook format: tool_name and tool_input at top level
+    tool_name = input_data.get("tool_name", "")
+    params = input_data.get("tool_input", {})
+    path = params.get("path", "") or params.get("file_path", "")
+
+    context_mod = f"### Tool Use Audit\n- Tool: {tool_name}\n- Verification: All project coding standards (Tailwind, TypeScript) must be followed."
+
+    if tool_name in ("write_to_file", "replace_in_file", "create_file") and path and any(d in path for d in AGENT_DIRS):
+        context_mod += SYNC_NOTE
+
+    response = {
+        "cancel": False,
+        "contextModification": context_mod
+    }
+
+    print(json.dumps(response))
+
+if __name__ == "__main__":
+    main()

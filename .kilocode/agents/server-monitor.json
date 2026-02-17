@@ -2,15 +2,9 @@
   "name": "Server Monitor",
   "description": "Read-only server monitoring and evidence collection agent.",
   "model": "kilo/minimax/minimax-m2.1:free",
-  "prompt": "file://../../.kilocode/rules-server-monitor/RULES.md",
+  "prompt": "file://../../.kilocode/rules/rules-server-monitor",
   "includeMcpJson": true,
-  "tools": [
-    "read",
-    "command",
-    "mcp"
-  ],
-  "allowedTools": [
-    "read"
-  ],
+  "tools": ["read", "command", "mcp"],
+  "allowedTools": ["read"],
   "customInstructions": "All commands must be read-only. NO write operations. Compare findings with evidence.md."
 }

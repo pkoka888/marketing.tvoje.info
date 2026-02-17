@@ -41,10 +41,12 @@
         fileRegex: "\\.(md|yaml|yml|json|mmd)$"
     - browser
     - mcp
+    - condense
   customInstructions: >
     Follow BMAD agent protocol from _bmad/bmm/agents/architect.md.
     Load _bmad/bmm/config.yaml on activation.
     Focus: architecture docs, tech stack decisions, API design, data models.
+    Use the 'condense' tool to proactively manage context window.
 
 - slug: bmad-dev
   name: "💻 BMAD Developer"
@@ -168,10 +170,26 @@
     - command
     - mcp
   customInstructions: >
-    Follow rules from .kilocode/rules-server-monitor/RULES.md.
-    Mode definition at .kilocode/modes/server-monitor/MODE.md.
+    Follow rules from .kilocode/rules/rules-server-monitor.
+    Mode definition at .kilocode/skills/server-monitor/SKILL.md.
     All commands must be read-only. NO write operations.
     Compare findings with vscodeportable/servers/evidence.md.
+
+- slug: maintenance
+  name: "🛠️ Maintenance & Context"
+  model: kilo/minimax/minimax-m2.1:free
+  roleDefinition: >
+    You are a specialized agent for conversation maintenance and context optimization.
+    Your primary goal is to ensure the agentic system remains performant and focused.
+  groups:
+    - read
+    - command
+    - mcp
+    - condense
+  customInstructions: |-
+    Follow the /condense workflow from .kilocode/workflows/condense.md.
+    Monitor token usage and proactively suggest condensation to the user.
+    Help clean up or consolidate rules and documentation.
 
 - slug: sysadmin
   name: "🔧 SysAdmin"
@@ -185,21 +203,21 @@
     - command
     - mcp
   customInstructions: >
-    Follow rules from .kilocode/rules-code/server-preservation.md.
-    Mode definition at .kilocode/modes/sysadmin/MODE.md.
-    
+    Follow rules from .kilocode/rules/rules-sysadmin.
+    Mode definition at .kilocode/skills/sysadmin/SKILL.md.
+
     ## Server Preservation Rule
     - NEVER perform cleanup operations (delete, remove, prune, purge)
     - ALWAYS perform analysis only unless explicitly approved
     - Document findings but do NOT modify server state
-    
+
     ## Allowed Operations
     - docker ps, docker logs, docker inspect
     - systemctl status
     - journalctl
     - cat, less, tail
     - diff
-    
+
     ## Prohibited Operations
     - docker rm, docker rmi, docker prune
     - systemctl stop, systemctl disable

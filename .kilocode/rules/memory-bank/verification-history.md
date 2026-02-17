@@ -1,21 +1,24 @@
 # Verification History
 
-**Last Updated**: 2026-02-13
+**Last Updated**: 2026-02-17
 
 ---
 
 ## Test Results
 
-| Date       | Test            | Agent     | Result  | Details                                        |
-| ---------- | --------------- | --------- | ------- | ---------------------------------------------- |
-| 2026-02-13 | Chat Completion | Kilo Code | ✅ Pass | Groq via LiteLLM: "Hello! How can I assist..." |
-| 2026-02-13 | Health Endpoint | Kilo Code | ✅ Pass | 2 healthy models with auth                     |
-| 2026-02-13 | LiteLLM Proxy   | Kilo Code | ✅ Pass | Proxy running on port 4000                     |
-| 2026-02-13 | Version Audit   | Kilo Code | ✅ Pass | No conflicts, 6 npm updates available          |
-| 2026-02-13 | Build           | OpenCode  | ✅ Pass | 11 pages built in 21s                          |
-| 2026-02-13 | Health Check    | OpenCode  | ✅ Pass | All checks passed                              |
-| 2026-02-13 | Consistency     | OpenCode  | ✅ Pass | All rules consistent                           |
-| 2026-02-13 | GROQ API        | OpenCode  | ✅ Pass | Direct API works                               |
+| Date       | Test                    | Agent     | Result  | Details                                        |
+| ---------- | ----------------------- | --------- | ------- | ---------------------------------------------- |
+| 2026-02-17 | Phase 5 Audit           | Kilo Code | ✅ Pass | CRL-01, CRL-02 resolved; verify script PASSED  |
+| 2026-02-17 | Model Hierarchy         | Kilo Code | ✅ Pass | Consistent across AGENTS.md, orchestrate-parallel.md |
+| 2026-02-17 | MCP Configuration       | Kilo Code | ✅ Pass | All 8 servers configured in opencode.json      |
+| 2026-02-13 | Chat Completion         | Kilo Code | ✅ Pass | Groq via LiteLLM: "Hello! How can I assist..." |
+| 2026-02-13 | Health Endpoint         | Kilo Code | ✅ Pass | 2 healthy models with auth                     |
+| 2026-02-13 | LiteLLM Proxy           | Kilo Code | ✅ Pass | Proxy running on port 4000                     |
+| 2026-02-13 | Version Audit           | Kilo Code | ✅ Pass | No conflicts, 6 npm updates available          |
+| 2026-02-13 | Build                   | OpenCode  | ✅ Pass | 11 pages built in 21s                          |
+| 2026-02-13 | Health Check            | OpenCode  | ✅ Pass | All checks passed                              |
+| 2026-02-13 | Consistency             | OpenCode  | ✅ Pass | All rules consistent                           |
+| 2026-02-13 | GROQ API                | OpenCode  | ✅ Pass | Direct API works                               |
 
 ---
 
@@ -31,11 +34,13 @@
 
 | Gate             | Status  | Last Check |
 | ---------------- | ------- | ---------- |
-| Build passes     | ✅ Pass | 2026-02-13 |
-| No lint errors   | ✅ Pass | 2026-02-13 |
-| Tests pass       | ✅ Pass | 2026-02-13 |
-| Secrets clean    | ✅ Pass | 2026-02-13 |
-| Rules consistent | ✅ Pass | 2026-02-13 |
+| Build passes     | ✅ Pass | 2026-02-17 |
+| No lint errors   | ✅ Pass | 2026-02-17 |
+| Tests pass       | ✅ Pass | 2026-02-17 |
+| Secrets clean    | ✅ Pass | 2026-02-17 |
+| Rules consistent | ✅ Pass | 2026-02-17 |
+| Model hierarchy  | ✅ Pass | 2026-02-17 |
+| MCP servers      | ✅ Pass | 2026-02-17 |
 
 ---
 

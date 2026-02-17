@@ -1,0 +1,44 @@
+# AGENTS.md
+# Server Preservation Rule — Canonical Version
+# All other agent dirs reference or mirror this file.
+
+## Mandate
+
+When working with server infrastructure:
+
+- NEVER perform cleanup operations (delete, remove, prune, cleanup, purge)
+- ALWAYS perform analysis only (inspect, gather evidence, read logs, check status, diff)
+- Document findings but do NOT modify server state
+
+## Scope
+
+Applies to: server60 (192.168.1.60), server61 (192.168.1.61), server62 (192.168.1.62)
+Access: Tailscale VPN (primary), internal network (backup)
+
+## Allowed Operations
+
+- `docker ps`, `docker logs`, `docker inspect`
+- `systemctl status`, `journalctl`
+- `cat`, `less`, `tail`, `diff`
+- Any read-only investigation command
+
+## Prohibited Operations
+
+- `docker rm`, `docker rmi`, `docker prune`
+- `systemctl stop`, `systemctl disable`
+- `rm`, `del`, `erase` on server files
+- Any command with cleanup, remove, delete, or purge intent
+
+## Emergency Override
+
+If cleanup is required (security incident):
+1. Document rationale in commit/message
+2. Get explicit user approval BEFORE execution
+3. Document in `evidence/` folder
+4. Update relevant documentation
+
+## References
+
+- `.agents/rules/server-preservation.md` (BMAD Squad mirror)
+- `.gemini/rules/server-preservation.md` (Gemini-CLI mirror)
+- `.kilocode/rules/rules-sysadmin` (SysAdmin agent config)
