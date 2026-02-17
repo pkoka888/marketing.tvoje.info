@@ -26,25 +26,26 @@ jobs:
         env:
           PUBLIC_SITE_URL: ${{ secrets.PUBLIC_SITE_URL }}
 
-      # Step 1: Copy dist to s60
-      - name: Deploy to s60 (temp)
+      # Method 1: s60 via public IP (port 2260) -> s62 via internal (port 2262)
+      - name: Deploy to s60 via Public IP
         uses: appleboy/ssh-action@v1
         with:
-          host: 100.111.141.111
-          port: 22
+          host: 89.203.173.196
+          port: 2260
           username: sugent
           key: ${{ secrets.VPS_SSH_KEY }}
+          timeout: 60s
           command_timeout: 5m
           script: |
             mkdir -p /tmp/portfolio-deploy
             rm -rf /tmp/portfolio-deploy/*
-            echo "Ready to receive files"
+            echo "Ready"
 
-      - name: Copy dist to s60 via scp
+      - name: Copy dist to s60
         uses: appleboy/scp-action@v0.1.7
         with:
-          host: 100.111.141.111
-          port: 22
+          host: 89.203.173.196
+          port: 2260
           username: sugent
           key: ${{ secrets.VPS_SSH_KEY }}
           source: 'dist/'
@@ -52,29 +53,15 @@ jobs:
           timeout: 300s
           strip_components: 1
 
-      # Step 2: From s60 to s62
       - name: Deploy from s60 to s62
         uses: appleboy/ssh-action@v1
         with:
-          host: 100.111.141.111
-          port: 22
+          host: 89.203.173.196
+          port: 2260
           username: sugent
           key: ${{ secrets.VPS_SSH_KEY }}
+          timeout: 60s
           command_timeout: 5m
           script: |
             scp -r -o StrictHostKeyChecking=no -P 2262 /tmp/portfolio-deploy/* sugent@192.168.1.62:/var/www/portfolio/
             ssh sugent@192.168.1.62 -p 2262 "ls -la /var/www/portfolio/ | head -10"
-
-      # Fallback: Direct public IP (requires port forwarding)
-      - name: Fallback - Deploy via Public IP
-        if: failure()
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: 89.203.173.196
-          port: 2262
-          username: sugent
-          key: ${{ secrets.VPS_SSH_KEY }}
-          source: 'dist/'
-          target: '/var/www/portfolio'
-          timeout: 300s
-          strip_components: 1
