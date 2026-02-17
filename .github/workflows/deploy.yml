@@ -26,15 +26,8 @@ jobs:
         env:
           PUBLIC_SITE_URL: ${{ secrets.PUBLIC_SITE_URL }}
 
-      # Method 1: Tailscale - Connect to tailnet then SSH via jumphost
-      - name: Connect to Tailscale
-        uses: tailscale/github-action@v4
-        with:
-          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
-          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
-          tags: tag:app-ci
-
-      - name: Deploy via Tailscale with Jumphost (s60 → s62)
+      # Method 1: Direct to s60 (works!) then jumphost to s62
+      - name: Deploy via s60 jumphost to s62
         uses: appleboy/ssh-action@v1
         with:
           host: 100.111.141.111
@@ -43,10 +36,10 @@ jobs:
           key: ${{ secrets.VPS_SSH_KEY }}
           command_timeout: 10m
           script: |
-            scp -r -P 2262 dist/* sugent@192.168.1.62:/var/www/portfolio/
+            scp -r -o StrictHostKeyChecking=no -P 2262 dist/* sugent@192.168.1.62:/var/www/portfolio/
             ssh sugent@192.168.1.62 -p 2262 "ls -la /var/www/portfolio/ | head -10"
 
-      # Fallback: Direct to s62 if Tailscale fails (requires port forwarding)
+      # Fallback: Direct public IP (requires port forwarding)
       - name: Fallback - Deploy via Public IP
         if: failure()
         uses: appleboy/scp-action@v0.1.7
