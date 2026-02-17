@@ -54,6 +54,71 @@ model_list:
       model: openai/gpt-4o-mini
       api_key: os.environ/OPENAI_API_KEY
 
+# Fallback Chains (Production Reliability)
+# -----------------------------------------
+# Follows tier hierarchy: T1 Free → T2 Complex → T4 Paid (Last Resort)
+# T3 Architect models are special-purpose and don't participate in general fallbacks
+fallbacks:
+  # T1 Free tier fallbacks (Primary → Secondary Free → Paid Last Resort)
+  - model: minimax-free
+    fallbacks:
+      - glm4-free
+      - gemma-free
+      - gemini-flash
+      - groq-llama-8b
+
+  - model: glm4-free
+    fallbacks:
+      - minimax-free
+      - gemma-free
+      - gemini-flash
+      - groq-llama-8b
+
+  - model: gemma-free
+    fallbacks:
+      - minimax-free
+      - glm4-free
+      - gemini-flash
+      - groq-llama-8b
+
+  # T2 Free Complex fallbacks (Rate Limited → Free tier → Paid)
+  - model: gemini-flash
+    fallbacks:
+      - minimax-free
+      - glm4-free
+      - groq-llama-8b
+      - groq-llama-70b
+
+  # T3 Architect fallbacks (High-capability models)
+  - model: gemini-pro
+    fallbacks:
+      - gemini-flash
+      - groq-llama-70b
+      - gpt-4o-mini
+
+  # T4 Paid fallbacks (Last Resort cascade)
+  - model: groq-llama-70b
+    fallbacks:
+      - groq-llama-8b
+      - gpt-4o-mini
+
+  - model: groq-llama-8b
+    fallbacks:
+      - groq-llama-70b
+      - gpt-4o-mini
+
+  - model: gpt-4o-mini
+    fallbacks:
+      - groq-llama-70b
+      - groq-llama-8b
+
+litellm_settings:
+  # Proxy behavior settings
+  set_verbose: false
+  drop_params: true  # Drop unsupported params gracefully
+  success_callback: []  # Add monitoring callbacks here
+  failure_callback: []  # Add failure handlers here
+
 router_settings:
   routing_strategy: latency
   redis_host: os.environ/REDIS_HOST
