@@ -63,13 +63,113 @@ Use this pattern to orchestrate multiple agents simultaneously:
 - **Knowledge Base**: `.kilocode/knowledge/`
 - **Rules**: `.kilocode/rules/` (Canonical Source).
 
-## 4. Troubleshooting
+## 4. Git & Selective Commits
+
+### Atomic Commits Principle
+
+Each commit should represent ONE logical change that can be built/tested independently.
+
+### Commit Categories (Conventional Commits)
+
+```
+feat:     New feature
+fix:      Bug fix
+docs:     Documentation only
+refactor: Code restructuring (no feature change)
+chore:    Maintenance, deps, configs
+test:     Adding tests
+```
+
+### Selective Commit Workflow
+
+```bash
+# 1. Check what changed
+git status
+
+# 2. Stage specific files (not all)
+git add src/components/Hero.astro
+git add docs/Hero-design.md
+
+# 3. Commit with scope
+git commit -m "feat(hero): add glassmorphism effect"
+
+# 4. Remaining changes - new commit
+git add src/styles/
+git commit -m "chore(styles): add glassmorphism utilities"
+```
+
+### When to Split vs Bundle
+
+| Scenario                                  | Action                                    |
+| ----------------------------------------- | ----------------------------------------- |
+| Related changes (feature + tests + docs)  | **Bundle** in one commit                  |
+| Independent changes (fix A + feature B)   | **Split** into separate commits           |
+| Platform configs (agent rules, workflows) | **Bundle** together (maintains integrity) |
+| Bugfix + unrelated feature                | **Split** - bugfix first, feature second  |
+
+### Verification Before Commit
+
+Always run before committing:
+
+```bash
+npm run build    # Must pass
+npm run typecheck  # Must pass
+git diff --stat  # Review what changed
+```
+
+## 5. Troubleshooting
 
 - **"Agent Context Full"**: Switch to Gemini CLI or start a new session.
 - **"Redis Connection Fail"**: Run `python scripts/verify_redis.py`.
 - **"Deployment Failed"**: Check GitHub Actions logs. If Vercel fails, ignore (we use VPS).
 
-## 5. Deployment
+## 6. Parallel Task Orchestration
+
+### ASSESS → SPLIT → ASSIGN → AGGREGATE → VALIDATE
+
+**Pattern** (2026 best practice):
+
+1. **ASSESS**: Is task simple/standard/complex?
+2. **SPLIT**: Can parts run in parallel?
+3. **ASSIGN**: Route to free models first
+4. **AGGREGATE**: Collect results via MCP
+5. **VALIDATE**: Run verification scripts
+
+### Parallel-Safe Tasks
+
+- Code + Tests (can run together)
+- Research + Documentation
+- Multi-server SSH checks
+- Lint + Build + Typecheck
+
+### Sequential Gates (Must wait)
+
+- Research → Architecture → Implementation
+- Build → Test → Deploy
+
+### Example: Multi-Section Website Update
+
+```
+ASSESS: Homepage needs 4 new sections → Complex
+SPLIT:
+  [PARALLEL]
+    - Research: Best practices for each section
+    - Audit: Current component implementations
+    - Tests: Write Playwright tests
+  [GATE] → Implement all sections
+  [PARALLEL]
+    - Lint check
+    - Build check
+    - Accessibility check
+ASSIGN:
+  - Research: @researcher (groq/free)
+  - Audit: @codex (groq/free)
+  - Tests: @reviewer (groq/free)
+AGGREGATE: Memory MCP for shared context
+VALIDATE: npm run build && npm run typecheck
+```
+
+## 7. Deployment
 
 - **Production**: Push to `main` triggers `deploy.yml` (VPS).
 - **Preview**: Open a PR triggers `deploy-preview` (Vercel).
