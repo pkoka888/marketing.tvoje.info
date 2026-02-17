@@ -33,10 +33,13 @@
       "description": "Web fetching for research"
     },
     "redis": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-redis"],
+      "command": "node",
+      "args": [
+        "C:/Users/pavel/projects/marketing.tvoje.info/.kilocode/mcp-servers/redis-server.js"
+      ],
       "env": {
-        "REDIS_URL": "${REDIS_URL}"
+        "REDIS_URL": "redis://:marketing@localhost:36379",
+        "REDIS_NAMESPACE": "marketing_tvoje_info"
       },
       "description": "Redis for rate limiting and coordination"
     }
