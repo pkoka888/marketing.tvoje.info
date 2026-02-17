@@ -9,22 +9,23 @@ The **Memory Bank** is the single source of truth for project context, architect
 
 ## Core Protocol
 
-1.  **Mandatory Load**: At the start of **EVERY** task, you MUST read the core Memory Bank files.
-2.  **Location**: `.kilocode/rules/memory-bank/`
-3.  **No Exceptions**: Even if you think you know the context, you must verify against the Memory Bank.
+## 1. Load Memory Bank
 
-## Instructions
+At the start of **EVERY** task, you must read the following core files to establish context:
 
-When starting a new task:
+1.  `QUICK_REFERENCE.md` (Critical constraints & map)
+2.  `context.md` (Active task status)
+3.  `brief.md` (Project goals - Optional if well understood)
 
-1.  List the files in `.kilocode/rules/memory-bank/`.
-2.  Read the content of the following **Core Files**:
-    - `brief.md` (Project goals)
-    - `product.md` (Product vision)
-    - `context.md` (Current work focus)
-    - `activeContext.md` (if present)
-    - `tech.md` (Technology stack)
-    - `architecture.md` (System architecture)
+**DO NOT** load `product.md` unless specifically working on feature planning.
+**DO NOT** search for archived files (`tech.md`, `architecture.md`) unless you hit a specific blocker.
+
+```xml
+<memory_bank_core>
+<file path=".kilocode/rules/memory-bank/QUICK_REFERENCE.md" />
+<file path=".kilocode/rules/memory-bank/context.md" />
+</memory_bank_core>
+```
 
 ## Updates
 

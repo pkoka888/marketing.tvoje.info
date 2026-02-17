@@ -49,6 +49,17 @@ npm test         # Run tests
 
 ---
 
+## Redis (MCP)
+
+| Item      | Value                |
+| --------- | -------------------- |
+| Host      | localhost:36379      |
+| Password  | marketing            |
+| Namespace | marketing_tvoje_info |
+| Status    | ✅ Running           |
+
+---
+
 ## Current Work
 
 - Phase 4: Fixes applied (Schema.org, themes)

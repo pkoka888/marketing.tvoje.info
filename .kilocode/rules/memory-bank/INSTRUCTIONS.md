@@ -10,13 +10,20 @@
    - Current status, commands, models
    - ~1.5KB
 
-2. **context.md** (required)
-   - Recent changes, what's pending
-   - ~1KB
+# Memory Bank Instructions
 
-3. **brief.md** (optional - for new features)
-   - Project goals, scope
-   - ~1.5KB
+**Core Protocol**:
+
+1.  **Load**: `QUICK_REFERENCE.md` + `context.md` (Required). `brief.md` (Optional).
+2.  **Product**: Load `product.md` ONLY for feature work.
+3.  **Archive**: Do NOT load files from `.archive/` unless stuck.
+
+**Goal**: Minimize context usage (keep < 10KB).
+
+**Updates**:
+
+- Use `QUICK_REFERENCE.md` for tech stack/rules.
+- Update `context.md` at start/end of tasks.
 
 ---
 

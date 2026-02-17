@@ -95,12 +95,13 @@
     },
     "redis": {
       "type": "local",
-      "command": ["cmd", "/c", "npx", "-y", "@modelcontextprotocol/server-redis"],
+      "command": [
+        "node",
+        "C:/Users/pavel/projects/marketing.tvoje.info/.kilocode/mcp-servers/redis-server.js"
+      ],
       "environment": {
-        "REDIS_URL": "redis://host.docker.internal:36379",
-        "REDIS_HOST": "host.docker.internal",
-        "REDIS_PORT": "36379",
-        "REDIS_NAMESPACE": "marketing_tvoje_info"
+        "PROJECT_NAME": "marketing-tvoje-info",
+        "REDIS_URL": "redis://:marketing@localhost:36379"
       }
     },
     "bmad-mcp": {

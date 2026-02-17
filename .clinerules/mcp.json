@@ -1,0 +1,33 @@
+{
+  "mcpServers": {
+    "redis": {
+      "command": "node",
+      "args": [
+        "C:/Users/pavel/projects/marketing.tvoje.info/.kilocode/mcp-servers/redis-server.js"
+      ],
+      "env": {
+        "PROJECT_NAME": "marketing-tvoje-info",
+        "REDIS_URL": "redis://:marketing@localhost:36379"
+      }
+    },
+    "filesystem-projects": {
+      "command": "node",
+      "args": [
+        "C:/nvm4w/nodejs/node_modules/@modelcontextprotocol/server-filesystem/dist/index.js",
+        "C:/Users/pavel/projects"
+      ]
+    },
+    "memory": {
+      "command": "node",
+      "args": ["C:/nvm4w/nodejs/node_modules/@modelcontextprotocol/server-memory/dist/index.js"]
+    },
+    "git": {
+      "command": "node",
+      "args": ["C:/nvm4w/nodejs/node_modules/git-mcp/dist/index.js"]
+    },
+    "fetch": {
+      "command": "uvx",
+      "args": ["mcp-server-fetch"]
+    }
+  }
+}
