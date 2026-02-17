@@ -76,7 +76,8 @@ const csUrl = canonicalUrl.startsWith('/cs') ? canonicalUrl : `${baseUrl}/cs${As
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.svg" />
     <link rel="manifest" href="/site.webmanifest" />
 
     <!-- RSS Feed -->
@@ -142,16 +143,19 @@ const csUrl = canonicalUrl.startsWith('/cs') ? canonicalUrl : `${baseUrl}/cs${As
       }
     </script>
 
-    <!-- Structured Data -->
+    <!-- Structured Data - Person -->
     <script
       type="application/ld+json"
       set:html={JSON.stringify({
         '@context': 'https://schema.org',
         '@type': 'Person',
-        name: 'Marketing & AI Specialist',
-        jobTitle: 'Marketing & AI Specialist',
+        name: 'Pavel Kašpar',
+        jobTitle: 'DevOps & AI Consultant',
         url: 'https://marketing.tvoje.info',
-        sameAs: ['https://linkedin.com/in/pavelkaspar', 'https://github.com/pavelkaspar'],
+        sameAs: [
+          'https://linkedin.com/in/pavelkaspar',
+          'https://github.com/pavelkaspar'
+        ],
         knowsAbout: [
           'Marketing Automation',
           'Growth Strategy',
@@ -159,7 +163,68 @@ const csUrl = canonicalUrl.startsWith('/cs') ? canonicalUrl : `${baseUrl}/cs${As
           'Creative Design',
           'Data Analytics',
           'Conversational AI',
+          'DevOps',
+          'Cloud Infrastructure'
         ],
+      })}
+    />
+
+    <!-- Structured Data - LocalBusiness -->
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'LocalBusiness',
+        name: 'Pavel Kašpar - Marketing & AI',
+        image: 'https://marketing.tvoje.info/og-image.png',
+        address: {
+          '@type': 'PostalAddress',
+          addressLocality: 'Prague',
+          addressCountry: 'CZ'
+        },
+        priceRange: '$$',
+        openingHoursSpecification: {
+          '@type': 'OpeningHoursSpecification',
+          dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+          opens: '09:00',
+          closes: '18:00'
+        },
+        contactPoint: {
+          '@type': 'ContactPoint',
+          telephone: '+420-777-123-456',
+          contactType: 'customer service',
+          availableLanguage: ['Czech', 'English']
+        }
+      })}
+    />
+
+    <!-- Structured Data - Service -->
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'Service',
+        name: 'Marketing & AI Consulting',
+        provider: {
+          '@type': 'Person',
+          name: 'Pavel Kašpar'
+        },
+        description: 'Professional marketing strategy and AI integration consulting services for businesses in Czech Republic and internationally.',
+        areaServed: {
+          '@type': 'Country',
+          name: ['Czech Republic', 'Europe']
+        },
+        serviceType: [
+          'Marketing Strategy',
+          'AI Integration',
+          'Growth Consulting',
+          'Automation'
+        ],
+        offers: {
+          '@type': 'Offer',
+          priceCurrency: 'CZK',
+          availability: 'https://schema.org/InStock'
+        }
       })}
     />
   </head>
