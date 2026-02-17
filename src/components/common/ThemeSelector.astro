@@ -1,43 +1,13 @@
 ---
+import { getThemesArray } from '../../themes.js';
+
 interface Props {
   lang?: 'en' | 'cs';
 }
 
 const { lang = 'en' } = Astro.props;
 
-const themes = [
-  {
-    id: 'titan',
-    name: lang === 'cs' ? 'Titan' : 'Titan',
-    desc: lang === 'cs' ? 'Přímý, profesionální' : 'Direct, Professional',
-    color: '#4285F4',
-    gradient: 'linear-gradient(135deg, #4285F4, #0ea5e9)',
-  },
-  {
-    id: 'nova',
-    name: lang === 'cs' ? 'Nova' : 'Nova',
-    desc: lang === 'cs' ? 'Přátelský, partnerský' : 'Friendly, Partner',
-    gradient: 'linear-gradient(135deg, #6366F1, #22D3EE)',
-  },
-  {
-    id: 'target',
-    name: lang === 'cs' ? 'Target' : 'Target',
-    desc: lang === 'cs' ? 'Cílově orientovaný' : 'Goal-focused',
-    gradient: 'linear-gradient(135deg, #1E40AF, #EA580C)',
-  },
-  {
-    id: 'spark',
-    name: lang === 'cs' ? 'Spark' : 'Spark',
-    desc: lang === 'cs' ? 'Odvážný, provokativní' : 'Bold, Provocative',
-    gradient: 'linear-gradient(135deg, #0A0A0A, #00D4FF)',
-  },
-  {
-    id: 'lux',
-    name: lang === 'cs' ? 'Lux' : 'Lux',
-    desc: lang === 'cs' ? 'Premium, minimalistický' : 'Premium, Minimal',
-    gradient: 'linear-gradient(135deg, #F5F5F5, #B8860B)',
-  },
-];
+const themes = getThemesArray(lang);
 ---
 
 <div class="theme-selector-wrapper relative" id="theme-selector-wrapper">
@@ -116,13 +86,7 @@ const themes = [
     const nameEl = document.getElementById('theme-current-name');
     const chevron = document.getElementById('theme-chevron');
 
-    const themes = {
-      titan: { name: 'Titan', gradient: 'linear-gradient(135deg, #4285F4, #0ea5e9)' },
-      nova: { name: 'Nova', gradient: 'linear-gradient(135deg, #6366F1, #22D3EE)' },
-      target: { name: 'Target', gradient: 'linear-gradient(135deg, #1E40AF, #EA580C)' },
-      spark: { name: 'Spark', gradient: 'linear-gradient(135deg, #0A0A0A, #00D4FF)' },
-      lux: { name: 'Lux', gradient: 'linear-gradient(135deg, #F5F5F5, #B8860B)' },
-    };
+    // Themes are imported from themes.js via getThemesArray(lang)
 
     // Initialize from localStorage
     function initTheme() {

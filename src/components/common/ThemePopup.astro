@@ -1,42 +1,13 @@
 ---
+import { getThemesArray } from '../../themes.js';
+
 interface Props {
   lang?: 'en' | 'cs';
 }
 
 const { lang = 'en' } = Astro.props;
 
-const themes = [
-  {
-    id: 'titan',
-    name: lang === 'cs' ? 'Titan' : 'Titan',
-    desc: lang === 'cs' ? 'Přímý, profesionální vzhled' : 'Direct, professional look',
-    gradient: 'linear-gradient(135deg, #4285F4, #0ea5e9)',
-  },
-  {
-    id: 'nova',
-    name: lang === 'cs' ? 'Nova' : 'Nova',
-    desc: lang === 'cs' ? 'Přátelský a moderní' : 'Friendly and modern',
-    gradient: 'linear-gradient(135deg, #6366F1, #22D3EE)',
-  },
-  {
-    id: 'target',
-    name: lang === 'cs' ? 'Target' : 'Target',
-    desc: lang === 'cs' ? 'Cílově orientovaný' : 'Goal-focused',
-    gradient: 'linear-gradient(135deg, #1E40AF, #EA580C)',
-  },
-  {
-    id: 'spark',
-    name: lang === 'cs' ? 'Spark' : 'Spark',
-    desc: lang === 'cs' ? 'Odvážný a výrazný' : 'Bold and striking',
-    gradient: 'linear-gradient(135deg, #0A0A0A, #00D4FF)',
-  },
-  {
-    id: 'lux',
-    name: lang === 'cs' ? 'Lux' : 'Lux',
-    desc: lang === 'cs' ? 'Premium a minimalistický' : 'Premium and minimal',
-    gradient: 'linear-gradient(135deg, #F5F5F5, #B8860B)',
-  },
-];
+const themes = getThemesArray(lang);
 
 const headlines = {
   en: 'Find Your Perfect Look!',
@@ -178,13 +149,7 @@ const continueBtn = {
     const closeBtn = document.getElementById('theme-popup-close');
     const continueBtn = document.querySelector('.theme-popup-continue');
 
-    const themes = {
-      titan: { name: 'Titan', gradient: 'linear-gradient(135deg, #4285F4, #0ea5e9)' },
-      nova: { name: 'Nova', gradient: 'linear-gradient(135deg, #6366F1, #22D3EE)' },
-      target: { name: 'Target', gradient: 'linear-gradient(135deg, #1E40AF, #EA580C)' },
-      spark: { name: 'Spark', gradient: 'linear-gradient(135deg, #0A0A0A, #00D4FF)' },
-      lux: { name: 'Lux', gradient: 'linear-gradient(135deg, #F5F5F5, #B8860B)' },
-    };
+    // Themes are imported from themes.js via getThemesArray(lang)
 
     let shown = false;
 

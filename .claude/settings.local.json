@@ -21,7 +21,8 @@
       "Bash(file=\"/c/Users/pavel/projects/marketing.tvoje.info/$ref\")",
       "Bash(cat:*)",
       "Bash(curl:*)",
-      "Bash(pkill:*)"
+      "Bash(pkill:*)",
+      "Bash(pip show:*)"
     ]
   }
 }

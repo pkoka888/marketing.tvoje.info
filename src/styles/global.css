@@ -379,3 +379,70 @@
 .btn-lg {
   @apply px-6 py-3 text-lg;
 }
+
+/* ========================================
+   THEME CSS VARIABLES
+   ======================================== */
+
+/* Titan Theme */
+.theme-titan {
+  --theme-primary: #4285F4;
+  --theme-secondary: #0ea5e9;
+  --theme-accent: #FBBC05;
+  --theme-bg: #ffffff;
+  --theme-text: #1f2937;
+}
+
+/* Nova Theme */
+.theme-nova {
+  --theme-primary: #6366F1;
+  --theme-secondary: #22D3EE;
+  --theme-accent: #F59E0B;
+  --theme-bg: #ffffff;
+  --theme-text: #1f2937;
+}
+
+/* Target Theme */
+.theme-target {
+  --theme-primary: #EF4444;
+  --theme-secondary: #F97316;
+  --theme-accent: #10B981;
+  --theme-bg: #ffffff;
+  --theme-text: #1f2937;
+}
+
+/* Spark Theme */
+.theme-spark {
+  --theme-primary: #F59E0B;
+  --theme-secondary: #EF4444;
+  --theme-accent: #8B5CF6;
+  --theme-bg: #ffffff;
+  --theme-text: #1f2937;
+}
+
+/* Lux Theme */
+.theme-lux {
+  --theme-primary: #8B5CF6;
+  --theme-secondary: #EC4899;
+  --theme-accent: #06B6D4;
+  --theme-bg: #ffffff;
+  --theme-text: #1f2937;
+}
+
+/* Obsidian Theme */
+.theme-obsidian {
+  --theme-primary: #1F2937;
+  --theme-secondary: #374151;
+  --theme-accent: #F59E0B;
+  --theme-bg: #1f2937;
+  --theme-text: #f9fafb;
+}
+
+/* Playful Theme */
+.theme-playful {
+  --theme-primary: #EC4899;
+  --theme-secondary: #F97316;
+  --theme-accent: #10B981;
+  --theme-bg: #ffffff;
+  --theme-text: #1f2937;
+}
