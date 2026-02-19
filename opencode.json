@@ -101,7 +101,7 @@
       ],
       "environment": {
         "PROJECT_NAME": "marketing-tvoje-info",
-        "REDIS_URL": "redis://:marketing@localhost:36379"
+        "REDIS_PASSWORD": "5XQtvKB2go/FW0EHwnV8kzoiHahDvXcQjih9AtIljzQ="
       }
     },
     "bmad-mcp": {
@@ -123,6 +123,21 @@
         "C:/nvm4w/nodejs/node_modules/@modelcontextprotocol/server-filesystem/dist/index.js",
         "C:/Users/pavel/vscodeportable"
       ],
+      "environment": {}
+    },
+    "firecrawl-local": {
+      "type": "local",
+      "command": [
+        "node",
+        "c:/Users/pavel/projects/marketing.tvoje.info/.kilocode/mcp-libs/firecrawl-fresh/node_modules/firecrawl-mcp/dist/index.js"
+      ],
+      "environment": {
+        "FIRECRAWL_API_KEY": "{env:FIRECRAWL_API_KEY}"
+      }
+    },
+    "playwright-mcp": {
+      "type": "local",
+      "command": ["node", "C:/nvm4w/nodejs/node_modules/@playwright/mcp/cli.js"],
       "environment": {}
     }
   },

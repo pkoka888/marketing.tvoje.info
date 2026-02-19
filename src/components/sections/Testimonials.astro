@@ -57,7 +57,14 @@ const testimonials = [
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
       {testimonials.map((testimonial, index) => (
         <div
-          class="card p-6"
+          class="testimonial-card card p-6 group relative overflow-hidden"
+          data-aos="fade-up"
+          data-aos-delay={index * 100}
+        >
+          <!-- Gradient border on hover -->
+          <div class="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+               style="background: linear-gradient(135deg, rgba(0,212,255,0.1), rgba(123,47,247,0.1)); padding: 2px;">
+          </div>
           data-aos="fade-up"
           data-aos-delay={index * 100}
         >

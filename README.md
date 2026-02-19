@@ -14,19 +14,25 @@ Modern, performant portfolio website showcasing DevOps and AI expertise. Built w
 
 ## Tech Stack
 
-| Category | Technology |
-|----------|------------|
-| Framework | Astro 5.0 |
-| Styling | Tailwind CSS 3.4 |
-| Language | TypeScript 5.7 |
-| Hosting | Vercel |
-| Forms | Formspree |
-| Analytics | Plausible (privacy-focused) |
-| CI/CD | GitHub Actions |
+| Category  | Technology                      |
+| --------- | ------------------------------- |
+| Framework | Astro 5.0                       |
+| Styling   | Tailwind CSS 3.4                |
+| Language  | TypeScript 5.7                  |
+| Hosting   | VPS (s60/s61/s62 via Tailscale) |
+| Forms     | Formspree                       |
+| Analytics | Plausible (privacy-focused)     |
+| CI/CD     | GitHub Actions                  |
 
-## Quick Start
+## Deployment
 
-### Prerequisites
+**Target: VPS (NOT Vercel)**
+
+This project deploys to VPS via GitHub Actions:
+
+- **Build**: `npm run build` (outputs to `dist/`)
+- **Deploy**: Push to VPS servers (s60/s61/s62) via Tailscale VPN
+- See `docs/DEPLOYMENT.md` for details
 
 - Node.js 20+
 - npm or pnpm
@@ -47,15 +53,15 @@ npm run dev
 
 ## Available Scripts
 
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start development server |
-| `npm run build` | Build for production |
-| `npm run preview` | Preview production build |
-| `npm run lint` | Run ESLint |
-| `npm run typecheck` | Run TypeScript checks |
-| `npm run format` | Format code with Prettier |
-| `npm run format:check` | Check code formatting |
+| Command                | Description               |
+| ---------------------- | ------------------------- |
+| `npm run dev`          | Start development server  |
+| `npm run build`        | Build for production      |
+| `npm run preview`      | Preview production build  |
+| `npm run lint`         | Run ESLint                |
+| `npm run typecheck`    | Run TypeScript checks     |
+| `npm run format`       | Format code with Prettier |
+| `npm run format:check` | Check code formatting     |
 
 ## Project Structure
 

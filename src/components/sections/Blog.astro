@@ -1,0 +1,131 @@
+---
+import type { Language } from '../../i18n/translations';
+import { getLangFromUrl } from '../../i18n/translations';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang: propLang } = Astro.props;
+const lang = propLang || getLangFromUrl(Astro.url);
+
+const blogPosts = [
+  {
+    slug: 'ai-marketing-2026',
+    title: lang === 'cs' ? 'AI marketing v roce 2026: Co očekávat' : 'AI Marketing in 2026: What to Expect',
+    excerpt: lang === 'cs' 
+      ? 'Objevte nejnovější trendy v AI marketingu a jak mohou změnit vaši strategii.'
+      : 'Discover the latest trends in AI marketing and how they can transform your strategy.',
+    date: '2026-02-15',
+    category: lang === 'cs' ? 'AI & Automatizace' : 'AI & Automation',
+    readTime: '5 min',
+  },
+  {
+    slug: 'tiktok-ads-guide',
+    title: lang === 'cs' ? 'Průvodce TikTok reklamami pro rok 2026' : 'TikTok Ads Guide for 2026',
+    excerpt: lang === 'cs'
+      ? 'Naučte se, jak efektivně využít TikTok reklamy pro růst vašeho podnikání.'
+      : 'Learn how to effectively use TikTok ads for your business growth.',
+    date: '2026-02-10',
+    category: lang === 'cs' ? 'PPC & Reklama' : 'PPC & Advertising',
+    readTime: '7 min',
+  },
+  {
+    slug: 'seo-ai-search',
+    title: lang === 'cs' ? 'SEO pro AI vyhledávače: ChatGPT, Perplexity' : 'SEO for AI Search: ChatGPT, Perplexity',
+    excerpt: lang === 'cs'
+      ? 'Jak optimalizovat váš web pro novou éru AI vyhledávání.'
+      : 'How to optimize your website for the new era of AI search.',
+    date: '2026-02-05',
+    category: lang === 'cs' ? 'SEO' : 'SEO',
+    readTime: '6 min',
+  },
+];
+---
+
+<section id="blog" class="section bg-white dark:bg-dark-900">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Section Header -->
+    <div class="text-center mb-12">
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 text-sm font-medium mb-4">
+        <span class="text-xl">📝</span>
+        {lang === 'cs' ? 'Blog' : 'Blog'}
+      </div>
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+        {lang === 'cs' ? 'Nejnovější články' : 'Latest Articles'}
+      </h2>
+      <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+        {lang === 'cs' 
+          ? 'Tipy, trendy a strategie pro váš marketingový růst.'
+          : 'Tips, trends, and strategies for your marketing growth.'}
+      </p>
+    </div>
+
+    <!-- Blog Grid -->
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {blogPosts.map((post, index) => (
+        <article 
+          class="blog-card card group overflow-hidden"
+          data-aos="fade-up"
+          data-aos-delay={index * 100}
+        >
+          <!-- Image placeholder -->
+          <div class="h-48 bg-gradient-to-br from-primary-100 to-accent-100 dark:from-primary-900/30 dark:to-accent-900/30 flex items-center justify-center">
+            <span class="text-4xl">📄</span>
+          </div>
+          
+          <!-- Content -->
+          <div class="p-6">
+            <!-- Meta -->
+            <div class="flex items-center gap-3 text-xs text-gray-500 dark:text-gray-400 mb-3">
+              <span class="px-2 py-1 rounded-full bg-gray-100 dark:bg-dark-700">
+                {post.category}
+              </span>
+              <span>{post.readTime} read</span>
+            </div>
+            
+            <!-- Title -->
+            <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+              <a href={`/${lang === 'cs' ? 'cs/' : ''}blog/${post.slug}`}>
+                {post.title}
+              </a>
+            </h3>
+            
+            <!-- Excerpt -->
+            <p class="text-sm text-gray-600 dark:text-gray-300 mb-4 line-clamp-2">
+              {post.excerpt}
+            </p>
+            
+            <!-- Date -->
+            <div class="text-xs text-gray-400 dark:text-gray-500">
+              {new Date(post.date).toLocaleDateString(lang === 'cs' ? 'cs-CZ' : 'en-US', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+              })}
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <!-- View All -->
+    <div class="text-center mt-12">
+      <a
+        href={lang === 'cs' ? '/cs/blog' : '/blog'}
+        class="btn-secondary px-8 py-3"
+      >
+        {lang === 'cs' ? 'Zobrazit všechny články' : 'View All Articles'}
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .blog-card {
+    transition: all 0.3s ease;
+  }
+  .blog-card:hover {
+    transform: translateY(-5px);
+  }
+</style>

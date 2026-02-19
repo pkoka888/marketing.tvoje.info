@@ -30,14 +30,15 @@ test.describe('Production Verification - New Sections', () => {
   test('Certifications section', async ({ page }) => {
     await page.goto(PRODUCTION_URL);
 
-    const certifications = page.locator('text=Certifications');
+    // Use more specific locator - target the section heading, not the subsection
+    const certifications = page.locator('#certifications h2:has-text("Certifications")');
     await expect(certifications).toBeVisible();
   });
 
   test('Contact form exists', async ({ page }) => {
     await page.goto(PRODUCTION_URL);
 
-    const form = page.locator('form[name="contact"]');
+    const form = page.locator('#contact-form');
     await expect(form).toBeVisible();
 
     const nameInput = form.locator('input[name="name"]');

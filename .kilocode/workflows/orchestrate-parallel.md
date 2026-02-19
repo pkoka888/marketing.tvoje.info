@@ -9,14 +9,15 @@ See canonical version at `.clinerules/workflows/orchestrate-parallel.md` for ful
 
 ## Quick Reference
 
-### Model Priority
-1. groq/llama-3.3-70b (100K TPD) — default free
-2. groq/llama-3.1-8b (500K TPD) — bulk/fast
-3. z-ai/glm4.7 (unlimited) — always-on fallback
-4. gemini-2.5-flash (1M/day) — large context
-5. claude-sonnet-4-5 (PAID, $20/mo) — complex only
-6. gemini-2.5-pro (PAID, $20/mo) — architecture only
-7. openai/o3 (PAID, $20/mo) — hard algorithms only
+### Model Priority (Free-First 2026)
+1. **kilo/minimax/minimax-m2.1:free** — default free (unlimited via OpenRouter)
+2. **x-ai/grok-code-fast-1:optimized:free** — bulk coding (Kilo Code free)
+3. **big-pickle (OpenCode Zen)** — routine tasks (unlimited)
+4. **gemini-2.5-flash** — large context (1M/day free tier)
+5. **gemini-2.5-pro** — architecture/complex (T3 orchestrator)
+6. **claude-sonnet-4-5 (PAID, $20/mo)** — complex only
+7. **openai/o3 (PAID, $20/mo)** — hard algorithms only
+8. **groq/llama-3.3-70b (PAID)** — last resort fallback
 
 ### Pattern
 ASSESS → SPLIT → ASSIGN → AGGREGATE → VALIDATE

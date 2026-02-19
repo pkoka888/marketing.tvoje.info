@@ -381,68 +381,330 @@
 }
 
 /* ========================================
+   ENHANCED UI EFFECTS 2026
+   ======================================== */
+
+/* Glow Effects */
+.glow-primary {
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+  transition: all 0.3s ease;
+}
+.glow-primary:hover {
+  box-shadow: 0 0 40px rgba(0, 212, 255, 0.5);
+}
+
+.glow-accent {
+  box-shadow: 0 0 20px rgba(123, 47, 247, 0.3);
+  transition: all 0.3s ease;
+}
+.glow-accent:hover {
+  box-shadow: 0 0 40px rgba(123, 47, 247, 0.5);
+}
+
+/* Animated Gradient Text */
+.gradient-text-animated {
+  background: linear-gradient(90deg, #00d4ff, #7b2ff7, #00d4ff);
+  background-size: 200% auto;
+  animation: gradient-shift 3s linear infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+/* Gradient Border */
+.gradient-border {
+  position: relative;
+  background: white;
+  border-radius: 0.75rem;
+}
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 0.875rem;
+  background: linear-gradient(90deg, #00d4ff, #7b2ff7, #00d4ff);
+  z-index: -1;
+  animation: border-gradient 3s linear infinite;
+}
+
+@keyframes border-gradient {
+  0% {
+    background-position: 0% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+/* Glassmorphism Enhanced */
+.glassmorphism {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+}
+
+.dark .glassmorphism {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Neon Glow Button */
+.btn-neon {
+  background: linear-gradient(90deg, #00d4ff, #7b2ff7);
+  color: white;
+  border: none;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+.btn-neon::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, #7b2ff7, #00d4ff);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.btn-neon:hover {
+  box-shadow:
+    0 0 30px rgba(0, 212, 255, 0.5),
+    0 0 60px rgba(123, 47, 247, 0.3);
+  transform: translateY(-2px);
+}
+
+/* Counter Animation */
+.counter-value {
+  display: inline-block;
+}
+
+/* Marquee/Ticker Animation */
+.marquee-container {
+  overflow: hidden;
+  white-space: nowrap;
+}
+.marquee-content {
+  display: inline-flex;
+  animation: marquee 30s linear infinite;
+}
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+.marquee-content:hover {
+  animation-play-state: paused;
+}
+
+/* Floating Animation */
+.float-animation {
+  animation: float 6s ease-in-out infinite;
+}
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+/* Pulse Glow */
+.pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+@keyframes pulse-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(0, 212, 255, 0.6);
+  }
+}
+
+/* Stagger Animation for Lists */
+.stagger-item {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: stagger-in 0.5s ease forwards;
+}
+.stagger-item:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.stagger-item:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.stagger-item:nth-child(3) {
+  animation-delay: 0.3s;
+}
+.stagger-item:nth-child(4) {
+  animation-delay: 0.4s;
+}
+.stagger-item:nth-child(5) {
+  animation-delay: 0.5s;
+}
+
+@keyframes stagger-in {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Hero Text Reveal */
+.hero-title {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: hero-reveal 0.8s ease forwards;
+}
+.hero-title:nth-child(1) {
+  animation-delay: 0.2s;
+}
+.hero-title:nth-child(2) {
+  animation-delay: 0.4s;
+}
+
+@keyframes hero-reveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ========================================
    THEME CSS VARIABLES
    ======================================== */
 
 /* Titan Theme */
 .theme-titan {
-  --theme-primary: #4285F4;
+  --theme-primary: #4285f4;
   --theme-secondary: #0ea5e9;
-  --theme-accent: #FBBC05;
+  --theme-accent: #fbbc05;
   --theme-bg: #ffffff;
   --theme-text: #1f2937;
 }
 
 /* Nova Theme */
 .theme-nova {
-  --theme-primary: #6366F1;
-  --theme-secondary: #22D3EE;
-  --theme-accent: #F59E0B;
+  --theme-primary: #6366f1;
+  --theme-secondary: #22d3ee;
+  --theme-accent: #f59e0b;
   --theme-bg: #ffffff;
   --theme-text: #1f2937;
 }
 
 /* Target Theme */
 .theme-target {
-  --theme-primary: #EF4444;
-  --theme-secondary: #F97316;
-  --theme-accent: #10B981;
+  --theme-primary: #ef4444;
+  --theme-secondary: #f97316;
+  --theme-accent: #10b981;
   --theme-bg: #ffffff;
   --theme-text: #1f2937;
 }
 
 /* Spark Theme */
 .theme-spark {
-  --theme-primary: #F59E0B;
-  --theme-secondary: #EF4444;
-  --theme-accent: #8B5CF6;
+  --theme-primary: #f59e0b;
+  --theme-secondary: #ef4444;
+  --theme-accent: #8b5cf6;
   --theme-bg: #ffffff;
   --theme-text: #1f2937;
 }
 
 /* Lux Theme */
 .theme-lux {
-  --theme-primary: #8B5CF6;
-  --theme-secondary: #EC4899;
-  --theme-accent: #06B6D4;
+  --theme-primary: #8b5cf6;
+  --theme-secondary: #ec4899;
+  --theme-accent: #06b6d4;
   --theme-bg: #ffffff;
   --theme-text: #1f2937;
 }
 
 /* Obsidian Theme */
 .theme-obsidian {
-  --theme-primary: #1F2937;
+  --theme-primary: #1f2937;
   --theme-secondary: #374151;
-  --theme-accent: #F59E0B;
+  --theme-accent: #f59e0b;
   --theme-bg: #1f2937;
   --theme-text: #f9fafb;
 }
 
 /* Playful Theme */
 .theme-playful {
-  --theme-primary: #EC4899;
-  --theme-secondary: #F97316;
-  --theme-accent: #10B981;
+  --theme-primary: #ec4899;
+  --theme-secondary: #f97316;
+  --theme-accent: #10b981;
   --theme-bg: #ffffff;
   --theme-text: #1f2937;
+}
+
+/* Neon Theme - Cyberpunk inspired */
+.theme-neon {
+  --theme-primary: #00f0ff;
+  --theme-secondary: #ff00ff;
+  --theme-accent: #00ff88;
+  --theme-bg: #0a0a0f;
+  --theme-text: #e0e0e0;
+  --theme-dark-900: #0a0a0f;
+  --theme-dark-800: #12121a;
+  --theme-dark-700: #1a1a25;
+  --theme-dark-600: #222230;
+  --theme-dark-500: #2a2a3a;
+  --theme-dark-400: #3a3a4a;
+  --theme-dark-300: #4a4a5a;
+  --theme-dark-200: #c0c0c0;
+  --theme-dark-100: #e0e0e0;
+  --theme-dark-50: #ffffff;
+}
+
+/* Neon glow effects for theme-neon */
+.theme-neon .glow-primary {
+  box-shadow:
+    0 0 20px rgba(0, 240, 255, 0.5),
+    0 0 40px rgba(255, 0, 255, 0.3);
+}
+
+.theme-neon .gradient-text-animated {
+  background: linear-gradient(90deg, #00f0ff, #ff00ff, #00ff88, #00f0ff);
+  animation: gradient-shift 2s linear infinite;
+}
+
+/* Testimonial card animations */
+.testimonial-card {
+  transition: all 0.3s ease;
+}
+
+.testimonial-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.dark .testimonial-card:hover {
+  box-shadow:
+    0 20px 40px rgba(0, 212, 255, 0.1),
+    0 20px 40px rgba(123, 47, 247, 0.1);
+}
+
+/* Platform card animations */
+.platform-card {
+  transition: all 0.3s ease;
+}
+
+.platform-card:hover {
+  transform: translateY(-5px);
 }

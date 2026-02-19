@@ -1,0 +1,111 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/common/Header.astro';
+import Footer from '../components/common/Footer.astro';
+import { getLangFromUrl } from '../i18n/translations';
+
+const lang = getLangFromUrl(Astro.url);
+
+const content = {
+  en: {
+    title: 'Privacy Policy',
+    lastUpdated: 'Last updated: February 2026',
+    intro: 'This Privacy Policy describes how we collect, use, and protect your personal information.',
+    sections: [
+      {
+        title: 'Data We Collect',
+        content: 'We collect information you provide directly through our contact form, including your name, email address, phone number, and any message content. We also collect basic usage data through privacy-friendly analytics.'
+      },
+      {
+        title: 'How We Use Your Data',
+        content: 'Your data is used solely to respond to your inquiries and provide the services you request. We never sell your personal data to third parties.'
+      },
+      {
+        title: 'Data Storage',
+        content: 'All personal data is stored securely on encrypted servers within the EU. Contact form submissions are retained for customer service purposes only.'
+      },
+      {
+        title: 'Your Rights',
+        content: 'Under GDPR, you have the right to access, correct, or delete your personal data. To exercise these rights, contact us through the contact form.'
+      },
+      {
+        title: 'Cookies',
+        content: 'We use minimal cookies necessary for site functionality. No tracking cookies or advertising identifiers are used.'
+      },
+      {
+        title: 'Contact',
+        content: 'For privacy concerns, please contact us through the contact form on our website.'
+      }
+    ]
+  },
+  cs: {
+    title: 'Zásady ochrany osobních údajů',
+    lastUpdated: 'Poslední aktualizace: únor 2026',
+    intro: 'Tyto Zásady ochrany osobních údajů popisují, jak shromažďujeme, používáme a chráníme vaše osobní údaje.',
+    sections: [
+      {
+        title: 'Shromažďované údaje',
+        content: 'Shromažďujeme informace, které poskytnete přímo prostřednictvím kontaktního formuláře, včetně vašeho jména, e-mailové adresy, telefonního čísla a obsahu zprávy. Shromažďujeme také základní údaje o používání prostřednictvím analytiky šetrné k soukromí.'
+      },
+      {
+        title: 'Jak používáme vaše údaje',
+        content: 'Vaše údaje používáme výhradně k reagování na vaše dotazy a poskytování služeb, které požadujete. Vaše osobní údaje nikdy neprodáváme třetím stranám.'
+      },
+      {
+        title: 'Ukládání dat',
+        content: 'Všechny osobní údaje jsou bezpečně ukládány na šifrovaných serverech v EU. Odeslání kontaktního formuláře je uchováváno pouze pro účely zákaznického servisu.'
+      },
+      {
+        title: 'Vaše práva',
+        content: 'Podle GDPR máte právo na přístup, opravu nebo výmaz vašich osobních údajů. Chcete-li tato práva uplatnit, kontaktujte nás prostřednictvím kontaktního formuláře.'
+      },
+      {
+        title: 'Cookies',
+        content: 'Používáme minimální cookies nezbytné pro funkčnost webu. Nepoužívají se žádné sledovací cookies ani identifikátory reklam.'
+      },
+      {
+        title: 'Kontakt',
+        content: 'V případě dotazů ohledně ochrany osobních údajů nás kontaktujte prostřednictvím kontaktního formuláře na našem webu.'
+      }
+    ]
+  }
+};
+
+const t = content[lang];
+---
+
+<Layout title={`${t.title} - Pavel Kašpar`} lang={lang}>
+  <Header slot="header" lang={lang} />
+
+  <main class="py-16 md:py-24">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mx-auto">
+        <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+          {t.title}
+        </h1>
+        <p class="text-gray-600 dark:text-gray-400 mb-12">
+          {t.lastUpdated}
+        </p>
+        
+        <div class="prose dark:prose-invert max-w-none">
+          <p class="text-lg text-gray-700 dark:text-gray-300 mb-12">
+            {t.intro}
+          </p>
+
+          {t.sections.map((section) => (
+            <div class="mb-10">
+              <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">
+                {section.title}
+              </h2>
+              <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                {section.content}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <Footer slot="footer" lang={lang} />
+</Layout>

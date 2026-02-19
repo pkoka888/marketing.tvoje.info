@@ -1,0 +1,8 @@
+  File: /usr/local/bin/smart-backup-to-server60.sh
+  Size: 5881      	Blocks: 16         IO Block: 4096   regular file
+Device: 254,0	Inode: 7635722     Links: 1
+Access: (0771/-rwxrwx--x)  Uid: ( 1000/   pavel)   Gid: ( 1000/   pavel)
+Access: 2026-02-12 03:10:54.962050710 +0100
+Modify: 2026-02-12 03:10:54.926050445 +0100
+Change: 2026-02-12 03:10:54.942050563 +0100
+ Birth: 2025-12-22 03:26:18.487649650 +0100

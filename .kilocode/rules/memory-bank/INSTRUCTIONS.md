@@ -1,22 +1,10 @@
 # Memory Bank - Agent Instructions
 
-**IMPORTANT**: Do NOT load all Memory Bank files. Follow this protocol:
-
----
-
-## At Task Start - Load These Only
-
-1. **QUICK_REFERENCE.md** (required)
-   - Current status, commands, models
-   - ~1.5KB
-
-# Memory Bank Instructions
-
 **Core Protocol**:
 
-1.  **Load**: `QUICK_REFERENCE.md` + `context.md` (Required). `brief.md` (Optional).
-2.  **Product**: Load `product.md` ONLY for feature work.
-3.  **Archive**: Do NOT load files from `.archive/` unless stuck.
+1. **Load**: `QUICK_REFERENCE.md` + `context.md` (Required). `brief.md` (Optional).
+2. **Product**: Load `product.md` ONLY for feature work.
+3. **Archive**: Do NOT load files from `.archive/` unless stuck.
 
 **Goal**: Minimize context usage (keep < 10KB).
 
@@ -29,14 +17,19 @@
 
 ## DO NOT LOAD
 
-These files are archived and too large:
+These files are archived or too large:
 
-- tech.md ❌
-- architecture.md ❌
-- servers.md ❌
-- agents-state.md ❌
-- verification-history.md ❌
-- tasks-queue.md ❌
+- tech.md
+- architecture.md
+- servers.md
+- agents-state.md
+- verification-history.md
+- tasks-queue.md
+
+Research docs (moved to `.kilocode/knowledge/`):
+
+- MEMORY_BANK_AUTOMATION.md
+- MEMORY_BANK_BEST_PRACTICES.md
 
 ---
 
@@ -48,15 +41,6 @@ These files are archived and too large:
 | Config updates | opencode.json       |
 | Plans          | plans/PHASE\*.md    |
 | Reports        | plans/reports/\*.md |
-
----
-
-## Quick Reference
-
-```
-Memory Bank = 3 core files + QUICK_REFERENCE
-Total size: ~6KB (vs previous 37KB)
-```
 
 ---
 

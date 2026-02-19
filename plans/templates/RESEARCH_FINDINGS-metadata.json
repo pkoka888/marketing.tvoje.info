@@ -1,0 +1,109 @@
+{
+  "$schema": "./template-metadata-schema.json",
+  "template": {
+    "name": "RESEARCH_FINDINGS",
+    "type": "RESEARCH_FINDINGS",
+    "version": "1.0.0",
+    "description": "Standardized research findings template for documenting investigation results",
+    "path": "plans/templates/RESEARCH_FINDINGS.md",
+    "author": "Kilo Code",
+    "created": "2026-02-18",
+    "updated": "2026-02-18"
+  },
+  "activation": {
+    "triggers": [
+      "research findings",
+      "investigation results",
+      "analysis report",
+      "study results"
+    ],
+    "keywords": [
+      "research",
+      "findings",
+      "investigation",
+      "analysis",
+      "study",
+      "results"
+    ],
+    "context": [
+      "research",
+      "analysis",
+      "investigation",
+      "documentation"
+    ],
+    "priority": "high",
+    "auto_activate": true
+  },
+  "models": {
+    "preferred": [
+      "gemini-2.5-pro",
+      "big-pickle",
+      "minimax-m2.1:free"
+    ],
+    "fallback": [
+      "x-ai/grok-code-fast-1:optimized:free",
+      "claude-sonnet-4-5"
+    ],
+    "cost_optimization": true
+  },
+  "references": {
+    "cross_links": [
+      "plans/templates/TASK_PLAN.md",
+      "plans/templates/AUDIT_REPORT.md",
+      "plans/templates/GAP_ANALYSIS.md"
+    ],
+    "dependencies": [
+      ".kilocode/rules/memory-bank/brief.md",
+      ".kilocode/rules/memory-bank/context.md"
+    ],
+    "related": [
+      "docs/research/*.md",
+      "plans/analysis/*.md"
+    ],
+    "skills": [
+      "bmad-discovery-research",
+      "prompt-consultant"
+    ],
+    "rules": [
+      "cost-optimization"
+    ]
+  },
+  "validation": {
+    "required_sections": [
+      "Summary",
+      "Key Insights",
+      "Technical Details / Examples",
+      "Sources / References",
+      "Recommendations"
+    ],
+    "format_checks": [
+      "markdown_structure",
+      "link_validation",
+      "code_block_syntax"
+    ],
+    "content_rules": [
+      "evidence_based_findings",
+      "actionable_recommendations",
+      "source_attribution"
+    ]
+  },
+  "metadata": {
+    "frameworks": [
+      "Kilo Code",
+      "OpenCode",
+      "Cline",
+      "Antigravity"
+    ],
+    "compatibility": "cross-agent",
+    "usage_count": 0,
+    "last_used": null,
+    "success_rate": null,
+    "tags": [
+      "research",
+      "analysis",
+      "investigation",
+      "documentation",
+      "findings"
+    ]
+  }
+}

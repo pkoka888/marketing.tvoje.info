@@ -1,0 +1,111 @@
+{
+  "$schema": "./template-metadata-schema.json",
+  "template": {
+    "name": "AUDIT_REPORT",
+    "type": "AUDIT_REPORT",
+    "version": "1.0.0",
+    "description": "Standardized audit report template for security and compliance assessments",
+    "path": "plans/templates/AUDIT_REPORT.md",
+    "author": "Kilo Code",
+    "created": "2026-02-18",
+    "updated": "2026-02-18"
+  },
+  "activation": {
+    "triggers": [
+      "audit report",
+      "security audit",
+      "compliance check",
+      "assessment report"
+    ],
+    "keywords": [
+      "audit",
+      "security",
+      "compliance",
+      "assessment",
+      "vulnerability",
+      "risk"
+    ],
+    "context": [
+      "security",
+      "compliance",
+      "assessment",
+      "audit"
+    ],
+    "priority": "high",
+    "auto_activate": true
+  },
+  "models": {
+    "preferred": [
+      "gemini-2.5-pro",
+      "claude-sonnet-4-5",
+      "x-ai/grok-code-fast-1:optimized:free"
+    ],
+    "fallback": [
+      "big-pickle",
+      "minimax-m2.1:free"
+    ],
+    "cost_optimization": false
+  },
+  "references": {
+    "cross_links": [
+      "plans/templates/RESEARCH_FINDINGS.md",
+      "plans/templates/GAP_ANALYSIS.md",
+      "plans/templates/LINT_FIX_STRATEGY.md"
+    ],
+    "dependencies": [
+      ".kilocode/rules/memory-bank/brief.md",
+      ".kilocode/rules/memory-bank/context.md"
+    ],
+    "related": [
+      "docs/security/*.md",
+      "plans/assessments/*.md"
+    ],
+    "skills": [
+      "bmad-security-review",
+      "debug"
+    ],
+    "rules": [
+      "server-preservation",
+      "cost-optimization"
+    ]
+  },
+  "validation": {
+    "required_sections": [
+      "Executive Summary",
+      "Scope and Methodology",
+      "Findings",
+      "Risk Assessment",
+      "Recommendations",
+      "Conclusion"
+    ],
+    "format_checks": [
+      "markdown_structure",
+      "severity_levels",
+      "evidence_links"
+    ],
+    "content_rules": [
+      "evidence_based_findings",
+      "actionable_recommendations",
+      "severity_classification"
+    ]
+  },
+  "metadata": {
+    "frameworks": [
+      "Kilo Code",
+      "OpenCode",
+      "Cline",
+      "Antigravity"
+    ],
+    "compatibility": "cross-agent",
+    "usage_count": 0,
+    "last_used": null,
+    "success_rate": null,
+    "tags": [
+      "audit",
+      "security",
+      "compliance",
+      "assessment",
+      "risk-management"
+    ]
+  }
+}

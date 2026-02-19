@@ -17,17 +17,18 @@ Usage:
     result = research_task("marketing agencies Czech Republic")
 """
 
-import os
-import sys
 import json
+import os
 import subprocess
-from pathlib import Path
-from typing import Optional, Dict, Any, List
+import sys
 from dataclasses import dataclass
 from datetime import datetime
+from pathlib import Path
+from typing import Any, Dict, List, Optional
 
 # Configuration
 LITELLM_URL = os.getenv("LITELLM_PROXY_URL", "http://localhost:4000")
+LITELLM_MASTER_KEY = os.getenv("LITELLM_MASTER_KEY", "sk-local-dev-1234")
 GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")
 
 # Model routing
@@ -36,6 +37,8 @@ MODELS = {
     "balanced": "groq/mixtral-8x7b-32768",
     "smart": "groq/llama-3.3-70b-versatile",
     "reasoning": "groq/llama-3.1-70b-versatile",
+    "flash": "gemini-flash",
+    "pro": "gemini-pro",
 }
 
 
@@ -54,9 +57,9 @@ class AgentResponse:
 class LiteLLMClient:
     """Client for LiteLLM proxy"""
 
-    def __init__(self, base_url: str = LITELLM_URL, api_key: str = GROQ_API_KEY):
+    def __init__(self, base_url: str = LITELLM_URL, api_key: str = LITELLM_MASTER_KEY):
         self.base_url = base_url
-        self.api_key = api_key or os.getenv("GROQ_API_KEY", "")
+        self.api_key = api_key
 
     def complete(
         self,
@@ -67,8 +70,9 @@ class LiteLLMClient:
         max_tokens: int = 4096,
     ) -> AgentResponse:
         """Make a completion request"""
-        import requests
         import time
+
+        import requests
 
         start_time = time.time()
 
@@ -260,7 +264,8 @@ def health_check() -> Dict[str, Any]:
 
     # Check LiteLLM
     try:
-        response = requests.get(f"{LITELLM_URL}/health", timeout=5)
+        headers = {"Authorization": f"Bearer {LITELLM_MASTER_KEY}"}
+        response = requests.get(f"{LITELLM_URL}/health", headers=headers, timeout=5)
         status["litellm"]["status"] = (
             "healthy" if response.status_code == 200 else "error"
         )

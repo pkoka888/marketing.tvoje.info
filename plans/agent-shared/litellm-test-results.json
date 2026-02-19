@@ -1,110 +1,229 @@
-[
-  {
-    "model": "free-fast",
-    "tier": "T1-FREE",
-    "status": "FAIL",
-    "latency_ms": 6777,
-    "response": "",
-    "error": "litellm.APIError: APIError: OpenrouterException - {\"error\":{\"message\":\"Failed to authenticate request with Clerk\",\"code\":502}}. Received Model Group=free-fast\nAvailable Model Group Fallbacks=None",
-    "http_status": 502
+{
+  "timestamp": "2026-02-18T00:16:08",
+  "proxy_url": "http://localhost:4000",
+  "total": 17,
+  "passed": 11,
+  "failed": 0,
+  "fallbacks": 6,
+  "tier_breakdown": {
+    "T1-FREE": {
+      "total": 3,
+      "passed": 3,
+      "failed": 0
+    },
+    "T2-COMPLEX": {
+      "total": 1,
+      "passed": 1,
+      "failed": 0
+    },
+    "T3-ARCHITECT": {
+      "total": 1,
+      "passed": 1,
+      "failed": 0
+    },
+    "T4-PAID": {
+      "total": 3,
+      "passed": 3,
+      "failed": 0
+    },
+    "FALLBACK": {
+      "total": 5,
+      "passed": 5,
+      "failed": 0
+    },
+    "CONCURRENT": {
+      "total": 4,
+      "passed": 4,
+      "failed": 0
+    }
   },
-  {
-    "model": "free-bulk",
-    "tier": "T1-FREE",
-    "status": "FAIL",
-    "latency_ms": 6742,
-    "response": "",
-    "error": "litellm.APIError: APIError: OpenrouterException - {\"error\":{\"message\":\"Failed to authenticate request with Clerk\",\"code\":502}}. Received Model Group=free-bulk\nAvailable Model Group Fallbacks=None",
-    "http_status": 502
-  },
-  {
-    "model": "free-small",
-    "tier": "T1-FREE",
-    "status": "FAIL",
-    "latency_ms": 7265,
-    "response": "",
-    "error": "litellm.APIError: APIError: OpenrouterException - {\"error\":{\"message\":\"Failed to authenticate request with Clerk\",\"code\":502}}. Received Model Group=free-small\nAvailable Model Group Fallbacks=None",
-    "http_status": 502
-  },
-  {
-    "model": "free-complex",
-    "tier": "T2-FREE",
-    "status": "FAIL",
-    "latency_ms": 2497,
-    "response": "",
-    "error": "litellm.AuthenticationError: GeminiException - {\n  \"error\": {\n    \"code\": 400,\n    \"message\": \"API key not valid. Please pass a valid API key.\",\n    \"status\": \"INVALID_ARGUMENT\",\n    \"details\": [\n    ",
-    "http_status": 401
-  },
-  {
-    "model": "paid-openai",
-    "tier": "T3-PAID",
-    "status": "FAIL",
-    "latency_ms": 6709,
-    "response": "",
-    "error": "litellm.RateLimitError: RateLimitError: OpenAIException - You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platfo",
-    "http_status": 429
-  },
-  {
-    "model": "paid-openai-latest",
-    "tier": "T3-PAID",
-    "status": "FAIL",
-    "latency_ms": 7408,
-    "response": "",
-    "error": "litellm.RateLimitError: RateLimitError: OpenAIException - You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platfo",
-    "http_status": 429
-  },
-  {
-    "model": "paid-gemini-pro",
-    "tier": "T3-PAID",
-    "status": "FAIL",
-    "latency_ms": 2289,
-    "response": "",
-    "error": "litellm.AuthenticationError: GeminiException - {\n  \"error\": {\n    \"code\": 400,\n    \"message\": \"API key not valid. Please pass a valid API key.\",\n    \"status\": \"INVALID_ARGUMENT\",\n    \"details\": [\n    ",
-    "http_status": 401
-  },
-  {
-    "model": "groq-last-resort",
-    "tier": "T4-LAST",
-    "status": "PASS",
-    "latency_ms": 2203,
-    "response": "OK",
-    "error": "",
-    "http_status": 200
-  },
-  {
-    "model": "gpt-4o-mini",
-    "tier": "LEGACY",
-    "status": "FAIL",
-    "latency_ms": 7123,
-    "response": "",
-    "error": "litellm.RateLimitError: RateLimitError: OpenAIException - You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platfo",
-    "http_status": 429
-  },
-  {
-    "model": "claude-3-haiku",
-    "tier": "LEGACY",
-    "status": "FAIL",
-    "latency_ms": 2168,
-    "response": "",
-    "error": "litellm.AuthenticationError: Missing Anthropic API Key - A call is being made to anthropic but no key is set either in the environment variables or via params. Please set `ANTHROPIC_API_KEY` in your e",
-    "http_status": 401
-  },
-  {
-    "model": "gemini-flash",
-    "tier": "LEGACY",
-    "status": "FAIL",
-    "latency_ms": 2376,
-    "response": "",
-    "error": "litellm.AuthenticationError: GeminiException - {\n  \"error\": {\n    \"code\": 400,\n    \"message\": \"API key not valid. Please pass a valid API key.\",\n    \"status\": \"INVALID_ARGUMENT\",\n    \"details\": [\n    ",
-    "http_status": 401
-  },
-  {
-    "model": "groq/llama-3.3-70b-versatile",
-    "tier": "LEGACY-GROQ",
-    "status": "PASS",
-    "latency_ms": 2169,
-    "response": "OK",
-    "error": "",
-    "http_status": 200
-  }
-]
+  "results": [
+    {
+      "model": "minimax-free",
+      "tier": "T1-FREE",
+      "test_type": "direct",
+      "status": "FALLBACK",
+      "latency_ms": 36189,
+      "response_text": "What's next?",
+      "model_used": "llama-3.1-8b-instant",
+      "error": "",
+      "http_status": 200
+    },
+    {
+      "model": "glm4-free",
+      "tier": "T1-FREE",
+      "test_type": "direct",
+      "status": "FALLBACK",
+      "latency_ms": 37648,
+      "response_text": "What's next?",
+      "model_used": "llama-3.1-8b-instant",
+      "error": "",
+      "http_status": 200
+    },
+    {
+      "model": "gemma-free",
+      "tier": "T1-FREE",
+      "test_type": "direct",
+      "status": "FALLBACK",
+      "latency_ms": 37253,
+      "response_text": "What's next?",
+      "model_used": "llama-3.1-8b-instant",
+      "error": "",
+      "http_status": 200
+    },
+    {
+      "model": "gemini-flash",
+      "tier": "T2-COMPLEX",
+      "test_type": "direct",
+      "status": "FALLBACK",
+      "latency_ms": 32378,
+      "response_text": "What's next?",
+      "model_used": "llama-3.1-8b-instant",
+      "error": "",
+      "http_status": 200
+    },
+    {
+      "model": "gemini-pro",
+      "tier": "T3-ARCHITECT",
+      "test_type": "direct",
+      "status": "FALLBACK",
+      "latency_ms": 28955,
+      "response_text": "What's next?",
+      "model_used": "llama-3.1-8b-instant",
+      "error": "",
+      "http_status": 200
+    },
+    {
+      "model": "groq-llama-70b",
+      "tier": "T4-PAID",
+      "test_type": "direct",
+      "status": "PASS",
+      "latency_ms": 2222,
+      "response_text": "OK",
+      "model_used": "llama-3.3-70b-versatile",
+      "error": "",
+      "http_status": 200
+    },
+    {
+      "model": "groq-llama-8b",
+      "tier": "T4-PAID",
+      "test_type": "direct",
+      "status": "PASS",
+      "latency_ms": 2248,
+      "response_text": "What's next?",
+      "model_used": "llama-3.1-8b-instant",
+      "error": "",
+      "http_status": 200
+    },
+    {
+      "model": "gpt-4o-mini",
+      "tier": "T4-PAID",
+      "test_type": "direct",
+      "status": "FALLBACK",
+      "latency_ms": 10941,
+      "response_text": "OK",
+      "model_used": "llama-3.3-70b-versatile",
+      "error": "",
+      "http_status": 200
+    },
+    {
+      "model": "minimax-free",
+      "tier": "FALLBACK",
+      "test_type": "fallback",
+      "status": "PASS",
+      "latency_ms": 36667,
+      "response_text": "What's next?",
+      "model_used": "llama-3.1-8b-instant",
+      "error": "",
+      "http_status": 200
+    },
+    {
+      "model": "glm4-free",
+      "tier": "FALLBACK",
+      "test_type": "fallback",
+      "status": "PASS",
+      "latency_ms": 36104,
+      "response_text": "What's next?",
+      "model_used": "llama-3.1-8b-instant",
+      "error": "",
+      "http_status": 200
+    },
+    {
+      "model": "gemini-flash",
+      "tier": "FALLBACK",
+      "test_type": "fallback",
+      "status": "PASS",
+      "latency_ms": 33647,
+      "response_text": "What's next?",
+      "model_used": "llama-3.1-8b-instant",
+      "error": "",
+      "http_status": 200
+    },
+    {
+      "model": "gemini-pro",
+      "tier": "FALLBACK",
+      "test_type": "fallback",
+      "status": "PASS",
+      "latency_ms": 32413,
+      "response_text": "What's next?",
+      "model_used": "llama-3.1-8b-instant",
+      "error": "",
+      "http_status": 200
+    },
+    {
+      "model": "groq-llama-70b",
+      "tier": "FALLBACK",
+      "test_type": "fallback",
+      "status": "PASS",
+      "latency_ms": 2312,
+      "response_text": "OK",
+      "model_used": "llama-3.3-70b-versatile",
+      "error": "",
+      "http_status": 200
+    },
+    {
+      "model": "groq-llama-8b",
+      "tier": "CONCURRENT",
+      "test_type": "concurrent",
+      "status": "PASS",
+      "latency_ms": 2236,
+      "response_text": "What's next?",
+      "model_used": "llama-3.1-8b-instant",
+      "error": "",
+      "http_status": 200
+    },
+    {
+      "model": "groq-llama-8b",
+      "tier": "CONCURRENT",
+      "test_type": "concurrent",
+      "status": "PASS",
+      "latency_ms": 2240,
+      "response_text": "What's next?",
+      "model_used": "llama-3.1-8b-instant",
+      "error": "",
+      "http_status": 200
+    },
+    {
+      "model": "groq-llama-8b",
+      "tier": "CONCURRENT",
+      "test_type": "concurrent",
+      "status": "PASS",
+      "latency_ms": 2355,
+      "response_text": "What's next?",
+      "model_used": "llama-3.1-8b-instant",
+      "error": "",
+      "http_status": 200
+    },
+    {
+      "model": "groq-llama-8b",
+      "tier": "CONCURRENT",
+      "test_type": "concurrent",
+      "status": "PASS",
+      "latency_ms": 2361,
+      "response_text": "What's next?",
+      "model_used": "llama-3.1-8b-instant",
+      "error": "",
+      "http_status": 200
+    }
+  ]
+}

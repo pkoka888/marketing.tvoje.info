@@ -46,3 +46,28 @@ _Concise overview of the audit scope, critical findings, and overall health scor
 
 1. [Step 1]
 2. [Step 2]
+
+## References
+
+### Dependencies
+- [GAP_ANALYSIS](GAP_ANALYSIS.md) - Referenced template
+- [LINT_FIX_STRATEGY](LINT_FIX_STRATEGY.md) - Referenced template
+- [RESEARCH_FINDINGS](RESEARCH_FINDINGS.md) - Referenced template
+- [TASK_PLAN](TASK_PLAN.md) - Referenced template
+- [TEST_RESULTS](TEST_RESULTS.md) - Referenced template
+
+### Referenced By
+- [GAP_ANALYSIS](GAP_ANALYSIS.md) - References this template
+- [LINT_FIX_STRATEGY](LINT_FIX_STRATEGY.md) - References this template
+- [RESEARCH_FINDINGS](RESEARCH_FINDINGS.md) - References this template
+
+---
+
+## Related Skills & Rules
+
+| Category | Resource | Description |
+|----------|----------|-------------|
+| **Skill** | [.kilocode/skills/bmad-security-review/SKILL.md](../.kilocode/skills/bmad-security-review/SKILL.md) | Security audit and compliance |
+| **Skill** | [.kilocode/skills/debug/SKILL.md](../.kilocode/skills/debug/SKILL.md) | Debugging and troubleshooting |
+| **Rule** | [.kilocode/rules/server-preservation](./server-preservation.md) | Server preservation protocols |
+

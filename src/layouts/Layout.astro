@@ -253,6 +253,19 @@ const csUrl = canonicalUrl.startsWith('/cs') ? canonicalUrl : `${baseUrl}/cs${As
 
     <!-- Theme toggle script -->
     <script is:inline>
+      // Initialize theme from localStorage on page load
+      (function initTheme() {
+        const savedTheme = localStorage.getItem('siteTheme') || 'titan';
+        document.documentElement.setAttribute('data-site-theme', savedTheme);
+      })();
+
+      // Set a specific theme
+      function setSiteTheme(theme) {
+        document.documentElement.setAttribute('data-site-theme', theme);
+        localStorage.setItem('siteTheme', theme);
+      }
+
+      // Toggle between light/dark (legacy)
       function toggleTheme() {
         const html = document.documentElement;
         const isDark = html.classList.contains('dark');
@@ -260,7 +273,8 @@ const csUrl = canonicalUrl.startsWith('/cs') ? canonicalUrl : `${baseUrl}/cs${As
         html.classList.toggle('dark');
       }
 
-      // Expose toggle function globally
+      // Expose functions globally
+      window.setSiteTheme = setSiteTheme;
       window.toggleTheme = toggleTheme;
     </script>
 

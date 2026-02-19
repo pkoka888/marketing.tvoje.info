@@ -31,6 +31,7 @@ pnpm install
 ## Step 3: Configure Environment Variables
 
 1. Copy the environment template:
+
    ```bash
    copy .env.template .env
    ```
@@ -38,7 +39,6 @@ pnpm install
 2. Edit the `.env` file and update the following variables:
    - `PROJECT_NAME`: Your project name (e.g., marketing-tvoje.info)
    - `PUBLIC_SITE_URL`: Your public site URL (e.g., https://portfolio.tvoje.info)
-   - `VERCEL_TOKEN`: Your Vercel deployment token (optional)
    - `FORMSPREE_ENDPOINT`: Your Formspree form endpoint (optional)
    - `PLAUSIBLE_API_KEY`: Your Plausible analytics API key (optional)
 
@@ -55,15 +55,15 @@ npm run dev
 
 ## Available Commands
 
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start development server |
-| `npm run build` | Build for production |
-| `npm run preview` | Preview production build |
-| `npm run lint` | Run ESLint |
-| `npm run typecheck` | Run TypeScript checks |
-| `npm run format` | Format code with Prettier |
-| `npm run format:check` | Check code formatting |
+| Command                | Description               |
+| ---------------------- | ------------------------- |
+| `npm run dev`          | Start development server  |
+| `npm run build`        | Build for production      |
+| `npm run preview`      | Preview production build  |
+| `npm run lint`         | Run ESLint                |
+| `npm run typecheck`    | Run TypeScript checks     |
+| `npm run format`       | Format code with Prettier |
+| `npm run format:check` | Check code formatting     |
 
 ## Project Structure
 
@@ -96,6 +96,8 @@ This project automatically deploys to Vercel:
 - **Preview**: Deploys on every PR
 - **Production**: Deploys on push to main branch
 
+**NOTE: Vercel deployment is DISABLED. See docs/DEPLOYMENT.md for VPS deployment.**
+
 ## Performance
 
 Target metrics:
@@ -117,22 +119,23 @@ Target metrics:
 ## License
 
 MIT License - see LICENSE file for details.
-   │   ├── common/     # Common components (Header, Footer)
-│   │   ├── sections/  # Section components (Hero, About, Projects)
-│   │   └── ui/         # UI primitives (Button, Card, Badge)
-│   ├── layouts/        # Page layouts
-│   ├── pages/          # Astro pages (routing)
-│   │   ├── cs/         # Czech language pages
-│   │   └── projects/  # Project detail pages
-│   ├── styles/         # Global styles
-│   ├── i18n/           # Internationalization
-│   ├── content/        # MDX content (projects)
-│   └── layouts/        # Layout components
-├── public/             # Static assets
-├── tests/             # Test files
-├── plans/             # Planning documents
+│ ├── common/ # Common components (Header, Footer)
+│ │ ├── sections/ # Section components (Hero, About, Projects)
+│ │ └── ui/ # UI primitives (Button, Card, Badge)
+│ ├── layouts/ # Page layouts
+│ ├── pages/ # Astro pages (routing)
+│ │ ├── cs/ # Czech language pages
+│ │ └── projects/ # Project detail pages
+│ ├── styles/ # Global styles
+│ ├── i18n/ # Internationalization
+│ ├── content/ # MDX content (projects)
+│ └── layouts/ # Layout components
+├── public/ # Static assets
+├── tests/ # Test files
+├── plans/ # Planning documents
 └── .github/
-    └── workflows/     # GitHub Actions
+└── workflows/ # GitHub Actions
+
 ```
 
 ## Deployment
@@ -142,6 +145,8 @@ This project automatically deploys to Vercel:
 - **Preview**: Deploys on every PR
 - **Production**: Deploys on push to main branch
 
+**NOTE: Vercel deployment is DISABLED. See docs/DEPLOYMENT.md for VPS deployment.**
+
 ## Performance
 
 Target metrics:
@@ -163,3 +168,4 @@ Target metrics:
 ## License
 
 MIT License - see LICENSE file for details.
+```

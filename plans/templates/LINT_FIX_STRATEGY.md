@@ -1,7 +1,7 @@
 # Lint Fix Strategy: ESLint + TypeScript False Positives
 
-**Date**: 2026-02-**: Best Practice Guide17
-**Type (2026)
+**Date**: {{DATE}}
+**Type**: Best Practice Guide (2026)
 **Source**: typescript-eslint official documentation
 
 ---
@@ -20,9 +20,9 @@ ESLint's `@typescript-eslint/no-unused-vars` rule produces false positives with:
 
 ## Best Practice Solution (2026)
 
-### Step 1: ConfigureBased on \*\* ESLint Properly
+### Step 1: Configure ESLint Properly
 
-typescript-eslint official recommendation\*\*, configure `eslint.config.mjs`:
+Based on **typescript-eslint official recommendation**, configure `eslint.config.mjs`:
 
 ```javascript
 import js from '@eslint/js';
@@ -190,6 +190,25 @@ npm run build          # Full build
 ---
 
 ## References
+
+### Dependencies
+- [AUDIT_REPORT](AUDIT_REPORT.md) - Referenced template
+- [TEST_RESULTS](TEST_RESULTS.md) - Referenced template
+
+### Referenced By
+- [AUDIT_REPORT](AUDIT_REPORT.md) - References this template
+- [TEST_RESULTS](TEST_RESULTS.md) - References this template
+
+---
+
+## Related Skills & Rules
+
+| Category | Resource | Description |
+|----------|----------|-------------|
+| **Skill** | [.kilocode/skills/debug/SKILL.md](../.kilocode/skills/debug/SKILL.md) | Systematic debugging protocol |
+| **Skill** | [.kilocode/skills/accessibility-wcag/SKILL.md](../.kilocode/skills/accessibility-wcag/SKILL.md) | WCAG 2.2 AA accessibility guidelines |
+| **Rule** | [.kilocode/rules/bmad-integration](./bmad-integration.md) | BMAD workflow protocol |
+
 
 - [typescript-eslint no-unused-vars](https://typescript-eslint.io/rules/no-unused-vars/)
 - [ESLint v10.0.0 Release](https://eslint.org/blog/2026/02/eslint-v10.0.0-released/)

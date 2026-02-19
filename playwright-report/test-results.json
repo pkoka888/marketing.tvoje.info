@@ -26,7 +26,9 @@
         "name": "chromium-desktop",
         "testDir": "C:/Users/pavel/projects/marketing.tvoje.info/tests/e2e",
         "testIgnore": [],
-        "testMatch": ["**/*.@(spec|test).?(c|m)[jt]s?(x)"],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
         "timeout": 30000
       },
       {
@@ -40,7 +42,9 @@
         "name": "firefox-desktop",
         "testDir": "C:/Users/pavel/projects/marketing.tvoje.info/tests/e2e",
         "testIgnore": [],
-        "testMatch": ["**/*.@(spec|test).?(c|m)[jt]s?(x)"],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
         "timeout": 30000
       },
       {
@@ -54,7 +58,9 @@
         "name": "webkit-desktop",
         "testDir": "C:/Users/pavel/projects/marketing.tvoje.info/tests/e2e",
         "testIgnore": [],
-        "testMatch": ["**/*.@(spec|test).?(c|m)[jt]s?(x)"],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
         "timeout": 30000
       },
       {
@@ -68,7 +74,9 @@
         "name": "chromium-mobile",
         "testDir": "C:/Users/pavel/projects/marketing.tvoje.info/tests/e2e",
         "testIgnore": [],
-        "testMatch": ["**/*.@(spec|test).?(c|m)[jt]s?(x)"],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
         "timeout": 30000
       },
       {
@@ -82,7 +90,9 @@
         "name": "iphone-12",
         "testDir": "C:/Users/pavel/projects/marketing.tvoje.info/tests/e2e",
         "testIgnore": [],
-        "testMatch": ["**/*.@(spec|test).?(c|m)[jt]s?(x)"],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
         "timeout": 30000
       },
       {
@@ -96,7 +106,9 @@
         "name": "ipad-pro",
         "testDir": "C:/Users/pavel/projects/marketing.tvoje.info/tests/e2e",
         "testIgnore": [],
-        "testMatch": ["**/*.@(spec|test).?(c|m)[jt]s?(x)"],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
         "timeout": 30000
       }
     ],
@@ -108,7 +120,10 @@
           "outputFolder": "playwright-report"
         }
       ],
-      ["list", null],
+      [
+        "list",
+        null
+      ],
       [
         "json",
         {
@@ -123,7 +138,7 @@
     "runAgents": "none",
     "shard": null,
     "tags": [],
-    "updateSnapshots": "changed",
+    "updateSnapshots": "missing",
     "updateSourceMethod": "patch",
     "version": "1.58.2",
     "workers": 4,
@@ -136,20 +151,20 @@
   },
   "suites": [
     {
-      "title": "visual\\regression.spec.ts",
-      "file": "visual/regression.spec.ts",
+      "title": "theme-system.spec.ts",
+      "file": "theme-system.spec.ts",
       "column": 0,
       "line": 0,
       "specs": [],
       "suites": [
         {
-          "title": "Visual Regression - Homepage",
-          "file": "visual/regression.spec.ts",
-          "line": 3,
+          "title": "Theme System",
+          "file": "theme-system.spec.ts",
+          "line": 7,
           "column": 6,
           "specs": [
             {
-              "title": "desktop",
+              "title": "should load with TITAN theme by default",
               "ok": true,
               "tags": [],
               "tests": [
@@ -164,12 +179,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 2887,
+                      "duration": 5189,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-02-17T11:52:26.476Z",
+                      "startTime": "2026-02-18T08:07:26.832Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -177,13 +192,13 @@
                   "status": "expected"
                 }
               ],
-              "id": "835f6540a55ac66c4207-f01a9df104ad1564a735",
-              "file": "visual/regression.spec.ts",
-              "line": 4,
+              "id": "02965a6f1307abe02dae-236695e0f65484fbc443",
+              "file": "theme-system.spec.ts",
+              "line": 8,
               "column": 3
             },
             {
-              "title": "mobile",
+              "title": "should apply theme via setSiteTheme function",
               "ok": true,
               "tags": [],
               "tests": [
@@ -198,12 +213,12 @@
                       "workerIndex": 1,
                       "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 1723,
+                      "duration": 5848,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-02-17T11:52:26.442Z",
+                      "startTime": "2026-02-18T08:07:26.979Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -211,13 +226,13 @@
                   "status": "expected"
                 }
               ],
-              "id": "835f6540a55ac66c4207-ad7529d90eca87b34094",
-              "file": "visual/regression.spec.ts",
-              "line": 11,
+              "id": "02965a6f1307abe02dae-f7b977260d4220bacd4a",
+              "file": "theme-system.spec.ts",
+              "line": 15,
               "column": 3
             },
             {
-              "title": "tablet",
+              "title": "should persist theme in localStorage",
               "ok": true,
               "tags": [],
               "tests": [
@@ -232,12 +247,12 @@
                       "workerIndex": 2,
                       "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 2378,
+                      "duration": 7405,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-02-17T11:52:26.490Z",
+                      "startTime": "2026-02-18T08:07:27.212Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -245,21 +260,13 @@
                   "status": "expected"
                 }
               ],
-              "id": "835f6540a55ac66c4207-9f2581ea972ff15657f4",
-              "file": "visual/regression.spec.ts",
-              "line": 18,
+              "id": "02965a6f1307abe02dae-b8240077c28c14bddd7b",
+              "file": "theme-system.spec.ts",
+              "line": 30,
               "column": 3
-            }
-          ]
-        },
-        {
-          "title": "Visual Regression - Pricing Page",
-          "file": "visual/regression.spec.ts",
-          "line": 26,
-          "column": 6,
-          "specs": [
+            },
             {
-              "title": "desktop",
+              "title": "should have all 7 themes defined",
               "ok": true,
               "tags": [],
               "tests": [
@@ -274,12 +281,12 @@
                       "workerIndex": 3,
                       "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 1994,
+                      "duration": 5923,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-02-17T11:52:26.442Z",
+                      "startTime": "2026-02-18T08:07:27.009Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -287,912 +294,10 @@
                   "status": "expected"
                 }
               ],
-              "id": "835f6540a55ac66c4207-33841ab37dba680e482e",
-              "file": "visual/regression.spec.ts",
-              "line": 27,
+              "id": "02965a6f1307abe02dae-314e853433d4c8ea7c68",
+              "file": "theme-system.spec.ts",
+              "line": 46,
               "column": 3
-            },
-            {
-              "title": "mobile",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium-desktop",
-                  "projectName": "chromium-desktop",
-                  "results": [
-                    {
-                      "workerIndex": 1,
-                      "parallelIndex": 1,
-                      "status": "passed",
-                      "duration": 951,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-02-17T11:52:29.057Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "835f6540a55ac66c4207-ddda21af9d1ea68899e3",
-              "file": "visual/regression.spec.ts",
-              "line": 34,
-              "column": 3
-            }
-          ]
-        },
-        {
-          "title": "Visual Regression - Start Page",
-          "file": "visual/regression.spec.ts",
-          "line": 42,
-          "column": 6,
-          "specs": [
-            {
-              "title": "desktop",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium-desktop",
-                  "projectName": "chromium-desktop",
-                  "results": [
-                    {
-                      "workerIndex": 3,
-                      "parallelIndex": 3,
-                      "status": "passed",
-                      "duration": 1265,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-02-17T11:52:29.306Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "835f6540a55ac66c4207-22ffd716645854074020",
-              "file": "visual/regression.spec.ts",
-              "line": 43,
-              "column": 3
-            }
-          ]
-        },
-        {
-          "title": "Visual Regression - Projects Page",
-          "file": "visual/regression.spec.ts",
-          "line": 51,
-          "column": 6,
-          "specs": [
-            {
-              "title": "desktop",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium-desktop",
-                  "projectName": "chromium-desktop",
-                  "results": [
-                    {
-                      "workerIndex": 2,
-                      "parallelIndex": 2,
-                      "status": "passed",
-                      "duration": 1879,
-                      "errors": [],
-                      "stdout": [
-                        {
-                          "text": "A snapshot doesn't exist at C:\\Users\\pavel\\projects\\marketing.tvoje.info\\tests\\e2e\\visual\\regression.spec.ts-snapshots\\projects-desktop-chromium-desktop-win32.png, writing actual.\n"
-                        }
-                      ],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-02-17T11:52:29.690Z",
-                      "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "projects-desktop-expected.png",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\pavel\\projects\\marketing.tvoje.info\\tests\\e2e\\visual\\regression.spec.ts-snapshots\\projects-desktop-chromium-desktop-win32.png"
-                        },
-                        {
-                          "name": "projects-desktop-actual.png",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\pavel\\projects\\marketing.tvoje.info\\test-results\\visual-regression-Visual-Regression---Projects-Page-desktop-chromium-desktop\\projects-desktop-actual.png"
-                        }
-                      ]
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "835f6540a55ac66c4207-24a2fc1956de40cac69a",
-              "file": "visual/regression.spec.ts",
-              "line": 52,
-              "column": 3
-            },
-            {
-              "title": "mobile",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium-desktop",
-                  "projectName": "chromium-desktop",
-                  "results": [
-                    {
-                      "workerIndex": 1,
-                      "parallelIndex": 1,
-                      "status": "passed",
-                      "duration": 1284,
-                      "errors": [],
-                      "stdout": [
-                        {
-                          "text": "A snapshot doesn't exist at C:\\Users\\pavel\\projects\\marketing.tvoje.info\\tests\\e2e\\visual\\regression.spec.ts-snapshots\\projects-mobile-chromium-desktop-win32.png, writing actual.\n"
-                        }
-                      ],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-02-17T11:52:30.027Z",
-                      "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "projects-mobile-expected.png",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\pavel\\projects\\marketing.tvoje.info\\tests\\e2e\\visual\\regression.spec.ts-snapshots\\projects-mobile-chromium-desktop-win32.png"
-                        },
-                        {
-                          "name": "projects-mobile-actual.png",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\pavel\\projects\\marketing.tvoje.info\\test-results\\visual-regression-Visual-Regression---Projects-Page-mobile-chromium-desktop\\projects-mobile-actual.png"
-                        }
-                      ]
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "835f6540a55ac66c4207-56fe5858f6cb06ad373e",
-              "file": "visual/regression.spec.ts",
-              "line": 59,
-              "column": 3
-            }
-          ]
-        },
-        {
-          "title": "Visual Regression - Case Studies Page",
-          "file": "visual/regression.spec.ts",
-          "line": 67,
-          "column": 6,
-          "specs": [
-            {
-              "title": "desktop",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium-desktop",
-                  "projectName": "chromium-desktop",
-                  "results": [
-                    {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 2039,
-                      "errors": [],
-                      "stdout": [
-                        {
-                          "text": "A snapshot doesn't exist at C:\\Users\\pavel\\projects\\marketing.tvoje.info\\tests\\e2e\\visual\\regression.spec.ts-snapshots\\case-studies-desktop-chromium-desktop-win32.png, writing actual.\n"
-                        }
-                      ],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-02-17T11:52:30.220Z",
-                      "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "case-studies-desktop-expected.png",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\pavel\\projects\\marketing.tvoje.info\\tests\\e2e\\visual\\regression.spec.ts-snapshots\\case-studies-desktop-chromium-desktop-win32.png"
-                        },
-                        {
-                          "name": "case-studies-desktop-actual.png",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\pavel\\projects\\marketing.tvoje.info\\test-results\\visual-regression-Visual-R-c4b6a---Case-Studies-Page-desktop-chromium-desktop\\case-studies-desktop-actual.png"
-                        }
-                      ]
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "835f6540a55ac66c4207-c2b505ac3e343f96809d",
-              "file": "visual/regression.spec.ts",
-              "line": 68,
-              "column": 3
-            },
-            {
-              "title": "mobile",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium-desktop",
-                  "projectName": "chromium-desktop",
-                  "results": [
-                    {
-                      "workerIndex": 3,
-                      "parallelIndex": 3,
-                      "status": "passed",
-                      "duration": 1153,
-                      "errors": [],
-                      "stdout": [
-                        {
-                          "text": "A snapshot doesn't exist at C:\\Users\\pavel\\projects\\marketing.tvoje.info\\tests\\e2e\\visual\\regression.spec.ts-snapshots\\case-studies-mobile-chromium-desktop-win32.png, writing actual.\n"
-                        }
-                      ],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-02-17T11:52:30.593Z",
-                      "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "case-studies-mobile-expected.png",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\pavel\\projects\\marketing.tvoje.info\\tests\\e2e\\visual\\regression.spec.ts-snapshots\\case-studies-mobile-chromium-desktop-win32.png"
-                        },
-                        {
-                          "name": "case-studies-mobile-actual.png",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\pavel\\projects\\marketing.tvoje.info\\test-results\\visual-regression-Visual-R-5c420----Case-Studies-Page-mobile-chromium-desktop\\case-studies-mobile-actual.png"
-                        }
-                      ]
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "835f6540a55ac66c4207-f108c85e43a57907e119",
-              "file": "visual/regression.spec.ts",
-              "line": 75,
-              "column": 3
-            }
-          ]
-        },
-        {
-          "title": "Visual Regression - Services Page",
-          "file": "visual/regression.spec.ts",
-          "line": 83,
-          "column": 6,
-          "specs": [
-            {
-              "title": "desktop",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium-desktop",
-                  "projectName": "chromium-desktop",
-                  "results": [
-                    {
-                      "workerIndex": 1,
-                      "parallelIndex": 1,
-                      "status": "passed",
-                      "duration": 1747,
-                      "errors": [],
-                      "stdout": [
-                        {
-                          "text": "A snapshot doesn't exist at C:\\Users\\pavel\\projects\\marketing.tvoje.info\\tests\\e2e\\visual\\regression.spec.ts-snapshots\\services-desktop-chromium-desktop-win32.png, writing actual.\n"
-                        }
-                      ],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-02-17T11:52:31.326Z",
-                      "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "services-desktop-expected.png",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\pavel\\projects\\marketing.tvoje.info\\tests\\e2e\\visual\\regression.spec.ts-snapshots\\services-desktop-chromium-desktop-win32.png"
-                        },
-                        {
-                          "name": "services-desktop-actual.png",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\pavel\\projects\\marketing.tvoje.info\\test-results\\visual-regression-Visual-Regression---Services-Page-desktop-chromium-desktop\\services-desktop-actual.png"
-                        }
-                      ]
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "835f6540a55ac66c4207-c65cd7bc4e2414a068c8",
-              "file": "visual/regression.spec.ts",
-              "line": 84,
-              "column": 3
-            },
-            {
-              "title": "mobile",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium-desktop",
-                  "projectName": "chromium-desktop",
-                  "results": [
-                    {
-                      "workerIndex": 2,
-                      "parallelIndex": 2,
-                      "status": "passed",
-                      "duration": 1125,
-                      "errors": [],
-                      "stdout": [
-                        {
-                          "text": "A snapshot doesn't exist at C:\\Users\\pavel\\projects\\marketing.tvoje.info\\tests\\e2e\\visual\\regression.spec.ts-snapshots\\services-mobile-chromium-desktop-win32.png, writing actual.\n"
-                        }
-                      ],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-02-17T11:52:31.586Z",
-                      "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "services-mobile-expected.png",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\pavel\\projects\\marketing.tvoje.info\\tests\\e2e\\visual\\regression.spec.ts-snapshots\\services-mobile-chromium-desktop-win32.png"
-                        },
-                        {
-                          "name": "services-mobile-actual.png",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\pavel\\projects\\marketing.tvoje.info\\test-results\\visual-regression-Visual-Regression---Services-Page-mobile-chromium-desktop\\services-mobile-actual.png"
-                        }
-                      ]
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "835f6540a55ac66c4207-9a8ee20e454090b12cb0",
-              "file": "visual/regression.spec.ts",
-              "line": 91,
-              "column": 3
-            }
-          ]
-        },
-        {
-          "title": "Visual Regression - About Page",
-          "file": "visual/regression.spec.ts",
-          "line": 99,
-          "column": 6,
-          "specs": [
-            {
-              "title": "desktop",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium-desktop",
-                  "projectName": "chromium-desktop",
-                  "results": [
-                    {
-                      "workerIndex": 3,
-                      "parallelIndex": 3,
-                      "status": "passed",
-                      "duration": 1831,
-                      "errors": [],
-                      "stdout": [
-                        {
-                          "text": "A snapshot doesn't exist at C:\\Users\\pavel\\projects\\marketing.tvoje.info\\tests\\e2e\\visual\\regression.spec.ts-snapshots\\about-desktop-chromium-desktop-win32.png, writing actual.\n"
-                        }
-                      ],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-02-17T11:52:31.761Z",
-                      "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "about-desktop-expected.png",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\pavel\\projects\\marketing.tvoje.info\\tests\\e2e\\visual\\regression.spec.ts-snapshots\\about-desktop-chromium-desktop-win32.png"
-                        },
-                        {
-                          "name": "about-desktop-actual.png",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\pavel\\projects\\marketing.tvoje.info\\test-results\\visual-regression-Visual-Regression---About-Page-desktop-chromium-desktop\\about-desktop-actual.png"
-                        }
-                      ]
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "835f6540a55ac66c4207-5f1434f1c2d8f9cab614",
-              "file": "visual/regression.spec.ts",
-              "line": 101,
-              "column": 3
-            },
-            {
-              "title": "mobile",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium-desktop",
-                  "projectName": "chromium-desktop",
-                  "results": [
-                    {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 1764,
-                      "errors": [],
-                      "stdout": [
-                        {
-                          "text": "A snapshot doesn't exist at C:\\Users\\pavel\\projects\\marketing.tvoje.info\\tests\\e2e\\visual\\regression.spec.ts-snapshots\\about-mobile-chromium-desktop-win32.png, writing actual.\n"
-                        }
-                      ],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-02-17T11:52:32.280Z",
-                      "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "about-mobile-expected.png",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\pavel\\projects\\marketing.tvoje.info\\tests\\e2e\\visual\\regression.spec.ts-snapshots\\about-mobile-chromium-desktop-win32.png"
-                        },
-                        {
-                          "name": "about-mobile-actual.png",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\pavel\\projects\\marketing.tvoje.info\\test-results\\visual-regression-Visual-Regression---About-Page-mobile-chromium-desktop\\about-mobile-actual.png"
-                        }
-                      ]
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "835f6540a55ac66c4207-24901d5aefe96b2883e7",
-              "file": "visual/regression.spec.ts",
-              "line": 108,
-              "column": 3
-            }
-          ]
-        },
-        {
-          "title": "Visual Regression - Contact Page",
-          "file": "visual/regression.spec.ts",
-          "line": 116,
-          "column": 6,
-          "specs": [
-            {
-              "title": "desktop",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium-desktop",
-                  "projectName": "chromium-desktop",
-                  "results": [
-                    {
-                      "workerIndex": 2,
-                      "parallelIndex": 2,
-                      "status": "passed",
-                      "duration": 5262,
-                      "errors": [],
-                      "stdout": [
-                        {
-                          "text": "A snapshot doesn't exist at C:\\Users\\pavel\\projects\\marketing.tvoje.info\\tests\\e2e\\visual\\regression.spec.ts-snapshots\\contact-desktop-chromium-desktop-win32.png, writing actual.\n"
-                        }
-                      ],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-02-17T11:52:32.730Z",
-                      "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "contact-desktop-expected.png",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\pavel\\projects\\marketing.tvoje.info\\tests\\e2e\\visual\\regression.spec.ts-snapshots\\contact-desktop-chromium-desktop-win32.png"
-                        },
-                        {
-                          "name": "contact-desktop-actual.png",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\pavel\\projects\\marketing.tvoje.info\\test-results\\visual-regression-Visual-Regression---Contact-Page-desktop-chromium-desktop\\contact-desktop-actual.png"
-                        }
-                      ]
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "835f6540a55ac66c4207-5da60557f1c46232f8e2",
-              "file": "visual/regression.spec.ts",
-              "line": 118,
-              "column": 3
-            },
-            {
-              "title": "mobile",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium-desktop",
-                  "projectName": "chromium-desktop",
-                  "results": [
-                    {
-                      "workerIndex": 1,
-                      "parallelIndex": 1,
-                      "status": "passed",
-                      "duration": 3016,
-                      "errors": [],
-                      "stdout": [
-                        {
-                          "text": "A snapshot doesn't exist at C:\\Users\\pavel\\projects\\marketing.tvoje.info\\tests\\e2e\\visual\\regression.spec.ts-snapshots\\contact-mobile-chromium-desktop-win32.png, writing actual.\n"
-                        }
-                      ],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-02-17T11:52:33.089Z",
-                      "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "contact-mobile-expected.png",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\pavel\\projects\\marketing.tvoje.info\\tests\\e2e\\visual\\regression.spec.ts-snapshots\\contact-mobile-chromium-desktop-win32.png"
-                        },
-                        {
-                          "name": "contact-mobile-actual.png",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\pavel\\projects\\marketing.tvoje.info\\test-results\\visual-regression-Visual-Regression---Contact-Page-mobile-chromium-desktop\\contact-mobile-actual.png"
-                        }
-                      ]
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "835f6540a55ac66c4207-b6cb35c73a5b50531f79",
-              "file": "visual/regression.spec.ts",
-              "line": 125,
-              "column": 3
-            }
-          ]
-        },
-        {
-          "title": "Visual Regression - FAQ Page",
-          "file": "visual/regression.spec.ts",
-          "line": 133,
-          "column": 6,
-          "specs": [
-            {
-              "title": "desktop",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium-desktop",
-                  "projectName": "chromium-desktop",
-                  "results": [
-                    {
-                      "workerIndex": 3,
-                      "parallelIndex": 3,
-                      "status": "passed",
-                      "duration": 1771,
-                      "errors": [],
-                      "stdout": [
-                        {
-                          "text": "A snapshot doesn't exist at C:\\Users\\pavel\\projects\\marketing.tvoje.info\\tests\\e2e\\visual\\regression.spec.ts-snapshots\\faq-desktop-chromium-desktop-win32.png, writing actual.\n"
-                        }
-                      ],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-02-17T11:52:33.625Z",
-                      "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "faq-desktop-expected.png",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\pavel\\projects\\marketing.tvoje.info\\tests\\e2e\\visual\\regression.spec.ts-snapshots\\faq-desktop-chromium-desktop-win32.png"
-                        },
-                        {
-                          "name": "faq-desktop-actual.png",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\pavel\\projects\\marketing.tvoje.info\\test-results\\visual-regression-Visual-Regression---FAQ-Page-desktop-chromium-desktop\\faq-desktop-actual.png"
-                        }
-                      ]
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "835f6540a55ac66c4207-948397056f5c380a90e3",
-              "file": "visual/regression.spec.ts",
-              "line": 134,
-              "column": 3
-            },
-            {
-              "title": "mobile",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium-desktop",
-                  "projectName": "chromium-desktop",
-                  "results": [
-                    {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 1184,
-                      "errors": [],
-                      "stdout": [
-                        {
-                          "text": "A snapshot doesn't exist at C:\\Users\\pavel\\projects\\marketing.tvoje.info\\tests\\e2e\\visual\\regression.spec.ts-snapshots\\faq-mobile-chromium-desktop-win32.png, writing actual.\n"
-                        }
-                      ],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-02-17T11:52:34.068Z",
-                      "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "faq-mobile-expected.png",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\pavel\\projects\\marketing.tvoje.info\\tests\\e2e\\visual\\regression.spec.ts-snapshots\\faq-mobile-chromium-desktop-win32.png"
-                        },
-                        {
-                          "name": "faq-mobile-actual.png",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\pavel\\projects\\marketing.tvoje.info\\test-results\\visual-regression-Visual-Regression---FAQ-Page-mobile-chromium-desktop\\faq-mobile-actual.png"
-                        }
-                      ]
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "835f6540a55ac66c4207-debbf2acfca094ea259a",
-              "file": "visual/regression.spec.ts",
-              "line": 141,
-              "column": 3
-            }
-          ]
-        },
-        {
-          "title": "Visual Regression - Theme Variations",
-          "file": "visual/regression.spec.ts",
-          "line": 149,
-          "column": 6,
-          "specs": [
-            {
-              "title": "theme titan",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium-desktop",
-                  "projectName": "chromium-desktop",
-                  "results": [
-                    {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 8103,
-                      "errors": [],
-                      "stdout": [
-                        {
-                          "text": "C:\\Users\\pavel\\projects\\marketing.tvoje.info\\tests\\e2e\\visual\\regression.spec.ts-snapshots\\theme-titan-chromium-desktop-win32.png is re-generated, writing actual.\n"
-                        }
-                      ],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-02-17T11:52:35.285Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "835f6540a55ac66c4207-921533d6574f3b93a766",
-              "file": "visual/regression.spec.ts",
-              "line": 153,
-              "column": 5
-            },
-            {
-              "title": "theme nova",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium-desktop",
-                  "projectName": "chromium-desktop",
-                  "results": [
-                    {
-                      "workerIndex": 3,
-                      "parallelIndex": 3,
-                      "status": "passed",
-                      "duration": 7777,
-                      "errors": [],
-                      "stdout": [
-                        {
-                          "text": "C:\\Users\\pavel\\projects\\marketing.tvoje.info\\tests\\e2e\\visual\\regression.spec.ts-snapshots\\theme-nova-chromium-desktop-win32.png is re-generated, writing actual.\n"
-                        }
-                      ],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-02-17T11:52:35.428Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "835f6540a55ac66c4207-16ec82441f0ba0064041",
-              "file": "visual/regression.spec.ts",
-              "line": 153,
-              "column": 5
-            },
-            {
-              "title": "theme target",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium-desktop",
-                  "projectName": "chromium-desktop",
-                  "results": [
-                    {
-                      "workerIndex": 1,
-                      "parallelIndex": 1,
-                      "status": "passed",
-                      "duration": 7260,
-                      "errors": [],
-                      "stdout": [
-                        {
-                          "text": "C:\\Users\\pavel\\projects\\marketing.tvoje.info\\tests\\e2e\\visual\\regression.spec.ts-snapshots\\theme-target-chromium-desktop-win32.png is re-generated, writing actual.\n"
-                        }
-                      ],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-02-17T11:52:36.127Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "835f6540a55ac66c4207-0ec949cff508996915d1",
-              "file": "visual/regression.spec.ts",
-              "line": 153,
-              "column": 5
-            },
-            {
-              "title": "theme spark",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium-desktop",
-                  "projectName": "chromium-desktop",
-                  "results": [
-                    {
-                      "workerIndex": 2,
-                      "parallelIndex": 2,
-                      "status": "passed",
-                      "duration": 4590,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-02-17T11:52:38.015Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "835f6540a55ac66c4207-aab930686e6b0127b686",
-              "file": "visual/regression.spec.ts",
-              "line": 153,
-              "column": 5
-            },
-            {
-              "title": "theme lux",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium-desktop",
-                  "projectName": "chromium-desktop",
-                  "results": [
-                    {
-                      "workerIndex": 2,
-                      "parallelIndex": 2,
-                      "status": "passed",
-                      "duration": 3532,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-02-17T11:52:42.637Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "835f6540a55ac66c4207-ce072236af5945a912bb",
-              "file": "visual/regression.spec.ts",
-              "line": 153,
-              "column": 5
             }
           ]
         }
@@ -1201,9 +306,9 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-02-17T11:52:21.061Z",
-    "duration": 25645.875,
-    "expected": 23,
+    "startTime": "2026-02-18T08:07:22.196Z",
+    "duration": 13503.425,
+    "expected": 4,
     "skipped": 0,
     "unexpected": 0,
     "flaky": 0

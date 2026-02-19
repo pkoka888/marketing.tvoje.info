@@ -38,7 +38,7 @@
         "C:/Users/pavel/projects/marketing.tvoje.info/.kilocode/mcp-servers/redis-server.js"
       ],
       "env": {
-        "REDIS_URL": "redis://:marketing@localhost:36379",
+        "REDIS_PASSWORD": "5XQtvKB2go/FW0EHwnV8kzoiHahDvXcQjih9AtIljzQ=",
         "REDIS_NAMESPACE": "marketing_tvoje_info"
       },
       "description": "Redis for rate limiting and coordination"

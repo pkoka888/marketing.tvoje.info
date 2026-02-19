@@ -1,322 +1,407 @@
 #!/usr/bin/env python3
-"""
-LiteLLM Live Functional Test Suite
-Tests all tiers: T1 free → T2 free-complex → T3 paid → T4 last-resort
-Also validates fallback chain behavior.
+"""LiteLLM live functional test suite.
+
+Tests all tiers, fallback chains, and concurrent requests.
+Reusable by all agents for parallel orchestration validation.
 
 Usage:
-    python scripts/test_litellm_live.py [--host localhost] [--port 4000]
+    python scripts/test_litellm_live.py
+    python scripts/test_litellm_live.py --tier T1
+    python scripts/test_litellm_live.py --fallbacks-only
+    python scripts/test_litellm_live.py --concurrent
+
+Exit codes: 0 = all pass, 1 = failures, 2 = proxy unreachable
 """
+import argparse
+import concurrent.futures
 import json
+import os
 import sys
 import time
-import argparse
-import os
-import urllib.request
 import urllib.error
-from dataclasses import dataclass, field
+import urllib.request
+from dataclasses import asdict, dataclass
 from typing import Optional
 
-
 BASE_URL = "http://localhost:4000"
-MASTER_KEY = os.environ.get("LITELLM_MASTER_KEY", "sk-local-dev-1234")
+MASTER_KEY = os.environ.get(
+    "LITELLM_MASTER_KEY", "sk-local-dev-1234"
+)
 HEADERS = {
     "Content-Type": "application/json",
     "Authorization": f"Bearer {MASTER_KEY}",
 }
-TEST_PROMPT = [{"role": "user", "content": "Reply with exactly: OK"}]
+PROMPT = [{"role": "user", "content": "Reply with one word: OK"}]
+
+# Model registry matching proxy_config.yaml
+MODELS = [
+    ("minimax-free", "T1-FREE", "OpenRouter minimax"),
+    ("glm4-free", "T1-FREE", "OpenRouter glm4.7"),
+    ("gemma-free", "T1-FREE", "OpenRouter gemma"),
+    ("gemini-flash", "T2-COMPLEX", "Gemini 2.5 Flash"),
+    ("gemini-pro", "T3-ARCHITECT", "Gemini 1.5 Pro"),
+    ("groq-llama-70b", "T4-PAID", "Groq llama-3.3-70b"),
+    ("groq-llama-8b", "T4-PAID", "Groq llama-3.1-8b"),
+    ("gpt-4o-mini", "T4-PAID", "OpenAI gpt-4o-mini"),
+]
+
+# Fallback chains from router_settings
+FALLBACK_CHAINS = {
+    "minimax-free": [
+        "glm4-free", "gemma-free",
+        "gemini-flash", "groq-llama-8b",
+    ],
+    "glm4-free": [
+        "minimax-free", "gemma-free",
+        "gemini-flash", "groq-llama-8b",
+    ],
+    "gemini-flash": [
+        "minimax-free", "glm4-free",
+        "groq-llama-8b", "groq-llama-70b",
+    ],
+    "gemini-pro": [
+        "gemini-flash", "groq-llama-70b", "gpt-4o-mini",
+    ],
+    "groq-llama-70b": ["groq-llama-8b", "gpt-4o-mini"],
+}
+
+# Expected substrings in model_used for each model_name
+MODEL_PATTERNS = {
+    "minimax-free": "minimax",
+    "glm4-free": "glm",
+    "gemma-free": "gemma",
+    "gemini-flash": "gemini",
+    "gemini-pro": "gemini",
+    "groq-llama-70b": "llama-3.3-70b",
+    "groq-llama-8b": "llama-3.1-8b",
+    "gpt-4o-mini": "gpt-4o-mini",
+}
 
 
 @dataclass
 class TestResult:
+    """Single test result."""
+
     model: str
     tier: str
-    status: str  # PASS | FAIL | SKIP | FALLBACK
+    test_type: str   # direct | fallback | concurrent
+    status: str      # PASS | FAIL | FALLBACK
     latency_ms: int = 0
     response_text: str = ""
+    model_used: str = ""
     error: str = ""
     http_status: int = 0
-    fallback_used: Optional[str] = None
 
 
-def post_json(url: str, data: dict) -> tuple[int, dict]:
-    """HTTP POST returning (status_code, response_body)."""
+def post_json(url, data, timeout=60):
+    """Send POST request and return (status, body)."""
     payload = json.dumps(data).encode()
-    req = urllib.request.Request(url, data=payload, headers=HEADERS, method="POST")
+    req = urllib.request.Request(
+        url, data=payload, headers=HEADERS, method="POST"
+    )
     try:
-        with urllib.request.urlopen(req, timeout=30) as resp:
-            return resp.status, json.loads(resp.read())
+        with urllib.request.urlopen(req, timeout=timeout) as r:
+            return r.status, json.loads(r.read())
     except urllib.error.HTTPError as e:
         try:
             body = json.loads(e.read())
         except Exception:
-            body = {"error": str(e)}
+            body = {"error": {"message": str(e)}}
         return e.code, body
     except Exception as e:
-        return 0, {"error": str(e)}
+        return 0, {"error": {"message": str(e)}}
 
 
-def get_json(url: str) -> tuple[int, dict]:
-    req = urllib.request.Request(url, headers=HEADERS, method="GET")
+def get_json(url):
+    """Send GET request and return (status, body)."""
+    req = urllib.request.Request(
+        url, headers=HEADERS, method="GET"
+    )
     try:
-        with urllib.request.urlopen(req, timeout=10) as resp:
-            return resp.status, json.loads(resp.read())
-    except urllib.error.HTTPError as e:
-        return e.code, {}
+        with urllib.request.urlopen(req, timeout=10) as r:
+            return r.status, json.loads(r.read())
     except Exception as e:
         return 0, {"error": str(e)}
 
 
-def test_model(model_name: str, tier: str, max_tokens: int = 10) -> TestResult:
+def test_model(
+    model_name: str,
+    tier: str,
+    test_type: str = "direct",
+    max_tokens: int = 10,
+) -> TestResult:
     """Test a single model via the proxy."""
     t0 = time.monotonic()
-    status, body = post_json(f"{BASE_URL}/v1/chat/completions", {
-        "model": model_name,
-        "messages": TEST_PROMPT,
-        "max_tokens": max_tokens,
-        "temperature": 0,
-    })
-    latency = int((time.monotonic() - t0) * 1000)
+    code, body = post_json(
+        f"{BASE_URL}/v1/chat/completions",
+        {
+            "model": model_name,
+            "messages": PROMPT,
+            "max_tokens": max_tokens,
+            "temperature": 0,
+        },
+    )
+    ms = int((time.monotonic() - t0) * 1000)
 
-    if status == 200:
+    if code == 200:
         try:
-            text = body["choices"][0]["message"]["content"].strip()
-            return TestResult(model_name, tier, "PASS", latency, text, http_status=status)
+            text = body["choices"][0]["message"]["content"]
+            used = body.get("model", "unknown")
+            st = "PASS"
+            if test_type == "direct":
+                pat = MODEL_PATTERNS.get(model_name, "")
+                if pat and pat not in used.lower():
+                    st = "FALLBACK"
+            return TestResult(
+                model_name, tier, test_type, st,
+                ms, text.strip()[:80], used,
+                http_status=code,
+            )
         except (KeyError, IndexError) as e:
-            return TestResult(model_name, tier, "FAIL", latency, error=f"Bad response shape: {e}", http_status=status)
+            return TestResult(
+                model_name, tier, test_type, "FAIL",
+                ms, error=f"Bad response: {e}",
+                http_status=code,
+            )
+
+    err = body.get("error", {})
+    if isinstance(err, dict):
+        msg = err.get("message", str(body))[:200]
     else:
-        err = body.get("error", {})
-        if isinstance(err, dict):
-            err_msg = err.get("message", str(body))
+        msg = str(err)[:200]
+    return TestResult(
+        model_name, tier, test_type, "FAIL",
+        ms, error=msg, http_status=code,
+    )
+
+
+def check_proxy() -> tuple:
+    """Return (is_healthy, model_list)."""
+    code, _ = get_json(f"{BASE_URL}/health")
+    if code not in (200, 401):
+        return False, []
+    code2, body2 = get_json(f"{BASE_URL}/v1/models")
+    models = []
+    if code2 == 200:
+        models = [m["id"] for m in body2.get("data", [])]
+    return True, models
+
+
+def run_direct_tests(
+    tier_filter: Optional[str] = None,
+) -> list:
+    """Test each model directly."""
+    results = []
+    models = MODELS
+    if tier_filter:
+        tiers = tier_filter.upper().split(",")
+        models = [
+            (n, t, d) for n, t, d in MODELS
+            if any(x in t for x in tiers)
+        ]
+
+    for name, tier, _desc in models:
+        r = test_model(name, tier)
+        icon = {"PASS": "+", "FAIL": "X", "FALLBACK": "~"}
+        sym = icon.get(r.status, "?")
+        if r.status == "PASS":
+            print(
+                f"  [{sym}] {tier:12s} {name:18s}"
+                f" {r.latency_ms:5d}ms"
+                f"  '{r.response_text[:30]}'"
+            )
+        elif r.status == "FALLBACK":
+            print(
+                f"  [{sym}] {tier:12s} {name:18s}"
+                f" {r.latency_ms:5d}ms"
+                f"  -> {r.model_used}"
+            )
         else:
-            err_msg = str(err)
-        return TestResult(model_name, tier, "FAIL", latency, error=err_msg[:200], http_status=status)
+            print(
+                f"  [{sym}] {tier:12s} {name:18s}"
+                f" HTTP {r.http_status}"
+                f" | {r.error[:50]}"
+            )
+        results.append(r)
+        time.sleep(0.3)
+    return results
 
 
-# Model tiers to test
-MODELS = [
-    # T1 FREE
-    ("free-fast",        "T1-FREE",    "openrouter/minimax/minimax-m2.1:free"),
-    ("free-bulk",        "T1-FREE",    "openrouter/z-ai/glm4.7"),
-    ("free-small",       "T1-FREE",    "openrouter/google/gemma-3-1b-it:free"),
-    # T2 FREE COMPLEX
-    ("free-complex",     "T2-FREE",    "gemini/gemini-2.5-flash"),
-    # T3 PAID
-    ("paid-openai",      "T3-PAID",    "openai/gpt-4o-mini"),
-    ("paid-openai-latest","T3-PAID",   "openai/gpt-4.1-mini"),
-    ("paid-gemini-pro",  "T3-PAID",    "gemini/gemini-2.5-pro"),
-    # T4 LAST RESORT
-    ("groq-last-resort", "T4-LAST",    "groq/llama-3.3-70b-versatile"),
-    # Legacy aliases
-    ("gpt-4o-mini",      "LEGACY",     "openai/gpt-4o-mini"),
-    ("claude-3-haiku",   "LEGACY",     "anthropic/claude-haiku-4-5-20251001"),
-    ("gemini-flash",     "LEGACY",     "gemini/gemini-2.5-flash"),
-    ("groq/llama-3.3-70b-versatile", "LEGACY-GROQ", "groq/llama-3.3-70b-versatile"),
-]
+def run_fallback_tests() -> list:
+    """Test fallback chain scenarios."""
+    results = []
+    print(
+        "\n  Testing fallback chains"
+        " (requested -> responded):"
+    )
+
+    for source in FALLBACK_CHAINS:
+        r = test_model(source, "FALLBACK", "fallback")
+        if r.status in ("PASS", "FALLBACK"):
+            used = r.model_used
+            if source not in used.lower():
+                tag = f"FALLBACK -> {used}"
+            else:
+                tag = f"DIRECT ({used})"
+            print(
+                f"  [+] {source:18s} -> {tag}"
+                f" ({r.latency_ms}ms)"
+            )
+        else:
+            print(
+                f"  [X] {source:18s}"
+                f" -> EXHAUSTED | {r.error[:50]}"
+            )
+        results.append(r)
+        time.sleep(0.5)
+    return results
 
 
-def check_health() -> bool:
-    status, body = get_json(f"{BASE_URL}/health")
-    if status == 200:
-        print(f"  ✓ Proxy health: OK")
-        return True
-    print(f"  ✗ Proxy not reachable (HTTP {status})")
-    return False
+def run_concurrent_tests(count: int = 4) -> list:
+    """Send concurrent requests to test load balancing."""
+    results = []
+    print(f"\n  Sending {count} concurrent requests...")
+
+    def _call(_):
+        return test_model(
+            "groq-llama-8b", "CONCURRENT", "concurrent"
+        )
+
+    with concurrent.futures.ThreadPoolExecutor(count) as p:
+        futs = [p.submit(_call, i) for i in range(count)]
+        for f in concurrent.futures.as_completed(futs):
+            results.append(f.result())
+
+    ok = sum(1 for r in results if r.status == "PASS")
+    lats = [r.latency_ms for r in results if r.status == "PASS"]
+    avg = sum(lats) // len(lats) if lats else 0
+    print(f"  [{ok}/{count}] passed | avg: {avg}ms")
+    return results
 
 
-def check_models_endpoint() -> list:
-    status, body = get_json(f"{BASE_URL}/v1/models")
-    if status == 200:
-        models = [m["id"] for m in body.get("data", [])]
-        print(f"  ✓ Models endpoint: {len(models)} models registered")
-        return models
-    print(f"  ✗ /v1/models failed (HTTP {status})")
-    return []
+def write_results(results, output_path):
+    """Write JSON results for other agents."""
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    tiers = [
+        "T1-FREE", "T2-COMPLEX", "T3-ARCHITECT",
+        "T4-PAID", "FALLBACK", "CONCURRENT",
+    ]
+    breakdown = {}
+    for tier in tiers:
+        tier_r = [r for r in results if r.tier == tier]
+        if tier_r:
+            breakdown[tier] = {
+                "total": len(tier_r),
+                "passed": sum(
+                    1 for r in tier_r
+                    if r.status in ("PASS", "FALLBACK")
+                ),
+                "failed": sum(
+                    1 for r in tier_r if r.status == "FAIL"
+                ),
+            }
+    summary = {
+        "timestamp": time.strftime("%Y-%m-%dT%H:%M:%S"),
+        "proxy_url": BASE_URL,
+        "total": len(results),
+        "passed": sum(
+            1 for r in results if r.status == "PASS"
+        ),
+        "failed": sum(
+            1 for r in results if r.status == "FAIL"
+        ),
+        "fallbacks": sum(
+            1 for r in results if r.status == "FALLBACK"
+        ),
+        "tier_breakdown": breakdown,
+        "results": [asdict(r) for r in results],
+    }
+    with open(output_path, "w") as f:
+        json.dump(summary, f, indent=2)
+    return summary
 
 
-def print_result(r: TestResult):
-    icon = {"PASS": "✓", "FAIL": "✗", "SKIP": "~", "FALLBACK": "↩"}.get(r.status, "?")
-    tier_color = {"T1-FREE": "🟢", "T2-FREE": "🟡", "T3-PAID": "🔵", "T4-LAST": "🔴", "LEGACY": "⚪", "LEGACY-GROQ": "🔴"}.get(r.tier, "")
-    if r.status == "PASS":
-        print(f"  {tier_color} {icon} [{r.tier}] {r.model:35s} {r.latency_ms:5d}ms  '{r.response_text[:40]}'")
-    else:
-        print(f"  {tier_color} {icon} [{r.tier}] {r.model:35s} HTTP {r.http_status} | {r.error[:80]}")
+def print_summary(results, summary):
+    """Print test summary."""
+    p = summary["passed"]
+    fb = summary["fallbacks"]
+    fl = summary["failed"]
+    t = summary["total"]
 
+    sep = "=" * 60
+    print(f"\n{sep}")
+    print(f"RESULTS: {p} pass | {fb} fallback | {fl} fail | {t} total")
+    for tier, data in summary["tier_breakdown"].items():
+        tag = "OK" if data["failed"] == 0 else "FAIL"
+        print(
+            f"  {tier:14s}:"
+            f" {data['passed']}/{data['total']} ({tag})"
+        )
 
-def test_fallback_chain():
-    """Test that calling free-fast actually fails over to fallback models when needed."""
-    print("\n[Fallback Chain Test]")
-    # Test by calling a model that SHOULD work - then verify the response
-    # Real fallback testing requires temporarily blocking models; we test by checking
-    # error response format when OpenRouter key is missing
-    print("  Testing fallback behavior with missing T1 key scenario...")
-
-    # Call free-fast — expect either success (if OpenRouter works) or graceful fallback error
-    t0 = time.monotonic()
-    status, body = post_json(f"{BASE_URL}/v1/chat/completions", {
-        "model": "free-fast",
-        "messages": TEST_PROMPT,
-        "max_tokens": 10,
-    })
-    latency = int((time.monotonic() - t0) * 1000)
-
-    if status == 200:
-        text = body.get("choices", [{}])[0].get("message", {}).get("content", "")
-        model_used = body.get("model", "unknown")
-        print(f"  ✓ free-fast responded in {latency}ms via model: {model_used}")
-        print(f"    Response: '{text[:40]}'")
-        # Check if it fell back to a different model
-        if "minimax" not in model_used.lower() and "groq" in model_used.lower():
-            print(f"  ↩ FALLBACK DETECTED: Fell through to {model_used}")
-        return True
-    else:
-        err = body.get("error", {})
-        err_msg = err.get("message", str(body)) if isinstance(err, dict) else str(err)
-        print(f"  ✗ free-fast failed: HTTP {status} — {err_msg[:120]}")
-        # Check if this is a key error (expected) vs config error
-        if "APIKeyError" in err_msg or "401" in err_msg or "authentication" in err_msg.lower():
-            print(f"  → Expected: OpenRouter API key not configured (T1 models need OPENROUTER_API_KEY)")
-        elif "fallback" in err_msg.lower():
-            print(f"  → Fallback chain exhausted: all fallback models also failed")
-        return False
-
-
-def analyze_failures(results: list[TestResult]):
-    """Categorize failures and generate actionable recommendations."""
-    failures = [r for r in results if r.status == "FAIL"]
-    if not failures:
-        print("\n  All models operational.")
-        return
-
-    print(f"\n[Failure Analysis] {len(failures)} model(s) failed:")
-
-    openrouter_failures = [r for r in failures if "T1" in r.tier]
-    gemini_failures = [r for r in failures if "T2" in r.tier or "gemini" in r.model.lower()]
-    openai_failures = [r for r in failures if "openai" in r.model.lower() or "gpt" in r.model.lower()]
-    groq_failures = [r for r in failures if "groq" in r.model.lower() or r.tier == "T4-LAST"]
-
-    if openrouter_failures:
-        print(f"\n  T1 FREE (OpenRouter) — {len(openrouter_failures)} failures:")
-        errs = set(r.error[:60] for r in openrouter_failures)
-        for e in errs:
-            print(f"    Error pattern: {e}")
-        if any("401" in r.error or "authentication" in r.error.lower() or "APIKey" in r.error for r in openrouter_failures):
-            print("    ROOT CAUSE: OPENROUTER_API_KEY not set or invalid")
-            print("    FIX: Set OPENROUTER_API_KEY in litellm/.env or system environment")
-            print("         Get key: https://openrouter.ai/keys")
-        elif any("404" in r.error or "model_not_found" in r.error.lower() for r in openrouter_failures):
-            print("    ROOT CAUSE: Model ID not found on OpenRouter")
-            print("    FIX: Verify model IDs at https://openrouter.ai/models")
-
-    if gemini_failures:
-        print(f"\n  T2 FREE (Gemini) — {len(gemini_failures)} failures:")
-        for r in gemini_failures:
-            print(f"    {r.model}: {r.error[:80]}")
-        if any("GOOGLE_API_KEY" in r.error or "401" in r.error for r in gemini_failures):
-            print("    ROOT CAUSE: GOOGLE_API_KEY not set")
-            print("    FIX: Set GOOGLE_API_KEY=<your GEMINI_API_KEY value> in litellm/.env")
-        elif any("quota" in r.error.lower() for r in gemini_failures):
-            print("    ROOT CAUSE: Gemini free tier quota exhausted (250 RPD)")
-            print("    FIX: Wait for quota reset (daily) or use paid tier")
-
-    if openai_failures:
-        print(f"\n  T3 PAID (OpenAI) — {len(openai_failures)} failures:")
-        for r in openai_failures:
-            print(f"    {r.model}: HTTP {r.http_status} — {r.error[:80]}")
-        if any("404" in r.error or "model_not_found" in r.error.lower() for r in openai_failures):
-            print("    ROOT CAUSE: Model ID deprecated or renamed")
-            print("    FIX: gpt-4o-mini → gpt-4o-mini (still valid) | gpt-4.1-mini if available")
-
-    if groq_failures:
-        print(f"\n  T4 LAST RESORT (Groq) — {len(groq_failures)} failures:")
-        for r in groq_failures:
-            print(f"    {r.model}: {r.error[:80]}")
-
-    # Summary recommendations
-    print("\n[Recommendations]")
-    if openrouter_failures:
-        print("  1. CRITICAL: Add OPENROUTER_API_KEY to litellm/.env for T1 free models")
-        print("     Without this, ALL tasks fall through to paid T3/T4 providers")
-    if gemini_failures and any("GOOGLE_API_KEY" in r.error for r in gemini_failures):
-        print("  2. Add to litellm/.env: GOOGLE_API_KEY=<your-gemini-api-key>")
-        print("     (GEMINI_API_KEY in system env, but config expects GOOGLE_API_KEY)")
+    if fl > 0:
+        print("\nFailed models:")
+        for r in results:
+            if r.status == "FAIL":
+                print(f"  {r.model}: {r.error[:70]}")
 
 
 def main():
-    parser = argparse.ArgumentParser()
+    """Run the test suite."""
+    parser = argparse.ArgumentParser(
+        description="LiteLLM Live Test Suite"
+    )
     parser.add_argument("--host", default="localhost")
     parser.add_argument("--port", type=int, default=4000)
-    parser.add_argument("--tier", help="Only test specific tier: T1,T2,T3,T4")
+    parser.add_argument("--tier", help="Filter: T1,T2,T3,T4")
+    parser.add_argument(
+        "--fallbacks-only", action="store_true"
+    )
+    parser.add_argument(
+        "--concurrent", action="store_true"
+    )
+    parser.add_argument(
+        "--output",
+        default="plans/agent-shared/litellm-test-results.json",
+    )
     args = parser.parse_args()
 
-    global BASE_URL
+    global BASE_URL  # noqa: PLW0603
     BASE_URL = f"http://{args.host}:{args.port}"
 
-    print("=" * 70)
-    print("LiteLLM Live Functional Test Suite")
-    print(f"Target: {BASE_URL}")
-    print("=" * 70)
+    sep = "=" * 60
+    print(sep)
+    print(f"LiteLLM Test Suite | {BASE_URL}")
+    print(sep)
 
-    # 1. Health + models endpoint
-    print("\n[Connectivity]")
-    if not check_health():
-        print("\nERROR: LiteLLM proxy is not running.")
-        print(f"Start with: GOOGLE_API_KEY=$GEMINI_API_KEY litellm --config litellm/proxy_config.yaml --port {args.port}")
-        sys.exit(1)
-    registered = check_models_endpoint()
+    healthy, registered = check_proxy()
+    if not healthy:
+        print(f"\nERROR: Proxy unreachable at {BASE_URL}")
+        print("Start: python litellm/start_litellm.py")
+        sys.exit(2)
+    print(f"\nProxy: OK | {len(registered)} models")
+    print(f"Models: {', '.join(registered)}")
 
-    # 2. Per-model tests
-    print("\n[Model Tests]")
-    results = []
-    models_to_test = MODELS
-    if args.tier:
-        tiers = args.tier.upper().split(",")
-        models_to_test = [(a, b, c) for a, b, c in MODELS if any(t in b for t in tiers)]
+    all_results = []
 
-    for alias, tier, underlying in models_to_test:
-        r = test_model(alias, tier)
-        print_result(r)
-        results.append(r)
-        time.sleep(0.5)  # Rate limit protection
+    if args.fallbacks_only:
+        print("\n[Fallback Chain Tests]")
+        all_results.extend(run_fallback_tests())
+    elif args.concurrent:
+        print("\n[Concurrent Load Tests]")
+        all_results.extend(run_concurrent_tests(8))
+    else:
+        print("\n[Direct Model Tests]")
+        all_results.extend(run_direct_tests(args.tier))
+        print("\n[Fallback Chain Tests]")
+        all_results.extend(run_fallback_tests())
+        print("\n[Concurrent Tests]")
+        all_results.extend(run_concurrent_tests())
 
-    # 3. Fallback chain test
-    test_fallback_chain()
+    summary = write_results(all_results, args.output)
+    print_summary(all_results, summary)
+    print(f"\nResults: {args.output}")
 
-    # 4. Summary
-    passed = sum(1 for r in results if r.status == "PASS")
-    failed = sum(1 for r in results if r.status == "FAIL")
-    total = len(results)
-
-    print("\n" + "=" * 70)
-    print(f"Results: {passed}/{total} passed | {failed} failed")
-
-    # Tier breakdown
-    for tier_name in ["T1-FREE", "T2-FREE", "T3-PAID", "T4-LAST"]:
-        tier_results = [r for r in results if r.tier == tier_name]
-        if tier_results:
-            tp = sum(1 for r in tier_results if r.status == "PASS")
-            print(f"  {tier_name}: {tp}/{len(tier_results)}")
-
-    # 5. Failure analysis
-    if failed > 0:
-        analyze_failures(results)
-        print("\n[Log file]: /tmp/litellm_test.log")
-
-    # 6. Write results JSON
-    results_path = "plans/agent-shared/litellm-test-results.json"
-    with open(results_path, "w") as f:
-        json.dump([{
-            "model": r.model,
-            "tier": r.tier,
-            "status": r.status,
-            "latency_ms": r.latency_ms,
-            "response": r.response_text,
-            "error": r.error,
-            "http_status": r.http_status,
-        } for r in results], f, indent=2)
-    print(f"\nResults saved: {results_path}")
-
-    return 0 if failed == 0 else 1
+    return 0 if summary["failed"] == 0 else 1
 
 
 if __name__ == "__main__":

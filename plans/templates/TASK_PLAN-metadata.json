@@ -1,0 +1,105 @@
+{
+  "$schema": "./template-metadata-schema.json",
+  "template": {
+    "name": "TASK_PLAN",
+    "type": "TASK_PLAN",
+    "version": "1.0.0",
+    "description": "Standardized task planning template for agentic platform",
+    "path": "plans/templates/TASK_PLAN.md",
+    "author": "Kilo Code",
+    "created": "2026-02-18",
+    "updated": "2026-02-18"
+  },
+  "activation": {
+    "triggers": [
+      "plan task",
+      "create plan",
+      "task planning",
+      "implementation plan"
+    ],
+    "keywords": [
+      "task",
+      "plan",
+      "implementation",
+      "steps",
+      "verification"
+    ],
+    "context": [
+      "planning",
+      "development",
+      "implementation"
+    ],
+    "priority": "high",
+    "auto_activate": true
+  },
+  "models": {
+    "preferred": [
+      "x-ai/grok-code-fast-1:optimized:free",
+      "big-pickle",
+      "minimax-m2.1:free"
+    ],
+    "fallback": [
+      "gemini-2.5-pro",
+      "claude-sonnet-4-5"
+    ],
+    "cost_optimization": true
+  },
+  "references": {
+    "cross_links": [
+      "plans/templates/RESEARCH_FINDINGS.md",
+      "plans/templates/AUDIT_REPORT.md",
+      "plans/templates/GAP_ANALYSIS.md"
+    ],
+    "dependencies": [
+      ".kilocode/rules/memory-bank/brief.md",
+      ".kilocode/rules/memory-bank/context.md"
+    ],
+    "related": [
+      "plans/PHASE*.md",
+      "docs/plans/*.md"
+    ],
+    "skills": [
+      "bmad-product-planning",
+      "bmad-story-planning"
+    ],
+    "rules": [
+      "bmad-integration"
+    ]
+  },
+  "validation": {
+    "required_sections": [
+      "Goal",
+      "Context & Constraints",
+      "Implementation Steps",
+      "Verification"
+    ],
+    "format_checks": [
+      "markdown_structure",
+      "checkbox_syntax",
+      "date_format"
+    ],
+    "content_rules": [
+      "no_empty_sections",
+      "actionable_steps",
+      "quantifiable_goals"
+    ]
+  },
+  "metadata": {
+    "frameworks": [
+      "Kilo Code",
+      "OpenCode",
+      "Cline",
+      "Antigravity"
+    ],
+    "compatibility": "cross-agent",
+    "usage_count": 0,
+    "last_used": null,
+    "success_rate": null,
+    "tags": [
+      "planning",
+      "implementation",
+      "task-management",
+      "agentic-workflow"
+    ]
+  }
+}

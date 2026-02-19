@@ -1,0 +1,78 @@
+# AGENTS.md
+# Plan Approval Required Rule — Canonical Version
+# All other agent dirs reference or mirror this file.
+
+## Mandate
+
+When using expensive AI models, agents **MUST** create detailed implementation plans instead of directly executing code. This ensures cost control, proper architecture decisions, and human oversight before incurring higher API costs.
+
+Expensive models are reserved for:
+- Complex architecture decisions requiring deep reasoning
+- High-stakes code generation where free models struggle
+- Tasks where free alternatives have demonstrably failed
+
+## Expensive Models
+
+The following models require plan approval before use:
+
+| Model | Provider | Cost (Approx) | Use Case |
+| ----- | -------- | ------------- | -------- |
+| Claude Opus 4.6 | Anthropic | $15/M input | Complex reasoning, architecture |
+| Claude Sonnet 4.5 | Anthropic | $3/M input | Deep code analysis |
+| Gemini 2.5 Pro | Google | $1.50/M input | High-context tasks |
+| OpenAI o3 | OpenAI | $10/M input | Hard algorithms |
+
+See `.kilocode/rules/cost-optimization` for current pricing details.
+
+## Free Alternatives (Use First)
+
+Before invoking expensive models, **MUST** try:
+
+| Alternative | Model | Cost | Best For |
+| ------------ | ----- | ---- | -------- |
+| Kilo Code | `grok-code-fast-1:optimized:free` | Free | Bulk coding, implementation |
+| OpenCode | `big-pickle` | Free | Standard tasks, 200K context |
+| Cline | `minimax-m2.1:free` | Free | Routine fixes, PM tasks |
+| Gemini CLI | `gemini-2.5-flash` | Free | Research, analysis |
+
+## Workflow
+
+### When Expensive Model is Needed
+
+1. **Assess**: Determine if free alternatives can handle the task
+2. **Plan**: Create detailed implementation plan (what, why, how)
+3. **Prompt**: Write Kilo prompt with the plan for expensive model
+4. **Execute**: Run expensive model with explicit cost tracking
+5. **Log**: Record usage in cost tracking system
+
+### Plan Requirements
+
+For expensive model usage, create a plan containing:
+- Task description and justification
+- Why free alternatives cannot胜任
+- Expected cost range
+- Success criteria
+- Fallback strategy
+
+### Cost Tracking
+
+All paid model usage MUST be logged:
+- File: `.kilocode/rules/cost-optimization`
+- Fields: Date, model, tokens, cost, task, justification
+- Budget cap: $20/month per provider
+- Alert threshold: 80% of budget
+
+## Exceptions
+
+Expensive models may be used **without** prior approval for:
+- Security incidents requiring immediate response
+- Production outages
+- Data loss prevention
+
+Post-incident documentation required within 24 hours.
+
+## References
+
+- `.kilocode/rules/cost-optimization` — Full pricing and routing
+- `.kilocode/rules/server-preservation` — Emergency protocols
+- AGENTS.md — Model routing matrix

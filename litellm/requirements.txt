@@ -1,0 +1,12 @@
+# LiteLLM Proxy Dependencies
+# Install with: pip install -r requirements.txt
+
+# Core proxy
+litellm>=1.0.0
+
+# Environment and configuration
+python-dotenv>=1.0.0
+pyyaml>=6.0
+
+# API clients (optional, based on providers used)
+openai>=1.0.0

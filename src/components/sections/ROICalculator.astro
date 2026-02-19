@@ -1,0 +1,215 @@
+---
+import type { Language } from '../../i18n/translations';
+import { getLangFromUrl } from '../../i18n/translations';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang: propLang } = Astro.props;
+const lang = propLang || getLangFromUrl(Astro.url);
+---
+
+<section id="roi-calculator" class="section bg-gradient-to-br from-primary-50 via-white to-accent-50 dark:from-dark-900 dark:via-dark-800 dark:to-dark-900">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Section Header -->
+    <div class="text-center mb-12">
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 text-sm font-medium mb-4">
+        <span class="text-xl">📊</span>
+        {lang === 'cs' ? 'Kalkulačka ROI' : 'ROI Calculator'}
+      </div>
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+        {lang === 'cs' ? 'Spočítejte si svůj potenciál' : 'Calculate Your Potential'}
+      </h2>
+      <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+        {lang === 'cs' 
+          ? 'Zjistěte, kolik můžete ušetřit nebo vydělat s našimi službami.'
+          : 'Find out how much you can save or earn with our services.'}
+      </p>
+    </div>
+
+    <!-- Calculator Card -->
+    <div class="max-w-2xl mx-auto">
+      <div class="bg-white dark:bg-dark-800 rounded-2xl shadow-xl p-8 border border-gray-200 dark:border-dark-700">
+        
+        <!-- Input Fields -->
+        <div class="space-y-6">
+          <!-- Monthly Ad Spend -->
+          <div>
+            <label for="adSpend" class="label">
+              {lang === 'cs' ? 'Měsíční rozpočet na reklamu (€)' : 'Monthly Ad Budget (€)'}
+            </label>
+            <input
+              type="number"
+              id="adSpend"
+              class="input"
+              placeholder="5000"
+              min="0"
+              value="5000"
+            />
+          </div>
+
+          <!-- Current Conversion Rate -->
+          <div>
+            <label for="conversionRate" class="label">
+              {lang === 'cs' ? 'Současná konverzní sazba (%)' : 'Current Conversion Rate (%)'}
+            </label>
+            <input
+              type="number"
+              id="conversionRate"
+              class="input"
+              placeholder="2"
+              min="0"
+              max="100"
+              value="2"
+            />
+          </div>
+
+          <!-- Average Order Value -->
+          <div>
+            <label for="orderValue" class="label">
+              {lang === 'cs' ? 'Průměrná hodnota objednávky (€)' : 'Average Order Value (€)'}
+            </label>
+            <input
+              type="number"
+              id="orderValue"
+              class="input"
+              placeholder="100"
+              min="0"
+              value="100"
+            />
+          </div>
+
+          <!-- Improvement Target -->
+          <div>
+            <label class="label">
+              {lang === 'cs' ? 'Cílové zlepšení' : 'Target Improvement'}
+            </label>
+            <div class="grid grid-cols-3 gap-4">
+              <button
+                type="button"
+                class="improvement-btn p-4 rounded-xl border-2 border-gray-200 dark:border-dark-600 hover:border-primary-500 transition-colors text-center"
+                data-improvement="20"
+              >
+                <div class="text-2xl font-bold text-gray-900 dark:text-white">20%</div>
+                <div class="text-xs text-gray-500 dark:text-gray-400">{lang === 'cs' ? 'Konzervativní' : 'Conservative'}</div>
+              </button>
+              <button
+                type="button"
+                class="improvement-btn p-4 rounded-xl border-2 border-primary-500 bg-primary-50 dark:bg-primary-900/20 transition-colors text-center"
+                data-improvement="40"
+              >
+                <div class="text-2xl font-bold text-primary-600 dark:text-primary-400">40%</div>
+                <div class="text-xs text-gray-500 dark:text-gray-400">{lang === 'cs' ? 'Střední' : 'Moderate'}</div>
+              </button>
+              <button
+                type="button"
+                class="improvement-btn p-4 rounded-xl border-2 border-gray-200 dark:border-dark-600 hover:border-primary-500 transition-colors text-center"
+                data-improvement="60"
+              >
+                <div class="text-2xl font-bold text-gray-900 dark:text-white">60%</div>
+                <div class="text-xs text-gray-500 dark:text-gray-400">{lang === 'cs' ? 'Agresivní' : 'Aggressive'}</div>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Results -->
+        <div class="mt-8 pt-8 border-t border-gray-200 dark:border-dark-700">
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4 text-center">
+            {lang === 'cs' ? 'Očekávané výsledky' : 'Expected Results'}
+          </h3>
+          
+          <div class="grid grid-cols-2 gap-6">
+            <div class="text-center p-4 rounded-xl bg-green-50 dark:bg-green-900/20">
+              <div class="text-sm text-gray-600 dark:text-gray-400 mb-1">
+                {lang === 'cs' ? 'Měsíční úspora' : 'Monthly Savings'}
+              </div>
+              <div class="text-3xl font-bold text-green-600 dark:text-green-400" id="monthlySavings">
+                €400
+              </div>
+            </div>
+            <div class="text-center p-4 rounded-xl bg-primary-50 dark:bg-primary-900/20">
+              <div class="text-sm text-gray-600 dark:text-gray-400 mb-1">
+                {lang === 'cs' ? 'Roční úspora' : 'Yearly Savings'}
+              </div>
+              <div class="text-3xl font-bold text-primary-600 dark:text-primary-400" id="yearlySavings">
+                €4,800
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-4 text-center">
+            <div class="text-sm text-gray-500 dark:text-gray-400">
+              {lang === 'cs' 
+                ? '+ Odhadovaný nárůst konverzí na'
+                : '+ Estimated conversion increase to'}
+              <span class="font-bold text-gray-900 dark:text-white" id="newConversion">2.8%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="mt-8 text-center">
+          <a
+            href={lang === 'cs' ? '/cs#contact' : '/#contact'}
+            class="btn-primary px-8 py-4 text-lg glow-primary"
+          >
+            {lang === 'cs' ? 'Získat přesnou kalkulaci' : 'Get Exact Calculation'}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  (function() {
+    const adSpend = document.getElementById('adSpend');
+    const conversionRate = document.getElementById('conversionRate');
+    const orderValue = document.getElementById('orderValue');
+    const improvementBtns = document.querySelectorAll('.improvement-btn');
+    
+    let selectedImprovement = 40;
+
+    function calculate() {
+      const spend = parseFloat(adSpend.value) || 0;
+      const rate = parseFloat(conversionRate.value) || 0;
+      const value = parseFloat(orderValue.value) || 0;
+      const improvement = selectedImprovement / 100;
+      
+      const currentConversions = (spend / value) * (rate / 100);
+      const newRate = rate * (1 + improvement);
+      const newConversions = (spend / value) * (newRate / 100);
+      
+      const monthlySavings = (newConversions - currentConversions) * value;
+      const yearlySavings = monthlySavings * 12;
+      
+      document.getElementById('monthlySavings').textContent = 
+        '€' + Math.round(monthlySavings).toLocaleString();
+      document.getElementById('yearlySavings').textContent = 
+        '€' + Math.round(yearlySavings).toLocaleString();
+      document.getElementById('newConversion').textContent = 
+        newRate.toFixed(1) + '%';
+    }
+
+    improvementBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        improvementBtns.forEach(b => {
+          b.classList.remove('border-primary-500', 'bg-primary-50', 'dark:bg-primary-900/20');
+          b.classList.add('border-gray-200', 'dark:border-dark-600');
+        });
+        btn.classList.remove('border-gray-200', 'dark:border-dark-600');
+        btn.classList.add('border-primary-500', 'bg-primary-50', 'dark:bg-primary-900/20');
+        selectedImprovement = parseInt(btn.dataset.improvement);
+        calculate();
+      });
+    });
+
+    adSpend.addEventListener('input', calculate);
+    conversionRate.addEventListener('input', calculate);
+    orderValue.addEventListener('input', calculate);
+
+    calculate();
+  })();
+</script>

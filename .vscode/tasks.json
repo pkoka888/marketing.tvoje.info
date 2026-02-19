@@ -1,0 +1,72 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Health Check (Background Agent)",
+      "type": "shell",
+      "command": "kilo.cmd",
+      "args": [
+        "run",
+        "Read .agent/health-checks.yaml and execute each check. Report results as a markdown table with status (✅/⚠️/🔴). Save report to .agent/reports/health-check-latest.md",
+        "--auto"
+      ],
+      "runOptions": {
+        "runOn": "default"
+      },
+      "presentation": {
+        "reveal": "silent",
+        "panel": "dedicated",
+        "close": true
+      },
+      "problemMatcher": [],
+      "group": "none",
+      "isBackground": true
+    },
+    {
+      "label": "Weekly Consistency Check",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        ".agent/workflows/weekly-consistency.py"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "problemMatcher": [],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "detail": "Run agent consistency check (weekly)"
+    },
+    {
+      "label": "BMAD Agent Menu",
+      "type": "shell",
+      "command": "kilo.cmd",
+      "args": [
+        "run",
+        "You are the BMAD orchestrator. Load _bmad/bmm/config.yaml. Show available BMAD agents and workflows. Ask user which agent to activate."
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Server Evidence Collect",
+      "type": "shell",
+      "command": "kilo.cmd",
+      "args": [
+        "run",
+        "SSH into s62pa, s61pa, s60pa and collect: uptime, disk usage (df -h /), memory (free -h), failed services, docker status. Compare with vscodeportable/servers/evidence.md. Output differences.",
+        "--auto"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      },
+      "problemMatcher": []
+    }
+  ]
+}

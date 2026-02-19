@@ -1,0 +1,169 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/common/Header.astro';
+import Footer from '../../components/common/Footer.astro';
+
+const blogPosts = [
+  {
+    slug: 'ai-marketing-2026',
+    title: 'AI Marketing in 2026: What to Expect',
+    excerpt: 'Discover the latest trends in AI marketing and how they can transform your strategy. From AI agents to hyper-personalization.',
+    date: '2026-02-15',
+    category: 'AI & Automation',
+    readTime: '5 min',
+    image: '🤖',
+  },
+  {
+    slug: 'tiktok-ads-guide',
+    title: 'TikTok Ads Guide for 2026',
+    excerpt: 'Learn how to effectively use TikTok ads for your business growth. Master Spark Ads and creator collaborations.',
+    date: '2026-02-10',
+    category: 'PPC & Advertising',
+    readTime: '7 min',
+    image: '🎵',
+  },
+  {
+    slug: 'seo-ai-search',
+    title: 'SEO for AI Search: ChatGPT, Perplexity',
+    excerpt: 'How to optimize your website for the new era of AI search. Learn the strategies that work for AI Overviews.',
+    date: '2026-02-05',
+    category: 'SEO',
+    readTime: '6 min',
+    image: '🔍',
+  },
+  {
+    slug: 'marketing-automation-roi',
+    title: 'Marketing Automation ROI: Real Results',
+    excerpt: 'Case study: How we achieved 312% ROI through marketing automation for a B2B SaaS company.',
+    date: '2026-01-28',
+    category: 'Case Studies',
+    readTime: '8 min',
+    image: '📈',
+  },
+  {
+    slug: 'ppc-trends-2026',
+    title: 'PPC Trends You Need to Know in 2026',
+    excerpt: 'From AI-powered bidding to privacy-first targeting - the complete guide to PPC in 2026.',
+    date: '2026-01-20',
+    category: 'PPC',
+    readTime: '6 min',
+    image: '💰',
+  },
+  {
+    slug: 'klaviyo-automation',
+    title: 'Klaviyo Automation Best Practices',
+    excerpt: 'Master Klaviyo automation flows to increase revenue. Tips from 50+ e-commerce implementations.',
+    date: '2026-01-15',
+    category: 'Email Marketing',
+    readTime: '5 min',
+    image: '📧',
+  },
+];
+---
+
+<Layout
+  title="Blog - Marketing Insights & Tips"
+  description="Latest articles about AI marketing, PPC, SEO, and marketing automation. Expert insights for your growth."
+>
+  <Header slot="header" />
+
+  <main class="py-16 md:py-24">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Header -->
+      <div class="text-center mb-16">
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 text-sm font-medium mb-4">
+          📝 Blog
+        </div>
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+          Marketing Insights
+        </h1>
+        <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+          Tips, trends, and strategies for your marketing growth. Written by industry experts.
+        </p>
+      </div>
+
+      <!-- Featured Post -->
+      <div class="mb-16">
+        <a href={`/blog/${blogPosts[0].slug}`} class="block group">
+          <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary-500 to-accent-500 p-1">
+            <div class="bg-white dark:bg-dark-900 rounded-xl p-8 md:p-12">
+              <div class="flex items-center gap-3 mb-4">
+                <span class="px-3 py-1 rounded-full bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 text-sm font-medium">
+                  Featured
+                </span>
+                <span class="text-sm text-gray-500 dark:text-gray-400">{blogPosts[0].category}</span>
+              </div>
+              <h2 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+                {blogPosts[0].title}
+              </h2>
+              <p class="text-lg text-gray-600 dark:text-gray-300 mb-6">
+                {blogPosts[0].excerpt}
+              </p>
+              <div class="flex items-center justify-between">
+                <span class="text-sm text-gray-500 dark:text-gray-400">
+                  {new Date(blogPosts[0].date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })} · {blogPosts[0].readTime} read
+                </span>
+                <span class="text-primary-600 dark:text-primary-400 font-medium group-hover:underline">
+                  Read more →
+                </span>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <!-- Blog Grid -->
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {blogPosts.slice(1).map((post) => (
+          <article class="card overflow-hidden group">
+            <a href={`/blog/${post.slug}`}>
+              <div class="h-48 bg-gradient-to-br from-primary-100 to-accent-100 dark:from-primary-900/30 dark:to-accent-900/30 flex items-center justify-center text-6xl">
+                {post.image}
+              </div>
+              <div class="p-6">
+                <div class="flex items-center gap-3 text-xs text-gray-500 dark:text-gray-400 mb-3">
+                  <span class="px-2 py-1 rounded-full bg-gray-100 dark:bg-dark-700">
+                    {post.category}
+                  </span>
+                  <span>{post.readTime} read</span>
+                </div>
+                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+                  {post.title}
+                </h3>
+                <p class="text-sm text-gray-600 dark:text-gray-300 mb-4 line-clamp-2">
+                  {post.excerpt}
+                </p>
+                <div class="text-xs text-gray-400 dark:text-gray-500">
+                  {new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                </div>
+              </div>
+            </a>
+          </article>
+        ))}
+      </div>
+
+      <!-- Newsletter CTA -->
+      <div class="mt-16 text-center p-8 rounded-2xl bg-gray-50 dark:bg-dark-800">
+        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">
+          Subscribe to Our Newsletter
+        </h3>
+        <p class="text-gray-600 dark:text-gray-300 mb-4">
+          Get the latest marketing insights delivered to your inbox.
+        </p>
+        <form class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+          <input
+            type="email"
+            placeholder="your@email.com"
+            class="input flex-1"
+            required
+          />
+          <button type="submit" class="btn-primary px-6">
+            Subscribe
+          </button>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <Footer slot="footer" />
+</Layout>

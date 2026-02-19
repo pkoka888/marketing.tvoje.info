@@ -1,0 +1,165 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://marketing.tvoje.info/schemas/template-metadata",
+  "title": "Template Metadata Schema",
+  "description": "Schema for template activation metadata in the agentic platform",
+  "type": "object",
+  "properties": {
+    "template": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Unique identifier for the template"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["TASK_PLAN", "RESEARCH_FINDINGS", "AUDIT_REPORT", "GAP_ANALYSIS", "LINT_FIX_STRATEGY", "TEST_RESULTS", "IMAGE_GENERATION_PLAN"],
+          "description": "Template category type"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$",
+          "description": "Semantic version of the template"
+        },
+        "description": {
+          "type": "string",
+          "description": "Human-readable description of the template purpose"
+        },
+        "path": {
+          "type": "string",
+          "description": "Relative path to the template file"
+        }
+      },
+      "required": ["name", "type", "version", "description", "path"]
+    },
+    "activation": {
+      "type": "object",
+      "properties": {
+        "triggers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Keywords or phrases that trigger template activation"
+        },
+        "prerequisites": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Required conditions or dependencies"
+        },
+        "context": {
+          "type": "string",
+          "enum": ["planning", "research", "audit", "implementation", "testing", "deployment"],
+          "description": "Development context where template is most useful"
+        }
+      },
+      "required": ["triggers", "context"]
+    },
+    "models": {
+      "type": "object",
+      "properties": {
+        "preferred": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["x-ai/grok-code-fast-1:optimized:free", "big-pickle", "minimax-m2.1:free", "gemini-2.5-pro", "claude-sonnet-4-5", "llama-3.3-70b"]
+          },
+          "description": "Preferred AI models for this template, ordered by priority"
+        },
+        "fallback": {
+          "type": "string",
+          "enum": ["x-ai/grok-code-fast-1:optimized:free", "big-pickle", "minimax-m2.1:free", "gemini-2.5-pro", "claude-sonnet-4-5", "llama-3.3-70b"],
+          "description": "Fallback model if preferred models are unavailable"
+        },
+        "cost_optimization": {
+          "type": "boolean",
+          "description": "Whether to prioritize free models for this template"
+        }
+      },
+      "required": ["preferred", "cost_optimization"]
+    },
+    "references": {
+      "type": "object",
+      "properties": {
+        "depends_on": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Other templates or files this template depends on"
+        },
+        "related_templates": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Related templates that might be used together"
+        },
+        "cross_agent_compatibility": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["kilo-code", "opencode", "cline", "antigravity", "claude-code", "gemini-cli"]
+          },
+          "description": "Agent frameworks that support this template"
+        }
+      },
+      "required": ["cross_agent_compatibility"]
+    },
+    "validation": {
+      "type": "object",
+      "properties": {
+        "required_sections": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Sections that must be present in generated content"
+        },
+        "quality_checks": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Quality validation rules"
+        },
+        "schema_version": {
+          "type": "string",
+          "description": "Version of this metadata schema"
+        }
+      },
+      "required": ["schema_version"]
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "author": {
+          "type": "string",
+          "description": "Template author or maintainer"
+        },
+        "created": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO 8601 timestamp of creation"
+        },
+        "last_updated": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO 8601 timestamp of last update"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Tags for categorization and search"
+        }
+      },
+      "required": ["author", "created", "last_updated"]
+    }
+  },
+  "required": ["template", "activation", "models", "references", "validation", "metadata"]
+}

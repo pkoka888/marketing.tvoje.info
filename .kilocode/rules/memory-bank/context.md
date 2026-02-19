@@ -4,25 +4,31 @@
 
 ---
 
----
-
 ## Current Work Focus
 
-**2026-02-18**: Auto-updated
+**2026-02-18**: Phase 5 Complete + Backend Research
 
-- Phase: PHASE2_FUNCTIONAL_GAPS
-- Active tasks: None
+- ✅ Theme Switcher: 7 themes working
+- ✅ Contact Form: API endpoint created (Formspree + DB ready)
+- ✅ Tests: 4/4 theme tests pass, 10/10 unit tests pass
+- ✅ Build: 24 pages
+- ✅ Production deployed to VPS (s62)
+- ✅ Research: Backend boilerplates analyzed
 
-## Recent Git Changes
+## Backend Research
 
-Uncommitted: A .kilocode/rules/memory-bank/MEMORY_BANK_AUTOMAT
-Recent commits:
-f07aec6 fix: Align Antigravity Redis MCP with other agents
-e06d0ef docs: Add Redis analysis and update Memory Bank
-7098f81 refactor: Simplify Memory Bank - reduce from 37KB to 7KB
-a9f51d8 fix: Add Schema.org markup and fix 404 issues
-5de0301 docs: Add complete analysis and remaining items
+- `research/templates/BACKEND_BOILERPLATES.md` - Full analysis
+- Best option: Astro Node Adapter (`npx astro add node`)
+- Freedom Stack is overkill for simple contact form
+
+## Deployment
+
+**Target: VPS (NOT Vercel)**
+- Server: s62 (192.168.1.62)
+- Gateway: s60 (89.203.173.196:2260)
+- Web root: /var/www/projects/marketing.tvoje.info
+- Deploy: Build locally → SCP to s60 → SCP to s62
 
 ## Active Task Files
 
-None
+- `plans/PHASE5_FEATURE_FIXES.md` - Theme & Contact fixes

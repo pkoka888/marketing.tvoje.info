@@ -41,33 +41,73 @@ console.error(`[ONE-AND-ONLY-REDIS] Key prefix: ${KEY_PREFIX}`);
 // Initialize Redis client
 function getRedisClient() {
   const redisUrl = process.env.REDIS_URL;
+  const redisPassword = process.env.REDIS_PASSWORD;
   const redisHost = process.env.REDIS_HOST || '0.0.0.0'; // Default to 0.0.0.0 for Docker compatibility
   const redisPort = parseInt(process.env.REDIS_PORT || '6379', 10);
 
   // Option 1: Use REDIS_URL if provided (takes precedence)
   if (redisUrl) {
-    console.error('[ONE-AND-ONLY-REDIS] Using Redis URL:', redisUrl);
-    return new Redis(redisUrl, {
-      maxRetriesPerRequest: 3,
-      retryStrategy(times) {
-        if (times > 3) {
-          console.error('[ONE-AND-ONLY-REDIS] Failed to connect after 3 attempts');
-          return null;
-        }
-        return Math.min(times * 200, 1000);
-      },
-      commandTimeout: 5000,
-      enableReadyCheck: true,
-      maxRedirections: 3,
-    });
+    console.error(
+      '[ONE-AND-ONLY-REDIS] Using Redis URL:',
+      redisUrl.replace(/:([^:@]+)@/, ':****@').replace(/^redis:\/+/, 'redis://')
+    );
+
+    // Parse URL to extract components for ioredis
+    let urlObj;
+    try {
+      // Fix the URL format for Node.js
+      let fixedUrl = redisUrl;
+      if (!fixedUrl.startsWith('redis://') && !fixedUrl.startsWith('//')) {
+        fixedUrl = 'redis://' + fixedUrl;
+      }
+      // Handle the case where there's no leading //
+      if (fixedUrl.startsWith('redis://:') && !fixedUrl.startsWith('redis:////')) {
+        fixedUrl = fixedUrl.replace('redis://:', 'redis://localhost:');
+      }
+      urlObj = new URL(fixedUrl);
+    } catch (e) {
+      console.error('[ONE-AND-ONLY-REDIS] Invalid URL, falling back to host/port:', e.message);
+      urlObj = null;
+    }
+
+    if (urlObj) {
+      const password = urlObj.password ? decodeURIComponent(urlObj.password) : undefined;
+      const host = urlObj.hostname || 'localhost';
+      const port = urlObj.port || 6379;
+
+      console.error(
+        `[ONE-AND-ONLY-REDIS]Parsed Redis: ${host}:${port} with password: ${password ? 'yes' : 'no'}`
+      );
+
+      return new Redis({
+        host: host,
+        port: parseInt(port, 10),
+        password: password,
+        maxRetriesPerRequest: 3,
+        retryStrategy(times) {
+          if (times > 3) {
+            console.error('[ONE-AND-ONLY-REDIS] Failed to connect after 3 attempts');
+            return null;
+          }
+          return Math.min(times * 200, 1000);
+        },
+        commandTimeout: 5000,
+        enableReadyCheck: true,
+        maxRedirections: 3,
+        connectTimeout: 10000,
+      });
+    }
   }
 
-  // Option 2: Use individual parameters (REDIS_HOST, REDIS_PORT)
+  // Option 2: Use individual parameters (REDIS_HOST, REDIS_PORT, REDIS_PASSWORD)
   // Default host is 0.0.0.0 for Docker container access
-  console.error(`[ONE-AND-ONLY-REDIS] Using Redis host: ${redisHost}:${redisPort}`);
+  console.error(
+    `[ONE-AND-ONLY-REDIS] Using Redis host: ${redisHost}:${redisPort}${redisPassword ? ' with password' : ''}`
+  );
   return new Redis({
     host: redisHost,
     port: redisPort,
+    password: redisPassword,
     maxRetriesPerRequest: 3,
     retryStrategy(times) {
       if (times > 3) {

@@ -6,6 +6,7 @@
 ## Mandatory Reading at Task Start
 @.kilocode/rules/rules-architect
 @.kilocode/rules/rules-code
+@.kilocode/rules/plan-approval-required
 @.clinerules/skills/general.md
 @.clinerules/skills/kilo-structure.md
 

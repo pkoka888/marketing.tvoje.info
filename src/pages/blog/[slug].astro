@@ -1,0 +1,314 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/common/Header.astro';
+import Footer from '../../components/common/Footer.astro';
+
+export function getStaticPaths() {
+  const posts = [
+    {
+      slug: 'ai-marketing-2026',
+      title: 'AI Marketing in 2026: What to Expect',
+      excerpt: 'Discover the latest trends in AI marketing and how they can transform your strategy.',
+      date: '2026-02-15',
+      category: 'AI & Automation',
+      readTime: '5 min',
+      content: `
+## The Rise of AI Marketing
+
+Artificial Intelligence is no longer just a buzzword—it's fundamentally changing how we approach marketing. In 2026, AI marketing has evolved from experimental to essential.
+
+### Key Trends for 2026
+
+1. **AI Agents** - Autonomous marketing agents that handle optimization, bidding, and content creation
+2. **Hyper-Personalization** - Real-time content customization based on user behavior
+3. **Predictive Analytics** - AI that forecasts customer behavior before it happens
+
+### What This Means for Your Business
+
+The companies embracing AI marketing today are seeing:
+- 40% improvement in campaign ROAS
+- 50% reduction in customer acquisition costs
+- 3x faster time-to-market for new campaigns
+
+### Getting Started
+
+You don't need to replace your entire marketing stack. Start with:
+1. AI-powered bidding in your PPC campaigns
+2. Automated content personalization
+3. Predictive lead scoring
+
+The future of marketing is AI-first. Are you ready?
+      `,
+    },
+    {
+      slug: 'tiktok-ads-guide',
+      title: 'TikTok Ads Guide for 2026',
+      excerpt: 'Learn how to effectively use TikTok ads for your business growth.',
+      date: '2026-02-10',
+      category: 'PPC & Advertising',
+      readTime: '7 min',
+      content: `
+## TikTok Ads: The Complete Guide for 2026
+
+TikTok has evolved from a Gen Z platform to a serious marketing channel. Here's everything you need to know.
+
+### Why TikTok Matters in 2026
+
+- 1B+ monthly active users
+- Highest engagement rates of any platform
+- Spark Ads revolutionized influencer marketing
+
+### Campaign Types
+
+1. **In-Feed Ads** - Appear in the For You feed
+2. **Spark Ads** - Boost organic content with paid promotion
+3. **TopView** - Premium placement at the top of the app
+4. **Brand Takeovers** - Full-screen ads when app opens
+
+### Best Practices
+
+- Keep videos under 15 seconds for maximum completion
+- Use trending sounds and hashtags
+- Partner with creators for authentic content
+- Test Spark Ads for best ROI
+
+Ready to launch your first TikTok campaign?
+      `,
+    },
+    {
+      slug: 'seo-ai-search',
+      title: 'SEO for AI Search: ChatGPT, Perplexity',
+      excerpt: 'How to optimize your website for the new era of AI search.',
+      date: '2026-02-05',
+      category: 'SEO',
+      readTime: '6 min',
+      content: `
+## The New Frontier: AI Search Optimization
+
+With AI Overviews, ChatGPT, and Perplexity changing how people find information, traditional SEO is evolving rapidly.
+
+### What's Different About AI Search?
+
+- Answers are generated, not just found
+- Citations and sources matter more than ever
+- Long-tail conversational queries are rising
+
+### How to Optimize for AI Search
+
+1. **Structured Data** - Use schema markup for better AI understanding
+2. **E-E-A-T Signals** - Experience, Expertise, Authoritativeness, Trustworthiness
+3. **Conversational Content** - Write as people actually ask questions
+4. **Cite Your Sources** - Make it easy for AI to reference your content
+
+### The Future is Now
+
+Companies optimizing for AI search now are seeing:
+- Higher visibility in AI Overviews
+- More qualified traffic from AI referrals
+- Better brand mention tracking
+
+Start optimizing for AI search today.
+      `,
+    },
+    {
+      slug: 'marketing-automation-roi',
+      title: 'Marketing Automation ROI: Real Results',
+      excerpt: 'Case study: How we achieved 312% ROI through marketing automation.',
+      date: '2026-01-28',
+      category: 'Case Studies',
+      readTime: '8 min',
+      content: `
+## Case Study: 312% ROI with Marketing Automation
+
+A B2B SaaS company came to us struggling with lead quality and conversion rates. Here's how we fixed it.
+
+### The Challenge
+
+- Low lead quality from inbound marketing
+- Manual follow-up process taking 48+ hours
+- 2% conversion rate on landing pages
+
+### Our Solution
+
+1. **Implemented HubSpot** for marketing automation
+2. **Created 12 automated nurture sequences**
+3. **Set up lead scoring** based on engagement
+4. **Integrated CRM** for seamless sales handoff
+
+### The Results
+
+| Metric | Before | After |
+|--------|--------|-------|
+| Conversion Rate | 2% | 6.5% |
+| Lead Response Time | 48 hours | 5 minutes |
+| Marketing Qualified Leads | 50/month | 180/month |
+| ROI | - | **312%** |
+
+### Key Takeaways
+
+- Automation isn't about replacing humans—it's about scaling what works
+- Lead scoring prevents wasted sales time
+- Personalization at scale is possible with the right tools
+
+Ready to see similar results?
+      `,
+    },
+    {
+      slug: 'ppc-trends-2026',
+      title: 'PPC Trends You Need to Know in 2026',
+      excerpt: 'From AI-powered bidding to privacy-first targeting.',
+      date: '2026-01-20',
+      category: 'PPC',
+      readTime: '6 min',
+      content: `
+## PPC in 2026: The Complete Guide
+
+The PPC landscape has changed dramatically. Here's what you need to know to stay competitive.
+
+### Major Trends
+
+1. **AI-Powered Bidding** - Smart Bidding now handles 80% of optimization
+2. **Privacy-First Targeting** - First-party data is your most valuable asset
+3. **Cross-Platform Attribution** - Track customers across Google, Meta, TikTok
+
+### Platform Updates
+
+**Google Ads:**
+- Performance Max gets AI upgrades
+- Demand Gen campaigns expand
+- AI Overviews affect search behavior
+
+**Meta Ads:**
+- Advantage+ shopping campaigns are now standard
+- Live Audio Rooms for brand building
+- Improved conversion API
+
+### What Works in 2026
+
+- Creative testing at scale
+- Audience segmentation based on behavior
+- Integration of organic + paid content
+
+Stay ahead of the curve.
+      `,
+    },
+    {
+      slug: 'klaviyo-automation',
+      title: 'Klaviyo Automation Best Practices',
+      excerpt: 'Master Klaviyo automation flows to increase revenue.',
+      date: '2026-01-15',
+      category: 'Email Marketing',
+      readTime: '5 min',
+      content: `
+## Klaviyo Automation: Maximum Revenue Guide
+
+Email marketing automation is one of the highest-ROI marketing activities. Here's how to make it work.
+
+### Essential Automations
+
+1. **Welcome Series** - Set the tone for customer relationships
+2. **Browse Abandonment** - Capture interest before it fades
+3. **Cart Abandonment** - Recover lost revenue (average 15% recovery rate)
+4. **Post-Purchase** - Drive repeat purchases and reviews
+5. **Win-Back** - Re-engage dormant customers
+
+### Klaviyo Best Practices
+
+- Use custom properties for personalization
+- A/B test subject lines and send times
+- Segment by engagement level
+- Integrate with your CRM for unified data
+
+### The Numbers
+
+- Email marketing generates $36 for every $1 spent
+- Automated emails have 70% higher open rates
+- Cart abandonment emails recover 15% of lost revenue
+
+Start building your automations today.
+      `,
+    },
+  ];
+
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+---
+
+<Layout
+  title={`${post.title} - Blog`}
+  description={post.excerpt}
+>
+  <Header slot="header" />
+
+  <main class="py-16 md:py-24">
+    <article class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-3xl">
+      <!-- Back link -->
+      <a href="/blog" class="inline-flex items-center gap-2 text-primary-600 dark:text-primary-400 mb-8 hover:underline">
+        ← Back to Blog
+      </a>
+
+      <!-- Header -->
+      <header class="mb-12">
+        <div class="flex items-center gap-3 text-sm text-gray-500 dark:text-gray-400 mb-4">
+          <span class="px-3 py-1 rounded-full bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300">
+            {post.category}
+          </span>
+          <span>{post.readTime} read</span>
+          <span>·</span>
+          <span>{new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+        </div>
+        
+        <h1 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6">
+          {post.title}
+        </h1>
+        
+        <p class="text-xl text-gray-600 dark:text-gray-300">
+          {post.excerpt}
+        </p>
+      </header>
+
+      <!-- Content -->
+      <div class="prose prose-lg dark:prose-invert max-w-none">
+        <Fragment set:html={post.content.replace(/\n/g, '<br/>').replace(/## (.+)/g, '<h2>$1</h2>').replace(/### (.+)/g, '<h3>$1</h3>').replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/\*(.+?)\*/g, '<em>$1</em>').replace(/- (.+)/g, '<li>$1</li>').replace(/\|(.+)\|/g, (match) => {
+          const cells = match.split('|').filter(c => c.trim());
+          return '<tr>' + cells.map(c => `<td>${c.trim()}</td>`).join('') + '</tr>';
+        })} />
+      </div>
+
+      <!-- Share -->
+      <div class="mt-12 pt-8 border-t border-gray-200 dark:border-dark-700">
+        <p class="text-gray-600 dark:text-gray-300 mb-4">
+          Share this article:
+        </p>
+        <div class="flex gap-4">
+          <a href={`https://www.linkedin.com/sharing/share-offsite/?url=https://marketing.tvoje.info/blog/${post.slug}`} target="_blank" class="btn-secondary px-4 py-2">
+            LinkedIn
+          </a>
+          <a href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=https://marketing.tvoje.info/blog/${post.slug}`} target="_blank" class="btn-secondary px-4 py-2">
+            Twitter
+          </a>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div class="mt-12 p-8 rounded-2xl bg-primary-50 dark:bg-primary-900/20">
+        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">
+          Ready to implement these strategies?
+        </h3>
+        <p class="text-gray-600 dark:text-gray-300 mb-4">
+          Let's discuss how we can help your business grow.
+        </p>
+        <a href="/#contact" class="btn-primary">
+          Get in Touch
+        </a>
+      </div>
+    </article>
+  </main>
+
+  <Footer slot="footer" />
+</Layout>

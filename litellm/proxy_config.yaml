@@ -1,129 +1,93 @@
 model_list:
-  # T1: FREE TIER (Primary - Unlimited)
-  # -----------------------------------
+  # T1: PRIMARY (OpenRouter - Free with $11 credits)
+  # -----------------------------------------------
+  # MiniMax M2.1 - General purpose, strong performance
   - model_name: minimax-free
     litellm_params:
-      model: openrouter/minimax/minimax-m2.1:free
+      model: openrouter/minimax/minimax-m2.1
       api_key: os.environ/OPENROUTER_API_KEY
       rpm: 100
 
+  # GLM-4.7 - Agent-centric applications
   - model_name: glm4-free
     litellm_params:
-      model: openrouter/z-ai/glm4.7
+      model: openrouter/z-ai/glm-4.7:free
       api_key: os.environ/OPENROUTER_API_KEY
       rpm: 100
 
-  - model_name: gemma-free
+  # Qwen3 Coder - Agentic coding
+  - model_name: qwen3-coder-free
     litellm_params:
-      model: openrouter/google/gemma-3-1b-it:free
+      model: openrouter/qwen/qwen3-coder:free
       api_key: os.environ/OPENROUTER_API_KEY
       rpm: 100
 
-  # T2: FREE COMPLEX (Secondary - Rate Limited)
-  # -------------------------------------------
+  # DeepSeek R1 - OpenAI o1-level
+  - model_name: deepseek-r1-free
+    litellm_params:
+      model: openrouter/deepseek/deepseek-r1-0528:free
+      api_key: os.environ/OPENROUTER_API_KEY
+      rpm: 100
+
+  # T2: GEMINI (Free Tier - High Capability)
+  # -----------------------------------------
   - model_name: gemini-flash
     litellm_params:
       model: gemini/gemini-2.5-flash
       api_key: os.environ/GEMINI_API_KEY
-      rpm: 15 # Free tier limit
+      rpm: 15
 
-  # T3: ARCHITECT (Tertiary - Capable but potentially paid/quota)
-  # -------------------------------------------------------------
   - model_name: gemini-pro
     litellm_params:
-      model: gemini/gemini-1.5-pro
+      model: gemini/gemini-2.5-pro
       api_key: os.environ/GEMINI_API_KEY
       rpm: 2
 
-  # T4: PAID FALLBACK (Last Resort - $$$)
-  # -------------------------------------
-  - model_name: groq-llama-70b
-    litellm_params:
-      model: groq/llama-3.3-70b-versatile
-      api_key: os.environ/GROQ_API_KEY
-      rpm: 30
-
+  # T3: GROQ (Fallback - Paid but fast)
+  # ------------------------------------
   - model_name: groq-llama-8b
     litellm_params:
       model: groq/llama-3.1-8b-instant
       api_key: os.environ/GROQ_API_KEY
       rpm: 30
 
+  - model_name: groq-llama-70b
+    litellm_params:
+      model: groq/llama-3.3-70b-versatile
+      api_key: os.environ/GROQ_API_KEY
+      rpm: 30
+
+  # T4: OPENAI (Last Resort Paid)
+  # ------------------------------
   - model_name: gpt-4o-mini
     litellm_params:
       model: openai/gpt-4o-mini
       api_key: os.environ/OPENAI_API_KEY
 
-# Fallback Chains (Production Reliability)
-# -----------------------------------------
-# Follows tier hierarchy: T1 Free → T2 Complex → T4 Paid (Last Resort)
-# T3 Architect models are special-purpose and don't participate in general fallbacks
-fallbacks:
-  # T1 Free tier fallbacks (Primary → Secondary Free → Paid Last Resort)
-  - model: minimax-free
-    fallbacks:
-      - glm4-free
-      - gemma-free
-      - gemini-flash
-      - groq-llama-8b
-
-  - model: glm4-free
-    fallbacks:
-      - minimax-free
-      - gemma-free
-      - gemini-flash
-      - groq-llama-8b
-
-  - model: gemma-free
-    fallbacks:
-      - minimax-free
-      - glm4-free
-      - gemini-flash
-      - groq-llama-8b
-
-  # T2 Free Complex fallbacks (Rate Limited → Free tier → Paid)
-  - model: gemini-flash
-    fallbacks:
-      - minimax-free
-      - glm4-free
-      - groq-llama-8b
-      - groq-llama-70b
-
-  # T3 Architect fallbacks (High-capability models)
-  - model: gemini-pro
-    fallbacks:
-      - gemini-flash
-      - groq-llama-70b
-      - gpt-4o-mini
-
-  # T4 Paid fallbacks (Last Resort cascade)
-  - model: groq-llama-70b
-    fallbacks:
-      - groq-llama-8b
-      - gpt-4o-mini
-
-  - model: groq-llama-8b
-    fallbacks:
-      - groq-llama-70b
-      - gpt-4o-mini
-
-  - model: gpt-4o-mini
-    fallbacks:
-      - groq-llama-70b
-      - groq-llama-8b
-
 litellm_settings:
-  # Proxy behavior settings
   set_verbose: false
-  drop_params: true  # Drop unsupported params gracefully
-  success_callback: []  # Add monitoring callbacks here
-  failure_callback: []  # Add failure handlers here
+  drop_params: true
+  request_timeout: 30
+  num_retries: 2
 
 router_settings:
-  routing_strategy: latency
-  redis_host: os.environ/REDIS_HOST
-  redis_port: os.environ/REDIS_PORT
+  routing_strategy: simple-shuffle
+  num_retries: 2
+  timeout: 30
+  allowed_fails: 2
   enable_pre_call_checks: true
+  # Fallback chains: OpenRouter (free) → Gemini → Groq → OpenAI
+  fallbacks:
+    - minimax-free: [glm4-free, qwen3-coder-free, deepseek-r1-free, gemini-flash, groq-llama-8b, gpt-4o-mini]
+    - glm4-free: [minimax-free, qwen3-coder-free, deepseek-r1-free, gemini-flash, groq-llama-8b, gpt-4o-mini]
+    - qwen3-coder-free: [minimax-free, glm4-free, deepseek-r1-free, gemini-flash, groq-llama-8b, gpt-4o-mini]
+    - deepseek-r1-free: [minimax-free, glm4-free, qwen3-coder-free, gemini-flash, groq-llama-8b, gpt-4o-mini]
+    - gemini-flash: [minimax-free, glm4-free, qwen3-coder-free, groq-llama-8b, gemini-pro, gpt-4o-mini]
+    - gemini-pro: [gemini-flash, minimax-free, groq-llama-70b, gpt-4o-mini]
+    - groq-llama-8b: [groq-llama-70b, gemini-flash, gpt-4o-mini]
+    - groq-llama-70b: [groq-llama-8b, gemini-flash, gpt-4o-mini]
+    - gpt-4o-mini: [groq-llama-70b, groq-llama-8b]
+  default_fallbacks: [gemini-flash, groq-llama-8b, gpt-4o-mini]
 
 general_settings:
   master_key: os.environ/LITELLM_MASTER_KEY

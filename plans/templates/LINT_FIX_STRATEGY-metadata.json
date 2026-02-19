@@ -1,0 +1,108 @@
+{
+  "$schema": "./template-metadata-schema.json",
+  "template": {
+    "name": "LINT_FIX_STRATEGY",
+    "type": "LINT_FIX_STRATEGY",
+    "version": "1.0.0",
+    "description": "Standardized linting fix strategy template for code quality improvements",
+    "path": "plans/templates/LINT_FIX_STRATEGY.md",
+    "author": "Kilo Code",
+    "created": "2026-02-18",
+    "updated": "2026-02-18"
+  },
+  "activation": {
+    "triggers": [
+      "lint fix",
+      "code quality",
+      "linting strategy",
+      "fix lint errors"
+    ],
+    "keywords": [
+      "lint",
+      "eslint",
+      "code quality",
+      "fix",
+      "errors",
+      "warnings"
+    ],
+    "context": [
+      "code quality",
+      "linting",
+      "development",
+      "maintenance"
+    ],
+    "priority": "medium",
+    "auto_activate": true
+  },
+  "models": {
+    "preferred": [
+      "x-ai/grok-code-fast-1:optimized:free",
+      "big-pickle",
+      "minimax-m2.1:free"
+    ],
+    "fallback": [
+      "gemini-2.5-pro",
+      "claude-sonnet-4-5"
+    ],
+    "cost_optimization": true
+  },
+  "references": {
+    "cross_links": [
+      "plans/templates/TEST_RESULTS.md",
+      "plans/templates/AUDIT_REPORT.md"
+    ],
+    "dependencies": [
+      ".kilocode/rules/memory-bank/brief.md",
+      ".kilocode/rules/memory-bank/context.md"
+    ],
+    "related": [
+      "docs/code-quality/*.md",
+      "plans/development/*.md"
+    ],
+    "skills": [
+      "debug",
+      "accessibility-wcag"
+    ],
+    "rules": [
+      "python-preferred"
+    ]
+  },
+  "validation": {
+    "required_sections": [
+      "Current Lint Status",
+      "Priority Issues",
+      "Fix Strategy",
+      "Implementation Plan",
+      "Verification"
+    ],
+    "format_checks": [
+      "markdown_structure",
+      "code_blocks",
+      "error_references"
+    ],
+    "content_rules": [
+      "actionable_fixes",
+      "priority_classification",
+      "impact_assessment"
+    ]
+  },
+  "metadata": {
+    "frameworks": [
+      "Kilo Code",
+      "OpenCode",
+      "Cline",
+      "Antigravity"
+    ],
+    "compatibility": "cross-agent",
+    "usage_count": 0,
+    "last_used": null,
+    "success_rate": null,
+    "tags": [
+      "linting",
+      "code-quality",
+      "development",
+      "maintenance",
+      "fix-strategy"
+    ]
+  }
+}

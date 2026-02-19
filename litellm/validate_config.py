@@ -4,16 +4,12 @@ LiteLLM Configuration Validation Script
 
 Validates:
 1. Required environment variables are set
-2. YAML configuration syntax is valid
-3. Connectivity to at least one provider
+2. YAML configuration syntax and structure
+3. Fallback chain integrity (all referenced models exist)
+4. Provider connectivity
 
-Exit codes:
-  0 - All validations passed
-  1 - Environment variables check failed
-  2 - YAML configuration validation failed
-  3 - Multiple failures
+Exit codes: 0 = pass, 1 = env fail, 2 = yaml fail, 3 = multiple
 """
-
 import os
 import sys
 from pathlib import Path
@@ -32,7 +28,6 @@ except ImportError:
 
 
 class Colors:
-    """ANSI color codes for terminal output."""
     RED = '\033[91m'
     GREEN = '\033[92m'
     YELLOW = '\033[93m'
@@ -40,240 +35,175 @@ class Colors:
     RESET = '\033[0m'
 
 
-def print_status(status: str, message: str) -> None:
-    """Print a colored status message."""
-    if status == "PASS":
-        print(f"{Colors.GREEN}✓ PASS{Colors.RESET}: {message}")
-    elif status == "FAIL":
-        print(f"{Colors.RED}✗ FAIL{Colors.RESET}: {message}")
-    elif status == "WARN":
-        print(f"{Colors.YELLOW}⚠ WARN{Colors.RESET}: {message}")
-    elif status == "INFO":
-        print(f"{Colors.BLUE}ℹ INFO{Colors.RESET}: {message}")
+def status(st: str, msg: str):
+    icons = {"PASS": f"{Colors.GREEN}+{Colors.RESET}",
+             "FAIL": f"{Colors.RED}X{Colors.RESET}",
+             "WARN": f"{Colors.YELLOW}!{Colors.RESET}",
+             "INFO": f"{Colors.BLUE}i{Colors.RESET}"}
+    print(f"  [{icons.get(st, '?')}] {msg}")
 
 
-def check_environment_variables() -> bool:
-    """
-    Check that required environment variables are set.
+def check_env() -> bool:
+    print("\n[Environment Variables]")
+    required = {
+        "LITELLM_MASTER_KEY": "Proxy auth",
+        "GROQ_API_KEY": "T4 last resort",
+    }
+    recommended = {
+        "OPENROUTER_API_KEY": "T1 free models",
+        "GEMINI_API_KEY": "T2 free complex + T3 architect",
+        "OPENAI_API_KEY": "T4 paid fallback",
+    }
 
-    Returns:
-        True if all required variables are set, False otherwise.
-    """
-    print("\n" + "="*60)
-    print("Environment Variables Check")
-    print("="*60)
-
-    # Required variables
-    required_vars = [
-        "LITELLM_MASTER_KEY",
-        "GROQ_API_KEY",
-    ]
-
-    # Optional variables (at least one should be set for fallbacks)
-    optional_vars = [
-        "OPENAI_API_KEY",
-        "ANTHROPIC_API_KEY",
-        "GOOGLE_API_KEY",
-    ]
-
-    all_valid = True
-
-    # Check required variables
-    for var in required_vars:
-        value = os.environ.get(var)
-        if value:
-            # Mask the value for security
-            masked = value[:4] + "..." if len(value) > 4 else "***"
-            print_status("PASS", f"{var} is set ({masked})")
+    ok = True
+    for var, desc in required.items():
+        val = os.environ.get(var)
+        if val and not val.startswith("YOUR_"):
+            status("PASS", f"{var} ({desc}): {val[:6]}...")
         else:
-            print_status("FAIL", f"{var} is not set")
-            all_valid = False
+            status("FAIL", f"{var} ({desc}): NOT SET")
+            ok = False
 
-    # Check optional variables
-    optional_set = 0
-    for var in optional_vars:
-        value = os.environ.get(var)
-        if value:
-            optional_set += 1
-            print_status("INFO", f"{var} is set (optional)")
-
-    if optional_set == 0:
-        print_status("WARN", "No fallback API keys set (only Groq available)")
-    else:
-        print_status("PASS", f"{optional_set} fallback provider(s) configured")
-
-    return all_valid
+    for var, desc in recommended.items():
+        val = os.environ.get(var)
+        if val and not val.startswith("YOUR_"):
+            status("PASS", f"{var} ({desc}): {val[:6]}...")
+        else:
+            status("WARN", f"{var} ({desc}): not set — tier will use fallbacks")
+    return ok
 
 
-def validate_yaml_syntax(config_path: Path) -> dict:
-    """
-    Validate YAML syntax and load configuration.
-
-    Args:
-        config_path: Path to the proxy_config.yaml file.
-
-    Returns:
-        Parsed configuration dict if valid, None otherwise.
-    """
-    print("\n" + "="*60)
-    print("YAML Configuration Validation")
-    print("="*60)
-
+def check_yaml(config_path: Path) -> dict:
+    print("\n[YAML Configuration]")
     if not config_path.exists():
-        print_status("FAIL", f"Configuration file not found: {config_path}")
+        status("FAIL", f"Config not found: {config_path}")
         return None
 
     try:
-        with open(config_path, 'r') as f:
+        with open(config_path) as f:
             config = yaml.safe_load(f)
-
-        print_status("PASS", "YAML syntax is valid")
-
-        # Validate required sections
-        required_sections = ["model_list", "litellm_settings"]
-        for section in required_sections:
-            if section in config:
-                print_status("PASS", f"Section '{section}' found")
-            else:
-                print_status("FAIL", f"Required section '{section}' missing")
-                return None
-
-        # Check for fallbacks section
-        if "fallbacks" in config:
-            fallback_count = len(config.get("fallbacks", []))
-            print_status("PASS", f"Fallbacks section found ({fallback_count} chains)")
-        else:
-            print_status("WARN", "No fallbacks section found (recommended for reliability)")
-
-        # Check for hardcoded secrets
-        config_str = str(config)
-        if "sk-local-dev" in config_str:
-            print_status("FAIL", "Hardcoded test key detected in config")
-            return None
-
-        # Check master_key uses environment variable
-        general_settings = config.get("general_settings", {})
-        master_key = general_settings.get("master_key", "")
-        if "os.environ" in str(master_key):
-            print_status("PASS", "Master key uses environment variable reference")
-        elif master_key:
-            print_status("FAIL", "Master key appears to be hardcoded (security risk)")
-            return None
-
-        return config
-
+        status("PASS", "YAML syntax valid")
     except yaml.YAMLError as e:
-        print_status("FAIL", f"YAML parsing error: {e}")
-        return None
-    except Exception as e:
-        print_status("FAIL", f"Error reading config: {e}")
+        status("FAIL", f"YAML parse error: {e}")
         return None
 
+    # Required sections
+    if "model_list" not in config:
+        status("FAIL", "Missing model_list section")
+        return None
+    status("PASS", f"model_list: {len(config['model_list'])} models")
 
-def test_provider_connectivity() -> bool:
-    """
-    Test connectivity to at least one LLM provider.
+    if "router_settings" not in config:
+        status("WARN", "Missing router_settings (fallbacks won't work)")
+    else:
+        rs = config["router_settings"]
+        if "fallbacks" in rs:
+            status("PASS", f"router_settings.fallbacks: {len(rs['fallbacks'])} chains")
+        else:
+            status("WARN", "No fallbacks in router_settings")
+        if "default_fallbacks" in rs:
+            status("PASS", f"default_fallbacks: {rs['default_fallbacks']}")
 
-    Returns:
-        True if at least one provider is reachable, False otherwise.
-    """
-    print("\n" + "="*60)
-    print("Provider Connectivity Check")
-    print("="*60)
+    if "general_settings" in config:
+        mk = config["general_settings"].get("master_key", "")
+        if "os.environ" in str(mk):
+            status("PASS", "master_key uses env reference")
+        elif mk:
+            status("FAIL", "master_key appears hardcoded")
+            return None
 
+    # Check for hardcoded secrets in model params
+    for model in config.get("model_list", []):
+        api_key = model.get("litellm_params", {}).get("api_key", "")
+        if isinstance(api_key, str) and api_key and not api_key.startswith("os.environ"):
+            status("FAIL", f"Hardcoded API key in model {model.get('model_name', '?')}")
+            return None
+
+    return config
+
+
+def check_fallback_integrity(config: dict) -> bool:
+    """Verify all fallback target models exist in model_list."""
+    print("\n[Fallback Chain Integrity]")
+    model_names = {m["model_name"] for m in config.get("model_list", [])}
+    rs = config.get("router_settings", {})
+    fallbacks = rs.get("fallbacks", [])
+    default_fb = rs.get("default_fallbacks", [])
+
+    ok = True
+    for entry in fallbacks:
+        for source, targets in entry.items():
+            if source not in model_names:
+                status("FAIL", f"Fallback source '{source}' not in model_list")
+                ok = False
+            for t in targets:
+                if t not in model_names:
+                    status("FAIL", f"Fallback target '{t}' (from {source}) not in model_list")
+                    ok = False
+
+    for t in default_fb:
+        if t not in model_names:
+            status("FAIL", f"default_fallback '{t}' not in model_list")
+            ok = False
+
+    if ok:
+        status("PASS", f"All {len(fallbacks)} chains reference valid models")
+    return ok
+
+
+def check_connectivity() -> bool:
+    """Quick connectivity check to Groq (always-available T4)."""
+    print("\n[Provider Connectivity]")
     groq_key = os.environ.get("GROQ_API_KEY")
     if not groq_key:
-        print_status("INFO", "GROQ_API_KEY not set, skipping connectivity test")
-        return True  # Don't fail if key not set (env check already failed)
+        status("WARN", "GROQ_API_KEY not set, skipping")
+        return True
 
     try:
-        import requests
-
-        # Test Groq API connectivity
-        print_status("INFO", "Testing Groq API connectivity...")
-
-        response = requests.get(
+        import urllib.request
+        req = urllib.request.Request(
             "https://api.groq.com/openai/v1/models",
             headers={"Authorization": f"Bearer {groq_key}"},
-            timeout=10
         )
-
-        if response.status_code == 200:
-            models = response.json().get("data", [])
-            print_status("PASS", f"Groq API reachable ({len(models)} models available)")
-            return True
-        else:
-            print_status("WARN", f"Groq API returned status {response.status_code}")
-            return True  # Don't fail on API errors, just warn
-
-    except requests.exceptions.Timeout:
-        print_status("WARN", "Groq API timeout (network may be slow)")
-        return True
-    except requests.exceptions.ConnectionError:
-        print_status("WARN", "Groq API connection error (network may be unavailable)")
-        return True
-    except ImportError:
-        print_status("INFO", "requests module not installed, skipping connectivity test")
-        return True
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            if resp.status == 200:
+                status("PASS", "Groq API reachable")
+                return True
     except Exception as e:
-        print_status("WARN", f"Unexpected error during connectivity test: {e}")
-        return True  # Don't fail on unexpected errors
+        status("WARN", f"Groq connectivity: {e}")
+    return True  # Non-critical
 
 
 def main() -> int:
-    """
-    Main validation function.
+    print("=" * 50)
+    print("LiteLLM Config Validation")
+    print("=" * 50)
 
-    Returns:
-        Exit code (0 for success, non-zero for failure).
-    """
-    print("="*60)
-    print("LiteLLM Configuration Validation")
-    print("="*60)
-
-    # Load environment variables from .env file
     script_dir = Path(__file__).parent
     env_file = script_dir / ".env"
     if env_file.exists():
         load_dotenv(env_file)
-        print_status("INFO", f"Loaded environment from {env_file}")
-    else:
-        print_status("WARN", f"No .env file found at {env_file}")
+        status("INFO", f"Loaded {env_file}")
 
-    # Determine config path
     config_path = script_dir / "proxy_config.yaml"
 
-    # Track validation results
-    env_valid = True
-    yaml_valid = True
-    connectivity_valid = True
+    env_ok = check_env()
+    config = check_yaml(config_path)
+    yaml_ok = config is not None
+    fb_ok = check_fallback_integrity(config) if yaml_ok else False
+    check_connectivity() if env_ok else None
 
-    # Run validations
-    env_valid = check_environment_variables()
-    config = validate_yaml_syntax(config_path)
-    yaml_valid = config is not None
-
-    if env_valid:
-        connectivity_valid = test_provider_connectivity()
-
-    # Print summary
-    print("\n" + "="*60)
-    print("Validation Summary")
-    print("="*60)
-
-    if env_valid and yaml_valid:
-        print_status("PASS", "All critical validations passed")
-        if not connectivity_valid:
-            print_status("WARN", "Some non-critical checks failed")
+    print(f"\n{'='*50}")
+    if env_ok and yaml_ok and fb_ok:
+        status("PASS", "All validations passed")
         return 0
-    else:
-        if not env_valid:
-            print_status("FAIL", "Environment variables check failed")
-            return 1
-        if not yaml_valid:
-            print_status("FAIL", "YAML configuration validation failed")
-            return 2
-        return 3
+    if not env_ok:
+        status("FAIL", "Environment check failed")
+        return 1
+    if not yaml_ok:
+        status("FAIL", "YAML validation failed")
+        return 2
+    return 3
 
 
 if __name__ == "__main__":

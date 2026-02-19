@@ -31,22 +31,21 @@ coverage/
 __tests__/coverage/
 
 # IDE - KEEP .vscode for team settings
-.vscode/
+# Exclusion first, then negations (last matching pattern wins)
+.vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
+!.vscode/extensions.json
+!.vscode/launch.json
 .idea/
 *.swp
 *.swo
 *~
-.DS_Store
 
 # Logs
 logs/
 *.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-lerna-debug.log*
+lerna-debug.log
 
 # OS
 .DS_Store
@@ -71,14 +70,14 @@ temp/
 *.sqlite
 *.sqlite3
 
-# Memory Bank (optional - uncomment if you want to exclude)
-# .kilocode/rules/memory-bank/
-
 # Agent Configuration (optional - uncomment if you want to exclude)
 # .agent/
 
 # MCP Server Configuration (optional - uncomment if you want to exclude)
 # .kilocode/mcp.json
+
+# MCP Library packages (npm packages with node_modules)
+.kilocode/mcp-libs/
 
 # Custom Modes (optional - uncomment if you want to exclude)
 # .kilocode/modes/
@@ -100,6 +99,9 @@ temp/
 # SETUP.md
 # USAGE.md
 # ARCHITECTURE.md
+
+# Memory Bank (optional - uncomment if you want to exclude)
+# .kilocode/rules/memory-bank/
 
 # Backup Files
 *.bak
@@ -127,13 +129,9 @@ kubectl/
 .terraform/
 .terraform.lock.hcl
 
-# AWS
+# Cloud Providers
 .aws/
-
-# Google Cloud
 .gcloud/
-
-# Azure
 .azure/
 
 # Misc
@@ -146,6 +144,8 @@ kubectl/
 .agent/plans/
 .agent/reports/
 .agent/reports-archived/
+
+# Project-specific generated files (not source .txt files)
 ignored_files.txt
 full_status.txt
 porcelain_status.txt
@@ -167,17 +167,13 @@ s61_sshd_config.txt
 s61_traefik_logs.txt
 
 # Testing & Playwright
-# KEEP these for CI/CD visibility
-# playwright-output/    # Uncomment if needed for local debugging only
 !.gitkeep
 .firebase/
 .firecrawl/
 
-
+# Null device files (Windows)
 src/content/docs/nul
 **/nul
-
-src/content/docs/
 
 # Python Environment
 .venv/
@@ -194,7 +190,6 @@ venv.bak/
 python3.cmd
 py.cmd
 
+# Project-specific exclusions
 evidence/
 .vercel/
-*.txt
-*.log

@@ -1,0 +1,232 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Header from '../../../components/common/Header.astro';
+import Footer from '../../../components/common/Footer.astro';
+
+export function getStaticPaths() {
+  const posts = [
+    {
+      slug: 'ai-marketing-2026',
+      title: 'AI marketing v roce 2026: Co očekávat',
+      excerpt: 'Objevte nejnovější trendy v AI marketingu a jak mohou změnit vaši strategii.',
+      date: '2026-02-15',
+      category: 'AI & Automatizace',
+      readTime: '5 min',
+      content: `
+## Vzestup AI Marketingu
+
+Umělá inteligence již není jen módní slovo - zásadně mění způsob, jakým přistupujeme k marketingu. V roce 2026 se AI marketing vyvinul z experimentálního na nezbytný.
+
+### Klíčové trendy pro rok 2026
+
+1. **AI Agenti** - Autonomní marketingoví agenti, kteří se starají o optimalizaci, bidding a tvorbu obsahu
+2. **Hyper-personalizace** - Obsah v reálném čase přizpůsobený chování uživatele
+3. **Prediktivní analytika** - AI, která předpovídá chování zákazníků
+
+### Co to znamená pro vaši firmu
+
+Společnosti, které dnes AI marketing přijímají, vidí:
+- 40% zlepšení ROAS kampaní
+- 50% snížení nákladů na akvizici zákazníků
+- 3x rychlejší uvedení nových kampaní na trh
+      `,
+    },
+    {
+      slug: 'tiktok-ads-guide',
+      title: 'Průvodce TikTok reklamami pro rok 2026',
+      excerpt: 'Naučte se efektivně využívat TikTok reklamy pro růst vašeho podnikání.',
+      date: '2026-02-10',
+      category: 'PPC & Reklama',
+      readTime: '7 min',
+      content: `
+## TikTok Ads: Kompletní průvodce pro 2026
+
+TikTok se vyvinul z platformy pro Gen Z na seriózní marketingový kanál. Zde je vše, co potřebujete vědět.
+
+### Proč TikTok v roce 2026 záleží
+
+- 1B+ měsíčně aktivních uživatelů
+- Nejvyšší míra engagement ze všech platforem
+- Spark Ads revoluciizovaly influencer marketing
+
+### Typy kampaní
+
+1. **In-Feed Ads** - Zobrazují se ve For You feedu
+2. **Spark Ads** - Podpora organického obsahu pomocí placené propagace
+3. **TopView** - Prémiové umístění na začátku aplikace
+4. **Brand Takeover** - Celooobrazovkové reklamy při otevření aplikace
+      `,
+    },
+    {
+      slug: 'seo-ai-search',
+      title: 'SEO pro AI vyhledávače: ChatGPT, Perplexity',
+      excerpt: 'Jak optimalizovat váš web pro novou éru AI vyhledávání.',
+      date: '2026-02-05',
+      category: 'SEO',
+      readTime: '6 min',
+      content: `
+## Nová hranice: Optimalizace pro AI vyhledávání
+
+S AI Overviews, ChatGPT a Perplexity se mění způsob, jakým lidé hledají informace. Tradiční SEO se rychle vyvíjí.
+
+### Co je jiné na AI vyhledávání
+
+- Odpovědi jsou generovány, nejen nalezeny
+- Citace a zdroje jsou důležitější než kdy dříve
+- Konverzační dotazy s dlouhým chvostem rostou
+
+### Jak optimalizovat pro AI vyhledávání
+
+1. **Strukturovaná data** - Používejte schema markup pro lepší pochopení AI
+2. **E-E-A-T signály** - Zkušenosti, Odbornost, Autorita, Důvěryhodnost
+3. **Konverzační obsah** - Pište tak, jak lidé skutečně kladou otázky
+4. **Citujte zdroje** - Usnadněte AI odkazovat na váš obsah
+      `,
+    },
+    {
+      slug: 'marketing-automation-roi',
+      title: 'ROI marketingové automatizace: Reálné výsledky',
+      excerpt: 'Případová studie: Jak jsme dosáhli 312% ROI.',
+      date: '2026-01-28',
+      category: 'Případové studie',
+      readTime: '8 min',
+      content: `
+## Případová studie: 312% ROI s marketingovou automatizací
+
+B2B SaaS společnost přišla za námi s problémy s kvalitou leadů a konverzními比率. Zde je náprava.
+
+### Výzva
+
+- Nízká kvalita leadů z inbound marketingu
+- Manuální follow-up proces trvající 48+ hodin
+- 2% konverzní poměr na landing pages
+
+### Naše řešení
+
+1. **Implementovali jsme HubSpot** pro marketingovou automatizaci
+2. **Vytvořili jsme 12 automatizovaných nurture sekvencí**
+3. **Nastavili jsme lead scoring** na základě engagementu
+4. **Integrovali jsme CRM** pro bezproblémové předání prodeji
+      `,
+    },
+    {
+      slug: 'ppc-trends-2026',
+      title: 'PPC trendy, které potřebujete v roce 2026',
+      excerpt: 'Od AI-powered bidingu po cílení s ohledem na soukromí.',
+      date: '2026-01-20',
+      category: 'PPC',
+      readTime: '6 min',
+      content: `
+## PPC v roce 2026: Kompletní průvodce
+
+PPC landscape se dramaticky změnil. Zde je to, co potřebujete vědět, abyste zůstali konkurenceschopní.
+
+### Hlavní trendy
+
+1. **AI-Powered Bidding** - Smart Bidding nyní řídí 80% optimalizace
+2. **Cílení s ohledem na soukromí** - First-party data jsou vaše nejcennější aktivum
+3. **Cross-Platform Attribution** - Sledujte zákazníky napříč Google, Meta, TikTok
+      `,
+    },
+    {
+      slug: 'klaviyo-automation',
+      title: 'Klaviyo automatizace - Best Practices',
+      excerpt: 'Ovládněte Klaviyo automatizační flows pro zvýšení tržeb.',
+      date: '2026-01-15',
+      category: 'E-mail Marketing',
+      readTime: '5 min',
+      content: `
+## Klaviyo automatizace: Průvodce maximálním tržbám
+
+E-mail marketing automatizace je jedna z nejvyšších ROI marketingových aktivit. Zde je jak to rozjet.
+
+### Základní automatizace
+
+1. **Welcome Series** - Nastavte tón pro vztahy se zákazníky
+2. **Browse Abandonment** - Zachyťte zájem než zmizí
+3. **Cart Abandonment** - Obnovte ztracené tržby (průměrná míra obnovy 15%)
+4. **Post-Purchase** - Podněcujte opakované nákupy a recenze
+5. **Win-Back** - Znovu aktivujte neaktivní zákazníky
+      `,
+    },
+  ];
+
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+---
+
+<Layout
+  title={`${post.title} - Blog`}
+  description={post.excerpt}
+>
+  <Header slot="header" />
+
+  <main class="py-16 md:py-24">
+    <article class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-3xl">
+      <!-- Back link -->
+      <a href="/cs/blog" class="inline-flex items-center gap-2 text-primary-600 dark:text-primary-400 mb-8 hover:underline">
+        ← Zpět do Blogu
+      </a>
+
+      <!-- Header -->
+      <header class="mb-12">
+        <div class="flex items-center gap-3 text-sm text-gray-500 dark:text-gray-400 mb-4">
+          <span class="px-3 py-1 rounded-full bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300">
+            {post.category}
+          </span>
+          <span>{post.readTime} čtení</span>
+          <span>·</span>
+          <span>{new Date(post.date).toLocaleDateString('cs-CZ', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+        </div>
+        
+        <h1 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6">
+          {post.title}
+        </h1>
+        
+        <p class="text-xl text-gray-600 dark:text-gray-300">
+          {post.excerpt}
+        </p>
+      </header>
+
+      <!-- Content -->
+      <div class="prose prose-lg dark:prose-invert max-w-none">
+        <Fragment set:html={post.content.replace(/\n/g, '<br/>').replace(/## (.+)/g, '<h2>$1</h2>').replace(/### (.+)/g, '<h3>$1</h3>').replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/\*(.+?)\*/g, '<em>$1</em>').replace(/- (.+)/g, '<li>$1</li>')} />
+      </div>
+
+      <!-- Share -->
+      <div class="mt-12 pt-8 border-t border-gray-200 dark:border-dark-700">
+        <p class="text-gray-600 dark:text-gray-300 mb-4">
+          Sdílet tento článek:
+        </p>
+        <div class="flex gap-4">
+          <a href={`https://www.linkedin.com/sharing/share-offsite/?url=https://marketing.tvoje.info/cs/blog/${post.slug}`} target="_blank" class="btn-secondary px-4 py-2">
+            LinkedIn
+          </a>
+          <a href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=https://marketing.tvoje.info/cs/blog/${post.slug}`} target="_blank" class="btn-secondary px-4 py-2">
+            Twitter
+          </a>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div class="mt-12 p-8 rounded-2xl bg-primary-50 dark:bg-primary-900/20">
+        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">
+          Chcete tyto strategie implementovat?
+        </h3>
+        <p class="text-gray-600 dark:text-gray-300 mb-4">
+          Pojďme prodiskutovat, jak můžeme pomoci vašemu podnikání růst.
+        </p>
+        <a href="/cs#contact" class="btn-primary">
+          Kontaktovat
+        </a>
+      </div>
+    </article>
+  </main>
+
+  <Footer slot="footer" />
+</Layout>

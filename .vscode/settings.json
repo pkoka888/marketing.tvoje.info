@@ -1,0 +1,100 @@
+{
+  // Python Configuration
+  "python.defaultInterpreterPath": "python",
+  "python.analysis.typeCheckingMode": "basic",
+
+  // File Exclusions - Keep .git visible for Git features
+  "files.exclude": {
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true
+  },
+
+  // Search Exclusions
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/bower_components": true,
+    "**/dist": true,
+    "**/.astro": true,
+    "**/.venv": true,
+    "**/__pycache__": true
+  },
+
+  // Editor Settings
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "always",
+    "source.organizeImports": "always"
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "files.eol": "\n",
+
+  // File Associations
+  "files.associations": {
+    "*.md": "markdown",
+    "*.mdx": "markdown",
+    "AGENTS.md": "markdown",
+    "CLAUDE.md": "markdown",
+    "GEMINI.md": "markdown",
+    ".kilocodemodes": "yaml",
+    ".agent/agents.yaml": "yaml",
+    "*.astro": "astro"
+  },
+
+  // Language-specific settings
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.wordWrap": "on"
+  },
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.formatOnSave": true,
+    "editor.tabSize": 4
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[yaml]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.tabSize": 2
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[astro]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  // TypeScript & ESLint
+  "eslint.enable": true,
+  "eslint.validate": ["javascript", "typescript", "typescriptastro"],
+  "typescript.tsdk": "node_modules/typescript/lib",
+
+  // AI Agent Settings (2026)
+  "github.copilot.enable": {
+    "*": true,
+    "yaml": true,
+    "plaintext": false
+  },
+  "github.copilot.editor.enableAutoCompletions": true,
+  "editor.inlineSuggest.enabled": true,
+  "editor.codeLens": true,
+
+  // Kilo Code Mode
+  "kilo.mode": "default",
+
+  // Telemetry - privacy first
+  "telemetry.telemetryLevel": "off"
+}

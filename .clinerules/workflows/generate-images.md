@@ -1,47 +1,40 @@
----
-description: 'How to generate theme-specific image assets'
----
+# Workflow: Generate Image
 
-# 📸 Workflow: Generate Images (Sally)
+Generate images using AI providers via `scripts/generate_images.py`.
 
-This workflow guides the Graphic Designer (Sally) through generating specific assets for the site's theme system.
+## Providers
 
-## 📋 Prerequisites
+| Provider | Model | Cost | Key |
+|----------|-------|------|-----|
+| nvidia | Stable Diffusion XL | Free | `NVIDIA_API_KEY` |
+| openai | DALL-E 3 | Paid | `OPENAI_API_KEY` |
 
-1. Ensure `GEMINI_API_KEY` is available for `gemini-2.5-flash` (Nano Banana).
-2. The `docs/plans/image-generation-prompts-gemini.md` file must exist.
+## Usage
 
-## 🚀 Steps
+```bash
+# Free (default — NVIDIA SDXL)
+python scripts/generate_images.py \
+    --prompt "Marketing infographic for web performance" \
+    --output public/images/infographic.png
 
-### 1. Identify Target Asset
-
-Determine which theme and asset type you are working on:
-
-- **Themes**: TITAN, NOVA, TARGET, SPARK, LUX
-- **Types**: LOGO, PHOTO, HERO
-
-### 2. Fetch Prompt
-
-Read the specialized prompt from [image-generation-prompts-gemini.md](file:///C:/Users/pavel/projects/marketing.tvoje.info/docs/plans/image-generation-prompts-gemini.md).
-
-### 3. Generate Content
-
-// turbo
-Run the generation command (or simulate if using interactive UI):
-
-```powershell
-# Example for logo
-python scripts/generate_images.py --theme [THEME] --type [TYPE]
+# Paid (DALL-E 3)
+python scripts/generate_images.py \
+    --prompt "Hero image for portfolio landing page" \
+    --output public/images/hero.png \
+    --provider openai
 ```
 
-### 4. Verify & Catalog
+## Flags
 
-1. Save output to `public/images/theme/`.
-2. Ensure file naming follows `[type]_[theme].[ext]`.
-3. Update the `IMAGE_INDEX.md` (if applicable) with the new asset metadata.
+| Flag | Required | Default | Description |
+|------|----------|---------|-------------|
+| `--prompt` | Yes | — | Image generation prompt |
+| `--output` | Yes | — | Output file path |
+| `--provider` | No | `nvidia` | `nvidia` or `openai` |
 
-## 🎨 Quality Check
+## Notes
 
-- Does the color palette match the theme in `src/styles/themes.css`?
-- Is the lighting/vibe consistent with the theme description?
-- Is the resolution correct (8K for BG, 4K for Photos)?
+- Output directory is created automatically
+- NVIDIA SDXL generates 1024x1024 images
+- DALL-E 3 generates 1024x1024 standard quality
+- Keys loaded from `.env` in project root

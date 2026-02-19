@@ -1,0 +1,134 @@
+{
+  "version": "1.0.0",
+  "snapshot_date": "2026-02-19T01:04:04Z",
+  "verified_count": 19,
+  "verification_status": "19/19 keys verified",
+  "keys": {
+    "OPENROUTER_API_KEY": {
+      "endpoint": "https://openrouter.ai/api/v1/models",
+      "method": "GET",
+      "auth_type": "bearer",
+      "expected_status": 200,
+      "key_prefix": "sk-or-v1-",
+      "last_verified": "2026-02-19"
+    },
+    "GROQ_API_KEY": {
+      "endpoint": "https://api.groq.com/openai/v1/models",
+      "method": "GET",
+      "auth_type": "bearer",
+      "expected_status": 200,
+      "key_prefix": "gsk_",
+      "last_verified": "2026-02-19"
+    },
+    "GEMINI_API_KEY": {
+      "endpoint": "https://generativelanguage.googleapis.com/v1beta/models",
+      "method": "GET",
+      "auth_type": "param",
+      "param_name": "key",
+      "expected_status": 200,
+      "key_prefix": "AIzaSy",
+      "last_verified": "2026-02-19"
+    },
+    "OPENAI_API_KEY": {
+      "endpoint": "https://api.openai.com/v1/models",
+      "method": "GET",
+      "auth_type": "bearer",
+      "expected_status": 200,
+      "key_prefix": "sk-",
+      "last_verified": "2026-02-19"
+    },
+    "NVIDIA_API_KEY": {
+      "endpoint": "https://integrate.api.nvidia.com/v1/models",
+      "method": "GET",
+      "auth_type": "bearer",
+      "expected_status": 200,
+      "key_prefix": "nvapi-",
+      "last_verified": "2026-02-19"
+    },
+    "KILOCODE_API_KEY": {
+      "purpose": "Kilo Code CLI authentication",
+      "presence_only": true,
+      "key_prefix": "eyJhbGci",
+      "last_verified": "2026-02-19"
+    },
+    "ROUTEWAY_API_KEY": {
+      "endpoint": "https://api.routeway.ai/v1/models",
+      "method": "GET",
+      "auth_type": "bearer",
+      "expected_status": 200,
+      "key_prefix": "rw_",
+      "last_verified": "2026-02-19"
+    },
+    "FIRECRAWL_API_KEY": {
+      "purpose": "Web scraping and data extraction",
+      "presence_only": true,
+      "key_prefix": "fc-",
+      "last_verified": "2026-02-19"
+    },
+    "GITHUB_TOKEN": {
+      "endpoint": "https://api.github.com/user",
+      "method": "GET",
+      "auth_type": "bearer",
+      "expected_status": 200,
+      "key_prefix": "ghp_",
+      "last_verified": "2026-02-19"
+    },
+    "TS_OAUTH_CLIENT_ID": {
+      "purpose": "Tailscale OAuth client ID",
+      "source": "github_secrets",
+      "last_verified": "2026-02-19"
+    },
+    "TS_OAUTH_SECRET": {
+      "purpose": "Tailscale OAuth client secret",
+      "source": "github_secrets",
+      "last_verified": "2026-02-19"
+    },
+    "VPS_IP": {
+      "purpose": "VPS server IP address",
+      "source": "github_secrets",
+      "last_verified": "2026-02-19"
+    },
+    "VPS_USER": {
+      "purpose": "VPS SSH username",
+      "source": "github_secrets",
+      "last_verified": "2026-02-19"
+    },
+    "VPS_SSH_PORT": {
+      "purpose": "VPS SSH port",
+      "source": "github_secrets",
+      "last_verified": "2026-02-19"
+    },
+    "VPS_SSH_KEY": {
+      "purpose": "VPS SSH private key",
+      "source": "github_secrets",
+      "last_verified": "2026-02-19"
+    },
+    "PUBLIC_SITE_URL": {
+      "purpose": "Public site URL for SEO",
+      "presence_only": true,
+      "expected_value": "https://marketing.tvoje.info",
+      "last_verified": "2026-02-19"
+    },
+    "PUBLIC_FORMSPREE_ENDPOINT": {
+      "purpose": "Formspree form endpoint",
+      "presence_only": true,
+      "last_verified": "2026-02-19"
+    },
+    "PUBLIC_PLAUSIBLE_DOMAIN": {
+      "purpose": "Plausible analytics domain",
+      "presence_only": true,
+      "last_verified": "2026-02-19"
+    },
+    "REDIS_PASSWORD": {
+      "purpose": "Redis cache password",
+      "presence_only": true,
+      "last_verified": "2026-02-19"
+    }
+  },
+  "verification_script": {
+    "path": "scripts/verify_api_keys.py",
+    "version": "3",
+    "last_verified": "2026-02-19"
+  },
+  "git_tag": "api-config-v1.0"
+}

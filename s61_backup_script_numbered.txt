@@ -1,0 +1,161 @@
+     1	#!/bin/bash
+     2	#===============================================================================
+     3	# Smart Backup Script for Server61 -> Server60
+     4	# Excludes: img/, cache/, logs/, vendor/
+     5	# Sequential backup: okamih.cz first, then okamih.sk
+     6	# Direct transfer to server60 backup hub
+     7	#===============================================================================
+     8
+     9	set -e
+    10
+    11	# Configuration
+    12	BACKUP_USER="agent"
+    13	BACKUP_DEST_SERVER="192.168.1.60"
+    14	BACKUP_DEST_PATH="/var/backups/server61"
+    15	BACKUP_DATE=$(date +%Y-%m-%d)
+    16	TEMP_BACKUP_DIR="/tmp/backup-${BACKUP_DATE}"
+    17	LOG_FILE="/var/log/smart-backup-server60.log"
+    18
+    19	# MySQL credentials (moved to /root/.my.cnf)
+    20	MY_CNF="/root/.my.cnf"
+    21
+    22	# Logging function
+    23	log() {
+    24	    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1" | tee -a "$LOG_FILE"
+    25	}
+    26
+    27	# Error handling
+    28	error_exit() {
+    29	    log "ERROR: $1"
+    30	    exit 1
+    31	}
+    32
+    33	log "=========================================="
+    34	log "Smart Backup Started"
+    35	log "=========================================="
+    36
+    37	# Check disk space
+    38	DISK_USAGE=$(df / | tail -1 | awk '{print $5}' | sed 's/%//')
+    39	log "Current disk usage: ${DISK_USAGE}%"
+    40
+    41	if [ "$DISK_USAGE" -gt 90 ]; then
+    42	    error_exit "Disk usage is ${DISK_USAGE}% - too high to create backups safely"
+    43	fi
+    44
+    45	# Create temporary backup directory
+    46	mkdir -p "$TEMP_BACKUP_DIR"
+    47	log "Created temporary backup directory: $TEMP_BACKUP_DIR"
+    48
+    49	# ==========================================
+    50	# BACKUP OKAMIH.CZ
+    51	# ==========================================
+    52	log "Starting okamih.cz backup..."
+    53
+    54	# Database backup
+    55	log "  Backing up okamih_shop database..."
+    56	mysqldump --defaults-extra-file="$MY_CNF" okamih_shop 2>/dev/null | \
+    57	    gzip > "$TEMP_BACKUP_DIR/okamih_cz_db.sql.gz" || error_exit "Failed to backup okamih.cz database"
+    58	DB_SIZE=$(du -sh "$TEMP_BACKUP_DIR/okamih_cz_db.sql.gz" | cut -f1)
+    59	log "  Database backup complete: $DB_SIZE"
+    60
+    61	# WWW backup (excluding img/cache)
+    62	log "  Backing up okamih.cz www (excluding img/cache)..."
+    63	tar --exclude='*/img/*' \
+    64	    --exclude='*/images/*' \
+    65	    --exclude='*/cache/*' \
+    66	    --exclude='*/var/cache/*' \
+    67	    --exclude='*/var/logs/*' \
+    68	    --exclude='*/vendor/*' \
+    69	    --exclude='*.log' \
+    70	    -czf "$TEMP_BACKUP_DIR/okamih_cz_www.tar.gz" \
+    71	    -C /var/www/okamih.cz www || error_exit "Failed to backup okamih.cz www"
+    72	WWW_SIZE=$(du -sh "$TEMP_BACKUP_DIR/okamih_cz_www.tar.gz" | cut -f1)
+    73	log "  WWW backup complete: $WWW_SIZE"
+    74
+    75	# Transfer to server60
+    76	log "  Transferring okamih.cz backups to server60..."
+    77	ssh -i /root/.ssh/id_ed25519 -p 20 "$BACKUP_USER@$BACKUP_DEST_SERVER" \
+    78	    "mkdir -p $BACKUP_DEST_PATH/$BACKUP_DATE" || error_exit "Failed to create remote directory"
+    79
+    80	rsync -avz -e "ssh -i /root/.ssh/id_ed25519 -p 20" \
+    81	    "$TEMP_BACKUP_DIR/okamih_cz_"* \
+    82	    "$BACKUP_USER@$BACKUP_DEST_SERVER:$BACKUP_DEST_PATH/$BACKUP_DATE/" || error_exit "Failed to transfer okamih.cz backups"
+    83	log "  Transfer complete"
+    84
+    85	# Remove local copies
+    86	rm -f "$TEMP_BACKUP_DIR/okamih_cz_"*
+    87	log "  Removed local okamih.cz backups"
+    88
+    89	# ==========================================
+    90	# BACKUP OKAMIH.SK
+    91	# ==========================================
+    92	log "Starting okamih.sk backup..."
+    93
+    94	# Database backup
+    95	log "  Backing up okamih_shop_sk database..."
+    96	mysqldump --defaults-extra-file="$MY_CNF" okamih_shop_sk 2>/dev/null | \
+    97	    gzip > "$TEMP_BACKUP_DIR/okamih_sk_db.sql.gz" || error_exit "Failed to backup okamih.sk database"
+    98	DB_SIZE=$(du -sh "$TEMP_BACKUP_DIR/okamih_sk_db.sql.gz" | cut -f1)
+    99	log "  Database backup complete: $DB_SIZE"
+   100
+   101	# WWW backup (excluding img/cache)
+   102	log "  Backing up okamih.sk www (excluding img/cache)..."
+   103	tar --exclude='*/img/*' \
+   104	    --exclude='*/images/*' \
+   105	    --exclude='*/cache/*' \
+   106	    --exclude='*/var/cache/*' \
+   107	    --exclude='*/var/logs/*' \
+   108	    --exclude='*/vendor/*' \
+   109	    --exclude='*.log' \
+   110	    -czf "$TEMP_BACKUP_DIR/okamih_sk_www.tar.gz" \
+   111	    -C /var/www/okamih.sk www || error_exit "Failed to backup okamih.sk www"
+   112	WWW_SIZE=$(du -sh "$TEMP_BACKUP_DIR/okamih_sk_www.tar.gz" | cut -f1)
+   113	log "  WWW backup complete: $WWW_SIZE"
+   114
+   115	# Transfer to server60
+   116	log "  Transferring okamih.sk backups to server60..."
+   117	rsync -avz -e "ssh -i /root/.ssh/id_ed25519 -p 20" \
+   118	    "$TEMP_BACKUP_DIR/okamih_sk_"* \
+   119	    "$BACKUP_USER@$BACKUP_DEST_SERVER:$BACKUP_DEST_PATH/$BACKUP_DATE/" || error_exit "Failed to transfer okamih.sk backups"
+   120	log "  Transfer complete"
+   121
+   122	# Remove local copies
+   123	rm -f "$TEMP_BACKUP_DIR/okamih_sk_"*
+   124	log "  Removed local okamih.sk backups"
+   125
+   126	# ==========================================
+   127	# BACKUP NGINX CONFIGS
+   128	# ==========================================
+   129	log "Backing up nginx configurations..."
+   130	tar -czf "$TEMP_BACKUP_DIR/nginx_configs.tar.gz" \
+   131	    -C /etc nginx/sites-available nginx/sites-enabled nginx/nginx.conf || error_exit "Failed to backup nginx configs"
+   132	NGINX_SIZE=$(du -sh "$TEMP_BACKUP_DIR/nginx_configs.tar.gz" | cut -f1)
+   133	log "  Nginx backup complete: $NGINX_SIZE"
+   134
+   135	# Transfer to server60
+   136	rsync -avz -e "ssh -i /root/.ssh/id_ed25519 -p 20" \
+   137	    "$TEMP_BACKUP_DIR/nginx_configs.tar.gz" \
+   138	    "$BACKUP_USER@$BACKUP_DEST_SERVER:$BACKUP_DEST_PATH/$BACKUP_DATE/" || error_exit "Failed transfer nginx configs"
+   139	log "  Transfer complete"
+   140
+   141	# Remove local copy
+   142	rm -f "$TEMP_BACKUP_DIR/nginx_configs.tar.gz"
+   143
+   144	# ==========================================
+   145	# CLEANUP
+   146	# ==========================================
+   147	log "Cleaning up..."
+   148	rmdir "$TEMP_BACKUP_DIR" 2>/dev/null || true
+   149
+   150	# Create completion marker on server60
+   151	ssh -i /root/.ssh/id_ed25519 -¤ 20 "$BACKUP_USER@$BACKUP_DEST_SERVER" \
+   152	    "echo 'Backup completed: $(date --iso-8601=seconds)' > $BACKUP_DEST_PATH/$BACKUP_DATE/BACKUP_COMPLETE"
+   153
+   154	# Final disk usage
+   155	FINAL_DISK_USAGE=$(df / | tail -1 | awk '{print $5}' | sed 's/%//')
+   156	log "Final disk usage: ${FINAL_DISK_USAGE}%"
+   157
+   158	log "=========================================="
+   159	log "âœ… Backup Completed Successfully"
+   160	log "Destination: $BACKUP_USER@$BACKUP_DEST_SERVER:$BACKUP_DEST_PATH/$BACKUP_DATE/"
+   161	log "=========================================="

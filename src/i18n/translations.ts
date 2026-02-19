@@ -125,8 +125,9 @@ export const translations: Record<Language, Translations> = {
       contact: 'Contact',
     },
     hero: {
-      title: 'Marketing & Growth Specialist',
-      subtitle: 'Building scalable growth strategies with automation and data-driven marketing',
+      title: 'Growth That Scales',
+      subtitle:
+        'AI-powered marketing strategies that turn visitors into customers. Data-driven campaigns with measurable ROI.',
       cta: 'View Projects',
       secondaryCta: 'Get in Touch',
     },
@@ -153,38 +154,53 @@ export const translations: Record<Language, Translations> = {
     services: {
       title: 'Services',
       subtitle: 'How I can help your business grow',
-      strategy: {
+      aiCampaigns: {
+        title: 'AI Campaign Optimization',
+        description:
+          'Precision targeting with AI that learns and improves. Smart bidding, automated A/B testing, and real-time optimization.',
+        items: [
+          'AI-powered bidding strategies',
+          'Cross-platform campaign management',
+          'Automated A/B testing at scale',
+          'Real-time performance optimization',
+        ],
+        result: '+40% ROAS typical',
+      },
+      tiktokAds: {
+        title: 'TikTok & Short-Form Ads',
+        description:
+          'Tap into the fastest-growing marketing channel. Spark Ads, creator partnerships, and viral content strategies.',
+        items: [
+          'Spark Ads campaigns',
+          'Creator collaboration',
+          'Viral content strategy',
+          'Short-form video production',
+        ],
+        result: '3x reach vs traditional',
+      },
+      automation: {
         title: 'Marketing Automation',
-        description: 'Transform your customer journey with modern growth automation practices',
+        description:
+          'Turn visitors into customers with automated funnels that work 24/7. Lead nurturing, behavior triggers, and CRM integration.',
         items: [
-          'Growth strategy development',
-          'Marketing funnel optimization',
-          'Lead generation campaigns',
-          'Email marketing automation',
-          'CRM integration',
+          'Lead scoring & nurturing',
+          'Behavior-triggered campaigns',
+          'CRM integration (HubSpot, Klaviyo)',
+          'Multi-channel orchestration',
         ],
+        result: '50% more qualified leads',
       },
-      campaigns: {
-        title: 'AI & Machine Learning',
-        description: 'Leverage the power of artificial intelligence for your business',
+      aiSearch: {
+        title: 'AI Search Optimization',
+        description:
+          'Optimize for the new frontier of search. Rank in ChatGPT, Perplexity, and AI Answer Engines.',
         items: [
-          'AI solution integration',
-          'Machine learning pipelines',
-          'Natural language processing',
-          'Computer vision applications',
-          'AI-powered automation',
+          'AI Overview optimization',
+          'Structured data for AI',
+          'Content for LLM training',
+          'Answer Engine positioning',
         ],
-      },
-      consulting: {
-        title: 'Technical Consulting',
-        description: 'Strategic guidance for your technical initiatives',
-        items: [
-          'Technology strategy',
-          'Team augmentation',
-          'Code review & optimization',
-          'Best practices implementation',
-          'Technical debt assessment',
-        ],
+        result: 'Top 3 AI results',
       },
     },
     testimonials: {
@@ -259,8 +275,9 @@ export const translations: Record<Language, Translations> = {
       contact: 'Kontakt',
     },
     hero: {
-      title: 'Marketingový a růstový specialista',
-      subtitle: 'Buduji škálovatelné růstové strategie s automatizací a datově řízeným marketingem',
+      title: 'Růst, který funguje',
+      subtitle:
+        'AI marketingové strategie, které proměňují návštěvníky v zákazníky. Datově řízené kampaně s měřitelným ROI.',
       cta: 'Zobrazit projekty',
       secondaryCta: 'Kontaktovat',
     },
@@ -287,39 +304,53 @@ export const translations: Record<Language, Translations> = {
     services: {
       title: 'Služby',
       subtitle: 'Jak mohu pomoci vašemu podnikání růst',
-      strategy: {
+      aiCampaigns: {
+        title: 'AI optimalizace kampaní',
+        description:
+          'Precizní cílení s AI, která se učí a zlepšuje. Chytrý bidding, automatizované testování a optimalizace v reálném čase.',
+        items: [
+          'AI strategie bidování',
+          'Správa kampaní napříč platformami',
+          'Automatizované A/B testování',
+          'Optimalizace v reálném čase',
+        ],
+        result: '+40% ROAS typicky',
+      },
+      tiktokAds: {
+        title: 'TikTok & krátká videa',
+        description:
+          'Využijte nejrychleji rostoucí marketingový kanál. Spark Ads, spolupráce s tvůrci a virální strategie.',
+        items: [
+          'Spark Ads kampaně',
+          'Spolupráce s influencery',
+          'Virální content strategie',
+          'Produkce krátkých videí',
+        ],
+        result: '3x dosah vs tradiční',
+      },
+      automation: {
         title: 'Marketingová automatizace',
         description:
-          'Transformujte svou zákaznickou cestu pomocí moderních postupů růstové automatizace',
+          'Proměňte návštěvníky v zákazníky s automatizovanými funnely, které fungují 24/7. Lead nurturing, behaviorální triggery a CRM integrace.',
         items: [
-          'Vývoj růstové strategie',
-          'Optimalizace marketingových funnelů',
-          'Kampaně na generování leadů',
-          'Automatizace e-mailového marketingu',
-          'Integrace CRM',
+          'Scoring a nurturing leadů',
+          'Kampaně na základě chování',
+          'CRM integrace (HubSpot, Klaviyo)',
+          'Orchestrace napříč kanály',
         ],
+        result: '50% více kvalifikovaných leadů',
       },
-      campaigns: {
-        title: 'AI & Strojové učení',
-        description: 'Využijte sílu umělé inteligence pro váš podnik',
+      aiSearch: {
+        title: 'AI vyhledávání SEO',
+        description:
+          'Optimalizujte pro novou éru vyhledávání. Pozice v ChatGPT, Perplexity a AI odpovědních enginech.',
         items: [
-          'Integrace AI řešení',
-          'Strojové učení pipeline',
-          'Zpracování přirozeného jazyka',
-          'Počítačové vidění aplikace',
-          'AI poháněná automatizace',
+          'Optimalizace pro AI Overview',
+          'Strukturovaná data pro AI',
+          'Content pro LLM modely',
+          'Pozicování v AI odpovědích',
         ],
-      },
-      consulting: {
-        title: 'Technické konzultace',
-        description: 'Strategické vedení pro vaše technické iniciativy',
-        items: [
-          'Technologická strategie',
-          'Augmentace týmu',
-          'Revize a optimalizace kódu',
-          'Implementace best practices',
-          'Hodnocení technického dluhu',
-        ],
+        result: 'Top 3 v AI výsledcích',
       },
     },
     testimonials: {

@@ -1,0 +1,110 @@
+---
+import type { Language } from '../../i18n/translations';
+import { getLangFromUrl } from '../../i18n/translations';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang: propLang } = Astro.props;
+const lang = propLang || getLangFromUrl(Astro.url);
+
+const platforms = [
+  { name: 'Google Ads', icon: '🔍', category: 'ads' },
+  { name: 'Meta Ads', icon: '📘', category: 'ads' },
+  { name: 'TikTok Ads', icon: '🎵', category: 'ads' },
+  { name: 'LinkedIn', icon: '💼', category: 'ads' },
+  { name: 'HubSpot', icon: '🟠', category: 'crm' },
+  { name: 'Klaviyo', icon: '📧', category: 'crm' },
+  { name: 'Mailchimp', icon: '📨', category: 'crm' },
+  { name: 'ChatGPT', icon: '🤖', category: 'ai' },
+  { name: 'Claude', icon: '🧠', category: 'ai' },
+  { name: 'Shopify', icon: '🛒', category: 'ecom' },
+  { name: 'WordPress', icon: '⚡', category: 'cms' },
+  { name: 'GA4', icon: '📊', category: 'analytics' },
+];
+
+const categories = lang === 'cs' ? {
+  ads: 'Reklamní platformy',
+  crm: 'CRM & Automatizace',
+  ai: 'AI Nástroje',
+  ecom: 'E-commerce',
+  cms: 'CMS',
+  analytics: 'Analytika',
+} : {
+  ads: 'Ad Platforms',
+  crm: 'CRM & Automation',
+  ai: 'AI Tools',
+  ecom: 'E-commerce',
+  cms: 'CMS',
+  analytics: 'Analytics',
+};
+---
+
+<section id="platforms" class="section bg-gray-50 dark:bg-dark-800">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Section Header -->
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+        {lang === 'cs' ? 'Nástroje a platformy' : 'Tools & Platforms'}
+      </h2>
+      <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+        {lang === 'cs' 
+          ? 'Pracujeme s nejlepšími nástroji pro maximální výsledky.'
+          : 'We work with the best tools for maximum results.'}
+      </p>
+    </div>
+
+    <!-- Platforms Grid -->
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+      {platforms.map((platform, index) => (
+        <div 
+          class="platform-card group flex flex-col items-center justify-center p-4 rounded-xl bg-white dark:bg-dark-700 border border-gray-200 dark:border-dark-600 hover:border-primary-500 dark:hover:border-primary-400 transition-all duration-300 hover:shadow-lg hover:shadow-primary-500/10"
+          data-aos="fade-up"
+          data-aos-delay={index * 50}
+        >
+          <span class="text-3xl mb-2 transform group-hover:scale-110 transition-transform duration-300">
+            {platform.icon}
+          </span>
+          <span class="text-sm font-medium text-gray-700 dark:text-gray-300">
+            {platform.name}
+          </span>
+        </div>
+      ))}
+    </div>
+
+    <!-- Stats -->
+    <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-6">
+      <div class="text-center">
+        <div class="text-3xl font-bold text-primary-600 dark:text-primary-400">12+</div>
+        <div class="text-sm text-gray-600 dark:text-gray-400">
+          {lang === 'cs' ? 'Platform' : 'Platforms'}
+        </div>
+      </div>
+      <div class="text-center">
+        <div class="text-3xl font-bold text-primary-600 dark:text-primary-400">5+</div>
+        <div class="text-sm text-gray-600 dark:text-gray-400">
+          {lang === 'cs' ? 'Let zkušeností' : 'Years Experience'}
+        </div>
+      </div>
+      <div class="text-center">
+        <div class="text-3xl font-bold text-primary-600 dark:text-primary-400">50+</div>
+        <div class="text-sm text-gray-600 dark:text-gray-400">
+          {lang === 'cs' ? 'Projektů' : 'Projects'}
+        </div>
+      </div>
+      <div class="text-center">
+        <div class="text-3xl font-bold text-primary-600 dark:text-primary-400">99%</div>
+        <div class="text-sm text-gray-600 dark:text-gray-400">
+          {lang === 'cs' ? 'Úspěšnost' : 'Success Rate'}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .platform-card {
+    min-height: 100px;
+  }
+</style>

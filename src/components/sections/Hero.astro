@@ -48,21 +48,16 @@ const t = translations[lang];
       </div>
 
       <!-- Title -->
-      <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 animate-slide-up">
+      <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 hero-title">
         <span class="block text-gray-900 dark:text-white">
           {t.hero.title}
         </span>
-        <span class="block gradient-text mt-2">
-          {lang === 'cs' ? 'pro moderní firmy' : 'for modern businesses'}
+        <span class="block gradient-text-animated mt-2 bg-gradient-to-r from-primary-500 via-accent-500 to-primary-500">
+          {t.hero.subtitle}
         </span>
       </h1>
 
-      <!-- Subtitle -->
-      <p
-        class="text-lg sm:text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-10 max-w-2xl mx-auto animate-slide-up animate-delay-100"
-      >
-        {t.hero.subtitle}
-      </p>
+      <!-- Subtitle moved to title above for animation -->
 
       <!-- CTA Buttons -->
       <div
@@ -70,7 +65,7 @@ const t = translations[lang];
       >
         <a
           href={lang === 'cs' ? '/cs/projects' : '/projects'}
-          class="btn-primary text-base px-8 py-4"
+          class="btn-primary text-base px-8 py-4 glow-primary"
         >
           <svg
             class="w-5 h-5 mr-2"
@@ -113,25 +108,19 @@ const t = translations[lang];
       <!-- Stats / Trust indicators -->
       <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 animate-fade-in animate-delay-300">
         <div class="text-center">
-          <div class="text-3xl md:text-4xl font-bold text-primary-600 dark:text-primary-400">
-            5+
-          </div>
+          <div class="counter text-3xl md:text-4xl font-bold text-primary-600 dark:text-primary-400" data-target="5">5+</div>
           <div class="text-sm text-gray-600 dark:text-gray-400 mt-1">
             {lang === 'cs' ? 'Let zkušeností' : 'Years experience'}
           </div>
         </div>
         <div class="text-center">
-          <div class="text-3xl md:text-4xl font-bold text-primary-600 dark:text-primary-400">
-            50+
-          </div>
+          <div class="counter text-3xl md:text-4xl font-bold text-primary-600 dark:text-primary-400" data-target="50">50+</div>
           <div class="text-sm text-gray-600 dark:text-gray-400 mt-1">
             {lang === 'cs' ? 'Dokončených projektů' : 'Projects completed'}
           </div>
         </div>
         <div class="text-center">
-          <div class="text-3xl md:text-4xl font-bold text-primary-600 dark:text-primary-400">
-            30+
-          </div>
+          <div class="counter text-3xl md:text-4xl font-bold text-primary-600 dark:text-primary-400" data-target="30">30+</div>
           <div class="text-sm text-gray-600 dark:text-gray-400 mt-1">
             {lang === 'cs' ? 'Spokojených klientů' : 'Happy clients'}
           </div>
@@ -167,3 +156,40 @@ const t = translations[lang];
     </a>
   </div>
 </section>
+
+<script is:inline>
+  // Counter animation on scroll
+  const observerOptions = {
+    threshold: 0.5,
+    rootMargin: '0px'
+  };
+
+  const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const counters = entry.target.querySelectorAll('.counter');
+        counters.forEach(counter => {
+          const target = parseInt(counter.getAttribute('data-target')) || 0;
+          const suffix = counter.textContent.replace(/[0-9]/g, '');
+          let current = 0;
+          const increment = target / 30;
+          const timer = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+              counter.textContent = target + suffix;
+              clearInterval(timer);
+            } else {
+              counter.textContent = Math.floor(current) + suffix;
+            }
+          }, 50);
+        });
+        counterObserver.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  const heroSection = document.querySelector('.min-h-screen');
+  if (heroSection) {
+    counterObserver.observe(heroSection);
+  }
+</script>
