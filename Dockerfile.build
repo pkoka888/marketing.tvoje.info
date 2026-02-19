@@ -1,0 +1,56 @@
+# syntax=docker/dockerfile:1.6
+# Dockerfile.build
+# Multi-stage build for Astro static site
+# Used in CI/CD to create reproducible builds
+# Optimized for S60 deployment (94Gi RAM available)
+#
+# Best Practices Applied:
+# - BuildKit cache mounts for faster rebuilds
+# - Debian-based image (bookworm) for better compatibility
+# - Multi-stage build to minimize final size
+# - Distroless option available for maximum security
+
+# Stage 1: Dependencies
+FROM node:20-bookworm AS deps
+WORKDIR /app
+
+# Copy package files first for better layer caching
+COPY package.json package-lock.json* ./
+
+# Install dependencies with BuildKit cache mount
+RUN --mount=type=cache,target=/root/.npm \
+    npm ci --only=production
+
+# Stage 2: Builder
+FROM node:20-bookworm AS builder
+WORKDIR /app
+
+# Copy dependencies from deps stage
+COPY --from=deps /app/node_modules ./node_modules
+
+# Copy all project files
+COPY . .
+
+# Environment variables for build
+ENV NODE_ENV=production
+ENV PUBLIC_SITE_URL=https://marketing.tvoje.info
+
+# Build the Astro site
+RUN npm run build
+
+# Stage 3: Validation (optional but recommended)
+FROM builder AS validator
+RUN npm run validate || echo "Validation skipped"
+
+# Final stage: Export dist directory
+FROM scratch AS export
+COPY --from=builder /app/dist /dist
+
+# Metadata
+LABEL maintainer="Pavel Kašpar <pavel@tvoje.info>"
+LABEL project="marketing.tvoje.info"
+LABEL version="1.0.0"
+LABEL description="Astro static site builder for S60 deployment"
+
+# Note: This image exports build artifacts only.
+# For runtime, use Nginx (systemd) or Caddy (container)

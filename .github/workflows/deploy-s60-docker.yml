@@ -1,0 +1,136 @@
+name: Deploy to S60 (Docker)
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build Astro Site
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        run: npm run build
+        env:
+          PUBLIC_SITE_URL: https://marketing.tvoje.info
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-output
+          path: dist/
+          retention-days: 1
+
+  deploy:
+    name: Deploy to S60
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: dist-output
+          path: dist/
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.S60_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          cat >> ~/.ssh/config << EOF
+          Host s60
+            HostName ${{ secrets.S60_HOST }}
+            Port ${{ secrets.S60_PORT }}
+            User ${{ secrets.S60_USER }}
+            IdentityFile ~/.ssh/id_rsa
+            StrictHostKeyChecking no
+          EOF
+
+      - name: Create remote directory
+        run: |
+          ssh s60 "mkdir -p /opt/marketing-docker/dist"
+
+      - name: Copy Docker files
+        run: |
+          scp -r docker-compose.prod.yml Dockerfile.build docker/ s60:/opt/marketing-docker/
+
+      - name: Copy dist files
+        run: |
+          scp -r dist/* s60:/opt/marketing-docker/dist/
+
+      - name: Create environment file
+        run: |
+          ssh s60 "cat > /opt/marketing-docker/.env << 'EOF'
+          PROJECT_NAME=marketing-tvoje-info
+          PUBLIC_SITE_URL=https://marketing.tvoje.info
+          REDIS_PASSWORD=${{ secrets.REDIS_PASSWORD }}
+          JWT_SECRET=${{ secrets.JWT_SECRET }}
+          GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
+          FIRECRAWL_API_KEY=${{ secrets.FIRECRAWL_API_KEY }}
+          EOF"
+
+      - name: Deploy Docker stack
+        run: |
+          ssh s60 << 'DEPLOY'
+          set -e
+          cd /opt/marketing-docker
+
+          echo "[1/4] Pulling latest images..."
+          docker-compose -f docker-compose.prod.yml pull
+
+          echo "[2/4] Starting Redis and MCP Gateway..."
+          docker-compose -f docker-compose.prod.yml up -d redis mcp-gateway
+
+          echo "[3/4] Waiting for services..."
+          sleep 10
+
+          echo "[4/4] Checking service health..."
+          docker-compose -f docker-compose.prod.yml ps
+          DEPLOY
+
+      - name: Update Nginx
+        run: |
+          ssh s60 << 'NGINX'
+          set -e
+
+          echo "Updating Nginx webroot..."
+          sudo rsync -av --delete /opt/marketing-docker/dist/ /var/www/portfolio/
+
+          echo "Reloading Nginx..."
+          sudo nginx -t && sudo nginx -s reload
+
+          echo "Nginx updated successfully"
+          NGINX
+
+      - name: Verify deployment
+        run: |
+          sleep 5
+
+          echo "Checking Redis..."
+          ssh s60 "docker exec marketing-redis redis-cli -a ${{ secrets.REDIS_PASSWORD }} ping" || echo "Redis check skipped"
+
+          echo "Checking MCP Gateway..."
+          ssh s60 "curl -s http://localhost:3000/health || echo 'MCP Gateway health check endpoint not responding'"
+
+          echo "Checking website..."
+          curl -s -o /dev/null -w "%{http_code}" https://marketing.tvoje.info || echo "Website check skipped"
+
+      - name: Cleanup
+        if: always()
+        run: rm -rf ~/.ssh/id_rsa

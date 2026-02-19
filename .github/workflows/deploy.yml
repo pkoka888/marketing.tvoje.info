@@ -30,8 +30,8 @@ jobs:
       - name: Deploy to s60 via Public IP
         uses: appleboy/ssh-action@v1
         with:
-          host: 89.203.173.196
-          port: 2260
+          host: ${{ secrets.VPS_HOST }}
+          port: ${{ secrets.VPS_PORT }}
           username: sugent
           key: ${{ secrets.VPS_SSH_KEY }}
           timeout: 60s
@@ -44,8 +44,8 @@ jobs:
       - name: Copy dist to s60
         uses: appleboy/scp-action@v0.1.7
         with:
-          host: 89.203.173.196
-          port: 2260
+          host: ${{ secrets.VPS_HOST }}
+          port: ${{ secrets.VPS_PORT }}
           username: sugent
           key: ${{ secrets.VPS_SSH_KEY }}
           source: 'dist/'
@@ -56,20 +56,20 @@ jobs:
       - name: Deploy from s60 to s62
         uses: appleboy/ssh-action@v1
         with:
-          host: 89.203.173.196
-          port: 2260
+          host: ${{ secrets.VPS_HOST }}
+          port: ${{ secrets.VPS_PORT }}
           username: sugent
           key: ${{ secrets.VPS_SSH_KEY }}
           timeout: 60s
           command_timeout: 5m
           script: |
             # Fix permissions for deployment
-            ssh sugent@192.168.1.62 -p 2262 'sudo chown -R sugent:www-data /var/www/projects/marketing.tvoje.info/'
+            ssh sugent@${{ secrets.INTERNAL_HOST }} -p ${{ secrets.INTERNAL_PORT }} 'sudo chown -R sugent:www-data /var/www/projects/marketing.tvoje.info/'
             # Deploy files
-            scp -r -o StrictHostKeyChecking=no -P 2262 /tmp/portfolio-deploy/* sugent@192.168.1.62:/var/www/projects/marketing.tvoje.info/
+            scp -r -o StrictHostKeyChecking=no -P ${{ secrets.INTERNAL_PORT }} /tmp/portfolio-deploy/* sugent@${{ secrets.INTERNAL_HOST }}:/var/www/projects/marketing.tvoje.info/
             # Reload nginx to pick up new files
-            ssh sugent@192.168.1.62 -p 2262 'sudo systemctl reload nginx'
-            ssh sugent@192.168.1.62 -p 2262 "ls -la /var/www/projects/marketing.tvoje.info/ | head -10"
+            ssh sugent@${{ secrets.INTERNAL_HOST }} -p ${{ secrets.INTERNAL_PORT }} 'sudo systemctl reload nginx'
+            ssh sugent@${{ secrets.INTERNAL_HOST }} -p ${{ secrets.INTERNAL_PORT }} "ls -la /var/www/projects/marketing.tvoje.info/ | head -10"
 
   verify-deployment:
     needs: build-and-deploy

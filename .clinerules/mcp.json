@@ -3,29 +3,29 @@
     "redis": {
       "command": "node",
       "args": [
-        "/c/Users/pavel/projects/marketing.tvoje.info/.kilocode/mcp-servers/mcp-wrapper.js",
+        "./.kilocode/mcp-servers/mcp-wrapper.js",
         "redis"
       ]
     },
     "filesystem-projects": {
       "command": "node",
       "args": [
-        "/c/nvm4w/nodejs/node_modules/@modelcontextprotocol/server-filesystem/dist/index.js",
-        "/c/Users/pavel/projects"
+        "C:/nvm4w/nodejs/node_modules/@modelcontextprotocol/server-filesystem/dist/index.js",
+        "C:/Users/pavel/projects"
       ]
     },
     "memory": {
       "command": "node",
-      "args": ["/c/nvm4w/nodejs/node_modules/@modelcontextprotocol/server-memory/dist/index.js"]
+      "args": ["C:/nvm4w/nodejs/node_modules/@modelcontextprotocol/server-memory/dist/index.js"]
     },
     "git": {
       "command": "node",
-      "args": ["/c/nvm4w/nodejs/node_modules/git-mcp/dist/index.js"]
+      "args": ["C:/nvm4w/nodejs/node_modules/git-mcp/dist/index.js"]
     },
     "github": {
       "command": "node",
       "args": [
-        "/c/Users/pavel/projects/marketing.tvoje.info/.kilocode/mcp-servers/mcp-wrapper.js",
+        "./.kilocode/mcp-servers/mcp-wrapper.js",
         "github"
       ]
     },
@@ -36,13 +36,13 @@
     "firecrawl-local": {
       "command": "node",
       "args": [
-        "/c/Users/pavel/projects/marketing.tvoje.info/.kilocode/mcp-servers/mcp-wrapper.js",
+        "./.kilocode/mcp-servers/mcp-wrapper.js",
         "firecrawl"
       ]
     },
     "playwright-mcp": {
       "command": "node",
-      "args": ["/c/nvm4w/nodejs/node_modules/@playwright/mcp/cli.js"]
+      "args": ["C:/nvm4w/nodejs/node_modules/@playwright/mcp/cli.js"]
     }
   }
 }

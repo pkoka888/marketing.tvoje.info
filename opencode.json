@@ -70,8 +70,8 @@
       "type": "local",
       "command": [
         "node",
-        "/c/nvm4w/nodejs/node_modules/@modelcontextprotocol/server-filesystem/dist/index.js",
-        "/c/Users/pavel/projects"
+        "C:/nvm4w/nodejs/node_modules/@modelcontextprotocol/server-filesystem/dist/index.js",
+        "C:/Users/pavel/projects"
       ],
       "environment": {}
     },
@@ -79,13 +79,13 @@
       "type": "local",
       "command": [
         "node",
-        "/c/nvm4w/nodejs/node_modules/@modelcontextprotocol/server-memory/dist/index.js"
+        "C:/nvm4w/nodejs/node_modules/@modelcontextprotocol/server-memory/dist/index.js"
       ],
       "environment": {}
     },
     "git": {
       "type": "local",
-      "command": ["node", "/c/nvm4w/nodejs/node_modules/git-mcp/dist/index.js"],
+      "command": ["node", "C:/nvm4w/nodejs/node_modules/git-mcp/dist/index.js"],
       "environment": {}
     },
     "fetch": {
@@ -97,31 +97,33 @@
       "type": "local",
       "command": [
         "node",
-        "/c/Users/pavel/projects/marketing.tvoje.info/.kilocode/mcp-servers/redis-server.js"
+        "./.kilocode/mcp-servers/mcp-wrapper.js",
+        "redis"
       ],
-      "environment": {
-        "PROJECT_NAME": "marketing-tvoje-info",
-        "REDIS_PASSWORD": "${REDIS_PASSWORD}"
-      }
+      "environment": {}
     },
     "bmad-mcp": {
       "type": "local",
-      "command": ["node", "/c/nvm4w/nodejs/node_modules/bmad-mcp/dist/index.js"],
+      "command": ["node", "C:/nvm4w/nodejs/node_modules/bmad-mcp/dist/index.js"],
       "environment": {
         "PROJECT_ROOT": "."
       }
     },
     "github": {
       "type": "local",
-      "command": ["npx", "-y", "@modelcontextprotocol/server-github"],
+      "command": [
+        "node",
+        "./.kilocode/mcp-servers/mcp-wrapper.js",
+        "github"
+      ],
       "environment": {}
     },
     "filesystem-agentic": {
       "type": "local",
       "command": [
         "node",
-        "/c/nvm4w/nodejs/node_modules/@modelcontextprotocol/server-filesystem/dist/index.js",
-        "/c/Users/pavel/vscodeportable"
+        "C:/nvm4w/nodejs/node_modules/@modelcontextprotocol/server-filesystem/dist/index.js",
+        "C:/Users/pavel/vscodeportable"
       ],
       "environment": {}
     },
@@ -129,15 +131,14 @@
       "type": "local",
       "command": [
         "node",
-        "/c/Users/pavel/projects/marketing.tvoje.info/.kilocode/mcp-libs/firecrawl-fresh/node_modules/firecrawl-mcp/dist/index.js"
+        "./.kilocode/mcp-servers/mcp-wrapper.js",
+        "firecrawl"
       ],
-      "environment": {
-        "FIRECRAWL_API_KEY": "{env:FIRECRAWL_API_KEY}"
-      }
+      "environment": {}
     },
     "playwright-mcp": {
       "type": "local",
-      "command": ["node", "/c/nvm4w/nodejs/node_modules/@playwright/mcp/cli.js"],
+      "command": ["node", "C:/nvm4w/nodejs/node_modules/@playwright/mcp/cli.js"],
       "environment": {}
     }
   },

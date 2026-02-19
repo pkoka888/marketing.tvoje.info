@@ -1,0 +1,194 @@
+# MCP Gateway Configuration
+# Configures the MCP Gateway for managing containerized MCP servers
+# Place at: docker/mcp/gateway-config.yml
+
+# Gateway Settings
+gateway:
+  port: 3000
+  host: '0.0.0.0'
+  log_level: 'info'
+
+  # Security Settings
+  security:
+    # Require authentication for MCP requests
+    auth_enabled: true
+    # Secret for signing tokens (use strong secret in production)
+    jwt_secret: '${JWT_SECRET}'
+    # Token expiration (in seconds)
+    token_expiry: 3600
+
+  # Rate Limiting
+  rate_limit:
+    enabled: true
+    requests_per_minute: 60
+    burst_size: 10
+
+  # CORS Settings
+  cors:
+    enabled: true
+    allowed_origins:
+      - 'https://marketing.tvoje.info'
+      - 'https://portfolio.tvoje.info'
+    allowed_methods:
+      - 'GET'
+      - 'POST'
+      - 'OPTIONS'
+    allowed_headers:
+      - 'Content-Type'
+      - 'Authorization'
+      - 'X-Request-ID'
+
+# MCP Server Definitions
+servers:
+  # Filesystem MCP Server
+  filesystem:
+    enabled: true
+    image: mcp/filesystem:latest
+    transport: stdio
+    config:
+      allowed_paths:
+        - '/projects'
+        - '/app/dist'
+    resources:
+      memory: '128m'
+      cpus: '0.5'
+    security:
+      read_only: true
+      no_new_privileges: true
+
+  # Memory MCP Server
+  memory:
+    enabled: true
+    image: mcp/memory:latest
+    transport: stdio
+    config:
+      redis_url: 'redis://:${REDIS_PASSWORD}@redis:6379'
+      namespace: 'mcp_memory'
+    resources:
+      memory: '64m'
+      cpus: '0.25'
+
+  # Git MCP Server
+  git:
+    enabled: true
+    image: mcp/git:latest
+    transport: stdio
+    config:
+      allowed_repos:
+        - 'github.com/pkoka888/marketing.tvoje.info'
+    resources:
+      memory: '64m'
+      cpus: '0.25'
+    volumes:
+      - '/home/admin/.ssh:/root/.ssh:ro'
+
+  # GitHub MCP Server
+  github:
+    enabled: true
+    image: mcp/github:latest
+    transport: stdio
+    config:
+      token: '${GITHUB_TOKEN}'
+    resources:
+      memory: '64m'
+      cpus: '0.25'
+    secrets:
+      - GITHUB_TOKEN
+
+  # Redis MCP Server
+  redis:
+    enabled: true
+    image: mcp/redis:latest
+    transport: stdio
+    config:
+      url: 'redis://:${REDIS_PASSWORD}@redis:6379'
+      project_name: '${PROJECT_NAME}'
+    resources:
+      memory: '64m'
+      cpus: '0.25'
+    secrets:
+      - REDIS_PASSWORD
+
+  # Fetch MCP Server
+  fetch:
+    enabled: true
+    image: mcp/fetch:latest
+    transport: stdio
+    config:
+      timeout: 30
+      max_content_length: 1000000
+      allowed_domains:
+        - '*.github.com'
+        - '*.npmjs.com'
+        - '*.astro.build'
+    resources:
+      memory: '64m'
+      cpus: '0.25'
+
+  # Firecrawl MCP Server
+  firecrawl:
+    enabled: true
+    image: mcp/firecrawl:latest
+    transport: stdio
+    config:
+      api_key: '${FIRECRAWL_API_KEY}'
+    resources:
+      memory: '128m'
+      cpus: '0.5'
+    secrets:
+      - FIRECRAWL_API_KEY
+
+# Global Security Policies
+security_policies:
+  # Network policy
+  network:
+    # Block outbound connections by default
+    default_egress: deny
+    # Allow specific domains
+    allowed_egress:
+      - 'github.com:443'
+      - 'api.github.com:443'
+      - 'registry.npmjs.org:443'
+      - 'api.firecrawl.dev:443'
+      - 'redis:6379'
+
+  # Filesystem policy
+  filesystem:
+    # Read-only by default
+    default_read_only: true
+    # Block sensitive paths
+    blocked_paths:
+      - '/etc/passwd'
+      - '/etc/shadow'
+      - '/root/.ssh'
+      - '/var/run/docker.sock'
+
+  # Resource limits
+  resources:
+    default_memory: '128m'
+    default_cpus: '0.5'
+    max_memory: '512m'
+    max_cpus: '2.0'
+
+# Monitoring & Logging
+monitoring:
+  # Enable call tracing
+  trace_enabled: true
+  # Log retention (in days)
+  log_retention: 7
+  # Metrics endpoint
+  metrics_enabled: true
+  metrics_port: 9090
+
+# Health Checks
+health_checks:
+  enabled: true
+  interval: 30
+  timeout: 10
+
+# Auto-scaling (if using Docker Swarm/K8s)
+scaling:
+  enabled: false
+  min_replicas: 1
+  max_replicas: 3
+  target_cpu_utilization: 70

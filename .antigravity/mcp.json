@@ -10,7 +10,7 @@
       "args": [
         "-y",
         "@modelcontextprotocol/server-filesystem",
-        "/c/Users/pavel/projects/marketing.tvoje.info"
+        "."
       ],
       "description": "Project filesystem access"
     },
@@ -20,12 +20,12 @@
       "description": "Git operations"
     },
     "github": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-github"],
-      "env": {
-        "GITHUB_TOKEN": "${GITHUB_TOKEN}"
-      },
-      "description": "GitHub API integration"
+      "command": "node",
+      "args": [
+        "./.kilocode/mcp-servers/mcp-wrapper.js",
+        "github"
+      ],
+      "description": "GitHub API integration (loads .env automatically)"
     },
     "fetch": {
       "command": "npx",
@@ -35,13 +35,10 @@
     "redis": {
       "command": "node",
       "args": [
-        "/c/Users/pavel/projects/marketing.tvoje.info/.kilocode/mcp-servers/redis-server.js"
+        "./.kilocode/mcp-servers/mcp-wrapper.js",
+        "redis"
       ],
-      "env": {
-        "REDIS_PASSWORD": "${REDIS_PASSWORD}",
-        "REDIS_NAMESPACE": "marketing_tvoje_info"
-      },
-      "description": "Redis for rate limiting and coordination"
+      "description": "Redis for rate limiting and coordination (loads .env automatically)"
     }
   },
   "disabled": false,

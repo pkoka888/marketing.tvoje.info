@@ -29,8 +29,8 @@ jobs:
       - name: Verify LiteLLM Health
         run: |
           sleep 8
-          ssh -o StrictHostKeyChecking=no -p 20 ${{ secrets.VPS_USER }}@100.91.164.109 "curl -s http://localhost:4000/health | head -c 200"
+          ssh -o StrictHostKeyChecking=no -p ${{ secrets.VPS_PORT }} ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "curl -s http://localhost:4000/health | head -c 200"
 
       - name: Test Chat Completion
         run: |
-          ssh -o StrictHostKeyChecking=no -p 20 ${{ secrets.VPS_USER }}@100.91.164.109 "curl -s -X POST http://localhost:4000/v1/chat/completions -H 'Content-Type: application/json' -d '{\"model\":\"groq/llama-3.3-70b-versatile\",\"messages\":[{\"role\":\"user\",\"content\":\"Hi\"}],\"max_tokens\":20}' | head -c 300"
+          ssh -o StrictHostKeyChecking=no -p ${{ secrets.VPS_PORT }} ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "curl -s -X POST http://localhost:4000/v1/chat/completions -H 'Content-Type: application/json' -d '{\"model\":\"groq/llama-3.3-70b-versatile\",\"messages\":[{\"role\":\"user\",\"content\":\"Hi\"}],\"max_tokens\":20}' | head -c 300"

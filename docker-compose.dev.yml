@@ -1,0 +1,105 @@
+# Development Docker Compose Configuration
+# For local development and testing
+#
+# Usage:
+#   docker-compose -f docker-compose.dev.yml up -d     # Start services
+#   docker-compose -f docker-compose.dev.yml down      # Stop services
+#   docker-compose -f docker-compose.dev.yml logs -f   # View logs
+
+services:
+  # Redis for MCP servers and caching (development)
+  redis-dev:
+    image: redis:7-alpine
+    container_name: marketing-redis-dev
+    restart: unless-stopped
+    ports:
+      - '6379:6379' # Exposed for local development
+    volumes:
+      - redis_dev_data:/data
+    command: >
+      redis-server
+      --appendonly yes
+      --appendfsync everysec
+      --save 60 1000
+      --maxmemory 128mb
+      --maxmemory-policy allkeys-lru
+    environment:
+      - REDIS_PASSWORD=dev_password
+    networks:
+      - marketing-dev-network
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '10m'
+        max-file: '3'
+
+  # MCP Gateway for development
+  mcp-gateway-dev:
+    image: mcp/gateway:latest
+    container_name: mcp-gateway-dev
+    restart: unless-stopped
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=development
+      - GATEWAY_PORT=3000
+      - REDIS_URL=redis://redis-dev:6379
+      - PROJECT_NAME=marketing-tvoje-info-dev
+      - JWT_SECRET=dev_jwt_secret_not_for_production
+    volumes:
+      - ./docker/mcp/gateway-config.yml:/app/config.yml:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - marketing-dev-network
+    depends_on:
+      redis-dev:
+        condition: service_healthy
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '10m'
+        max-file: '3'
+
+  # LiteLLM for local AI testing
+  litellm-dev:
+    image: ghcr.io/berriai/litellm:main-latest
+    container_name: litellm-dev
+    restart: unless-stopped
+    ports:
+      - '4000:4000'
+    volumes:
+      - ./litellm/proxy_config.yaml:/app/proxy_config.yaml:ro
+    environment:
+      - GROQ_API_KEY=${GROQ_API_KEY}
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
+      - LITELLM_MASTER_KEY=${LITELLM_MASTER_KEY:-sk-litellm-dev}
+    command: >
+      --config /app/proxy_config.yaml
+      --port 4000
+      --host 0.0.0.0
+    networks:
+      - marketing-dev-network
+    profiles:
+      - litellm # Only start when explicitly requested
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '10m'
+        max-file: '3'
+
+networks:
+  marketing-dev-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.25.0.0/16
+
+volumes:
+  redis_dev_data:
+    driver: local

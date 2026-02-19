@@ -55,13 +55,13 @@ const servers = {
   },
   firecrawl: {
     command: 'node',
-    args: [path.join('/c/nvm4w/nodejs/node_modules/firecrawl-mcp/dist/index.js')],
+    args: [path.join('C:/nvm4w/nodejs/node_modules/firecrawl-mcp/dist/index.js')],
     required: ['FIRECRAWL_API_KEY'],
   },
   github: {
     command: 'node',
     args: [
-      path.join('/c/nvm4w/nodejs/node_modules/@modelcontextprotocol/server-github/dist/index.js'),
+      path.join('C:/nvm4w/nodejs/node_modules/@modelcontextprotocol/server-github/dist/index.js'),
     ],
     required: ['GITHUB_TOKEN'],
   },
