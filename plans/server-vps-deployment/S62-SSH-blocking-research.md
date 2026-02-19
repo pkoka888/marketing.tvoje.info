@@ -1,17 +1,19 @@
 # BMAD Research: SSH Port Blocking Investigation
 
-**Project:** Server Infrastructure SSH Access Analysis  
-**Type:** DevOps/Infrastructure Research  
-**Level:** 2 (Medium - Multi-server investigation)  
-**Created:** 2026-02-19
+**Project:** Server Infrastructure SSH Access Analysis **Type:**
+DevOps/Infrastructure Research **Level:** 2 (Medium - Multi-server
+investigation) **Created:** 2026-02-19
 
 ---
 
 ## Problem Statement
 
-SSH connection to port 2262 on server s62 (192.168.1.62) fails with timeout when accessed directly via public IP (89.203.173.196:2262), but works via jumphost (s60 → s62).
+SSH connection to port 2262 on server s62 (192.168.1.62) fails with timeout when
+accessed directly via public IP (89.203.173.196:2262), but works via jumphost
+(s60 → s62).
 
-**Objective:** Identify ALL possible locations on Debian/Linux that can block SSH access to a specific port.
+**Objective:** Identify ALL possible locations on Debian/Linux that can block
+SSH access to a specific port.
 
 ---
 
@@ -386,7 +388,8 @@ SSH connection to port 2262 on server s62 (192.168.1.62) fails with timeout when
 
 - Tailscale: `ssh sugent@100.91.164.109 -p 20` ✅ Works
 - Internal: `ssh sugent@192.168.1.62 -p 2262` ✅ Works
-- Via s60: `ssh -p 2260 sugent@89.203.173.196` → `ssh -p 2262 sugent@192.168.1.62` ✅ Works
+- Via s60: `ssh -p 2260 sugent@89.203.173.196` →
+  `ssh -p 2262 sugent@192.168.1.62` ✅ Works
 
 ### Failing Path
 
@@ -394,7 +397,8 @@ SSH connection to port 2262 on server s62 (192.168.1.62) fails with timeout when
 
 ### Hypothesis
 
-Port 2262 is NOT forwarded at ISP router/NAT level to internal IP 192.168.1.62. This is NOT a server-side issue.
+Port 2262 is NOT forwarded at ISP router/NAT level to internal IP 192.168.1.62.
+This is NOT a server-side issue.
 
 ---
 
@@ -407,7 +411,8 @@ Internet → CISCO Firewall (NAT) → Internal Network 192.168.1.0/24
                                     └── s62 (192.168.1.62) - Public:2262 → Internal:20
 ```
 
-**Note:** CISCO firewall handles public→internal port mapping. Servers listen on internal port 20 (or custom like 2260, 2262 on s60 itself).
+**Note:** CISCO firewall handles public→internal port mapping. Servers listen on
+internal port 20 (or custom like 2260, 2262 on s60 itself).
 
 ---
 
@@ -483,8 +488,9 @@ PasswordAuthentication yes
 
 ### Conclusion
 
-**The issue is at CISCO firewall level** - port 2262 is not forwarded from public IP to internal s62.
-This is NOT a server config issue - it's a missing NAT port forwarding rule on CISCO firewall.
+**The issue is at CISCO firewall level** - port 2262 is not forwarded from
+public IP to internal s62. This is NOT a server config issue - it's a missing
+NAT port forwarding rule on CISCO firewall.
 
 All server-side configurations are correct:
 

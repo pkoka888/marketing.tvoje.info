@@ -6,15 +6,14 @@
 
 ## Mandatory Reading at Task Start
 
-@.kilocode/rules/rules-architect
-@.kilocode/rules/rules-code
-@.kilocode/rules/plan-approval-required
-@.clinerules/skills/general.md
+@.kilocode/rules/rules-architect @.kilocode/rules/rules-code
+@.kilocode/rules/plan-approval-required @.clinerules/skills/general.md
 @.clinerules/skills/kilo-structure.md
 
 ## Cross-Agent Rule Synchronization Protocol (MANDATORY)
 
-When modifying ANY file in `.kilocode/`, `.clinerules/`, `.agent/`, `.agents/`, or `.claude/`:
+When modifying ANY file in `.kilocode/`, `.clinerules/`, `.agent/`, `.agents/`,
+or `.claude/`:
 
 1. **READ** the canonical version in `.kilocode/rules/` FIRST
 2. After change, **UPDATE** equivalent files in ALL other agent dirs
@@ -34,7 +33,8 @@ When modifying ANY file in `.kilocode/`, `.clinerules/`, `.agent/`, `.agents/`, 
 
 ## Cost Routing
 
-- **Free first**: Kilo (z-ai/glm4.7), OpenRouter (minimax-m2.1:free), Gemini-CLI flash
+- **Free first**: Kilo (z-ai/glm4.7), OpenRouter (minimax-m2.1:free), Gemini-CLI
+  flash
 - **Paid budget**: $20/month per provider (Gemini Pro, OpenAI)
 - **Kill-switch**: If approaching budget, immediately switch to free models
 

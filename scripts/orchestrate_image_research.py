@@ -106,11 +106,11 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--list", action="store_true")
     args = parser.parse_args()
-    
+
     if args.list:
         list_tasks()
         return 0
-    
+
     print("🔬 Image Generation Deep Research V3\n")
     list_tasks()
     return 0

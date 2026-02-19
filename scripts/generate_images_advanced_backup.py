@@ -43,11 +43,11 @@ except ImportError:
 
 class ImageGenerator:
     """Unified image generation across multiple providers."""
-    
+
     def __init__(self, provider: str = "gemini"):
         self.provider = provider
         self._setup_providers()
-    
+
     def _setup_providers(self):
         """Initialize provider clients."""
         # Gemini
@@ -59,25 +59,25 @@ class ImageGenerator:
                 else:
                     genai.configure(api_key=gemini_key)
                 print("✅ Gemini configured")
-        
+
         # OpenAI DALL-E
         if OPENAI_AVAILABLE:
             openai_key = os.environ.get("OPENAI_API_KEY")
             if openai_key:
                 self.openai_client = OpenAI(api_key=openai_key)
                 print("✅ OpenAI configured")
-        
+
         # LiteLLM proxy (for DALL-E, Stable Diffusion)
         litellm_url = os.environ.get("LITELLM_PROXY_URL", "http://localhost:4000")
         self.litellm_url = litellm_url
-    
+
     def generate_gemini(self, prompt: str, output_path: str) -> bool:
         """Generate image using Gemini 2.0"""
         if not GEMINI_AVAILABLE:
             print("❌ Google GenerativeAI not installed")
             print("   pip install google-generativeai")
             return False
-        
+
         try:
             if GEMINI_USES_NEW_API and hasattr(self, 'gemini_client'):
                 # New google.genai API
@@ -95,7 +95,7 @@ class ImageGenerator:
                 # Old google.generativeai API
                 model = genai.GenerativeModel('gemini-2.5-flash-image')
                 response = model.generate_content(prompt)
-                
+
                 # Handle different response formats
                 if hasattr(response, 'image'):
                     image_data = response.image
@@ -107,7 +107,7 @@ class ImageGenerator:
                 else:
                     print("❌ Unexpected response format")
                     return False
-            
+
             # Save the image
             if isinstance(image_data, bytes):
                 with open(output_path, 'wb') as f:
@@ -115,21 +115,21 @@ class ImageGenerator:
             else:
                 print(f"❌ Cannot save image - unexpected type: {type(image_data)}")
                 return False
-            
+
             print(f"✅ Saved: {output_path}")
             return True
-            
+
         except Exception as e:
             print(f"❌ Gemini error: {e}")
             return False
-    
+
     def generate_dalle(self, prompt: str, output_path: str, model: str = "dall-e-3") -> bool:
         """Generate image using DALL-E via LiteLLM proxy or OpenAI directly."""
         if not OPENAI_AVAILABLE:
             print("❌ OpenAI not installed")
             print("   pip install openai")
             return False
-        
+
         try:
             # Try LiteLLM first
             litellm_key = os.environ.get("LITELLM_API_KEY")
@@ -142,7 +142,7 @@ class ImageGenerator:
             else:
                 client = self.openai_client
                 print("🔄 Using OpenAI directly")
-            
+
             response = client.images.generate(
                 model=model,
                 prompt=prompt,
@@ -150,21 +150,21 @@ class ImageGenerator:
                 quality="standard",
                 n=1
             )
-            
+
             # Download and save
             image_url = response.data[0].url
             img_data = requests.get(image_url).content
-            
+
             with open(output_path, 'wb') as f:
                 f.write(img_data)
-            
+
             print(f"✅ Saved: {output_path}")
             return True
-            
+
         except Exception as e:
             print(f"❌ DALL-E error: {e}")
             return False
-    
+
     def generate_stable_diffusion(self, prompt: str, output_path: str) -> bool:
         """Generate image using Stable Diffusion via LiteLLM."""
         try:
@@ -181,25 +181,25 @@ class ImageGenerator:
                     "num_images": 1
                 }
             )
-            
+
             if response.status_code == 200:
                 data = response.json()
                 image_url = data['data'][0]['url']
                 img_data = requests.get(image_url).content
-                
+
                 with open(output_path, 'wb') as f:
                     f.write(img_data)
-                
+
                 print(f"✅ Saved: {output_path}")
                 return True
             else:
                 print(f"❌ SD error: {response.status_code} - {response.text}")
                 return False
-                
+
         except Exception as e:
             print(f"❌ Stable Diffusion error: {e}")
             return False
-    
+
     def generate(self, prompt: str, output_path: str, **kwargs) -> bool:
         """Generate image using configured provider."""
         if self.provider == "gemini":
@@ -217,14 +217,14 @@ def list_models():
     """List available models from LiteLLM proxy."""
     print("\n📋 Available Image Generation Models")
     print("=" * 50)
-    
+
     models = [
         ("gemini-2.5-flash-image", "Google Gemini 2.0 (Free daily)", "gemini"),
         ("dall-e-3", "OpenAI DALL-E 3 (Paid)", "dalle"),
         ("dall-e-2", "OpenAI DALL-E 2 (Paid)", "dalle"),
         ("stabilityai/stable-diffusion-xl", "Stable Diffusion XL (via LiteLLM)", "sd"),
     ]
-    
+
     for model_id, desc, provider in models:
         print(f"  • {model_id}")
         print(f"    {desc}")
@@ -237,17 +237,17 @@ def batch_generate(prompts_file: str, output_dir: str, provider: str = "gemini")
     if not prompts_path.exists():
         print(f"❌ File not found: {prompts_file}")
         return
-    
+
     output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
-    
+
     prompts = prompts_path.read_text().split('\n')
     prompts = [p.strip() for p in prompts if p.strip() and not p.startswith('#')]
-    
+
     print(f"📝 Processing {len(prompts)} prompts...")
-    
+
     gen = ImageGenerator(provider)
-    
+
     for i, prompt in enumerate(prompts, 1):
         output_path = output_dir / f"image_{i:03d}.png"
         print(f"\n[{i}/{len(prompts)}] {prompt[:50]}...")
@@ -258,7 +258,7 @@ def main():
     parser = argparse.ArgumentParser(description="AI Image Generation Tool")
     parser.add_argument("--prompt", "-p", help="Image prompt")
     parser.add_argument("--output", "-o", help="Output file path")
-    parser.add_argument("--provider", default="gemini", 
+    parser.add_argument("--provider", default="gemini",
                        choices=["gemini", "dalle", "sd"],
                        help="Provider to use")
     parser.add_argument("--model", "-m", default="dall-e-3",
@@ -268,27 +268,26 @@ def main():
     parser.add_argument("--batch", "-b", help="Batch process prompts from file")
     parser.add_argument("--output-dir", default="output/images",
                        help="Output directory for batch")
-    
+
     args = parser.parse_args()
-    
+
     if args.list_models:
         list_models()
         return 0
-    
+
     if args.batch:
         batch_generate(args.batch, args.output_dir, args.provider)
         return 0
-    
+
     if not args.prompt or not args.output:
         parser.print_help()
         return 1
-    
+
     gen = ImageGenerator(args.provider)
     success = gen.generate(args.prompt, args.output, model=args.model)
-    
+
     return 0 if success else 1
 
 
 if __name__ == "__main__":
     sys.exit(main())
-

@@ -1,19 +1,24 @@
 # MCP Servers & Services Recovery Plan
-**Date**: 2026-02-19  
-**Status**: Critical - Services Down  
-**Context**: Switched to Git Bash, MCP servers not functional
+
+**Date**: 2026-02-19 **Status**: Critical - Services Down **Context**: Switched
+to Git Bash, MCP servers not functional
 
 ---
 
 ## Current State Analysis
 
 ### What's Broken
-1. **Path Format Mismatch**: MCP configs use Windows paths (`C:/...`) but Git Bash needs Unix paths (`/c/...`)
+
+1. **Path Format Mismatch**: MCP configs use Windows paths (`C:/...`) but Git
+   Bash needs Unix paths (`/c/...`)
 2. **Missing CLI Tools**: `kilo` and `cline` commands not in Git Bash PATH
-3. **MCP Config Drift**: 4 different configs (.kilocode, .clinerules, .antigravity, opencode.json) with inconsistencies
-4. **Swarm Orchestration**: Analyst (Flash) and Developer (Kilo) agents failing in audit
+3. **MCP Config Drift**: 4 different configs (.kilocode, .clinerules,
+   .antigravity, opencode.json) with inconsistencies
+4. **Swarm Orchestration**: Analyst (Flash) and Developer (Kilo) agents failing
+   in audit
 
 ### Working Components
+
 - Node.js: ✅ v22.22.0 (via nvm4w)
 - npm: ✅ 10.9.4
 - Python: ✅ 3.13.7
@@ -25,9 +30,11 @@
 ## Recovery Phases
 
 ### Phase 1: PATH & Environment Fixes (P0)
+
 **Goal**: Make core tools accessible in Git Bash
 
 #### 1.1 Add Kilo CLI to PATH
+
 ```bash
 # Add to ~/.bashrc or ~/.bash_profile
 export PATH="$PATH:$APPDATA/npm"
@@ -39,6 +46,7 @@ ln -sf "/c/Users/pavel/AppData/Roaming/npm/cline" /usr/local/bin/cline
 ```
 
 #### 1.2 Verify Tool Access
+
 ```bash
 which kilo && kilo --version
 which cline && cline --version
@@ -48,14 +56,18 @@ which opencode && opencode --version
 ---
 
 ### Phase 2: MCP Configuration Fix (P0)
+
 **Goal**: Standardize MCP configs for Git Bash compatibility
 
 #### 2.1 Path Conversion Strategy
+
 Convert all Windows paths to Git Bash format:
+
 - `C:/nvm4w/nodejs/node_modules` → `/c/nvm4w/nodejs/node_modules`
 - `C:/Users/pavel/projects` → `/c/Users/pavel/projects`
 
 #### 2.2 Create Unified MCP Config
+
 Create `mcp-servers.json` in project root (single source of truth):
 
 ```json
@@ -83,9 +95,7 @@ Create `mcp-servers.json` in project root (single source of truth):
     },
     "git": {
       "command": "node",
-      "args": [
-        "/c/nvm4w/nodejs/node_modules/git-mcp/dist/index.js"
-      ]
+      "args": ["/c/nvm4w/nodejs/node_modules/git-mcp/dist/index.js"]
     },
     "github": {
       "command": "node",
@@ -112,9 +122,7 @@ Create `mcp-servers.json` in project root (single source of truth):
     },
     "bmad-mcp": {
       "command": "node",
-      "args": [
-        "/c/nvm4w/nodejs/node_modules/bmad-mcp/dist/index.js"
-      ],
+      "args": ["/c/nvm4w/nodejs/node_modules/bmad-mcp/dist/index.js"],
       "env": {
         "PROJECT_ROOT": "."
       }
@@ -130,16 +138,16 @@ Create `mcp-servers.json` in project root (single source of truth):
     },
     "playwright-mcp": {
       "command": "node",
-      "args": [
-        "/c/nvm4w/nodejs/node_modules/@playwright/mcp/cli.js"
-      ]
+      "args": ["/c/nvm4w/nodejs/node_modules/@playwright/mcp/cli.js"]
     }
   }
 }
 ```
 
 #### 2.3 Sync Configs to All Agents
+
 Update these files with unified config:
+
 - `.kilocode/mcp.json`
 - `.clinerules/mcp.json`
 - `.antigravity/mcp.json`
@@ -148,9 +156,11 @@ Update these files with unified config:
 ---
 
 ### Phase 3: Swarm Orchestration Fix (P1)
+
 **Goal**: Restore parallel agent execution
 
 #### 3.1 Fix Swarm Audit Script
+
 Update `scripts/swarm_audit.py`:
 
 ```python
@@ -228,7 +238,7 @@ def task_cline(prompt):
 
 def main():
     print(f"--- 🐝 Swarm Audit Initiated ({datetime.now().strftime('%H:%M:%S')}) ---")
-    
+
     with concurrent.futures.ThreadPoolExecutor(max_workers=3) as executor:
         f_flash = executor.submit(
             task_flash,
@@ -236,13 +246,13 @@ def main():
         )
         f_kilo = executor.submit(task_kilo, "Check Kilo availability")
         f_cline = executor.submit(task_cline, "Verify Cline CLI")
-        
+
         results = [f.result() for f in [f_flash, f_kilo, f_cline]]
-    
+
     print("\n--- 🏁 Swarm Audit Results ---")
     report_path = "plans/agent-shared/swarm_audit_report.md"
     os.makedirs(os.path.dirname(report_path), exist_ok=True)
-    
+
     with open(report_path, "w") as f:
         f.write(f"# Swarm Audit Report - {datetime.now().isoformat()}\n\n")
         for r in results:
@@ -251,7 +261,7 @@ def main():
             f.write(f"## {r['agent']}\n")
             f.write(f"Status: {icon}\n\n")
             f.write(f"### Findings\n{r.get('output', 'No output')}\n\n")
-    
+
     print(f"\nAudit complete. Detailed report at {report_path}")
 
 if __name__ == "__main__":
@@ -259,6 +269,7 @@ if __name__ == "__main__":
 ```
 
 #### 3.2 Create Path Helper Script
+
 Create `scripts/fix_gitbash_paths.py`:
 
 ```python
@@ -281,9 +292,9 @@ def fix_mcp_config(config_path):
     """Fix paths in an MCP config file"""
     with open(config_path, 'r') as f:
         config = json.load(f)
-    
+
     modified = False
-    
+
     def fix_recursive(obj):
         nonlocal modified
         if isinstance(obj, dict):
@@ -300,9 +311,9 @@ def fix_mcp_config(config_path):
                     modified = True
                 elif isinstance(item, (dict, list)):
                     fix_recursive(item)
-    
+
     fix_recursive(config)
-    
+
     if modified:
         with open(config_path, 'w') as f:
             json.dump(config, f, indent=2)
@@ -316,7 +327,7 @@ def main():
         ".clinerules/mcp.json",
         ".antigravity/mcp.json"
     ]
-    
+
     for config in configs:
         if Path(config).exists():
             fix_mcp_config(config)
@@ -332,6 +343,7 @@ if __name__ == "__main__":
 ### Phase 4: Testing & Verification (P1)
 
 #### 4.1 MCP Server Test Script
+
 Create `scripts/test_mcp_servers.py`:
 
 ```python
@@ -366,10 +378,10 @@ def test_mcp_server(name, command, args):
 def main():
     with open(".kilocode/mcp.json") as f:
         config = json.load(f)
-    
+
     print("Testing MCP Servers...")
     print("-" * 50)
-    
+
     for name, server in config.get("mcpServers", {}).items():
         result = test_mcp_server(
             name,

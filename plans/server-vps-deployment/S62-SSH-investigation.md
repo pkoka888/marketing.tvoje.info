@@ -1,7 +1,6 @@
 # Marketing.tvoje.info Deployment Fixes Plan
 
-**Created:** 2026-02-19
-**Status:** In Progress
+**Created:** 2026-02-19 **Status:** In Progress
 
 ---
 

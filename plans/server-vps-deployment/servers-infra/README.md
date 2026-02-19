@@ -1,8 +1,7 @@
 # Universal Server Infrastructure Package
 
-**Version:** 1.0  
-**Created:** 2026-02-19  
-**Purpose:** Project-agnostic deployment & management toolkit for AI agent sysadmins.
+**Version:** 1.0 **Created:** 2026-02-19 **Purpose:** Project-agnostic
+deployment & management toolkit for AI agent sysadmins.
 
 ## Quick Start (for Orchestrator Agents)
 
@@ -48,15 +47,15 @@ ansible-playbook -i inventory.yml playbooks/health-check.yml
 
 ## Safety Rules (Summary)
 
-| Rule | Description |
-|------|-------------|
-| **Never** | Restart Traefik/Docker/Nginx on s61 without human approval |
-| **Never** | Delete files outside your project's deploy path |
-| **Never** | Change firewall rules without explicit permission |
-| **Always** | Run `preflight-check.yml` before any deployment |
-| **Always** | Run `health-check.yml` after any deployment |
-| **Always** | Check port conflicts before exposing new ports |
-| **Always** | Verify okamih.cz/sk accessibility after any s61 change |
+| Rule       | Description                                                |
+| ---------- | ---------------------------------------------------------- |
+| **Never**  | Restart Traefik/Docker/Nginx on s61 without human approval |
+| **Never**  | Delete files outside your project's deploy path            |
+| **Never**  | Change firewall rules without explicit permission          |
+| **Always** | Run `preflight-check.yml` before any deployment            |
+| **Always** | Run `health-check.yml` after any deployment                |
+| **Always** | Check port conflicts before exposing new ports             |
+| **Always** | Verify okamih.cz/sk accessibility after any s61 change     |
 
 ## Known Issues
 
@@ -64,19 +63,20 @@ See [known-issues.md](known-issues.md) for current infrastructure issues.
 
 ## Files
 
-| File | Purpose |
-|------|---------|
-| `servers.yml` | Master server registry (single source of truth) |
-| `inventory.yml` | Ansible inventory |
-| `agent-sysadmin.md` | Agent role definition & safety rules |
-| `known-issues.md` | Current infrastructure issues |
-| `playbooks/` | Ansible playbooks for deployment & checks |
-| `scripts/` | Python utilities (safe SSH, preflight, evidence) |
-| `templates/` | Jinja2 templates for Nginx, PM2, GitHub Actions |
+| File                | Purpose                                          |
+| ------------------- | ------------------------------------------------ |
+| `servers.yml`       | Master server registry (single source of truth)  |
+| `inventory.yml`     | Ansible inventory                                |
+| `agent-sysadmin.md` | Agent role definition & safety rules             |
+| `known-issues.md`   | Current infrastructure issues                    |
+| `playbooks/`        | Ansible playbooks for deployment & checks        |
+| `scripts/`          | Python utilities (safe SSH, preflight, evidence) |
+| `templates/`        | Jinja2 templates for Nginx, PM2, GitHub Actions  |
 
 ## Service Restart Protocol
 
-**IMPORTANT:** After ANY service change (config, deployment, package), agents MUST follow the restart protocol.
+**IMPORTANT:** After ANY service change (config, deployment, package), agents
+MUST follow the restart protocol.
 
 ### Using `restart_all_services.py`
 
@@ -102,16 +102,18 @@ python scripts/restart_all_services.py --servers s62 --services nginx --check-on
 ### Approval Requirements
 
 | Server | Services Requiring Approval |
-|--------|---------------------------|
-| s60 | nginx, docker |
-| s61 | ALL (critical server) |
-| s62 | nginx, docker |
+| ------ | --------------------------- |
+| s60    | nginx, docker               |
+| s61    | ALL (critical server)       |
+| s62    | nginx, docker               |
 
 **s61 (Gateway/Traefik) requires human approval for ANY service restart.**
 
 ### Protected Containers
 
-The following containers are protected and should NEVER be restarted without explicit approval:
+The following containers are protected and should NEVER be restarted without
+explicit approval:
+
 - `traefik`, `netbox`, `netbox-redis`, `netbox-postgres`, `homarr-dashboard`
 
 See `agent-sysadmin.md` for full protocol details.

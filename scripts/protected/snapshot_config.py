@@ -28,14 +28,14 @@ def load_snapshot():
     if not SNAPSHOT_PATH.exists():
         print(f"❌ Snapshot not found: {SNAPSHOT_PATH}")
         return None
-    
+
     with open(SNAPSHOT_PATH) as f:
         return json.load(f)
 
 
 def get_current_config():
     """Extract current configuration from verification script.
-    
+
     Imports API_KEYS_CONFIG from verify_api_keys.py to avoid duplication.
     This ensures single source of truth for API key configurations.
     """
@@ -105,18 +105,18 @@ def compare_configs(snapshot, current):
     """Compare current config against snapshot and report drift."""
     drift_detected = False
     issues = []
-    
+
     snapshot_keys = snapshot.get("keys", {})
-    
+
     # Check each key in snapshot
     for key_name, snapshot_config in snapshot_keys.items():
         current_config = current.get(key_name, {})
-        
+
         # Check endpoint changes
         if "endpoint" in snapshot_config:
             snapshot_endpoint = snapshot_config.get("endpoint")
             current_endpoint = current_config.get("endpoint")
-            
+
             if snapshot_endpoint != current_endpoint:
                 drift_detected = True
                 issues.append({
@@ -125,12 +125,12 @@ def compare_configs(snapshot, current):
                     "expected": snapshot_endpoint,
                     "current": current_endpoint,
                 })
-        
+
         # Check auth_type changes
         if "auth_type" in snapshot_config:
             snapshot_auth = snapshot_config.get("auth_type")
             current_auth = current_config.get("auth_type")
-            
+
             if snapshot_auth != current_auth:
                 drift_detected = True
                 issues.append({
@@ -139,12 +139,12 @@ def compare_configs(snapshot, current):
                     "expected": snapshot_auth,
                     "current": current_auth,
                 })
-        
+
         # Check method changes
         if "method" in snapshot_config:
             snapshot_method = snapshot_config.get("method")
             current_method = current_config.get("method")
-            
+
             if snapshot_method != current_method:
                 drift_detected = True
                 issues.append({
@@ -153,7 +153,7 @@ def compare_configs(snapshot, current):
                     "expected": snapshot_method,
                     "current": current_method,
                 })
-    
+
     return drift_detected, issues
 
 
@@ -166,15 +166,15 @@ def generate_report(snapshot, issues):
     print(f"Snapshot Date: {snapshot.get('snapshot_date')}")
     print(f"Verified Keys: {snapshot.get('verified_count')}")
     print()
-    
+
     if not issues:
         print("✅ NO DRIFT DETECTED - Configuration matches known-good state")
         print()
         return 0
-    
+
     print(f"⚠️  DRIFT DETECTED: {len(issues)} issue(s)")
     print()
-    
+
     for issue in issues:
         print(f"  🔸 {issue['key']}")
         print(f"     Type: {issue['type']}")
@@ -183,7 +183,7 @@ def generate_report(snapshot, issues):
         if "current" in issue:
             print(f"     Current:  {issue['current']}")
         print()
-    
+
     return 1
 
 
@@ -192,10 +192,10 @@ def compare():
     snapshot = load_snapshot()
     if not snapshot:
         return 1
-    
+
     current = get_current_config()
     drift_detected, issues = compare_configs(snapshot, current)
-    
+
     return generate_report(snapshot, issues)
 
 
@@ -204,9 +204,9 @@ def generate():
     env_path = Path(__file__).parent.parent / ".env"
     if env_path.exists():
         load_dotenv(env_path, override=True)
-    
+
     current = get_current_config()
-    
+
     snapshot = {
         "version": "1.0.0",
         "snapshot_date": datetime.now().isoformat() + "Z",
@@ -219,14 +219,14 @@ def generate():
             "last_verified": datetime.now().strftime("%Y-%m-%d")
         },
     }
-    
+
     # Add current config to snapshot
     for key, config in current.items():
         snapshot["keys"][key] = config
-    
+
     with open(SNAPSHOT_PATH, "w") as f:
         json.dump(snapshot, f, indent=2)
-    
+
     print(f"✅ Snapshot generated: {SNAPSHOT_PATH}")
     return 0
 
@@ -236,7 +236,7 @@ def report():
     snapshot = load_snapshot()
     if not snapshot:
         return 1
-    
+
     print(f"Version: {snapshot.get('version')}")
     print(f"Date: {snapshot.get('snapshot_date')}")
     print(f"Verified Keys: {snapshot.get('verified_count')}")
@@ -245,7 +245,7 @@ def report():
     print("Keys in snapshot:")
     for key in snapshot.get("keys", {}).keys():
         print(f"  - {key}")
-    
+
     return 0
 
 
@@ -253,9 +253,9 @@ def main():
     if len(sys.argv) < 2:
         print(__doc__)
         return 1
-    
+
     command = sys.argv[1]
-    
+
     if command == "--compare":
         return compare()
     elif command == "--generate":

@@ -128,6 +128,10 @@ marketing.tvoje.info/
 | `VPS_IP`             | VPS IP address              | Yes (for deployment) |
 | `FORMSPREE_ENDPOINT` | Formspree form endpoint     | Optional             |
 | `PLAUSIBLE_API_KEY`  | Plausible analytics API key | Optional             |
+| `REDIS_PASSWORD`     | Redis authentication        | Yes (for MCP)        |
+| `REDIS_URL`          | Redis connection URL        | Yes (for MCP)        |
+| `FIRECRAWL_API_KEY`  | Firecrawl API access        | Yes (for MCP)        |
+| `GITHUB_TOKEN`       | GitHub API authentication   | Yes (for MCP)        |
 
 ## Build and Deployment
 
@@ -218,6 +222,38 @@ npm run typecheck    # Type checking
 - GDPR-compliant analytics (Plausible)
 - CSP headers configured
 - No user-generated content (static site)
+
+## MCP Server Configuration
+
+### Environment Wrapper
+
+**Problem**: MCP configs used `${VAR_NAME}` syntax which doesn't work in Git
+Bash.
+
+**Solution**: Created `mcp-wrapper.js` that loads `.env` before starting
+servers.
+
+**Files**:
+
+- `.kilocode/mcp-servers/mcp-wrapper.js` - Main wrapper script
+- `.kilocode/mcp.json` - Updated to use wrapper for redis, firecrawl, github
+- `.clinerules/mcp.json` - Same updates for Cline
+
+**Usage**:
+
+```bash
+# Wrapper automatically loads .env and starts server
+node .kilocode/mcp-servers/mcp-wrapper.js redis
+node .kilocode/mcp-servers/mcp-wrapper.js firecrawl
+node .kilocode/mcp-servers/mcp-wrapper.js github
+```
+
+**Benefits**:
+
+- Secrets stay in `.env` only (not in config files)
+- Works across Git Bash, PowerShell, CMD
+- Validates required variables before starting
+- No changes needed when rotating API keys
 
 ---
 

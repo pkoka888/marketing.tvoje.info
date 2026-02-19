@@ -121,7 +121,7 @@ def list_tasks():
         print(f"\n{i}. {emoji} {task['description']} ({priority})")
         print(f"   Agent: {task['agent']}")
         print(f"   Model: {task['model']}")
-    
+
     print("\n" + "=" * 60)
     print("📋 Verification (2 checks)")
     print("=" * 60)
@@ -134,11 +134,11 @@ def main():
     parser = argparse.ArgumentParser(description="Image Generation Orchestrator V2")
     parser.add_argument("--list", action="store_true", help="List tasks only")
     args = parser.parse_args()
-    
+
     if args.list:
         list_tasks()
         return 0
-    
+
     print("""
 🎨 IMAGE GENERATION ORCHESTRATION V2
 
@@ -151,7 +151,7 @@ Extended research tasks:
 6. LiteLLM image updates
 """)
     list_tasks()
-    
+
     return 0
 
 

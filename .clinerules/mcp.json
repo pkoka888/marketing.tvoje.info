@@ -3,12 +3,9 @@
     "redis": {
       "command": "node",
       "args": [
-        "/c/Users/pavel/projects/marketing.tvoje.info/.kilocode/mcp-servers/redis-server.js"
-      ],
-      "env": {
-        "PROJECT_NAME": "marketing-tvoje-info",
-        "REDIS_PASSWORD": "${REDIS_PASSWORD}"
-      }
+        "/c/Users/pavel/projects/marketing.tvoje.info/.kilocode/mcp-servers/mcp-wrapper.js",
+        "redis"
+      ]
     },
     "filesystem-projects": {
       "command": "node",
@@ -25,6 +22,13 @@
       "command": "node",
       "args": ["/c/nvm4w/nodejs/node_modules/git-mcp/dist/index.js"]
     },
+    "github": {
+      "command": "node",
+      "args": [
+        "/c/Users/pavel/projects/marketing.tvoje.info/.kilocode/mcp-servers/mcp-wrapper.js",
+        "github"
+      ]
+    },
     "fetch": {
       "command": "uvx",
       "args": ["mcp-server-fetch"]
@@ -32,11 +36,9 @@
     "firecrawl-local": {
       "command": "node",
       "args": [
-        "/c/Users/pavel/projects/marketing.tvoje.info/.kilocode/mcp-libs/firecrawl-fresh/node_modules/firecrawl-mcp/dist/index.js"
-      ],
-      "env": {
-        "FIRECRAWL_API_KEY": "${FIRECRAWL_API_KEY}"
-      }
+        "/c/Users/pavel/projects/marketing.tvoje.info/.kilocode/mcp-servers/mcp-wrapper.js",
+        "firecrawl"
+      ]
     },
     "playwright-mcp": {
       "command": "node",

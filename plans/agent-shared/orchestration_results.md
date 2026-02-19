@@ -1,10 +1,11 @@
 # Parallel Orchestration Results
 
 ## Agent: kilo
-Status: Failure
-Duration: 1.80s
+
+Status: Failure Duration: 1.80s
 
 ### Output
+
 ```
 kilo run [message..]
 
@@ -40,20 +41,21 @@ Options:
 ```
 
 ## Agent: cline
-Status: Failure
-Duration: 53.18s
+
+Status: Failure Duration: 53.18s
 
 ### Output
+
 ```
 {"message":"402 Insufficient balance. Your Cline Credits balance is $0.01","status":402,"code":"insufficient_credits","modelId":"minimax/minimax-m2.1","providerId":"cline","details":{"code":"insufficient_credits","message":"Insufficient balance. Your Cline Credits balance is $0.01","current_balance":0.009608,"total_spent":0,"total_promotions":0,"buy_credits_url":"https://app.cline.bot/credits"}}
 
 ```
 
 ### Error
+
 ```
 Task started: 1771463273774
 Error: API request failed: {"message":"402 Insufficient balance. Your Cline Credits balance is $0.01","status":402,"code":"insufficient_credits","modelId":"minimax/minimax-m2.1","providerId":"cline","details":{"code":"insufficient_credits","message":"Insufficient balance. Your Cline Credits balance is $0.01","current_balance":0.009608,"total_spent":0,"total_promotions":0,"buy_credits_url":"https://app.cline.bot/credits"}}
 Error: {"message":"402 Insufficient balance. Your Cline Credits balance is $0.01","status":402,"code":"insufficient_credits","modelId":"minimax/minimax-m2.1","providerId":"cline","details":{"code":"insufficient_credits","message":"Insufficient balance. Your Cline Credits balance is $0.01","current_balance":0.009608,"total_spent":0,"total_promotions":0,"buy_credits_url":"https://app.cline.bot/credits"}}
 
 ```
-

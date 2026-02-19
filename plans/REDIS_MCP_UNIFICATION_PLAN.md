@@ -1,7 +1,6 @@
 # Redis MCP Unification Plan
 
-**Date**: 2026-02-17
-**Status**: Draft - Pending Approval
+**Date**: 2026-02-17 **Status**: Draft - Pending Approval
 
 ---
 
@@ -34,11 +33,14 @@ redis:
    - `opencode.json`: `PROJECT_NAME` (plus stray `astro` var)
    - `.antigravity/mcp.json`: `REDIS_NAMESPACE` (different convention)
 
-2. **Hardcoded credentials**: Redis password stored in plaintext in `docker-compose.yml` and connection URLs
+2. **Hardcoded credentials**: Redis password stored in plaintext in
+   `docker-compose.yml` and connection URLs
 
-3. **Namespace naming inconsistency**: `marketing-tvoje-info` vs `marketing_tvoje_info`
+3. **Namespace naming inconsistency**: `marketing-tvoje-info` vs
+   `marketing_tvoje_info`
 
-4. **Missing env variable support**: Redis password should use environment variable
+4. **Missing env variable support**: Redis password should use environment
+   variable
 
 ---
 
@@ -92,7 +94,9 @@ redis:
     - '${REDIS_PORT:-36379}:6379'
   volumes:
     - redis_data:/data
-  command: redis-server --appendonly yes --save 60 1000 --requirepass "${REDIS_PASSWORD:-marketing}"
+  command:
+    redis-server --appendonly yes --save 60 1000 --requirepass
+    "${REDIS_PASSWORD:-marketing}"
   restart: unless-stopped
   healthcheck:
     test: ['CMD', 'redis-cli', '-a', '${REDIS_PASSWORD:-marketing}', 'ping']
@@ -112,7 +116,9 @@ All 4 config files should use identical Redis configuration:
 {
   "redis": {
     "command": "node",
-    "args": ["C:/Users/pavel/projects/marketing.tvoje.info/.kilocode/mcp-servers/redis-server.js"],
+    "args": [
+      "C:/Users/pavel/projects/marketing.tvoje.info/.kilocode/mcp-servers/redis-server.js"
+    ],
     "env": {
       "PROJECT_NAME": "marketing-tvoje-info",
       "REDIS_URL": "redis://:${REDIS_PASSWORD}@localhost:${REDIS_PORT:-36379}"

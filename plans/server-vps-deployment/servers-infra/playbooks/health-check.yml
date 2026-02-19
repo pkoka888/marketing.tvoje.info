@@ -12,74 +12,74 @@
   become: false
 
   tasks:
-    - name: "System: Uptime and load"
+    - name: 'System: Uptime and load'
       ansible.builtin.shell: uptime
       register: uptime_result
       changed_when: false
 
-    - name: "System: Disk usage"
+    - name: 'System: Disk usage'
       ansible.builtin.shell: df -h / | tail -1
       register: disk_result
       changed_when: false
 
-    - name: "System: Memory"
+    - name: 'System: Memory'
       ansible.builtin.shell: free -h | head -2
       register: mem_result
       changed_when: false
 
-    - name: "Service: Nginx status"
+    - name: 'Service: Nginx status'
       ansible.builtin.shell: systemctl is-active nginx 2>/dev/null || echo 'not-installed'
       register: nginx_status
       changed_when: false
       failed_when: false
 
-    - name: "Service: Docker status"
+    - name: 'Service: Docker status'
       ansible.builtin.shell: systemctl is-active docker 2>/dev/null || echo 'not-installed'
       register: docker_status
       changed_when: false
       failed_when: false
 
-    - name: "Service: PM2 processes"
+    - name: 'Service: PM2 processes'
       ansible.builtin.shell: pm2 jlist 2>/dev/null || echo '[]'
       register: pm2_status
       changed_when: false
       failed_when: false
 
-    - name: "Docker: Running containers"
+    - name: 'Docker: Running containers'
       ansible.builtin.shell: docker ps --format 'table {{ "{{" }}.Names{{ "}}" }}\t{{ "{{" }}.Status{{ "}}" }}' 2>/dev/null || echo 'no docker'
       register: docker_ps
       changed_when: false
       failed_when: false
 
-    - name: "Service: Failed systemd units"
+    - name: 'Service: Failed systemd units'
       ansible.builtin.shell: systemctl --failed --no-pager 2>/dev/null | head -15
       register: failed_units
       changed_when: false
       failed_when: false
 
     # s61-specific checks
-    - name: "CRITICAL: Traefik container (s61 only)"
+    - name: 'CRITICAL: Traefik container (s61 only)'
       ansible.builtin.shell: docker ps --filter "name=traefik" --format '{{ "{{" }}.Status{{ "}}" }}'
       register: traefik_status
       changed_when: false
       failed_when: false
       when: inventory_hostname == 's61'
 
-    - name: "ALERT: Traefik is DOWN"
+    - name: 'ALERT: Traefik is DOWN'
       ansible.builtin.fail:
-        msg: "🔴 CRITICAL: Traefik container is NOT running on s61! All web traffic is affected!"
+        msg: '🔴 CRITICAL: Traefik container is NOT running on s61! All web traffic is affected!'
       when:
         - inventory_hostname == 's61'
         - traefik_status.stdout | length == 0
 
-    - name: "CRITICAL: okamih.cz check (s61 only)"
+    - name: 'CRITICAL: okamih.cz check (s61 only)'
       ansible.builtin.shell: curl -s -o /dev/null -w '%{http_code}' --max-time 10 http://localhost/
       register: okamih_check
       changed_when: false
       failed_when: false
       when: inventory_hostname == 's61'
 
-    - name: "SUMMARY: Server health"
+    - name: 'SUMMARY: Server health'
       ansible.builtin.debug:
         msg: |
           ═══════════════════════════════════════

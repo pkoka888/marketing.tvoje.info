@@ -1,14 +1,15 @@
 # LiteLLM Source Code Analysis: Router Settings Filtering
 
-**Date:** 2026-02-17
-**LiteLLM Version:** 1.81.1
-**Python Location:** `C:\Users\HP\AppData\Local\Programs\Python\Python313\Lib\site-packages\litellm`
+**Date:** 2026-02-17 **LiteLLM Version:** 1.81.1 **Python Location:**
+`C:\Users\HP\AppData\Local\Programs\Python\Python313\Lib\site-packages\litellm`
 
 ---
 
 ## Executive Summary
 
-Analysis of how LiteLLM Router handles `router_settings` parameters, specifically examining the filtering mechanism in `proxy_server.py` and parameter acceptance in `Router.__init__`.
+Analysis of how LiteLLM Router handles `router_settings` parameters,
+specifically examining the filtering mechanism in `proxy_server.py` and
+parameter acceptance in `Router.__init__`.
 
 ---
 
@@ -127,7 +128,8 @@ if default_fallbacks is not None or litellm.default_fallbacks is not None:
 
 ### Filtering Mechanism
 
-The proxy server filters `router_settings` from `config.yaml` to only pass valid Router parameters:
+The proxy server filters `router_settings` from `config.yaml` to only pass valid
+Router parameters:
 
 ```python
 # Get Router.__init__ signature
@@ -343,7 +345,8 @@ router_settings:
 **Breaking Changes from Older Versions:**
 
 - `enable_pre_call_checks` now defaults to `False` (was `True`)
-- `routing_strategy` validation is stricter (raises `ValueError` for invalid values)
+- `routing_strategy` validation is stricter (raises `ValueError` for invalid
+  values)
 - Redis caching parameters consolidated under `cache_kwargs`
 
 ---

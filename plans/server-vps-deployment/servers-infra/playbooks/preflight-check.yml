@@ -14,77 +14,77 @@
   vars:
     disk_warning_pct: 85
     disk_critical_pct: 90
-    required_port: ""
+    required_port: ''
 
   tasks:
-    - name: "CHECK: Disk space"
+    - name: 'CHECK: Disk space'
       ansible.builtin.shell: df -h / | tail -1 | awk '{print $5}' | tr -d '%'
       register: disk_usage
       changed_when: false
 
-    - name: "ALERT: Disk usage warning"
+    - name: 'ALERT: Disk usage warning'
       ansible.builtin.debug:
-        msg: "⚠️ Disk usage at {{ disk_usage.stdout }}% on {{ inventory_hostname }}"
+        msg: '⚠️ Disk usage at {{ disk_usage.stdout }}% on {{ inventory_hostname }}'
       when: disk_usage.stdout | int >= disk_warning_pct
 
-    - name: "FAIL: Disk usage critical"
+    - name: 'FAIL: Disk usage critical'
       ansible.builtin.fail:
-        msg: "🔴 CRITICAL: Disk at {{ disk_usage.stdout }}% on {{ inventory_hostname }}. Deployment blocked."
+        msg: '🔴 CRITICAL: Disk at {{ disk_usage.stdout }}% on {{ inventory_hostname }}. Deployment blocked.'
       when: disk_usage.stdout | int >= disk_critical_pct
 
-    - name: "CHECK: Memory available"
+    - name: 'CHECK: Memory available'
       ansible.builtin.shell: free -m | awk '/^Mem:/{print $7}'
       register: mem_available
       changed_when: false
 
-    - name: "ALERT: Low memory"
+    - name: 'ALERT: Low memory'
       ansible.builtin.debug:
-        msg: "⚠️ Only {{ mem_available.stdout }}MB available on {{ inventory_hostname }}"
+        msg: '⚠️ Only {{ mem_available.stdout }}MB available on {{ inventory_hostname }}'
       when: mem_available.stdout | int < 256
 
-    - name: "CHECK: Nginx is running"
+    - name: 'CHECK: Nginx is running'
       ansible.builtin.shell: systemctl is-active nginx
       register: nginx_status
       changed_when: false
       failed_when: false
 
-    - name: "ALERT: Nginx not running"
+    - name: 'ALERT: Nginx not running'
       ansible.builtin.debug:
-        msg: "⚠️ Nginx is NOT running on {{ inventory_hostname }}: {{ nginx_status.stdout }}"
+        msg: '⚠️ Nginx is NOT running on {{ inventory_hostname }}: {{ nginx_status.stdout }}'
       when: nginx_status.rc != 0
 
-    - name: "CHECK: Docker status"
+    - name: 'CHECK: Docker status'
       ansible.builtin.shell: systemctl is-active docker
       register: docker_status
       changed_when: false
       failed_when: false
 
-    - name: "CHECK: Port availability (if specified)"
+    - name: 'CHECK: Port availability (if specified)'
       ansible.builtin.shell: "ss -tulpn | grep ':{{ required_port }}' || echo 'PORT_FREE'"
       register: port_check
       changed_when: false
       when: required_port | length > 0
 
-    - name: "FAIL: Port conflict detected"
+    - name: 'FAIL: Port conflict detected'
       ansible.builtin.fail:
-        msg: "🔴 Port {{ required_port }} is already in use on {{ inventory_hostname }}: {{ port_check.stdout }}"
+        msg: '🔴 Port {{ required_port }} is already in use on {{ inventory_hostname }}: {{ port_check.stdout }}'
       when:
         - required_port | length > 0
         - "'PORT_FREE' not in port_check.stdout"
 
-    - name: "CHECK: PM2 processes (if PM2 installed)"
+    - name: 'CHECK: PM2 processes (if PM2 installed)'
       ansible.builtin.shell: pm2 jlist 2>/dev/null || echo '[]'
       register: pm2_status
       changed_when: false
       failed_when: false
 
-    - name: "CHECK: Docker containers"
+    - name: 'CHECK: Docker containers'
       ansible.builtin.shell: docker ps --format '{{ "{{" }}.Names{{ "}}" }}\t{{ "{{" }}.Status{{ "}}" }}' 2>/dev/null || echo 'no docker'
       register: docker_containers
       changed_when: false
       failed_when: false
 
-    - name: "SUMMARY: Pre-flight results"
+    - name: 'SUMMARY: Pre-flight results'
       ansible.builtin.debug:
         msg: |
           ═══════════════════════════════════════

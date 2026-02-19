@@ -1,7 +1,6 @@
 # SSH Port 2262 Blocking - Complete Evidence Document
 
-**Created:** 2026-02-19  
-**Status:** Complete Evidence Collection
+**Created:** 2026-02-19 **Status:** Complete Evidence Collection
 
 ---
 
@@ -33,7 +32,8 @@ Ports allowed: 2260, 2261, 2262, 20, 80, 443, and many others
 24    5335 1135K ACCEPT     tcp  --  *      *       0.0.0.0/0            192.168.1.62         tcp dpt:20
 ```
 
-**Note:** Only port 20 is forwarded internally (Tailscale/internal network), NOT 2262
+**Note:** Only port 20 is forwarded internally (Tailscale/internal network), NOT
+2262
 
 ### SSH Config (/etc/ssh/sshd_config)
 
@@ -210,7 +210,8 @@ ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIdgqbXj5+AxULz3P0nMNVMzsTCq2D989nMIW9Qozgrm
 
 ### Root Cause: CISCO Firewall ❌
 
-- Port 2262 is NOT forwarded from public IP (89.203.173.196) to internal s62 (192.168.1.62)
+- Port 2262 is NOT forwarded from public IP (89.203.173.196) to internal s62
+  (192.168.1.62)
 - This is NOT a server configuration issue
 - This is a CISCO firewall NAT configuration issue
 

@@ -11,18 +11,18 @@
   become: false
 
   vars:
-    evidence_base: "../evidence"
-    timestamp: "{{ ansible_date_time.iso8601_basic_short }}"
+    evidence_base: '../evidence'
+    timestamp: '{{ ansible_date_time.iso8601_basic_short }}'
 
   tasks:
-    - name: "Create local evidence directory"
+    - name: 'Create local evidence directory'
       ansible.builtin.file:
-        path: "{{ evidence_base }}/{{ timestamp }}/{{ inventory_hostname }}"
+        path: '{{ evidence_base }}/{{ timestamp }}/{{ inventory_hostname }}'
         state: directory
         mode: '0755'
       delegate_to: localhost
 
-    - name: "Collect: System info"
+    - name: 'Collect: System info'
       ansible.builtin.shell: |
         echo "=== HOSTNAME ===" && hostname -f
         echo "=== UNAME ===" && uname -a
@@ -33,24 +33,24 @@
       register: system_info
       changed_when: false
 
-    - name: "Save: System info"
+    - name: 'Save: System info'
       ansible.builtin.copy:
-        content: "{{ system_info.stdout }}"
-        dest: "{{ evidence_base }}/{{ timestamp }}/{{ inventory_hostname }}/system-info.txt"
+        content: '{{ system_info.stdout }}'
+        dest: '{{ evidence_base }}/{{ timestamp }}/{{ inventory_hostname }}/system-info.txt'
       delegate_to: localhost
 
-    - name: "Collect: Services"
+    - name: 'Collect: Services'
       ansible.builtin.shell: systemctl list-units --type=service --state=running --no-pager 2>/dev/null
       register: services
       changed_when: false
 
-    - name: "Save: Services"
+    - name: 'Save: Services'
       ansible.builtin.copy:
-        content: "{{ services.stdout }}"
-        dest: "{{ evidence_base }}/{{ timestamp }}/{{ inventory_hostname }}/services.txt"
+        content: '{{ services.stdout }}'
+        dest: '{{ evidence_base }}/{{ timestamp }}/{{ inventory_hostname }}/services.txt'
       delegate_to: localhost
 
-    - name: "Collect: Network"
+    - name: 'Collect: Network'
       ansible.builtin.shell: |
         echo "=== IP ADDR ===" && ip addr
         echo "=== ROUTES ===" && ip route
@@ -58,13 +58,13 @@
       register: network
       changed_when: false
 
-    - name: "Save: Network"
+    - name: 'Save: Network'
       ansible.builtin.copy:
-        content: "{{ network.stdout }}"
-        dest: "{{ evidence_base }}/{{ timestamp }}/{{ inventory_hostname }}/network.txt"
+        content: '{{ network.stdout }}'
+        dest: '{{ evidence_base }}/{{ timestamp }}/{{ inventory_hostname }}/network.txt'
       delegate_to: localhost
 
-    - name: "Collect: Docker containers"
+    - name: 'Collect: Docker containers'
       ansible.builtin.shell: |
         echo "=== RUNNING ===" && docker ps -a --format 'table {{ "{{" }}.Names{{ "}}" }}\t{{ "{{" }}.Status{{ "}}" }}\t{{ "{{" }}.Ports{{ "}}" }}' 2>/dev/null
         echo "=== IMAGES ===" && docker images --format 'table {{ "{{" }}.Repository{{ "}}" }}\t{{ "{{" }}.Tag{{ "}}" }}\t{{ "{{" }}.Size{{ "}}" }}' 2>/dev/null
@@ -73,37 +73,37 @@
       changed_when: false
       failed_when: false
 
-    - name: "Save: Docker"
+    - name: 'Save: Docker'
       ansible.builtin.copy:
         content: "{{ docker_info.stdout | default('Docker not available') }}"
-        dest: "{{ evidence_base }}/{{ timestamp }}/{{ inventory_hostname }}/docker.txt"
+        dest: '{{ evidence_base }}/{{ timestamp }}/{{ inventory_hostname }}/docker.txt'
       delegate_to: localhost
 
-    - name: "Collect: PM2 processes"
+    - name: 'Collect: PM2 processes'
       ansible.builtin.shell: pm2 jlist 2>/dev/null || echo '[]'
       register: pm2_info
       changed_when: false
       failed_when: false
 
-    - name: "Save: PM2"
+    - name: 'Save: PM2'
       ansible.builtin.copy:
-        content: "{{ pm2_info.stdout }}"
-        dest: "{{ evidence_base }}/{{ timestamp }}/{{ inventory_hostname }}/pm2.json"
+        content: '{{ pm2_info.stdout }}'
+        dest: '{{ evidence_base }}/{{ timestamp }}/{{ inventory_hostname }}/pm2.json'
       delegate_to: localhost
 
-    - name: "Collect: Failed services"
+    - name: 'Collect: Failed services'
       ansible.builtin.shell: systemctl --failed --no-pager 2>/dev/null
       register: failed_services
       changed_when: false
       failed_when: false
 
-    - name: "Save: Failed services"
+    - name: 'Save: Failed services'
       ansible.builtin.copy:
         content: "{{ failed_services.stdout | default('none') }}"
-        dest: "{{ evidence_base }}/{{ timestamp }}/{{ inventory_hostname }}/failed.txt"
+        dest: '{{ evidence_base }}/{{ timestamp }}/{{ inventory_hostname }}/failed.txt'
       delegate_to: localhost
 
-    - name: "Collect: Disk usage breakdown"
+    - name: 'Collect: Disk usage breakdown'
       ansible.builtin.shell: |
         echo "=== FILESYSTEM ===" && df -h
         echo "=== VAR ===" && du -sh /var/*/ 2>/dev/null | sort -rh | head -15
@@ -111,24 +111,24 @@
       register: disk_usage
       changed_when: false
 
-    - name: "Save: Disk usage"
+    - name: 'Save: Disk usage'
       ansible.builtin.copy:
-        content: "{{ disk_usage.stdout }}"
-        dest: "{{ evidence_base }}/{{ timestamp }}/{{ inventory_hostname }}/disk-usage.txt"
+        content: '{{ disk_usage.stdout }}'
+        dest: '{{ evidence_base }}/{{ timestamp }}/{{ inventory_hostname }}/disk-usage.txt'
       delegate_to: localhost
 
-    - name: "Collect: Nginx sites"
+    - name: 'Collect: Nginx sites'
       ansible.builtin.shell: ls -la /etc/nginx/sites-enabled/ 2>/dev/null && cat /etc/nginx/sites-enabled/* 2>/dev/null | head -200
       register: nginx_sites
       changed_when: false
       failed_when: false
 
-    - name: "Save: Nginx"
+    - name: 'Save: Nginx'
       ansible.builtin.copy:
         content: "{{ nginx_sites.stdout | default('Nginx not available') }}"
-        dest: "{{ evidence_base }}/{{ timestamp }}/{{ inventory_hostname }}/nginx.txt"
+        dest: '{{ evidence_base }}/{{ timestamp }}/{{ inventory_hostname }}/nginx.txt'
       delegate_to: localhost
 
-    - name: "Evidence collection complete"
+    - name: 'Evidence collection complete'
       ansible.builtin.debug:
-        msg: "✅ Evidence saved to {{ evidence_base }}/{{ timestamp }}/{{ inventory_hostname }}/"
+        msg: '✅ Evidence saved to {{ evidence_base }}/{{ timestamp }}/{{ inventory_hostname }}/'

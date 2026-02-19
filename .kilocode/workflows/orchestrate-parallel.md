@@ -5,7 +5,8 @@
 
 ---
 
-See canonical version at `.clinerules/workflows/orchestrate-parallel.md` for full content.
+See canonical version at `.clinerules/workflows/orchestrate-parallel.md` for
+full content.
 
 ## Quick Reference
 
@@ -48,10 +49,10 @@ ASSESS → SPLIT → ASSIGN → AGGREGATE → VALIDATE
 
 ### BMAD MCP
 
-Use: new features, phase transitions, sprint plans
-Skip: routine edits, single bug fixes, doc updates
+Use: new features, phase transitions, sprint plans Skip: routine edits, single
+bug fixes, doc updates
 
 ### Cost Guard
 
-Log paid model usage in `.kilocode/rules/cost-optimization`
-Cap: $20/month per provider
+Log paid model usage in `.kilocode/rules/cost-optimization` Cap: $20/month per
+provider

@@ -1,10 +1,13 @@
 ---
-description: Create new plans using standardized templates with automatic keyword-based template selection
+description:
+  Create new plans using standardized templates with automatic keyword-based
+  template selection
 subtask: true
 model: big-pickle
 ---
 
-Create a new plan using standardized templates with automatic keyword-based template selection.
+Create a new plan using standardized templates with automatic keyword-based
+template selection.
 
 ## Options
 
@@ -15,15 +18,13 @@ Create a new plan using standardized templates with automatic keyword-based temp
 
 ## Usage
 
-List templates:
-!`python scripts/new_plan.py --list`
+List templates: !`python scripts/new_plan.py --list`
 
 Auto-select by description:
 !`python scripts/new_plan.py --auto "audit redis security"`
 !`python scripts/new_plan.py -a "test QA results"`
 
-Select specific template:
-!`python scripts/new_plan.py --template TASK_PLAN`
+Select specific template: !`python scripts/new_plan.py --template TASK_PLAN`
 
 ## Templates
 
@@ -40,15 +41,15 @@ Select specific template:
 
 ### Auto-select for security audit
 
-Input: `!`python scripts/new_plan.py --auto "audit redis security"`
-Output: Selects AUDIT_REPORT template
+Input: `!`python scripts/new_plan.py --auto "audit redis security"` Output:
+Selects AUDIT_REPORT template
 
 ### Auto-select for implementation plan
 
-Input: `!`python scripts/new_plan.py --auto "implement new feature"`
-Output: Selects TASK_PLAN template
+Input: `!`python scripts/new_plan.py --auto "implement new feature"` Output:
+Selects TASK_PLAN template
 
 ### List all templates
 
-Input: `!`python scripts/new_plan.py --list`
-Output: Shows all available templates with descriptions
+Input: `!`python scripts/new_plan.py --list` Output: Shows all available
+templates with descriptions

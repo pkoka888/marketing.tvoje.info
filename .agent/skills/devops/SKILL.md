@@ -1,15 +1,19 @@
 ---
 name: devops
-description: Must read this skill when performing any server operations or analyzing infrastructure.
+description:
+  Must read this skill when performing any server operations or analyzing
+  infrastructure.
 ---
 
 # DevOps & Server Operations Skill
 
-Use this skill when interacting with the project's server infrastructure (`s60`, `s61`, `s62`).
+Use this skill when interacting with the project's server infrastructure (`s60`,
+`s61`, `s62`).
 
 ## Core Principle: READ-ONLY BY DEFAULT
 
-**Antigravity agents are strictly prohibited from modifying server state without explicit user approval.**
+**Antigravity agents are strictly prohibited from modifying server state without
+explicit user approval.**
 
 ## Server Inventory
 

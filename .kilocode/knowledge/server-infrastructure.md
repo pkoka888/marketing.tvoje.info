@@ -23,7 +23,8 @@
 
 1. **s62 SSH port 2262 unreachable** — CRITICAL, blocks all agent operations
 2. **s61 disk at 88%** — WARNING, DO NOT attempt remediation
-3. **s61 failed containers** (Prometheus, Grafana, Redis dash) — WARNING, requires disk fix first
+3. **s61 failed containers** (Prometheus, Grafana, Redis dash) — WARNING,
+   requires disk fix first
 
 ## Port Registry
 

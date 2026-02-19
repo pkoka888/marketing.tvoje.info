@@ -1,8 +1,8 @@
 # Agent Sysadmin Role Definition
 
-**Role:** AI Agent Server Administrator  
-**Scope:** Safe deployment and maintenance of web projects across s60/s61/s62  
-**Authority Level:** Restricted — destructive operations require human approval
+**Role:** AI Agent Server Administrator **Scope:** Safe deployment and
+maintenance of web projects across s60/s61/s62 **Authority Level:** Restricted —
+destructive operations require human approval
 
 ---
 
@@ -10,8 +10,10 @@
 
 ### Before ANY Server Interaction
 
-1. **Load `servers.yml`** — understand the target server's purpose, services, and criticality
-2. **Run `preflight-check.yml`** — verify disk space, port availability, service health
+1. **Load `servers.yml`** — understand the target server's purpose, services,
+   and criticality
+2. **Run `preflight-check.yml`** — verify disk space, port availability, service
+   health
 3. **Identify your project's deploy path** — NEVER touch files outside it
 4. **Check port registry** — ensure no port conflicts with existing services
 
@@ -26,28 +28,30 @@
 
 ## Permission Matrix
 
-| Action | s60 | s61 | s62 |
-|--------|-----|-----|-----|
-| Read logs/status | ✅ Auto | ✅ Auto | ✅ Auto |
-| Deploy to project path | ✅ Auto | ❌ Human | ✅ Auto |
-| Restart project's PM2 process | ✅ Auto | ❌ Human | ✅ Auto |
-| Reload Nginx | ⚠ Caution | ❌ Human | ⚠ Caution |
-| Add Nginx site config | ⚠ Caution | ❌ Human | ⚠ Caution |
-| Restart Docker containers | ⚠ Caution | ❌ Human | ⚠ Caution |
-| Modify firewall (UFW) | ❌ Human | ❌ Human | ❌ Human |
-| Delete any file | ❌ Human | ❌ Human | ❌ Human |
-| Restart Traefik | N/A | ❌ Human | N/A |
-| Database operations | N/A | ❌ Human | N/A |
-| System reboot | ❌ Human | ❌ Human | ❌ Human |
-| Install packages | ❌ Human | ❌ Human | ❌ Human |
+| Action                        | s60       | s61      | s62       |
+| ----------------------------- | --------- | -------- | --------- |
+| Read logs/status              | ✅ Auto   | ✅ Auto  | ✅ Auto   |
+| Deploy to project path        | ✅ Auto   | ❌ Human | ✅ Auto   |
+| Restart project's PM2 process | ✅ Auto   | ❌ Human | ✅ Auto   |
+| Reload Nginx                  | ⚠ Caution | ❌ Human | ⚠ Caution |
+| Add Nginx site config         | ⚠ Caution | ❌ Human | ⚠ Caution |
+| Restart Docker containers     | ⚠ Caution | ❌ Human | ⚠ Caution |
+| Modify firewall (UFW)         | ❌ Human  | ❌ Human | ❌ Human  |
+| Delete any file               | ❌ Human  | ❌ Human | ❌ Human  |
+| Restart Traefik               | N/A       | ❌ Human | N/A       |
+| Database operations           | N/A       | ❌ Human | N/A       |
+| System reboot                 | ❌ Human  | ❌ Human | ❌ Human  |
+| Install packages              | ❌ Human  | ❌ Human | ❌ Human  |
 
-**Legend:** ✅ Auto = agent can proceed autonomously | ⚠ Caution = run preflight, proceed with care | ❌ Human = requires explicit human approval
+**Legend:** ✅ Auto = agent can proceed autonomously | ⚠ Caution = run
+preflight, proceed with care | ❌ Human = requires explicit human approval
 
 ---
 
 ## Forbidden Commands
 
-The `safe_ssh.py` script blocks these patterns. Agents must NEVER attempt to bypass:
+The `safe_ssh.py` script blocks these patterns. Agents must NEVER attempt to
+bypass:
 
 ```
 rm, rmdir, mkfs, dd, reboot, shutdown, halt
@@ -113,6 +117,7 @@ On s61 specifically, these containers are protected and must NEVER be stopped:
 - `homarr-dashboard` — monitoring dashboard
 
 **Rule:** Before running ANY `docker` command on s61, the agent must:
+
 1. List current containers: `docker ps --format '{{.Names}}'`
 2. Cross-reference against `protected_containers` in `servers.yml`
 3. Refuse to affect any protected container
@@ -126,22 +131,26 @@ If a deployment breaks a service:
 1. **Do NOT panic-restart services** — this can cascade failures
 2. Check PM2 logs: `pm2 logs <process> --err --lines 50`
 3. Check Nginx: `nginx -t` (config test, does NOT restart)
-4. If Nginx config is broken: restore from backup, `nginx -t`, then `systemctl reload nginx`
+4. If Nginx config is broken: restore from backup, `nginx -t`, then
+   `systemctl reload nginx`
 5. If PM2 app crashes: `pm2 restart <process>` (only YOUR project's process)
-6. If Docker container failed: check logs first (`docker logs <container>`), then escalate
+6. If Docker container failed: check logs first (`docker logs <container>`),
+   then escalate
 
 ---
 
 ## Service Restart Protocol (MANDATORY)
 
-**When to use:** After making ANY change to a service (config, deployment, package update)
+**When to use:** After making ANY change to a service (config, deployment,
+package update)
 
 ### Protocol Steps
 
 1. **Restart Related Services**
    - Use `scripts/restart_all_services.py` to restart affected services
    - Script handles nginx, PM2, and Docker across all servers
-   - Example: `python scripts/restart_all_services.py --servers s62 --services nginx,pm2`
+   - Example:
+     `python scripts/restart_all_services.py --servers s62 --services nginx,pm2`
 
 2. **Wait 30 Seconds**
    - Script automatically waits 30 seconds for services to stabilize
@@ -175,17 +184,19 @@ python scripts/restart_all_services.py --servers s62 --services nginx --check-on
 
 ### Approval Requirements
 
-| Server | Services Requiring Approval |
-|--------|---------------------------|
-| s60 | nginx, docker |
-| s61 | nginx, traefik, docker (ALL require approval - critical server) |
-| s62 | nginx, docker |
+| Server | Services Requiring Approval                                     |
+| ------ | --------------------------------------------------------------- |
+| s60    | nginx, docker                                                   |
+| s61    | nginx, traefik, docker (ALL require approval - critical server) |
+| s62    | nginx, docker                                                   |
 
-**Note:** s61 (Gateway/Traefik) is critical - all service restarts require human approval.
+**Note:** s61 (Gateway/Traefik) is critical - all service restarts require human
+approval.
 
 ### Protected Containers
 
-On s61, these Docker containers are protected and must NEVER be restarted without explicit approval:
+On s61, these Docker containers are protected and must NEVER be restarted
+without explicit approval:
 
 - `traefik` — gateway for ports 80/443
 - `netbox`, `netbox-redis`, `netbox-postgres` — infrastructure docs
@@ -195,7 +206,8 @@ On s61, these Docker containers are protected and must NEVER be restarted withou
 
 - **Config test before restart**: nginx -t runs first
 - **Graceful reload**: Uses `systemctl reload` instead of restart where possible
-- **Container protection**: Script checks protected container list before restart
+- **Container protection**: Script checks protected container list before
+  restart
 - **Health verification**: All services verified after restart
 
 ---
@@ -203,6 +215,7 @@ On s61, these Docker containers are protected and must NEVER be restarted withou
 ## Escalation Rules
 
 **Escalate to human immediately if:**
+
 - Any okamih.cz or okamih.sk URL returns non-200
 - Traefik container is not running
 - Disk usage exceeds 90% on any server

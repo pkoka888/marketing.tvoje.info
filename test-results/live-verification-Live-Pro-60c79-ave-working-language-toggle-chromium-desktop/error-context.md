@@ -34,9 +34,15 @@
             - generic [ref=e25]:
                 - generic [ref=e33]:
                     - generic [ref=e34]: Available for new projects
-                    - heading "Growth That Scales AI-powered marketing strategies that turn visitors into customers. Data-driven campaigns with measurable ROI." [level=1] [ref=e38]:
-                        - generic [ref=e39]: Growth That Scales
-                        - generic [ref=e40]: AI-powered marketing strategies that turn visitors into customers. Data-driven campaigns with measurable ROI.
+                    - ? heading "Growth That Scales AI-powered marketing
+                        strategies that turn visitors into customers.
+                        Data-driven campaigns with measurable ROI." [level=1]
+                        [ref=e38]
+                      : - generic [ref=e39]: Growth That Scales
+                        - generic [ref=e40]:
+                            AI-powered marketing strategies that turn visitors
+                            into customers. Data-driven campaigns with
+                            measurable ROI.
                     - generic [ref=e41]:
                         - link "View Projects" [ref=e42] [cursor=pointer]:
                             - /url: /projects
@@ -147,8 +153,20 @@
                 - generic [ref=e132]:
                     - heading "Marketing & AI Specialist" [level=2] [ref=e133]
                     - generic [ref=e134]:
-                        - paragraph [ref=e135]: I'm a passionate Marketing and AI Specialist with over 5 years of experience in building scalable growth strategies and automated marketing ecosystems. My expertise lies in bridging the gap between creative design and data-driven automation, implementing high-converting funnels, and integrating AI solutions into modern marketing workflows.
-                        - paragraph [ref=e136]: I believe in the power of automation to transform businesses and am dedicated to helping organizations achieve exponential growth through state-of-the-art marketing practices and AI-powered solutions.
+                        - paragraph [ref=e135]:
+                            I'm a passionate Marketing and AI Specialist with
+                            over 5 years of experience in building scalable
+                            growth strategies and automated marketing
+                            ecosystems. My expertise lies in bridging the gap
+                            between creative design and data-driven automation,
+                            implementing high-converting funnels, and
+                            integrating AI solutions into modern marketing
+                            workflows.
+                        - paragraph [ref=e136]:
+                            I believe in the power of automation to transform
+                            businesses and am dedicated to helping organizations
+                            achieve exponential growth through state-of-the-art
+                            marketing practices and AI-powered solutions.
                     - generic [ref=e137]:
                         - heading "Certifications" [level=3] [ref=e138]
                         - generic [ref=e139]:
@@ -229,27 +247,39 @@
                         - generic [ref=e219]: 🤖
                         - text: AI-Powered Marketing
                     - heading "Ready for 2026?" [level=2] [ref=e220]
-                    - paragraph [ref=e221]: Let AI do the heavy lifting while you focus on growth. Our AI solutions deliver measurable results.
+                    - paragraph [ref=e221]:
+                        Let AI do the heavy lifting while you focus on growth.
+                        Our AI solutions deliver measurable results.
                 - generic [ref=e222]:
                     - generic [ref=e223]:
                         - generic [ref=e224]: 🎯
-                        - heading "Smart Campaign Optimization" [level=3] [ref=e225]
-                        - paragraph [ref=e226]: AI automatically optimizes bidding and targeting for maximum ROAS.
+                        - heading "Smart Campaign Optimization" [level=3]
+                          [ref=e225]
+                        - paragraph [ref=e226]:
+                            AI automatically optimizes bidding and targeting for
+                            maximum ROAS.
                         - generic [ref=e227]: +40% better ROAS
                     - generic [ref=e228]:
                         - generic [ref=e229]: ⚡
                         - heading "Predictive Analytics" [level=3] [ref=e230]
-                        - paragraph [ref=e231]: AI predicts customer behavior and identifies the best opportunities.
+                        - paragraph [ref=e231]:
+                            AI predicts customer behavior and identifies the
+                            best opportunities.
                         - generic [ref=e232]: 3x faster
                     - generic [ref=e233]:
                         - generic [ref=e234]: 🎨
                         - heading "AI Content Generation" [level=3] [ref=e235]
-                        - paragraph [ref=e236]: Auto-generate ad copy and creatives based on performance.
+                        - paragraph [ref=e236]:
+                            Auto-generate ad copy and creatives based on
+                            performance.
                         - generic [ref=e237]: 50% time saved
                     - generic [ref=e238]:
                         - generic [ref=e239]: 🔄
-                        - heading "Real-time Personalization" [level=3] [ref=e240]
-                        - paragraph [ref=e241]: Dynamic content tailored to each visitor in real-time.
+                        - heading "Real-time Personalization" [level=3]
+                          [ref=e240]
+                        - paragraph [ref=e241]:
+                            Dynamic content tailored to each visitor in
+                            real-time.
                         - generic [ref=e242]: +25% conversion
                 - link "Get Free AI Audit" [ref=e244] [cursor=pointer]:
                     - /url: /#contact
@@ -265,9 +295,12 @@
             - generic [ref=e262]:
                 - generic [ref=e263]:
                     - heading "Featured Projects" [level=2] [ref=e264]
-                    - paragraph [ref=e265]: A selection of projects demonstrating expertise in Growth Strategy, AI, and Marketing Automation
+                    - paragraph [ref=e265]:
+                        A selection of projects demonstrating expertise in
+                        Growth Strategy, AI, and Marketing Automation
                 - group "Project categories" [ref=e266]:
-                    - button "All Projects" [pressed] [ref=e267] [cursor=pointer]
+                    - button "All Projects" [pressed] [ref=e267]
+                      [cursor=pointer]
                     - button "SEO" [ref=e268] [cursor=pointer]
                     - button "PPC/Ads" [ref=e269] [cursor=pointer]
                     - button "Content" [ref=e270] [cursor=pointer]
@@ -282,8 +315,11 @@
                                 - generic [ref=e281]: AI
                                 - generic [ref=e282]: ChatGPT
                                 - generic [ref=e283]: Support
-                            - heading "AI Customer Support Chatbot" [level=3] [ref=e284]
-                            - paragraph [ref=e285]: Implementation of AI-powered chatbot for customer support using ChatGPT integration.
+                            - heading "AI Customer Support Chatbot" [level=3]
+                              [ref=e284]
+                            - paragraph [ref=e285]:
+                                Implementation of AI-powered chatbot for
+                                customer support using ChatGPT integration.
                             - generic [ref=e286]:
                                 - generic [ref=e287]:
                                     - generic [ref=e288]: 70%
@@ -294,8 +330,9 @@
                                 - generic [ref=e293]:
                                     - generic [ref=e294]: 90%
                                     - generic [ref=e295]: Customer Satisfaction
-                            - 'link "View Details: AI Customer Support Chatbot" [ref=e296] [cursor=pointer]':
-                                - /url: /projects/ai-chatbot
+                            - ? 'link "View Details: AI Customer Support
+                                Chatbot" [ref=e296] [cursor=pointer]'
+                              : - /url: /projects/ai-chatbot
                                 - text: View Details
                                 - img [ref=e297]
                     - article [ref=e299]:
@@ -308,8 +345,12 @@
                                 - generic [ref=e308]: TensorFlow
                                 - generic [ref=e309]: PyTorch
                                 - generic [ref=e310]: ML Infrastructure
-                            - heading "AI/ML Infrastructure Setup" [level=3] [ref=e311]
-                            - paragraph [ref=e312]: End-to-end AI/ML platform infrastructure on AWS with SageMaker, MLOps pipelines, and scalable compute resources
+                            - heading "AI/ML Infrastructure Setup" [level=3]
+                              [ref=e311]
+                            - paragraph [ref=e312]:
+                                End-to-end AI/ML platform infrastructure on AWS
+                                with SageMaker, MLOps pipelines, and scalable
+                                compute resources
                             - generic [ref=e313]:
                                 - generic [ref=e314]:
                                     - generic [ref=e315]: 10x
@@ -320,8 +361,9 @@
                                 - generic [ref=e320]:
                                     - generic [ref=e321]: 99.9%
                                     - generic [ref=e322]: Model availability
-                            - 'link "View Details: AI/ML Infrastructure Setup" [ref=e323] [cursor=pointer]':
-                                - /url: /projects/ai-ml-infrastructure
+                            - ? 'link "View Details: AI/ML Infrastructure Setup"
+                                [ref=e323] [cursor=pointer]'
+                              : - /url: /projects/ai-ml-infrastructure
                                 - text: View Details
                                 - img [ref=e324]
                     - article [ref=e326]:
@@ -331,8 +373,11 @@
                                 - generic [ref=e332]: Design
                                 - generic [ref=e333]: Branding
                                 - generic [ref=e334]: Figma
-                            - heading "Brand Identity Redesign" [level=3] [ref=e335]
-                            - paragraph [ref=e336]: Complete brand identity and website redesign for a Prague-based startup.
+                            - heading "Brand Identity Redesign" [level=3]
+                              [ref=e335]
+                            - paragraph [ref=e336]:
+                                Complete brand identity and website redesign for
+                                a Prague-based startup.
                             - generic [ref=e337]:
                                 - generic [ref=e338]:
                                     - generic [ref=e339]: 5x
@@ -343,8 +388,9 @@
                                 - generic [ref=e344]:
                                     - generic [ref=e345]: 100%
                                     - generic [ref=e346]: Client Satisfaction
-                            - 'link "View Details: Brand Identity Redesign" [ref=e347] [cursor=pointer]':
-                                - /url: /projects/brand-identity
+                            - ? 'link "View Details: Brand Identity Redesign"
+                                [ref=e347] [cursor=pointer]'
+                              : - /url: /projects/brand-identity
                                 - text: View Details
                                 - img [ref=e348]
                     - article [ref=e350]:
@@ -357,20 +403,25 @@
                                 - generic [ref=e359]: Conversion
                                 - generic [ref=e360]: Retargeting
                                 - generic [ref=e361]: Analytics
-                            - heading "Marketing automatizace" [level=3] [ref=e362]
-                            - paragraph [ref=e363]: Automatizace e-mail marketingu a retargetingu pro e-commerce
+                            - heading "Marketing automatizace" [level=3]
+                              [ref=e362]
+                            - paragraph [ref=e363]:
+                                Automatizace e-mail marketingu a retargetingu
+                                pro e-commerce
                             - generic [ref=e364]:
                                 - generic [ref=e365]:
                                     - generic [ref=e366]: +35%
                                     - generic [ref=e367]: Opakované nákupy
                                 - generic [ref=e368]:
                                     - generic [ref=e369]: +28%
-                                    - generic [ref=e370]: Průměrná hodnota objednávky
+                                    - generic [ref=e370]:
+                                        Průměrná hodnota objednávky
                                 - generic [ref=e371]:
                                     - generic [ref=e372]: 2.4x
                                     - generic [ref=e373]: Návratnost investice
-                            - 'link "View Details: Marketing automatizace" [ref=e374] [cursor=pointer]':
-                                - /url: /projects/cicd-automation
+                            - ? 'link "View Details: Marketing automatizace"
+                                [ref=e374] [cursor=pointer]'
+                              : - /url: /projects/cicd-automation
                                 - text: View Details
                                 - img [ref=e375]
                     - article [ref=e377]:
@@ -383,20 +434,25 @@
                                 - generic [ref=e386]: Analytics
                                 - generic [ref=e387]: Google Ads
                                 - generic [ref=e388]: Conversion
-                            - heading "E-commerce růst strategie" [level=3] [ref=e389]
-                            - paragraph [ref=e390]: Komplexní marketingová strategie pro růst e-shopu a zvýšení tržeb
+                            - heading "E-commerce růst strategie" [level=3]
+                              [ref=e389]
+                            - paragraph [ref=e390]:
+                                Komplexní marketingová strategie pro růst
+                                e-shopu a zvýšení tržeb
                             - generic [ref=e391]:
                                 - generic [ref=e392]:
                                     - generic [ref=e393]: +47%
-                                    - generic [ref=e394]: Návštěvnost z vyhledávačů
+                                    - generic [ref=e394]:
+                                        Návštěvnost z vyhledávačů
                                 - generic [ref=e395]:
                                     - generic [ref=e396]: +62%
                                     - generic [ref=e397]: Konverze
                                 - generic [ref=e398]:
                                     - generic [ref=e399]: 320%
                                     - generic [ref=e400]: ROI z PPC
-                            - 'link "View Details: E-commerce růst strategie" [ref=e401] [cursor=pointer]':
-                                - /url: /projects/cloud-migration
+                            - ? 'link "View Details: E-commerce růst strategie"
+                                [ref=e401] [cursor=pointer]'
+                              : - /url: /projects/cloud-migration
                                 - text: View Details
                                 - img [ref=e402]
                     - article [ref=e404]:
@@ -407,8 +463,11 @@
                                 - generic [ref=e411]: Meta Ads
                                 - generic [ref=e412]: CRM Automation
                                 - generic [ref=e413]: ROI
-                            - heading "300% ROI B2B Growth Funnel" [level=3] [ref=e414]
-                            - paragraph [ref=e415]: Integrated performance marketing campaign leveraging behavioral CRM and AI-driven bidding.
+                            - heading "300% ROI B2B Growth Funnel" [level=3]
+                              [ref=e414]
+                            - paragraph [ref=e415]:
+                                Integrated performance marketing campaign
+                                leveraging behavioral CRM and AI-driven bidding.
                             - generic [ref=e416]:
                                 - generic [ref=e417]:
                                     - generic [ref=e418]: 312%
@@ -419,8 +478,9 @@
                                 - generic [ref=e423]:
                                     - generic [ref=e424]: 120%
                                     - generic [ref=e425]: Lead Volume
-                            - 'link "View Details: 300% ROI B2B Growth Funnel" [ref=e426] [cursor=pointer]':
-                                - /url: /projects/growth-funnel
+                            - ? 'link "View Details: 300% ROI B2B Growth Funnel"
+                                [ref=e426] [cursor=pointer]'
+                              : - /url: /projects/growth-funnel
                                 - text: View Details
                                 - img [ref=e427]
                     - article [ref=e429]:
@@ -433,8 +493,12 @@
                                 - generic [ref=e438]: Security
                                 - generic [ref=e439]: Helm
                                 - generic [ref=e440]: Operators
-                            - heading "Kubernetes Cluster Management" [level=3] [ref=e441]
-                            - paragraph [ref=e442]: Enterprise-grade Kubernetes platform with multi-cluster management, security hardening, and operational automation
+                            - heading "Kubernetes Cluster Management" [level=3]
+                              [ref=e441]
+                            - paragraph [ref=e442]:
+                                Enterprise-grade Kubernetes platform with
+                                multi-cluster management, security hardening,
+                                and operational automation
                             - generic [ref=e443]:
                                 - generic [ref=e444]:
                                     - generic [ref=e445]: 99.95%
@@ -445,8 +509,9 @@
                                 - generic [ref=e450]:
                                     - generic [ref=e451]: 90%
                                     - generic [ref=e452]: Security score
-                            - 'link "View Details: Kubernetes Cluster Management" [ref=e453] [cursor=pointer]':
-                                - /url: /projects/kubernetes-management
+                            - ? 'link "View Details: Kubernetes Cluster
+                                Management" [ref=e453] [cursor=pointer]'
+                              : - /url: /projects/kubernetes-management
                                 - text: View Details
                                 - img [ref=e454]
                     - article [ref=e456]:
@@ -456,8 +521,11 @@
                                 - generic [ref=e462]: SEO
                                 - generic [ref=e463]: E-commerce
                                 - generic [ref=e464]: Analytics
-                            - heading "E-commerce SEO Growth" [level=3] [ref=e465]
-                            - paragraph [ref=e466]: Complete SEO overhaul for a Czech e-commerce store resulting in 200% traffic increase.
+                            - heading "E-commerce SEO Growth" [level=3]
+                              [ref=e465]
+                            - paragraph [ref=e466]:
+                                Complete SEO overhaul for a Czech e-commerce
+                                store resulting in 200% traffic increase.
                             - generic [ref=e467]:
                                 - generic [ref=e468]:
                                     - generic [ref=e469]: 200%
@@ -468,8 +536,9 @@
                                 - generic [ref=e474]:
                                     - generic [ref=e475]: '1'
                                     - generic [ref=e476]: Year to results
-                            - 'link "View Details: E-commerce SEO Growth" [ref=e477] [cursor=pointer]':
-                                - /url: /projects/ecommerce-seo
+                            - ? 'link "View Details: E-commerce SEO Growth"
+                                [ref=e477] [cursor=pointer]'
+                              : - /url: /projects/ecommerce-seo
                                 - text: View Details
                                 - img [ref=e478]
                     - article [ref=e480]:
@@ -479,8 +548,11 @@
                                 - generic [ref=e486]: Automation
                                 - generic [ref=e487]: HubSpot
                                 - generic [ref=e488]: Klaviyo
-                            - heading "Marketing Automation Setup" [level=3] [ref=e489]
-                            - paragraph [ref=e490]: Implementation of full marketing automation stack for B2B SaaS company.
+                            - heading "Marketing Automation Setup" [level=3]
+                              [ref=e489]
+                            - paragraph [ref=e490]:
+                                Implementation of full marketing automation
+                                stack for B2B SaaS company.
                             - generic [ref=e491]:
                                 - generic [ref=e492]:
                                     - generic [ref=e493]: 60%
@@ -491,8 +563,9 @@
                                 - generic [ref=e498]:
                                     - generic [ref=e499]: 3x
                                     - generic [ref=e500]: Email ROI
-                            - 'link "View Details: Marketing Automation Setup" [ref=e501] [cursor=pointer]':
-                                - /url: /projects/marketing-automation
+                            - ? 'link "View Details: Marketing Automation Setup"
+                                [ref=e501] [cursor=pointer]'
+                              : - /url: /projects/marketing-automation
                                 - text: View Details
                                 - img [ref=e502]
                 - link "View All" [ref=e505] [cursor=pointer]:
@@ -506,21 +579,29 @@
                 - generic [ref=e513]:
                     - generic [ref=e516]:
                         - img [ref=e518]
-                        - heading "AI Campaign Optimization" [level=3] [ref=e520]
-                        - paragraph [ref=e521]: Precision targeting with AI that learns and improves. Smart bidding, automated A/B testing, and real-time optimization.
+                        - heading "AI Campaign Optimization" [level=3]
+                          [ref=e520]
+                        - paragraph [ref=e521]:
+                            Precision targeting with AI that learns and
+                            improves. Smart bidding, automated A/B testing, and
+                            real-time optimization.
                         - list [ref=e522]:
                             - listitem [ref=e523]:
                                 - img [ref=e524]
-                                - generic [ref=e526]: AI-powered bidding strategies
+                                - generic [ref=e526]:
+                                    AI-powered bidding strategies
                             - listitem [ref=e527]:
                                 - img [ref=e528]
-                                - generic [ref=e530]: Cross-platform campaign management
+                                - generic [ref=e530]:
+                                    Cross-platform campaign management
                             - listitem [ref=e531]:
                                 - img [ref=e532]
-                                - generic [ref=e534]: Automated A/B testing at scale
+                                - generic [ref=e534]:
+                                    Automated A/B testing at scale
                             - listitem [ref=e535]:
                                 - img [ref=e536]
-                                - generic [ref=e538]: Real-time performance optimization
+                                - generic [ref=e538]:
+                                    Real-time performance optimization
                         - generic [ref=e540]:
                             - img [ref=e541]
                             - text: +40% ROAS typical
@@ -531,7 +612,10 @@
                     - generic [ref=e550]:
                         - img [ref=e552]
                         - heading "TikTok & Short-Form Ads" [level=3] [ref=e554]
-                        - paragraph [ref=e555]: Tap into the fastest-growing marketing channel. Spark Ads, creator partnerships, and viral content strategies.
+                        - paragraph [ref=e555]:
+                            Tap into the fastest-growing marketing channel.
+                            Spark Ads, creator partnerships, and viral content
+                            strategies.
                         - list [ref=e556]:
                             - listitem [ref=e557]:
                                 - img [ref=e558]
@@ -544,7 +628,8 @@
                                 - generic [ref=e568]: Viral content strategy
                             - listitem [ref=e569]:
                                 - img [ref=e570]
-                                - generic [ref=e572]: Short-form video production
+                                - generic [ref=e572]:
+                                    Short-form video production
                         - generic [ref=e574]:
                             - img [ref=e575]
                             - text: 3x reach vs traditional
@@ -555,20 +640,26 @@
                     - generic [ref=e584]:
                         - img [ref=e586]
                         - heading "Marketing Automation" [level=3] [ref=e588]
-                        - paragraph [ref=e589]: Turn visitors into customers with automated funnels that work 24/7. Lead nurturing, behavior triggers, and CRM integration.
+                        - paragraph [ref=e589]:
+                            Turn visitors into customers with automated funnels
+                            that work 24/7. Lead nurturing, behavior triggers,
+                            and CRM integration.
                         - list [ref=e590]:
                             - listitem [ref=e591]:
                                 - img [ref=e592]
                                 - generic [ref=e594]: Lead scoring & nurturing
                             - listitem [ref=e595]:
                                 - img [ref=e596]
-                                - generic [ref=e598]: Behavior-triggered campaigns
+                                - generic [ref=e598]:
+                                    Behavior-triggered campaigns
                             - listitem [ref=e599]:
                                 - img [ref=e600]
-                                - generic [ref=e602]: CRM integration (HubSpot, Klaviyo)
+                                - generic [ref=e602]:
+                                    CRM integration (HubSpot, Klaviyo)
                             - listitem [ref=e603]:
                                 - img [ref=e604]
-                                - generic [ref=e606]: Multi-channel orchestration
+                                - generic [ref=e606]:
+                                    Multi-channel orchestration
                         - generic [ref=e608]:
                             - img [ref=e609]
                             - text: 50% more qualified leads
@@ -579,7 +670,9 @@
                     - generic [ref=e618]:
                         - img [ref=e620]
                         - heading "AI Search Optimization" [level=3] [ref=e622]
-                        - paragraph [ref=e623]: Optimize for the new frontier of search. Rank in ChatGPT, Perplexity, and AI Answer Engines.
+                        - paragraph [ref=e623]:
+                            Optimize for the new frontier of search. Rank in
+                            ChatGPT, Perplexity, and AI Answer Engines.
                         - list [ref=e624]:
                             - listitem [ref=e625]:
                                 - img [ref=e626]
@@ -608,28 +701,36 @@
                         - img [ref=e660]
                         - generic [ref=e662]:
                             - heading "Discovery" [level=3] [ref=e663]
-                            - paragraph [ref=e664]: We analyze your current marketing, competitors, and goals.
+                            - paragraph [ref=e664]:
+                                We analyze your current marketing, competitors,
+                                and goals.
                             - generic [ref=e665]: 1-2 weeks
                     - generic [ref=e666]:
                         - generic [ref=e667]: '2'
                         - img [ref=e669]
                         - generic [ref=e671]:
                             - heading "Strategy" [level=3] [ref=e672]
-                            - paragraph [ref=e673]: We create a custom marketing plan with KPIs and timeline.
+                            - paragraph [ref=e673]:
+                                We create a custom marketing plan with KPIs and
+                                timeline.
                             - generic [ref=e674]: 1 week
                     - generic [ref=e675]:
                         - generic [ref=e676]: '3'
                         - img [ref=e678]
                         - generic [ref=e680]:
                             - heading "Implementation" [level=3] [ref=e681]
-                            - paragraph [ref=e682]: We execute the strategy with regular reporting and optimization.
+                            - paragraph [ref=e682]:
+                                We execute the strategy with regular reporting
+                                and optimization.
                             - generic [ref=e683]: 2-8 weeks
                     - generic [ref=e684]:
                         - generic [ref=e685]: '4'
                         - img [ref=e687]
                         - generic [ref=e689]:
                             - heading "Optimization" [level=3] [ref=e690]
-                            - paragraph [ref=e691]: We continuously improve based on data and results.
+                            - paragraph [ref=e691]:
+                                We continuously improve based on data and
+                                results.
                             - generic [ref=e692]: Ongoing
             - generic [ref=e694]:
                 - heading "What Clients Say" [level=2] [ref=e696]
@@ -641,7 +742,11 @@
                             - img [ref=e704]
                             - img [ref=e706]
                             - img [ref=e708]
-                        - blockquote [ref=e710]: '"Exceptional work on our marketing. Increased our conversions by 40% and improved our online visibility. I recommend them to anyone looking for a reliable marketing partner."'
+                        - blockquote [ref=e710]:
+                            '"Exceptional work on our marketing. Increased our
+                            conversions by 40% and improved our online
+                            visibility. I recommend them to anyone looking for a
+                            reliable marketing partner."'
                         - generic [ref=e712]:
                             - generic [ref=e713]: Jan Novák
                             - generic [ref=e714]: CEO, TechStartup s.r.o.
@@ -652,7 +757,11 @@
                             - img [ref=e721]
                             - img [ref=e723]
                             - img [ref=e725]
-                        - blockquote [ref=e727]: '"The AI integration they created for us transformed our customer service. Our team now processes 60% fewer routine inquiries thanks to the intelligent chatbot."'
+                        - blockquote [ref=e727]:
+                            '"The AI integration they created for us transformed
+                            our customer service. Our team now processes 60%
+                            fewer routine inquiries thanks to the intelligent
+                            chatbot."'
                         - generic [ref=e729]:
                             - generic [ref=e730]: Marie Svobodová
                             - generic [ref=e731]: CTO, Digital Agency a.s.
@@ -663,10 +772,14 @@
                             - img [ref=e738]
                             - img [ref=e740]
                             - img [ref=e742]
-                        - blockquote [ref=e744]: '"Professional approach and technical mastery. The Kubernetes implementation was seamless and our deployment pipeline is now fully automated."'
+                        - blockquote [ref=e744]:
+                            '"Professional approach and technical mastery. The
+                            Kubernetes implementation was seamless and our
+                            deployment pipeline is now fully automated."'
                         - generic [ref=e746]:
                             - generic [ref=e747]: Petr Dvořák
-                            - generic [ref=e748]: Technical Director, Enterprise Solutions
+                            - generic [ref=e748]:
+                                Technical Director, Enterprise Solutions
             - generic [ref=e750]:
                 - heading "Certifications" [level=2] [ref=e752]
                 - generic [ref=e753]:
@@ -698,7 +811,8 @@
             - generic [ref=e796]:
                 - generic [ref=e797]:
                     - heading "Get in Touch" [level=2] [ref=e798]
-                    - paragraph [ref=e799]: Ready to start your next project? Let's talk!
+                    - paragraph [ref=e799]:
+                        Ready to start your next project? Let's talk!
                 - generic [ref=e800]:
                     - generic [ref=e801]:
                         - generic [ref=e802]:
@@ -727,8 +841,16 @@
                         - generic [ref=e819]: Message *
                         - textbox "Message" [ref=e820]
                     - generic [ref=e822] [cursor=pointer]:
-                        - checkbox "I consent to the processing of personal data for the purpose of contact. I have read the <a href=\"/privacy\" class=\"text-primary-600 hover:text-primary-700\">privacy policy</a>." [ref=e823]
-                        - generic [ref=e824]: I consent to the processing of personal data for the purpose of contact. I have read the <a href="/privacy" class="text-primary-600 hover:text-primary-700">privacy policy</a>.
+                        - checkbox "I consent to the processing of personal data
+                          for the purpose of contact. I have read the <a
+                          href=\"/privacy\" class=\"text-primary-600
+                          hover:text-primary-700\">privacy policy</a>."
+                          [ref=e823]
+                        - generic [ref=e824]:
+                            I consent to the processing of personal data for the
+                            purpose of contact. I have read the <a
+                            href="/privacy" class="text-primary-600
+                            hover:text-primary-700">privacy policy</a>.
                     - button "Send Message" [ref=e826] [cursor=pointer]:
                         - generic [ref=e827]: Send Message
     - contentinfo [ref=e828]:
@@ -738,7 +860,9 @@
                     - generic [ref=e833]:
                         - link "Pavel Kašpar" [ref=e834] [cursor=pointer]:
                             - /url: /
-                        - paragraph [ref=e835]: Marketing that works. More customers, measurable results.
+                        - paragraph [ref=e835]:
+                            Marketing that works. More customers, measurable
+                            results.
                         - generic [ref=e836]:
                             - link "LinkedIn" [ref=e837] [cursor=pointer]:
                                 - /url: https://linkedin.com/in/pavelkaspar
@@ -768,11 +892,13 @@
                         - heading "Contact" [level=3] [ref=e858]
                         - list [ref=e859]:
                             - listitem [ref=e860]:
-                                - link "hello@marketing.tvoje.info" [ref=e861] [cursor=pointer]:
-                                    - /url: mailto:hello@marketing.tvoje.info
+                                - ? link "hello@marketing.tvoje.info" [ref=e861]
+                                    [cursor=pointer]
+                                  : - /url: mailto:hello@marketing.tvoje.info
                             - listitem [ref=e862]: Prague, Czech Republic
                 - generic [ref=e864]:
-                    - paragraph [ref=e865]: © 2026 Portfolio. All rights reserved.
+                    - paragraph [ref=e865]:
+                        © 2026 Portfolio. All rights reserved.
                     - generic [ref=e866]:
                         - link "Privacy Policy" [ref=e867] [cursor=pointer]:
                             - /url: /privacy

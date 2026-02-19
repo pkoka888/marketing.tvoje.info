@@ -14,25 +14,25 @@ all:
     backup:
       hosts:
         s60:
-          ansible_host: "100.111.141.111"  # Tailscale
+          ansible_host: '100.111.141.111' # Tailscale
           ansible_port: 20
-          server_purpose: "Hub/Backup"
+          server_purpose: 'Hub/Backup'
           server_criticality: medium
 
     gateway:
       hosts:
         s61:
-          ansible_host: "100.111.141.112"  # Tailscale
+          ansible_host: '100.111.141.112' # Tailscale
           ansible_port: 20
-          server_purpose: "Gateway/Traefik"
+          server_purpose: 'Gateway/Traefik'
           server_criticality: critical
 
     webservers:
       hosts:
         s62:
-          ansible_host: "100.91.164.109"  # Tailscale
+          ansible_host: '100.91.164.109' # Tailscale
           ansible_port: 20
-          server_purpose: "Production/Web"
+          server_purpose: 'Production/Web'
           server_criticality: high
 
     # Convenience groups

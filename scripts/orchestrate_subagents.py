@@ -23,12 +23,12 @@ AUDIT_FIX_TASKS = [
         "description": "Fix Chinese character in plan-approval-required",
         "severity": "CRITICAL",
         "prompt": """Fix the Chinese character corruption in all 4 copies of plan-approval-required.
-        
+
 Find 'cannot胜任' (around line 52) and replace with 'cannot handle the task'.
 
 Target files:
 - .kilocode/rules/plan-approval-required
-- .agents/rules/plan-approval-required  
+- .agents/rules/plan-approval-required
 - .clinerules/skills/plan-approval-required
 - .gemini/rules/plan-approval-required
 
@@ -193,7 +193,7 @@ def list_tasks():
         print(f"\n{i}. {severity_emoji} {task['description']} ({severity})")
         print(f"   Agent: {task['agent']}")
         print(f"   Files: {', '.join(task['files'])}")
-    
+
     print("\n" + "=" * 60)
     print("📋 Verification Gates (3 total)")
     print("=" * 60)
@@ -207,11 +207,11 @@ def main():
     parser.add_argument("--list", action="store_true", help="List tasks only")
     parser.add_argument("--dry-run", action="store_true", help="Show what would run")
     args = parser.parse_args()
-    
+
     if args.list:
         list_tasks()
         return 0
-    
+
     print("""
 🎯 SUBAGENT ORCHESTRATION FOR AUDIT FIXES
 
@@ -224,14 +224,14 @@ To execute:
 Tasks:
 """)
     list_tasks()
-    
+
     print("""
 USAGE:
 - This script defines the prompts for use_subagents tool
 - Execute in parallel using the prompts above
 - Then run verification gates sequentially
 """)
-    
+
     return 0
 
 

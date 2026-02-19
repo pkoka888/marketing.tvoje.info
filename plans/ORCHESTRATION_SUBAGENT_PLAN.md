@@ -4,15 +4,18 @@
 
 Pending tasks identified from previous session:
 
-1. **Fix FIRECRAWL_API_KEY detection** - Key exists in .env but script reports "Not Found"
-2. **Add TS_OAUTH and VPS keys to .env** - These exist in GitHub Secrets but not in .env
+1. **Fix FIRECRAWL_API_KEY detection** - Key exists in .env but script reports
+   "Not Found"
+2. **Add TS_OAUTH and VPS keys to .env** - These exist in GitHub Secrets but not
+   in .env
 3. **Verify all API keys end-to-end**
 
 ## Task Analysis
 
 ### Task 1: FIRECRAWL_API_KEY Detection Fix
 
-- **Root Cause**: Python script using `load_dotenv()` not correctly parsing the key
+- **Root Cause**: Python script using `load_dotenv()` not correctly parsing the
+  key
 - **Location**: `scripts/verify_api_keys.py`
 - **Agent**: Kilo Code (bulk coding)
 - **Skill**: `bmad-development-execution` + `debug`
@@ -73,7 +76,7 @@ cline "Add the following keys to .env from GitHub Secrets: TS_OAUTH_CLIENT_ID, T
 ## Expected Outcomes
 
 1. FIRECRAWL_API_KEY detection fixed - script reports "Present" or "OK"
-2. .env updated with 6 new keys (TS*OAUTH*_, VPS\__)
+2. .env updated with 6 new keys (TS*OAUTH*\_, VPS\_\_)
 3. Security best practices documented in docs/SECURITY_BEST_PRACTICES.md
 4. All 19 keys verified working
 

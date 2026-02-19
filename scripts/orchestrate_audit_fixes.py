@@ -26,18 +26,18 @@ class AuditFixOrchestrator:
     def __init__(self, dry_run: bool = False):
         self.dry_run = dry_run
         self.results: List[Dict[str, Any]] = []
-        
+
     def run_subagent(self, task: Dict[str, str]) -> Dict[str, Any]:
         """Execute a single subagent task via Kilo Code."""
         agent_name = task["agent"]
         prompt = task["prompt"]
         files = task.get("files", [])
-        
+
         print(f"\n🚀 [{agent_name}] Starting task: {task['description']}")
         print(f"   Files: {', '.join(files)}")
-        
+
         start_time = time.time()
-        
+
         if self.dry_run:
             print(f"   ⚠️  DRY RUN - Would execute:")
             print(f"       {prompt[:200]}...")
@@ -48,10 +48,10 @@ class AuditFixOrchestrator:
                 "files": files,
                 "status": "dry_run"
             }
-        
+
         # Build Kilo command
         cmd = f'kilo run --model {MODEL} --prompt "{prompt}"'
-        
+
         try:
             result = subprocess.run(
                 cmd,
@@ -60,16 +60,16 @@ class AuditFixOrchestrator:
                 text=True,
                 timeout=TIMEOUT
             )
-            
+
             success = result.returncode == 0
             duration = time.time() - start_time
-            
+
             if success:
                 print(f"   ✅ Completed in {duration:.2f}s")
             else:
                 print(f"   ❌ Failed in {duration:.2f}s")
                 print(f"   Error: {result.stderr[:200] if result.stderr else 'Unknown'}")
-            
+
             return {
                 "agent": agent_name,
                 "success": success,
@@ -79,7 +79,7 @@ class AuditFixOrchestrator:
                 "files": files,
                 "status": "completed"
             }
-            
+
         except subprocess.TimeoutExpired:
             duration = time.time() - start_time
             print(f"   ⏱️  Timeout after {duration:.2f}s")
@@ -102,7 +102,7 @@ class AuditFixOrchestrator:
                 "files": files,
                 "status": "error"
             }
-    
+
     def run_parallel(self, tasks: List[Dict[str, str]]) -> List[Dict[str, Any]]:
         """Execute all tasks in parallel using ThreadPoolExecutor."""
         print(f"\n{'='*60}")
@@ -110,16 +110,16 @@ class AuditFixOrchestrator:
         print(f"   Model: {MODEL}")
         print(f"   Dry Run: {self.dry_run}")
         print(f"{'='*60}")
-        
+
         results = []
-        
+
         with concurrent.futures.ThreadPoolExecutor(max_workers=len(tasks)) as executor:
             # Submit all tasks
             futures = {
-                executor.submit(self.run_subagent, task): task 
+                executor.submit(self.run_subagent, task): task
                 for task in tasks
             }
-            
+
             # Collect results as they complete
             for future in concurrent.futures.as_completed(futures):
                 task = futures[future]
@@ -134,20 +134,20 @@ class AuditFixOrchestrator:
                         "files": task.get("files", []),
                         "status": "exception"
                     })
-        
+
         return results
-    
+
     def run_sequential_gate(self, gate_name: str, command: str) -> bool:
         """Execute a sequential gate (verification step)."""
         print(f"\n{'='*60}")
         print(f"🚪 SEQUENTIAL GATE: {gate_name}")
         print(f"   Command: {command}")
         print(f"{'='*60}")
-        
+
         if self.dry_run:
             print(f"   ⚠️  DRY RUN - Would execute: {command}")
             return True
-        
+
         try:
             result = subprocess.run(
                 command,
@@ -156,9 +156,9 @@ class AuditFixOrchestrator:
                 text=True,
                 timeout=120
             )
-            
+
             success = result.returncode == 0
-            
+
             if success:
                 print(f"   ✅ Gate passed (exit {result.returncode})")
                 if result.stdout:
@@ -169,16 +169,16 @@ class AuditFixOrchestrator:
                 print(f"   ❌ Gate failed (exit {result.returncode})")
                 if result.stderr:
                     print(f"   Error: {result.stderr[:200]}")
-            
+
             return success
-            
+
         except subprocess.TimeoutExpired:
             print(f"   ⏱️  Gate timeout")
             return False
         except Exception as e:
             print(f"   ❌ Gate error: {str(e)[:100]}")
             return False
-    
+
     def generate_report(self, results: List[Dict[str, Any]], gates_passed: bool) -> str:
         """Generate execution report."""
         report = []
@@ -188,12 +188,12 @@ class AuditFixOrchestrator:
         report.append(f"**Model**: {MODEL}")
         report.append(f"**Dry Run**: {self.dry_run}")
         report.append("")
-        
+
         # Summary
         total = len(results)
         successful = sum(1 for r in results if r.get("success"))
         failed = total - successful
-        
+
         report.append("## Summary")
         report.append("")
         report.append(f"| Metric | Value |")
@@ -203,7 +203,7 @@ class AuditFixOrchestrator:
         report.append(f"| Failed | {failed} |")
         report.append(f"| Gates Passed | {'✅ Yes' if gates_passed else '❌ No'} |")
         report.append("")
-        
+
         # Task Results
         report.append("## Task Results")
         report.append("")
@@ -213,15 +213,15 @@ class AuditFixOrchestrator:
             files = ", ".join(r.get("files", []))
             duration = r.get("duration", 0)
             error = r.get("error", "")
-            
+
             report.append(f"- {status} **{agent}** ({duration:.1f}s)")
             report.append(f"  - Files: {files}")
             if error:
                 report.append(f"  - Error: {error[:100]}")
         report.append("")
-        
+
         return "\n".join(report)
-    
+
     def execute(self):
         """Main execution flow."""
         # Define parallel tasks (Phase 1 & 2)
@@ -279,32 +279,32 @@ class AuditFixOrchestrator:
                 "files": ["scripts/protected/snapshot_config.py"]
             }
         ]
-        
+
         # Phase 1 & 2: Parallel execution
         results = self.run_parallel(tasks)
-        
+
         # Phase 3: Sequential gates (verification)
         gates = [
             ("verify_agentic_platform", "python scripts/verify_agentic_platform.py"),
             ("validate_template_references", "python scripts/validate_template_references.py"),
             ("new_plan_list", "python scripts/new_plan.py --list")
         ]
-        
+
         gates_passed = True
         for gate_name, command in gates:
             if not self.run_sequential_gate(gate_name, command):
                 gates_passed = False
                 print(f"\n⚠️  Gate '{gate_name}' failed - continuing with remaining gates")
-        
+
         # Generate report
         report = self.generate_report(results, gates_passed)
         print(f"\n\n{report}")
-        
+
         # Save report
         report_path = Path("plans/agent-shared/audit-fix-orchestration-report.md")
         report_path.write_text(report)
         print(f"\n📄 Report saved to: {report_path}")
-        
+
         # Exit code
         all_success = all(r.get("success") for r in results)
         if all_success and gates_passed:
@@ -317,11 +317,11 @@ class AuditFixOrchestrator:
 
 def main():
     import argparse
-    
+
     parser = argparse.ArgumentParser(description="Audit Fix Orchestrator")
     parser.add_argument("--dry-run", action="store_true", help="Show what would be done")
     args = parser.parse_args()
-    
+
     orchestrator = AuditFixOrchestrator(dry_run=args.dry_run)
     return orchestrator.execute()
 

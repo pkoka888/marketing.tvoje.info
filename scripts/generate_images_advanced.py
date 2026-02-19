@@ -152,13 +152,13 @@ def generate_with_cloudflare(prompt, output_file):
         # Cloudflare Workers AI with FLUX model
         account_id = os.getenv("CLOUDFLARE_ACCOUNT_ID")
         api_token = os.getenv("CLOUDFLARE_API_TOKEN")
-        
+
         if not account_id or not api_token:
             print("Error: CLOUDFLARE_ACCOUNT_ID and CLOUDFLARE_API_TOKEN required.")
             return False
 
         url = f"https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/@cf/black-forest-labs/flux-1-schnell"
-        
+
         headers = {
             "Authorization": f"Bearer {api_token}",
         }
@@ -172,7 +172,7 @@ def generate_with_cloudflare(prompt, output_file):
             url, headers=headers,
             json=payload, timeout=120,
         )
-        
+
         if response.status_code == 200:
             data = response.json()
             if 'images' in data:
@@ -183,7 +183,7 @@ def generate_with_cloudflare(prompt, output_file):
                     f.write(img_data)
                 print(f"✅ Saved to {output_file}")
                 return True
-        
+
         print(f"❌ Cloudflare error: {response.status_code} - {response.text}")
         return False
 

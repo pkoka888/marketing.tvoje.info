@@ -193,7 +193,7 @@ def main():
 ========================================
 Collected: {datetime.now().isoformat()}
 
-This evidence was collected to investigate why SSH port 2262 is not 
+This evidence was collected to investigate why SSH port 2262 is not
 accessible from public IP but works via jumphost.
 
 Evidence categories:

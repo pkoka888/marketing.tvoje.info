@@ -1,8 +1,7 @@
 # Server Infrastructure & Deployment Manual
 
-**Project:** marketing.tvoje.info
-**Repository:** <https://github.com/pkoka888/marketing.tvoje.info>
-**Last Updated:** 2026-02-19
+**Project:** marketing.tvoje.info **Repository:**
+<https://github.com/pkoka888/marketing.tvoje.info> **Last Updated:** 2026-02-19
 **Version:** 1.0
 
 ---
@@ -459,7 +458,8 @@ The following containers on Server61 have failed and are in exited state:
 
 **Impact:** Dashboard monitoring stack is unavailable
 
-**Recommendation:** Do not attempt to restart - these require disk space remediation first
+**Recommendation:** Do not attempt to restart - these require disk space
+remediation first
 
 ### ⚠️ General Warnings
 
@@ -526,4 +526,5 @@ df -h
 
 ---
 
-_This manual is maintained for project orchestrators. Update this document when infrastructure changes occur._
+_This manual is maintained for project orchestrators. Update this document when
+infrastructure changes occur._

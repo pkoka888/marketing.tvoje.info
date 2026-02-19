@@ -1,7 +1,6 @@
 # UI/UX & Copywriting Audit Report
 
-**Date**: 2026-02-18
-**Scope**: marketing.tvoje.info (Full Site Audit)
+**Date**: 2026-02-18 **Scope**: marketing.tvoje.info (Full Site Audit)
 
 ---
 
@@ -20,7 +19,8 @@
 
 ## Executive Summary
 
-The marketing portfolio is well-structured with solid technical foundation. Several improvements were made during this audit session.
+The marketing portfolio is well-structured with solid technical foundation.
+Several improvements were made during this audit session.
 
 **Overall Grade**: B+ → A- (86/100)
 
@@ -62,8 +62,7 @@ Created `/privacy` page with full EN + CS translations.
 
 **Changes**:
 
-- CTAs changed from "Learn more" → "Get a Quote"
-  Marketing & Growth Specialist
+- CTAs changed from "Learn more" → "Get a Quote" Marketing & Growth Specialist
   for modern businesses
 
 ```
@@ -72,8 +71,8 @@ Created `/privacy` page with full EN + CS translations.
 
 ```
 
-Data-Driven Growth That Scales
-AI-powered marketing strategies for B2B companies ready to 3x their leads
+Data-Driven Growth That Scales AI-powered marketing strategies for B2B companies
+ready to 3x their leads
 
 ```
 
@@ -107,8 +106,8 @@ AI-powered marketing strategies for B2B companies ready to 3x their leads
 
 ```
 
-Marketing Automation
-Transform your customer journey with modern growth automation practices
+Marketing Automation Transform your customer journey with modern growth
+automation practices
 
 ```
 
@@ -116,10 +115,9 @@ Transform your customer journey with modern growth automation practices
 
 ```
 
-Marketing Automation
-Turn visitors into customers with automated funnels that work 24/7.
-✓ 3x more leads in 90 days
-✓ 50% reduction in customer acquisition cost
+Marketing Automation Turn visitors into customers with automated funnels that
+work 24/7. ✓ 3x more leads in 90 days ✓ 50% reduction in customer acquisition
+cost
 
 ````
 

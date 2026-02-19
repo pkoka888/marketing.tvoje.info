@@ -6,7 +6,8 @@
 
 ## Overview
 
-This document covers ComfyUI models, LiteLLM integration, and boilerplate workflows for marketing applications.
+This document covers ComfyUI models, LiteLLM integration, and boilerplate
+workflows for marketing applications.
 
 ## 1. Best ComfyUI Models for Marketing
 
@@ -64,12 +65,12 @@ This document covers ComfyUI models, LiteLLM integration, and boilerplate workfl
 
 ## 4. Best Models by Category
 
-| Category | Primary | Secondary | Enhancement |
-|----------|---------|-----------|-------------|
-| Portraits | Flux 1.0 | Juggernaut XL | FameGrid Qwen |
-| Product Photography | Flux 1.0 | SDXL | ACE+ LoRA |
-| Logos/Icons | Crystal Clear XL | Flux Dev | - |
-| Social Media | Flux 1.0 | Juggernaut XL | FameGrid Qwen |
+| Category            | Primary          | Secondary     | Enhancement   |
+| ------------------- | ---------------- | ------------- | ------------- |
+| Portraits           | Flux 1.0         | Juggernaut XL | FameGrid Qwen |
+| Product Photography | Flux 1.0         | SDXL          | ACE+ LoRA     |
+| Logos/Icons         | Crystal Clear XL | Flux Dev      | -             |
+| Social Media        | Flux 1.0         | Juggernaut XL | FameGrid Qwen |
 
 ## 5. Key Resources
 

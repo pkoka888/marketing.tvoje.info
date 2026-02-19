@@ -58,9 +58,11 @@
     },
     "github": {
       "command": "node",
-      "args": ["/c/nvm4w/nodejs/node_modules/@modelcontextprotocol/server-github/dist/index.js"],
-      "env": {},
-      "description": "GitHub API for repo management, issues, and PRs (optimized: inherits GITHUB_TOKEN from parent env)",
+      "args": [
+        "/c/Users/pavel/projects/marketing.tvoje.info/.kilocode/mcp-servers/mcp-wrapper.js",
+        "github"
+      ],
+      "description": "GitHub API for repo management (loads .env automatically)",
       "alwaysAllow": [
         "get_file_contents",
         "list_commits",
@@ -84,13 +86,10 @@
     "redis": {
       "command": "node",
       "args": [
-        "/c/Users/pavel/projects/marketing.tvoje.info/.kilocode/mcp-servers/redis-server.js"
+        "/c/Users/pavel/projects/marketing.tvoje.info/.kilocode/mcp-servers/mcp-wrapper.js",
+        "redis"
       ],
-      "env": {
-        "PROJECT_NAME": "marketing-tvoje-info",
-        "REDIS_PASSWORD": "${REDIS_PASSWORD}"
-      },
-      "description": "Redis server with project isolation (marketing-tvoje-info namespace)",
+      "description": "Redis server with project isolation (loads .env automatically)",
       "alwaysAllow": [
         "redis_get",
         "redis_set",
@@ -116,12 +115,10 @@
     "firecrawl-local": {
       "command": "node",
       "args": [
-        "/c/Users/pavel/projects/marketing.tvoje.info/.kilocode/mcp-libs/firecrawl-fresh/node_modules/firecrawl-mcp/dist/index.js"
+        "/c/Users/pavel/projects/marketing.tvoje.info/.kilocode/mcp-servers/mcp-wrapper.js",
+        "firecrawl"
       ],
-      "env": {
-        "FIRECRAWL_API_KEY": "${FIRECRAWL_API_KEY}"
-      },
-      "description": "Firecrawl web scraping and data extraction (Local Fix)"
+      "description": "Firecrawl web scraping (loads .env automatically)"
     },
     "playwright-mcp": {
       "command": "node",

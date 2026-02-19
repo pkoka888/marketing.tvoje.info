@@ -84,11 +84,11 @@ def validate_command(command: str) -> tuple[bool, str]:
         r'\bnano\b', r'\bvi\b', r'\bnvim\b',
         r'\bcurl\b.*\|\s*bash', r'\bwget\b.*\|\s*bash',
     ]
-    
+
     for pattern in forbidden:
         if re.search(pattern, command, re.IGNORECASE):
             return False, f"BLOCKED: matches forbidden pattern '{pattern}'"
-    
+
     return True, "OK"
 
 
@@ -98,9 +98,9 @@ def check_approval_required(server: str, service: str) -> bool:
 
 
 def run_ssh_command(
-    host: str, 
-    port: int, 
-    username: str, 
+    host: str,
+    port: int,
+    username: str,
     command: str,
     log_file: Optional[str] = None
 ) -> tuple[int, str, str]:
@@ -109,9 +109,9 @@ def run_ssh_command(
     if not valid:
         log_action(f"BLOCKED: {msg} | cmd: {command}", log_file)
         return 1, "", msg
-    
+
     log_action(f"EXEC: {username}@{host}:{port} → {command}", log_file)
-    
+
     try:
         result = subprocess.run(
             ["ssh", "-o", "StrictHostKeyChecking=no",
@@ -133,27 +133,27 @@ def run_ssh_command(
 def restart_nginx(server: str, config: dict, log_file: Optional[str] = None) -> bool:
     """Restart nginx service on a server."""
     log_action(f"Restarting nginx on {server}...", log_file)
-    
+
     # Test config first
     code, stdout, stderr = run_ssh_command(
         config["host"], config["port"], config["user"],
         "sudo nginx -t", log_file
     )
-    
+
     if code != 0:
         log_action(f"ERROR: nginx config test failed on {server}: {stderr}", log_file)
         return False
-    
+
     # Reload nginx (safer than restart)
     code, stdout, stderr = run_ssh_command(
         config["host"], config["port"], config["user"],
         "sudo systemctl reload nginx", log_file
     )
-    
+
     if code != 0:
         log_action(f"ERROR: nginx reload failed on {server}: {stderr}", log_file)
         return False
-    
+
     log_action(f"SUCCESS: nginx reloaded on {server}", log_file)
     return True
 
@@ -161,34 +161,34 @@ def restart_nginx(server: str, config: dict, log_file: Optional[str] = None) -> 
 def restart_pm2(server: str, config: dict, project_name: str = "portfolio", log_file: Optional[str] = None) -> bool:
     """Restart PM2 process for a project."""
     log_action(f"Restarting PM2 process '{project_name}' on {server}...", log_file)
-    
+
     # Check if process exists first
     code, stdout, stderr = run_ssh_command(
         config["host"], config["port"], config["user"],
         f"pm2 describe {project_name}", log_file
     )
-    
+
     if code != 0:
         log_action(f"WARNING: PM2 process '{project_name}' not found on {server}", log_file)
         return False
-    
+
     # Restart the process
     code, stdout, stderr = run_ssh_command(
         config["host"], config["port"], config["user"],
         f"pm2 restart {project_name}", log_file
     )
-    
+
     if code != 0:
         log_action(f"ERROR: PM2 restart failed on {server}: {stderr}", log_file)
         return False
-    
+
     log_action(f"SUCCESS: PM2 process '{project_name}' restarted on {server}", log_file)
     return True
 
 
 def restart_docker_container(
-    server: str, 
-    config: dict, 
+    server: str,
+    config: dict,
     container_name: str,
     log_file: Optional[str] = None
 ) -> bool:
@@ -197,45 +197,45 @@ def restart_docker_container(
     if container_name in PROTECTED_CONTAINERS:
         log_action(f"ERROR: Cannot restart protected container '{container_name}' on {server}", log_file)
         return False
-    
+
     log_action(f"Restarting Docker container '{container_name}' on {server}...", log_file)
-    
+
     # Check if container exists
     code, stdout, stderr = run_ssh_command(
         config["host"], config["port"], config["user"],
         f"docker ps --filter name={container_name} --format '{{{{.Names}}}}'", log_file
     )
-    
+
     if container_name not in stdout:
         log_action(f"WARNING: Container '{container_name}' not found on {server}", log_file)
         return False
-    
+
     # Restart the container
     code, stdout, stderr = run_ssh_command(
         config["host"], config["port"], config["user"],
         f"docker restart {container_name}", log_file
     )
-    
+
     if code != 0:
         log_action(f"ERROR: Docker restart failed for '{container_name}' on {server}: {stderr}", log_file)
         return False
-    
+
     log_action(f"SUCCESS: Docker container '{container_name}' restarted on {server}", log_file)
     return True
 
 
 def analyze_logs(
-    server: str, 
+    server: str,
     config: dict,
     services: list[str],
     log_file: Optional[str] = None
 ) -> list[dict]:
     """Analyze logs after restart for errors."""
     errors = []
-    
+
     for service in services:
         log_action(f"Analyzing {service} logs on {server}...", log_file)
-        
+
         if service == "nginx":
             # Check nginx error log
             cmd = "sudo tail -n 50 /var/log/nginx/error.log | grep -i error || true"
@@ -249,7 +249,7 @@ def analyze_logs(
                     "type": "error",
                     "message": stdout.strip()[:500]
                 })
-        
+
         elif service == "pm2":
             # Check PM2 logs for errors
             cmd = "pm2 logs --nostream --err --lines 20 --no-auto-restart 2>/dev/null || true"
@@ -263,7 +263,7 @@ def analyze_logs(
                     "type": "error",
                     "message": stdout.strip()[:500]
                 })
-        
+
         elif service == "docker":
             # Check Docker daemon logs
             cmd = "sudo journalctl -u docker --no-pager -n 20 | grep -i error || true"
@@ -277,19 +277,19 @@ def analyze_logs(
                     "type": "error",
                     "message": stdout.strip()[:500]
                 })
-    
+
     return errors
 
 
 def verify_service_health(
-    server: str, 
+    server: str,
     config: dict,
     service: str,
     log_file: Optional[str] = None
 ) -> bool:
     """Verify a service is running after restart."""
     log_action(f"Verifying {service} health on {server}...", log_file)
-    
+
     if service == "nginx":
         cmd = "sudo systemctl is-active nginx"
     elif service == "pm2":
@@ -300,18 +300,18 @@ def verify_service_health(
         cmd = "docker ps --filter name=traefik --format '{{.Status}}' | grep -q Up && echo 'running' || echo 'stopped'"
     else:
         return True  # Unknown service, skip
-    
+
     code, stdout, stderr = run_ssh_command(
         config["host"], config["port"], config["user"], cmd, log_file
     )
-    
+
     is_healthy = code == 0 and "running" in stdout.lower()
-    
+
     if is_healthy:
         log_action(f"SUCCESS: {service} is healthy on {server}", log_file)
     else:
         log_action(f"WARNING: {service} may not be healthy on {server}", log_file)
-    
+
     return is_healthy
 
 
@@ -325,7 +325,7 @@ def restart_services(
 ) -> dict:
     """
     Main function to restart services across servers.
-    
+
     Returns:
         dict with 'success', 'errors', and 'warnings' keys
     """
@@ -335,14 +335,14 @@ def restart_services(
         "warnings": [],
         "restarts": []
     }
-    
+
     # Validate servers
     for server in servers:
         if server not in SERVERS:
             results["errors"].append(f"Unknown server: {server}")
             results["success"] = False
             return results
-    
+
     # Validate services
     valid_services = ["nginx", "pm2", "docker", "traefik"]
     for service in services:
@@ -350,7 +350,7 @@ def restart_services(
             results["errors"].append(f"Unknown service: {service}")
             results["success"] = False
             return results
-    
+
     # Check approval requirements
     for server in servers:
         for service in services:
@@ -361,25 +361,25 @@ def restart_services(
                 # Remove from services to restart
                 if service in services:
                     services.remove(service)
-    
+
     if check_only:
         log_action("Check-only mode: skipping actual restarts", log_file)
         return results
-    
+
     # Perform restarts
     for server in servers:
         config = SERVERS[server]
         log_action(f"\n{'='*50}", log_file)
         log_action(f"Processing server: {server} ({config['purpose']})", log_file)
-        
+
         for service in services:
             # Skip services not available on this server
             if service not in SERVER_SERVICES.get(server, []):
                 results["warnings"].append(f"{server}: {service} not available")
                 continue
-            
+
             log_action(f"\n--- Restarting {service} on {server} ---", log_file)
-            
+
             success = False
             if service == "nginx":
                 success = restart_nginx(server, config, log_file)
@@ -390,33 +390,33 @@ def restart_services(
                 success = True  # Just verify docker is running
             elif service == "traefik":
                 success = restart_docker_container(server, config, "traefik", log_file)
-            
+
             if success:
                 results["restarts"].append(f"{server}/{service}")
             else:
                 results["errors"].append(f"Failed to restart {service} on {server}")
                 results["success"] = False
-    
+
     # Wait after restarts
     if results["restarts"]:
         log_action(f"\nWaiting {wait_seconds} seconds for services to stabilize...", log_file)
         time.sleep(wait_seconds)
-    
+
     # Analyze logs and verify health
     for server in servers:
         config = SERVERS[server]
-        
+
         # Analyze logs
         errors = analyze_logs(server, config, services, log_file)
         if errors:
             results["errors"].extend([e["message"] for e in errors])
             results["success"] = False
-        
+
         # Verify health
         for service in services:
             if not verify_service_health(server, config, service, log_file):
                 results["warnings"].append(f"{server}/{service} health check failed")
-    
+
     return results
 
 
@@ -430,7 +430,7 @@ def main() -> None:
         help="Comma-separated list of servers (e.g., s60,s62)"
     )
     parser.add_argument(
-        "--services", 
+        "--services",
         help="Comma-separated list of services (e.g., nginx,pm2)"
     )
     parser.add_argument(
@@ -458,9 +458,9 @@ def main() -> None:
         "--log-file",
         help="Path to log file"
     )
-    
+
     args = parser.parse_args()
-    
+
     # Determine servers
     if args.all:
         servers = ["s60", "s62"]  # Exclude s61 by default
@@ -470,17 +470,17 @@ def main() -> None:
         print("Error: Must specify --servers or --all")
         parser.print_help()
         sys.exit(1)
-    
+
     # Determine services
     if args.services:
         services = [s.strip() for s in args.services.split(",")]
     else:
         services = ["nginx", "pm2"]  # Default services
-    
+
     # Run restart
     log_action(f"\n{'#'*60}", args.log_file)
     log_action(f"Service Restart - Servers: {servers}, Services: {services}", args.log_file)
-    
+
     results = restart_services(
         servers=servers,
         services=services,
@@ -489,23 +489,23 @@ def main() -> None:
         check_only=args.check_only,
         log_file=args.log_file
     )
-    
+
     # Print summary
     print("\n" + "="*60)
     print("RESULTS:")
     print("="*60)
     print(f"Restarts: {results['restarts']}")
-    
+
     if results['warnings']:
         print("\nWARNINGS:")
         for w in results['warnings']:
             print(f"  ⚠️  {w}")
-    
+
     if results['errors']:
         print("\nERRORS:")
         for e in results['errors']:
             print(f"  ❌  {e}")
-    
+
     if results['success']:
         print("\n✅ Service restart completed successfully")
         sys.exit(0)

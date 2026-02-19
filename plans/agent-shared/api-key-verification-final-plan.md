@@ -1,18 +1,22 @@
 # API Config Protection & Hardening Plan
 
-**Date**: 2026-02-19
-**Orchestrator**: Antigravity (Gemini 2.5 Pro)
-**Status**: 19/19 keys verified — now hardening the known-good state
+**Date**: 2026-02-19 **Orchestrator**: Antigravity (Gemini 2.5 Pro) **Status**:
+19/19 keys verified — now hardening the known-good state
 
 ---
 
 ## Problem Statement
 
-We've reached a **verified 19/19 functional state** for the agentic API configuration. The risk now is **config drift** — agents editing `.env`, endpoint changes, key rotation, or provider deprecations silently breaking this state without detection.
+We've reached a **verified 19/19 functional state** for the agentic API
+configuration. The risk now is **config drift** — agents editing `.env`,
+endpoint changes, key rotation, or provider deprecations silently breaking this
+state without detection.
 
 ## Recommended Strategy: Config Snapshot + CI Drift Detection
 
-After researching 2026 best practices (OWASP Agentic Top 10, GitOps drift detection, HashiCorp health assessments, `driftctl`-patterns), here's the recommended architecture:
+After researching 2026 best practices (OWASP Agentic Top 10, GitOps drift
+detection, HashiCorp health assessments, `driftctl`-patterns), here's the
+recommended architecture:
 
 ```mermaid
 graph TD
@@ -31,7 +35,9 @@ graph TD
 
 ### What
 
-Create a JSON snapshot of the current known-good configuration state — endpoints, auth types, key prefixes, and expected responses — that serves as the **baseline** for drift detection.
+Create a JSON snapshot of the current known-good configuration state —
+endpoints, auth types, key prefixes, and expected responses — that serves as the
+**baseline** for drift detection.
 
 ### Files
 
@@ -63,7 +69,8 @@ Create a JSON snapshot of the current known-good configuration state — endpoin
 
 #### [NEW] `scripts/protected/snapshot_config.py`
 
-Script to: (a) generate snapshot from current state, (b) compare live state against snapshot, (c) output drift report.
+Script to: (a) generate snapshot from current state, (b) compare live state
+against snapshot, (c) output drift report.
 
 #### [NEW] Git tag: `api-config-v1.0`
 
@@ -75,7 +82,8 @@ Tag the current commit as the known-good state.
 
 ### What
 
-GitHub Actions workflow that runs the verification script on a schedule (daily or on push) and fails if the live state deviates from the snapshot.
+GitHub Actions workflow that runs the verification script on a schedule (daily
+or on push) and fails if the live state deviates from the snapshot.
 
 ### Files
 
@@ -112,7 +120,8 @@ jobs:
         run: python scripts/protected/snapshot_config.py --compare
 ```
 
-> **Note:** This requires syncing key values to GitHub Secrets (they currently exist for infra keys; LLM keys may need adding).
+> **Note:** This requires syncing key values to GitHub Secrets (they currently
+> exist for infra keys; LLM keys may need adding).
 
 ---
 
@@ -120,17 +129,21 @@ jobs:
 
 ### What
 
-Move verified, production-critical scripts to `scripts/protected/` with `# @protected` headers. Agent rules should prevent agents from modifying these files without explicit human approval.
+Move verified, production-critical scripts to `scripts/protected/` with
+`# @protected` headers. Agent rules should prevent agents from modifying these
+files without explicit human approval.
 
 ### Files
 
 #### [NEW] `scripts/protected/verify_api_keys.py`
 
-Copy of the verified v3 script, marked `# @protected — do not modify without human approval`.
+Copy of the verified v3 script, marked
+`# @protected — do not modify without human approval`.
 
 #### [MODIFY] `.clinerules/protected-files.md`
 
-Add rule: agents must not modify files in `scripts/protected/` without explicit approval.
+Add rule: agents must not modify files in `scripts/protected/` without explicit
+approval.
 
 #### [MODIFY] `.kilocode/rules/protected-files.md`
 
@@ -142,7 +155,8 @@ Mirror the same rule for Kilo Code.
 
 ### What
 
-Proper test suite for the verification script itself — mock API responses, test edge cases, verify correct behavior for each auth type.
+Proper test suite for the verification script itself — mock API responses, test
+edge cases, verify correct behavior for each auth type.
 
 ### Files
 
@@ -163,7 +177,8 @@ Proper test suite for the verification script itself — mock API responses, tes
 | 9   | `test_snapshot_drift`      | Drift detection catches endpoint changes               |
 | 10  | `test_all_keys_in_config`  | All 19 keys exist in `API_KEYS_CONFIG`                 |
 
-**Implementation:** Use `pytest` + `responses` library (or `unittest.mock`) to mock HTTP calls.
+**Implementation:** Use `pytest` + `responses` library (or `unittest.mock`) to
+mock HTTP calls.
 
 ---
 
@@ -171,7 +186,9 @@ Proper test suite for the verification script itself — mock API responses, tes
 
 ### What
 
-Create/update `.env.example` as the template that mirrors `.env` structure (without real values) and add a CI step that validates `.env` contains all required keys.
+Create/update `.env.example` as the template that mirrors `.env` structure
+(without real values) and add a CI step that validates `.env` contains all
+required keys.
 
 ### Files
 
