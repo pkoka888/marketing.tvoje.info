@@ -75,6 +75,15 @@
       ],
       "environment": {}
     },
+    "filesystem-vscodeportable": {
+      "type": "local",
+      "command": [
+        "node",
+        "C:/nvm4w/nodejs/node_modules/@modelcontextprotocol/server-filesystem/dist/index.js",
+        "C:/Users/pavel/vscodeportable"
+      ],
+      "environment": {}
+    },
     "memory": {
       "type": "local",
       "command": [

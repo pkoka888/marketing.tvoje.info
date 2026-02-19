@@ -1,5 +1,13 @@
 {
   "mcpServers": {
+    "filesystem-vscodeportable": {
+      "command": "node",
+      "args": [
+        "C:/nvm4w/nodejs/node_modules/@modelcontextprotocol/server-filesystem/dist/index.js",
+        "C:/Users/pavel/vscodeportable"
+      ],
+      "description": "Filesystem access to VSCode portable directory with write permissions"
+    },
     "memory": {
       "command": "npx",
       "args": ["-y", "@modelcontextprotocol/server-memory"],

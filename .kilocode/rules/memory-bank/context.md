@@ -15,12 +15,13 @@
 
 ## Recent Git Changes
 
+Uncommitted: M .antigravity/mcp.json
 Recent commits:
+f587d50 docs: add agent directory protection and Antigravity best practices
+c5cbc2a docs: add READY-TO-EXECUTE summary with execution options
+eb997ea docs: add BMAD stories for critical gaps
+f8f5a95 chore: commit remaining changes before BMAD planning
 669d32b feat: complete local development environment setup with Docker and CI/CD improvements
-4c2e750 chore: fix CRLF line endings in context.md
-7936f0e chore: fix CRLF line endings in context.md
-5fec7b6 chore: fix CRLF line endings in context.md
-422b3f4 chore: fix CRLF line endings in context.md
 
 ## Active Task Files
 

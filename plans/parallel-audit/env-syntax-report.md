@@ -1,131 +1,104 @@
 # Environment Variable Syntax Audit
 
-**Audit Date**: 2026-02-19
-**Auditor**: Kilo Code (Configuration Auditor)
-**Status**: COMPLETE
+**Date**: 2026-02-19
+**Auditor**: Kilo Code
+**Status**: ✅ COMPLETE
 
 ---
 
-## Summary
+## Executive Summary
 
-- **Total `${VAR}` issues remaining**: 0
-- **Files using wrapper solution**: 4
-- **Files with valid native syntax**: 5
-- **Status**: ✅ ALL ISSUES RESOLVED
+**Result**: No invalid `${VAR}` syntax issues found in problematic contexts.
+
+All MCP server configurations have been successfully migrated to use the wrapper solution (`mcp-wrapper.js`), which loads environment variables from `.env` file before starting servers.
 
 ---
 
-## Invalid `${VAR}` Syntax Found
+## Invalid ${VAR} Syntax Found
 
-No invalid `${VAR}` syntax patterns found. All previously identified issues have been resolved.
+**Status**: No issues in MCP configs - all previously fixed ✅
 
 | File | Line | Variable | Context | Fix Status |
 |------|------|----------|---------|------------|
-| - | - | - | - | - |
+| - | - | - | - | All FIXED |
+
+### Historical Issues (Now Resolved)
+The following were previously fixed using the wrapper solution:
+- `.kilocode/mcp.json` - redis, github, firecrawl servers
+- `.clinerules/mcp.json` - redis, github, firecrawl servers  
+- `.antigravity/mcp.json` - redis, github servers
+- `opencode.json` - redis, github, firecrawl servers
 
 ---
 
 ## Valid Alternatives in Use
 
-### 1. Wrapper Solution (mcp-wrapper.js)
+### Wrapper Solution (Primary)
 
-The project uses a custom Node.js wrapper (`mcp-wrapper.js`) that loads `.env` before starting MCP servers. This is the recommended solution for Git Bash compatibility.
+| File | Server | Wrapper Command | Status |
+|------|--------|-----------------|--------|
+| `.kilocode/mcp.json` | redis | `node ./mcp-servers/mcp-wrapper.js redis` | ✅ |
+| `.kilocode/mcp.json` | github | `node ./mcp-servers/mcp-wrapper.js github` | ✅ |
+| `.kilocode/mcp.json` | firecrawl | `node ./mcp-servers/mcp-wrapper.js firecrawl` | ✅ |
+| `.clinerules/mcp.json` | redis | `node ./mcp-servers/mcp-wrapper.js redis` | ✅ |
+| `.clinerules/mcp.json` | github | `node ./mcp-servers/mcp-wrapper.js github` | ✅ |
+| `.clinerules/mcp.json` | firecrawl | `node ./mcp-servers/mcp-wrapper.js firecrawl` | ✅ |
+| `.antigravity/mcp.json` | redis | `node ./mcp-servers/mcp-wrapper.js redis` | ✅ |
+| `.antigravity/mcp.json` | github | `node ./mcp-servers/mcp-wrapper.js github` | ✅ |
+| `opencode.json` | redis | `node ./mcp-servers/mcp-wrapper.js redis` | ✅ |
+| `opencode.json` | github | `node ./mcp-servers/mcp-wrapper.js github` | ✅ |
+| `opencode.json` | firecrawl | `node ./mcp-servers/mcp-wrapper.js firecrawl` | ✅ |
 
-| File | Pattern | Usage Count | Notes |
-|------|---------|-------------|-------|
-| `.kilocode/mcp.json` | `node .../mcp-wrapper.js, [server]` | 3 | redis, firecrawl, github |
-| `.clinerules/mcp.json` | `node .../mcp-wrapper.js, [server]` | 3 | redis, firecrawl, github |
-| `.antigravity/mcp.json` | `node .../mcp-wrapper.js, [server]` | 2 | redis, github |
-| `opencode.json` | `node .../mcp-wrapper.js, [server]` | 3 | redis, firecrawl, github |
+### OpenCode {env:} Syntax (Valid)
 
-**Wrapper Implementation**:
-```json
-{
-  "command": "node",
-  "args": [".kilocode/mcp-servers/mcp-wrapper.js", "redis"]
-}
-```
+| File | Variable | Usage |
+|------|----------|-------|
+| `opencode.json` | `OPENROUTER_API_KEY` | `{env:OPENROUTER_API_KEY}` |
 
-### 2. OpenCode Native `{env:VAR}` Syntax
+---
 
-OpenCode supports its own environment variable reference syntax which is valid within OpenCode configurations.
+## Docker Compose ${VAR} (Valid in Docker Context)
 
-| File | Pattern | Usage Count | Notes |
-|------|---------|-------------|-------|
-| `opencode.json` | `{env:OPENROUTER_API_KEY}` | 1 | Valid OpenCode-native syntax |
+The following use `${VAR}` syntax which is **valid and expected** in Docker Compose files:
 
-**Note**: This is NOT the broken `${VAR}` Git Bash syntax. OpenCode processes `{env:VAR}` internally.
-
-### 3. JavaScript `process.env` (Runtime)
-
-JavaScript files use `process.env.VAR_NAME` at runtime, which is the correct pattern for Node.js applications.
-
-| File | Pattern | Usage | Notes |
-|------|---------|-------|-------|
-| Various `.js`/`.ts` files | `process.env.VAR` | Runtime | Correct pattern |
+| File | Variables | Context | Valid? |
+|------|-----------|---------|---------|
+| `docker-compose.prod.yml` | REDIS_PASSWORD, REDIS_URL, PROJECT_NAME, JWT_SECRET, PUBLIC_SITE_URL | Docker environment substitution | ✅ Valid |
+| `docker-compose.dev.yml` | GROQ_API_KEY, OPENROUTER_API_KEY, LITELLM_MASTER_KEY | Docker environment substitution | ✅ Valid |
+| `docker/mcp/gateway-config.yml` | JWT_SECRET, REDIS_PASSWORD, GITHUB_TOKEN, PROJECT_NAME, FIRECRAWL_API_KEY | Docker environment substitution | ✅ Valid |
 
 ---
 
 ## GitHub Actions env (Correct)
 
-All GitHub Actions workflows use the correct `${{ secrets.VAR }}` syntax for accessing secrets.
+GitHub Actions workflows use `${{ secrets.VAR }}` syntax correctly:
 
 | File | Variable | Usage |
 |------|----------|-------|
-| `.github/workflows/ci.yml` | `PUBLIC_SITE_URL` | Line 55 (direct value) |
-| `.github/workflows/deploy.yml` | `${{ secrets.PUBLIC_SITE_URL }}` | Line 27 |
-| `.github/workflows/deploy.yml` | `${{ secrets.VPS_SSH_KEY }}` | Lines 36, 50, 62 |
+| `.github/workflows/backend-ci.yml` | secrets.REDIS_PASSWORD | `${{ secrets.REDIS_PASSWORD }}` |
+| `.github/workflows/backend-ci.yml` | secrets.GITHUB_TOKEN | `${{ secrets.GITHUB_TOKEN }}` |
+| `.github/workflows/deploy.yml` | secrets.VPS_SSH_KEY | `${{ secrets.VPS_SSH_KEY }}` |
 
 ---
 
-## Environment Template Files
+## Summary
 
-### `.env.example` and `.env.template`
-
-These files contain placeholder values (not environment variable references):
-
-```
-# .env.example - Example format:
-OPENROUTER_API_KEY=sk-or-v1-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-# .env.template - Example format:
-PROJECT_NAME=marketing-tvoje-info
-PUBLIC_SITE_URL=https://portfolio.tvoje.info
-```
-
-**Status**: ✅ No `${VAR}` references found - these are actual placeholder values
-
----
-
-## Syntax Comparison Reference
-
-| Syntax | Platform | Status | Example |
-|--------|----------|--------|---------|
-| `${VAR}` | Git Bash | ❌ BROKEN | `REDIS_PASSWORD: ${REDIS_PASSWORD}` |
-| `{env:VAR}` | OpenCode | ✅ VALID | `{env:OPENROUTER_API_KEY}` |
-| `${{ secrets.VAR }}` | GitHub Actions | ✅ VALID | `secrets.REDIS_PASSWORD` |
-| `process.env.VAR` | JavaScript | ✅ VALID | `process.env.REDIS_PASSWORD` |
-| Wrapper solution | Node.js | ✅ VALID | `mcp-wrapper.js` |
-
----
-
-## Completion Checklist
-
-- [x] Checked all .json configs
-- [x] Checked all .yml workflows
-- [x] Checked .env files
-- [x] Created env-syntax-report.md
-- [x] Verified wrapper is used where needed
-- [x] Ready for orchestrator review
+| Category | Count | Status |
+|----------|-------|--------|
+| **Total ${VAR} issues remaining** | **0** | ✅ Fixed |
+| Files using wrapper solution | 4 | ✅ All configured |
+| Files with valid native syntax | 3 | ✅ Docker/YAML |
+| Files with valid {env:} syntax | 1 | ✅ OpenCode |
 
 ---
 
 ## Conclusion
 
-**All `${VAR}` syntax issues have been resolved.** The project now uses:
-1. **Wrapper solution** for MCP server configurations (Kilo Code, Cline, Antigravity, OpenCode)
-2. **Native `{env:VAR}`** for OpenCode-specific configurations
-3. **GitHub Actions `${{ secrets.VAR }}`** for CI/CD workflows
-4. **Placeholder values** for .env template files
+**All environment variable syntax issues have been resolved.**
 
-No further action required.
+- MCP server configs now use the wrapper solution (`mcp-wrapper.js`) which loads `.env` automatically
+- Docker Compose files correctly use native `${VAR}` syntax (valid in Docker context)
+- GitHub Actions correctly use `${{ secrets.VAR }}` syntax
+- OpenCode correctly uses `{env:VAR}` syntax
+
+**No further action required.**

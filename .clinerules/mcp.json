@@ -14,13 +14,45 @@
         "C:/Users/pavel/projects"
       ]
     },
+    "filesystem-agentic": {
+      "command": "node",
+      "args": [
+        "C:/nvm4w/nodejs/node_modules/@modelcontextprotocol/server-filesystem/dist/index.js",
+        "C:/Users/pavel/vscodeportable/agentic"
+      ],
+      "description": "Filesystem access to agentic repository directory (read-only reference)"
+    },
+    "filesystem-vscodeportable": {
+      "command": "node",
+      "args": [
+        "C:/nvm4w/nodejs/node_modules/@modelcontextprotocol/server-filesystem/dist/index.js",
+        "C:/Users/pavel/vscodeportable"
+      ],
+      "description": "Filesystem access to VSCode portable directory with write permissions",
+      "alwaysAllow": [
+        "read_text_file",
+        "list_directory",
+        "directory_tree",
+        "read_multiple_files",
+        "write_file",
+        "create_directory",
+        "read_file",
+        "edit_file",
+        "search_files",
+        "move_file"
+      ]
+    },
     "memory": {
       "command": "node",
-      "args": ["C:/nvm4w/nodejs/node_modules/@modelcontextprotocol/server-memory/dist/index.js"]
+      "args": [
+        "C:/nvm4w/nodejs/node_modules/@modelcontextprotocol/server-memory/dist/index.js"
+      ]
     },
     "git": {
       "command": "node",
-      "args": ["C:/nvm4w/nodejs/node_modules/git-mcp/dist/index.js"]
+      "args": [
+        "C:/nvm4w/nodejs/node_modules/git-mcp/dist/index.js"
+      ]
     },
     "github": {
       "command": "node",
@@ -31,7 +63,9 @@
     },
     "fetch": {
       "command": "uvx",
-      "args": ["mcp-server-fetch"]
+      "args": [
+        "mcp-server-fetch"
+      ]
     },
     "firecrawl-local": {
       "command": "node",
@@ -42,7 +76,9 @@
     },
     "playwright-mcp": {
       "command": "node",
-      "args": ["C:/nvm4w/nodejs/node_modules/@playwright/mcp/cli.js"]
+      "args": [
+        "C:/nvm4w/nodejs/node_modules/@playwright/mcp/cli.js"
+      ]
     }
   }
 }
