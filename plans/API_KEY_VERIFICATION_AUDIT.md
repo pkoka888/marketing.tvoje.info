@@ -1,7 +1,7 @@
 # API Key Verification Audit Report
 
-**Date:** 2026-02-19  
-**Status:** ✅ COMPLETED - 19/19 Keys Verified  
+**Date:** 2026-02-19
+**Status:** ✅ COMPLETED - 19/19 Keys Verified
 **Previous Issues:** 4 bugs found and fixed
 
 ---
@@ -15,24 +15,28 @@ All 19 API keys in the project have been verified. The verification script `scri
 ## Bugs Fixed
 
 ### 1. GEMINI_API_KEY - Endpoint & Auth Type
+
 - **Issue:** 400 error on `https://generativelanguage.googleapis.com/v1/models`
 - **Root Cause:** Wrong endpoint version and auth method
 - **Fix:** Changed to `v1beta/models` with query param auth (`?key=...`)
 - **Status:** ✅ Fixed
 
 ### 2. NVIDIA_API_KEY - Wrong Endpoint
+
 - **Issue:** 404 on `https://api.nvcf.nvidia.com/v2/chat/completions`
 - **Root Cause:** Wrong API endpoint
 - **Fix:** Changed to `https://integrate.api.nvidia.com/v1/models`
 - **Status:** ✅ Fixed
 
 ### 3. KILOCODE_API_KEY - No Public API
+
 - **Issue:** Connection exception
 - **Root Cause:** No public verification endpoint exists
 - **Fix:** Set to `presence_only: True` (JWT verified by IDE)
 - **Status:** ✅ Fixed
 
 ### 4. Hidden Bug - load_dotenv Override
+
 - **Issue:** Stale system env var `GEMINI_API_KEY` (AIzaSyAu...leyw) shadowed .env
 - **Root Cause:** `load_dotenv()` doesn't override existing system env vars by default
 - **Fix:** Added `override=True` parameter
@@ -70,8 +74,9 @@ load_dotenv(env_path, override=True)
 ### Infrastructure Keys - GitHub Secrets Only
 
 The following keys are intentionally kept in GitHub Secrets only (not in .env):
+
 - TS_OAUTH_CLIENT_ID
-- TS_OAUTH_SECRET  
+- TS_OAUTH_SECRET
 - VPS_IP
 - VPS_USER
 - VPS_SSH_PORT
@@ -124,9 +129,9 @@ Summary: 19/19 keys verified
 
 ## Open Action Items
 
-| Item | Priority | Status |
-|------|----------|--------|
-| Remove stale GEMINI_API_KEY from Windows System Environment Variables | Medium | ⚠️ Pending |
+| Item                                                                  | Priority | Status     |
+| --------------------------------------------------------------------- | -------- | ---------- |
+| Remove stale GEMINI_API_KEY from Windows System Environment Variables | Medium   | ⚠️ Pending |
 
 ---
 

@@ -1,17 +1,17 @@
 # Project Architecture Knowledge
 
-**Last Updated:** 2026-02-12
+**Last Updated:** 2026-02-19
 
 ## Tech Stack Summary
 
 | Layer     | Technology          | Version          |
 | --------- | ------------------- | ---------------- |
 | Framework | Astro               | 5.0              |
-| Styling   | Tailwind CSS        | 3.4              |
+| Styling   | Tailwind CSS        | 4.0              |
 | Language  | TypeScript          | 5.7              |
 | Content   | MDX                 | via @astrojs/mdx |
 | Testing   | Vitest              | latest           |
-| Hosting   | Vercel              | auto-deploy      |
+| Hosting   | VPS s62             | GitHub Actions   |
 | Forms     | Formspree           | external         |
 | Analytics | Plausible           | privacy-first    |
 | CI/CD     | GitHub Actions      | 3 workflows      |

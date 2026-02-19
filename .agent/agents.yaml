@@ -76,6 +76,21 @@ agents:
     evidence_path: 'vscodeportable/servers/evidence.md'
     read_only: true
 
+  sysadmin:
+    name: 'SysAdmin'
+    role: 'Safe server operations — evidence collection, deployment, config validation'
+    delegate_to: 'kilo' # Free model for bulk ops
+    model: 'z-ai/glm4.7'
+    rules:
+      - '.kilocode/rules/rules-sysadmin'
+      - '.kilocode/rules/server-preservation'
+    skills:
+      - '.agent/skills/devops/'
+    flows:
+      - '.agent/flows/server_ops.py'
+    read_only: false
+    approval_required: true # ALWAYS requires human approval for writes
+
   orchestrator:
     name: 'Antigravity Orchestrator'
     role: 'Primary orchestrator — delegates to specialized agents, handles complex architectural decisions'

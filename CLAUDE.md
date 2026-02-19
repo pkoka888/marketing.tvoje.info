@@ -1,9 +1,11 @@
 # marketing.tvoje.info — Claude Code Instructions
 
 ## Agent Platform Governance
+
 @AGENTS.md
 
 ## Mandatory Reading at Task Start
+
 @.kilocode/rules/rules-architect
 @.kilocode/rules/rules-code
 @.kilocode/rules/plan-approval-required
@@ -21,14 +23,14 @@ When modifying ANY file in `.kilocode/`, `.clinerules/`, `.agent/`, `.agents/`, 
 
 ## Active Agent Namespaces
 
-| Dir | Agent | Config Files |
-|-----|-------|-------------|
-| `.agent/` | Antigravity (Gemini orchestrator) | agents.yaml, kilo-alignment.md |
-| `.agents/` | BMAD Squad (OpenCode/Groq) | squad.json, rules/ |
-| `.claude/` | Claude Code (this agent) | settings.json, hooks/, commands/ |
-| `.clinerules/` | Cline | skills/, hooks/, workflows/ |
-| `.gemini/` | Gemini-CLI | rules/, settings |
-| `.kilocode/` | Kilo Code | agents/, skills/, rules/, workflows/ |
+| Dir            | Agent                             | Config Files                         |
+| -------------- | --------------------------------- | ------------------------------------ |
+| `.agent/`      | Antigravity (Gemini orchestrator) | agents.yaml, kilo-alignment.md       |
+| `.agents/`     | BMAD Squad (OpenCode/Groq)        | squad.json, rules/                   |
+| `.claude/`     | Claude Code (this agent)          | settings.json, hooks/, commands/     |
+| `.clinerules/` | Cline                             | skills/, hooks/, workflows/          |
+| `.gemini/`     | Gemini-CLI                        | rules/, settings                     |
+| `.kilocode/`   | Kilo Code                         | agents/, skills/, rules/, workflows/ |
 
 ## Cost Routing
 

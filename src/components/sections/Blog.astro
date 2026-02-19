@@ -13,7 +13,7 @@ const blogPosts = [
   {
     slug: 'ai-marketing-2026',
     title: lang === 'cs' ? 'AI marketing v roce 2026: Co očekávat' : 'AI Marketing in 2026: What to Expect',
-    excerpt: lang === 'cs' 
+    excerpt: lang === 'cs'
       ? 'Objevte nejnovější trendy v AI marketingu a jak mohou změnit vaši strategii.'
       : 'Discover the latest trends in AI marketing and how they can transform your strategy.',
     date: '2026-02-15',
@@ -55,7 +55,7 @@ const blogPosts = [
         {lang === 'cs' ? 'Nejnovější články' : 'Latest Articles'}
       </h2>
       <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-        {lang === 'cs' 
+        {lang === 'cs'
           ? 'Tipy, trendy a strategie pro váš marketingový růst.'
           : 'Tips, trends, and strategies for your marketing growth.'}
       </p>
@@ -64,7 +64,7 @@ const blogPosts = [
     <!-- Blog Grid -->
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
       {blogPosts.map((post, index) => (
-        <article 
+        <article
           class="blog-card card group overflow-hidden"
           data-aos="fade-up"
           data-aos-delay={index * 100}
@@ -73,7 +73,7 @@ const blogPosts = [
           <div class="h-48 bg-gradient-to-br from-primary-100 to-accent-100 dark:from-primary-900/30 dark:to-accent-900/30 flex items-center justify-center">
             <span class="text-4xl">📄</span>
           </div>
-          
+
           <!-- Content -->
           <div class="p-6">
             <!-- Meta -->
@@ -83,25 +83,25 @@ const blogPosts = [
               </span>
               <span>{post.readTime} read</span>
             </div>
-            
+
             <!-- Title -->
             <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
               <a href={`/${lang === 'cs' ? 'cs/' : ''}blog/${post.slug}`}>
                 {post.title}
               </a>
             </h3>
-            
+
             <!-- Excerpt -->
             <p class="text-sm text-gray-600 dark:text-gray-300 mb-4 line-clamp-2">
               {post.excerpt}
             </p>
-            
+
             <!-- Date -->
             <div class="text-xs text-gray-400 dark:text-gray-500">
-              {new Date(post.date).toLocaleDateString(lang === 'cs' ? 'cs-CZ' : 'en-US', { 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
+              {new Date(post.date).toLocaleDateString(lang === 'cs' ? 'cs-CZ' : 'en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
               })}
             </div>
           </div>

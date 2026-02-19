@@ -14,7 +14,15 @@
         },
         "type": {
           "type": "string",
-          "enum": ["TASK_PLAN", "RESEARCH_FINDINGS", "AUDIT_REPORT", "GAP_ANALYSIS", "LINT_FIX_STRATEGY", "TEST_RESULTS", "IMAGE_GENERATION_PLAN"],
+          "enum": [
+            "TASK_PLAN",
+            "RESEARCH_FINDINGS",
+            "AUDIT_REPORT",
+            "GAP_ANALYSIS",
+            "LINT_FIX_STRATEGY",
+            "TEST_RESULTS",
+            "IMAGE_GENERATION_PLAN"
+          ],
           "description": "Template category type"
         },
         "version": {
@@ -65,13 +73,27 @@
           "type": "array",
           "items": {
             "type": "string",
-            "enum": ["x-ai/grok-code-fast-1:optimized:free", "big-pickle", "minimax-m2.1:free", "gemini-2.5-pro", "claude-sonnet-4-5", "llama-3.3-70b"]
+            "enum": [
+              "x-ai/grok-code-fast-1:optimized:free",
+              "big-pickle",
+              "minimax-m2.1:free",
+              "gemini-2.5-pro",
+              "claude-sonnet-4-5",
+              "llama-3.3-70b"
+            ]
           },
           "description": "Preferred AI models for this template, ordered by priority"
         },
         "fallback": {
           "type": "string",
-          "enum": ["x-ai/grok-code-fast-1:optimized:free", "big-pickle", "minimax-m2.1:free", "gemini-2.5-pro", "claude-sonnet-4-5", "llama-3.3-70b"],
+          "enum": [
+            "x-ai/grok-code-fast-1:optimized:free",
+            "big-pickle",
+            "minimax-m2.1:free",
+            "gemini-2.5-pro",
+            "claude-sonnet-4-5",
+            "llama-3.3-70b"
+          ],
           "description": "Fallback model if preferred models are unavailable"
         },
         "cost_optimization": {

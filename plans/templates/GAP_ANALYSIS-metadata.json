@@ -26,25 +26,13 @@
       "assessment",
       "capability"
     ],
-    "context": [
-      "analysis",
-      "assessment",
-      "planning",
-      "requirements"
-    ],
+    "context": ["analysis", "assessment", "planning", "requirements"],
     "priority": "high",
     "auto_activate": true
   },
   "models": {
-    "preferred": [
-      "gemini-2.5-pro",
-      "big-pickle",
-      "minimax-m2.1:free"
-    ],
-    "fallback": [
-      "x-ai/grok-code-fast-1:optimized:free",
-      "claude-sonnet-4-5"
-    ],
+    "preferred": ["gemini-2.5-pro", "big-pickle", "minimax-m2.1:free"],
+    "fallback": ["x-ai/grok-code-fast-1:optimized:free", "claude-sonnet-4-5"],
     "cost_optimization": true
   },
   "references": {
@@ -57,17 +45,9 @@
       ".kilocode/rules/memory-bank/brief.md",
       ".kilocode/rules/memory-bank/context.md"
     ],
-    "related": [
-      "docs/analysis/*.md",
-      "plans/requirements/*.md"
-    ],
-    "skills": [
-      "bmad-discovery-research",
-      "bmad-architecture-design"
-    ],
-    "rules": [
-      "cost-optimization"
-    ]
+    "related": ["docs/analysis/*.md", "plans/requirements/*.md"],
+    "skills": ["bmad-discovery-research", "bmad-architecture-design"],
+    "rules": ["cost-optimization"]
   },
   "validation": {
     "required_sections": [
@@ -77,34 +57,15 @@
       "Impact Assessment",
       "Action Plan"
     ],
-    "format_checks": [
-      "markdown_structure",
-      "comparison_tables",
-      "priority_matrix"
-    ],
-    "content_rules": [
-      "quantifiable_gaps",
-      "actionable_recommendations",
-      "feasibility_assessment"
-    ]
+    "format_checks": ["markdown_structure", "comparison_tables", "priority_matrix"],
+    "content_rules": ["quantifiable_gaps", "actionable_recommendations", "feasibility_assessment"]
   },
   "metadata": {
-    "frameworks": [
-      "Kilo Code",
-      "OpenCode",
-      "Cline",
-      "Antigravity"
-    ],
+    "frameworks": ["Kilo Code", "OpenCode", "Cline", "Antigravity"],
     "compatibility": "cross-agent",
     "usage_count": 0,
     "last_used": null,
     "success_rate": null,
-    "tags": [
-      "gap-analysis",
-      "requirements",
-      "assessment",
-      "planning",
-      "comparison"
-    ]
+    "tags": ["gap-analysis", "requirements", "assessment", "planning", "comparison"]
   }
 }

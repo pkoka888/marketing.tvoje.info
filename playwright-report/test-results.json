@@ -26,9 +26,7 @@
         "name": "chromium-desktop",
         "testDir": "C:/Users/pavel/projects/marketing.tvoje.info/tests/e2e",
         "testIgnore": [],
-        "testMatch": [
-          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
-        ],
+        "testMatch": ["**/*.@(spec|test).?(c|m)[jt]s?(x)"],
         "timeout": 30000
       },
       {
@@ -42,9 +40,7 @@
         "name": "firefox-desktop",
         "testDir": "C:/Users/pavel/projects/marketing.tvoje.info/tests/e2e",
         "testIgnore": [],
-        "testMatch": [
-          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
-        ],
+        "testMatch": ["**/*.@(spec|test).?(c|m)[jt]s?(x)"],
         "timeout": 30000
       },
       {
@@ -58,9 +54,7 @@
         "name": "webkit-desktop",
         "testDir": "C:/Users/pavel/projects/marketing.tvoje.info/tests/e2e",
         "testIgnore": [],
-        "testMatch": [
-          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
-        ],
+        "testMatch": ["**/*.@(spec|test).?(c|m)[jt]s?(x)"],
         "timeout": 30000
       },
       {
@@ -74,9 +68,7 @@
         "name": "chromium-mobile",
         "testDir": "C:/Users/pavel/projects/marketing.tvoje.info/tests/e2e",
         "testIgnore": [],
-        "testMatch": [
-          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
-        ],
+        "testMatch": ["**/*.@(spec|test).?(c|m)[jt]s?(x)"],
         "timeout": 30000
       },
       {
@@ -90,9 +82,7 @@
         "name": "iphone-12",
         "testDir": "C:/Users/pavel/projects/marketing.tvoje.info/tests/e2e",
         "testIgnore": [],
-        "testMatch": [
-          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
-        ],
+        "testMatch": ["**/*.@(spec|test).?(c|m)[jt]s?(x)"],
         "timeout": 30000
       },
       {
@@ -106,9 +96,7 @@
         "name": "ipad-pro",
         "testDir": "C:/Users/pavel/projects/marketing.tvoje.info/tests/e2e",
         "testIgnore": [],
-        "testMatch": [
-          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
-        ],
+        "testMatch": ["**/*.@(spec|test).?(c|m)[jt]s?(x)"],
         "timeout": 30000
       }
     ],
@@ -120,10 +108,7 @@
           "outputFolder": "playwright-report"
         }
       ],
-      [
-        "list",
-        null
-      ],
+      ["list", null],
       [
         "json",
         {

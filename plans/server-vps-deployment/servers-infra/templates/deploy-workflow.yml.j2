@@ -1,0 +1,87 @@
+# ============================================================================
+# GitHub Actions Deploy Workflow Template
+# ============================================================================
+# Fill in the variables below and save as .github/workflows/deploy.yml
+#
+# Variables:
+#   PROJECT_NAME   - e.g., "my-portfolio"
+#   TARGET_SERVER  - s60, s62 (never s61 for auto-deploy)
+#   DEPLOY_PATH    - e.g., /var/www/projects/my-portfolio
+#   BUILD_COMMAND  - e.g., "npm run build"
+#   DIST_DIR       - e.g., "dist/"
+# ============================================================================
+name: "Deploy {{ PROJECT_NAME }}"
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        run: {{ BUILD_COMMAND | default('npm run build') }}
+        env:
+          PUBLIC_SITE_URL: {{ '${{ secrets.PUBLIC_SITE_URL }}' }}
+
+      # ── Method 1: Direct via Tailscale ──
+      - name: "Deploy via Tailscale SSH"
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: {{ TAILSCALE_IP }}
+          port: 20
+          username: {{ '${{ secrets.VPS_USER }}' }}
+          key: {{ '${{ secrets.VPS_SSH_KEY }}' }}
+          source: '{{ DIST_DIR | default("dist/") }}'
+          target: '{{ DEPLOY_PATH }}'
+          timeout: 300s
+          strip_components: 1
+
+      - name: "Restart Application via Tailscale"
+        uses: appleboy/ssh-action@v1
+        with:
+          host: {{ TAILSCALE_IP }}
+          port: 20
+          username: {{ '${{ secrets.VPS_USER }}' }}
+          key: {{ '${{ secrets.VPS_SSH_KEY }}' }}
+          timeout: 60s
+          command_timeout: 5m
+          script: |
+            cd {{ DEPLOY_PATH }}
+            {% if USE_PM2 | default(true) %}
+            pm2 restart {{ PM2_NAME | default(PROJECT_NAME) }} || echo "PM2 process not found"
+            {% endif %}
+            sudo systemctl reload nginx
+
+      # ── Method 2: Fallback via s60 jump host ──
+      - name: "Fallback: Deploy via s60 jump host"
+        if: failure()
+        uses: appleboy/ssh-action@v1
+        with:
+          host: 89.203.173.196
+          port: 2260
+          username: {{ '${{ secrets.VPS_USER }}' }}
+          key: {{ '${{ secrets.VPS_SSH_KEY }}' }}
+          timeout: 60s
+          command_timeout: 5m
+          script: |
+            # Hop from s60 to target server internally
+            scp -r -o StrictHostKeyChecking=no -P 2262 \
+              /tmp/deploy-{{ PROJECT_NAME }}/* \
+              {{ '${{ secrets.VPS_USER }}' }}@192.168.1.62:{{ DEPLOY_PATH }}/
+            ssh {{ '${{ secrets.VPS_USER }}' }}@192.168.1.62 -p 2262 \
+              'sudo systemctl reload nginx'

@@ -9,45 +9,52 @@ interface Props {
 const { lang: propLang } = Astro.props;
 const lang = propLang || getLangFromUrl(Astro.url);
 
-const trends = lang === 'cs' ? [
-  { icon: '🤖', text: 'AI Marketing' },
-  { icon: '🎯', text: 'Precision Targeting' },
-  { icon: '📱', text: 'TikTok Ads' },
-  { icon: '📈', text: 'ROI-Focused' },
-  { icon: '🔒', text: 'Privacy-First' },
-  { icon: '⚡', text: 'Smart Automation' },
-  { icon: '🎬', text: 'Short-Form Content' },
-  { icon: '📊', text: 'Data Analytics' },
-  { icon: '🤖', text: 'AI Agents' },
-  { icon: '🔍', text: 'AI Search SEO' },
-] : [
-  { icon: '🤖', text: 'AI Marketing' },
-  { icon: '🎯', text: 'Precision Targeting' },
-  { icon: '📱', text: 'TikTok Ads' },
-  { icon: '📈', text: 'ROI-Focused' },
-  { icon: '🔒', text: 'Privacy-First' },
-  { icon: '⚡', text: 'Smart Automation' },
-  { icon: '🎬', text: 'Short-Form Content' },
-  { icon: '📊', text: 'Data Analytics' },
-  { icon: '🤖', text: 'AI Agents' },
-  { icon: '🔍', text: 'AI Search SEO' },
-];
+const trends =
+  lang === 'cs'
+    ? [
+        { icon: '🤖', text: 'AI Marketing' },
+        { icon: '🎯', text: 'Precision Targeting' },
+        { icon: '📱', text: 'TikTok Ads' },
+        { icon: '📈', text: 'ROI-Focused' },
+        { icon: '🔒', text: 'Privacy-First' },
+        { icon: '⚡', text: 'Smart Automation' },
+        { icon: '🎬', text: 'Short-Form Content' },
+        { icon: '📊', text: 'Data Analytics' },
+        { icon: '🤖', text: 'AI Agents' },
+        { icon: '🔍', text: 'AI Search SEO' },
+      ]
+    : [
+        { icon: '🤖', text: 'AI Marketing' },
+        { icon: '🎯', text: 'Precision Targeting' },
+        { icon: '📱', text: 'TikTok Ads' },
+        { icon: '📈', text: 'ROI-Focused' },
+        { icon: '🔒', text: 'Privacy-First' },
+        { icon: '⚡', text: 'Smart Automation' },
+        { icon: '🎬', text: 'Short-Form Content' },
+        { icon: '📊', text: 'Data Analytics' },
+        { icon: '🤖', text: 'AI Agents' },
+        { icon: '🔍', text: 'AI Search SEO' },
+      ];
 
 const trendsDouble = [...trends, ...trends];
 ---
 
-<section class="py-4 bg-gradient-to-r from-primary-50 to-accent-50 dark:from-dark-800 dark:to-dark-700 border-y border-gray-200 dark:border-dark-700">
+<section
+  class="py-4 bg-gradient-to-r from-primary-50 to-accent-50 dark:from-dark-800 dark:to-dark-700 border-y border-gray-200 dark:border-dark-700"
+>
   <div class="marquee-container">
     <div class="marquee-content">
-      {trendsDouble.map((trend, index) => (
-        <a
-          href={lang === 'cs' ? '/cs#services' : '/#services'}
-          class="inline-flex items-center gap-2 px-6 py-2 mx-2 whitespace-nowrap text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
-        >
-          <span class="text-lg">{trend.icon}</span>
-          <span>{trend.text}</span>
-        </a>
-      ))}
+      {
+        trendsDouble.map((trend, index) => (
+          <a
+            href={lang === 'cs' ? '/cs#services' : '/#services'}
+            class="inline-flex items-center gap-2 px-6 py-2 mx-2 whitespace-nowrap text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+          >
+            <span class="text-lg">{trend.icon}</span>
+            <span>{trend.text}</span>
+          </a>
+        ))
+      }
     </div>
   </div>
 </section>

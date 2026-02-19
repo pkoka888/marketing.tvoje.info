@@ -1,7 +1,6 @@
 # Task Plan: [Task Name]
 
-**Date**: {{DATE}}
-**Agent**: {{AGENT_NAME}}
+**Date**: {{DATE}} **Agent**: {{AGENT_NAME}}
 
 ## 1. Goal
 
@@ -29,10 +28,12 @@ _1-2 sentence description of the objective._
 ## References
 
 ### Dependencies
+
 - [GAP_ANALYSIS](GAP_ANALYSIS.md) - Referenced template
 - [RESEARCH_FINDINGS](RESEARCH_FINDINGS.md) - Referenced template
 
 ### Referenced By
+
 - [AUDIT_REPORT](AUDIT_REPORT.md) - References this template
 - [GAP_ANALYSIS](GAP_ANALYSIS.md) - References this template
 - [RESEARCH_FINDINGS](RESEARCH_FINDINGS.md) - References this template
@@ -41,8 +42,7 @@ _1-2 sentence description of the objective._
 
 ## Related Skills & Rules
 
-| Category | Resource | Description |
-|----------|----------|-------------|
+| Category  | Resource                                                                                          | Description                       |
+| --------- | ------------------------------------------------------------------------------------------------- | --------------------------------- |
 | **Skill** | [.kilocode/skills/bmad-story-planning/SKILL.md](../.kilocode/skills/bmad-story-planning/SKILL.md) | Story breakdown and task planning |
-| **Rule** | [.kilocode/rules/bmad-integration](./bmad-integration.md) | BMAD workflow protocol |
-
+| **Rule**  | [.kilocode/rules/bmad-integration](./bmad-integration.md)                                         | BMAD workflow protocol            |

@@ -12,7 +12,7 @@ Analysis of how LiteLLM Router handles `router_settings` parameters, specificall
 
 ---
 
-## 1. Router.__init__ Accepted Parameters
+## 1. Router.**init** Accepted Parameters
 
 **Location:** `litellm/router.py` - `Router.__init__` method (lines ~128-205)
 
@@ -25,16 +25,16 @@ def __init__(
     self,
     # Model Configuration
     model_list: Optional[Union[List[DeploymentTypedDict], List[Dict[str, Any]]]] = None,
-    
+
     # Assistants API
     assistants_config: Optional[AssistantsTypedDict] = None,
-    
+
     # Search API
     search_tools: Optional[List[SearchToolTypedDict]] = None,
-    
+
     # Guardrail API
     guardrail_list: Optional[List[GuardrailTypedDict]] = None,
-    
+
     # Caching
     redis_url: Optional[str] = None,
     redis_host: Optional[str] = None,
@@ -44,11 +44,11 @@ def __init__(
     cache_kwargs: dict = {},
     caching_groups: Optional[List[tuple]] = None,
     client_ttl: int = 3600,
-    
+
     # Scheduler
     polling_interval: Optional[float] = None,
     default_priority: Optional[int] = None,
-    
+
     # Reliability
     num_retries: Optional[int] = None,
     max_fallbacks: Optional[int] = None,
@@ -73,7 +73,7 @@ def __init__(
     allowed_fails_policy: Optional[AllowedFailsPolicy] = None,
     cooldown_time: Optional[float] = None,
     disable_cooldowns: Optional[bool] = None,
-    
+
     # Routing Strategy
     routing_strategy: Literal[
         "simple-shuffle",
@@ -85,7 +85,7 @@ def __init__(
     ] = "simple-shuffle",
     optional_pre_call_checks: Optional[OptionalPreCallChecks] = None,
     routing_strategy_args: dict = {},
-    
+
     # Budget & Alerting
     provider_budget_config: Optional[GenericBudgetConfigType] = None,
     alerting_config: Optional[AlertingConfig] = None,
@@ -114,6 +114,7 @@ if default_fallbacks is not None or litellm.default_fallbacks is not None:
 ```
 
 **Behavior:**
+
 1. Takes `fallbacks` parameter OR falls back to `litellm.fallbacks` global
 2. Validates format via `validate_fallbacks()` method
 3. If `default_fallbacks` is set, appends as wildcard fallback `{"*": [...]}`
@@ -136,7 +137,7 @@ valid_params = set(sig.parameters.keys())
 
 # Filter router_settings to only include valid parameters
 filtered_router_settings = {
-    k: v for k, v in router_settings.items() 
+    k: v for k, v in router_settings.items()
     if k in valid_params
 }
 
@@ -151,6 +152,7 @@ if ignored:
 ### Parameters That Get Filtered
 
 **Valid (passed to Router):**
+
 - `routing_strategy`
 - `num_retries`
 - `timeout`
@@ -166,9 +168,10 @@ if ignored:
 - `enable_pre_call_checks`
 - `redis_url`, `redis_host`, `redis_port`, `redis_password`
 - `cache_responses`
-- And all other Router.__init__ parameters
+- And all other Router.**init** parameters
 
-**Ignored (not in Router.__init__):**
+**Ignored (not in Router.**init**):**
+
 - Any typo or non-existent parameter names
 - Deprecated parameters removed from current version
 
@@ -179,39 +182,44 @@ if ignored:
 ### Valid Fallback Formats
 
 **Standard Format:**
+
 ```yaml
 router_settings:
   fallbacks:
-    - "primary-model": ["fallback-model-1", "fallback-model-2"]
-    - "another-model": ["backup-model"]
+    - 'primary-model': ['fallback-model-1', 'fallback-model-2']
+    - 'another-model': ['backup-model']
 ```
 
 **Default Fallbacks (Wildcard):**
+
 ```yaml
 router_settings:
   default_fallbacks:
-    - "fallback-model-1"
-    - "fallback-model-2"
+    - 'fallback-model-1'
+    - 'fallback-model-2'
   # This becomes: fallbacks: [{"*": ["fallback-model-1", "fallback-model-2"]}]
 ```
 
 **Context Window Fallbacks:**
+
 ```yaml
 router_settings:
   context_window_fallbacks:
-    - "gpt-3.5-turbo": ["gpt-3.5-turbo-16k"]
+    - 'gpt-3.5-turbo': ['gpt-3.5-turbo-16k']
 ```
 
 **Content Policy Fallbacks:**
+
 ```yaml
 router_settings:
   content_policy_fallbacks:
-    - "gpt-4": ["gpt-3.5-turbo"]
+    - 'gpt-4': ['gpt-3.5-turbo']
 ```
 
 ### Validation Rules
 
 From `Router.validate_fallbacks()`:
+
 ```python
 def validate_fallbacks(self, fallback_param: Optional[List]):
     if fallback_param is None:
@@ -226,6 +234,7 @@ def validate_fallbacks(self, fallback_param: Optional[List]):
 ```
 
 **Requirements:**
+
 1. Must be a list
 2. Each item must be a dictionary
 3. Each dictionary must have exactly one key (model_name -> fallback_list)
@@ -241,49 +250,49 @@ router_settings:
   # Retry configuration
   num_retries: 3
   timeout: 30.0
-  
+
   # Fallback chain: primary groq models -> backup groq models -> openai
   fallbacks:
-    - "llama-3.3-70b-versatile": ["llama-3.1-70b-versatile", "gpt-4o-mini"]
-    - "llama-3.1-70b-versatile": ["gpt-4o-mini"]
-    - "llama-3.2-3b-preview": ["gpt-4o-mini"]
-    - "gemma2-9b-it": ["gpt-4o-mini"]
-  
+    - 'llama-3.3-70b-versatile': ['llama-3.1-70b-versatile', 'gpt-4o-mini']
+    - 'llama-3.1-70b-versatile': ['gpt-4o-mini']
+    - 'llama-3.2-3b-preview': ['gpt-4o-mini']
+    - 'gemma2-9b-it': ['gpt-4o-mini']
+
   # Default fallback for any model not explicitly listed
   default_fallbacks:
-    - "gpt-4o-mini"
-  
+    - 'gpt-4o-mini'
+
   # Context window fallbacks
   context_window_fallbacks:
-    - "llama-3.2-3b-preview": ["llama-3.3-70b-versatile"]
-  
+    - 'llama-3.2-3b-preview': ['llama-3.3-70b-versatile']
+
   # Cooldown and reliability
   cooldown_time: 60
   allowed_fails: 3
-  
+
   # Routing strategy
-  routing_strategy: "simple-shuffle"
-  
+  routing_strategy: 'simple-shuffle'
+
   # Enable pre-call checks for rate limiting
   enable_pre_call_checks: true
 
 model_list:
   # Primary Groq models
-  - model_name: "llama-3.3-70b-versatile"
+  - model_name: 'llama-3.3-70b-versatile'
     litellm_params:
-      model: "groq/llama-3.3-70b-versatile"
-      api_base: "http://localhost:4000/v1"
-      
-  - model_name: "llama-3.1-70b-versatile"
+      model: 'groq/llama-3.3-70b-versatile'
+      api_base: 'http://localhost:4000/v1'
+
+  - model_name: 'llama-3.1-70b-versatile'
     litellm_params:
-      model: "groq/llama-3.1-70b-versatile"
-      api_base: "http://localhost:4000/v1"
-  
+      model: 'groq/llama-3.1-70b-versatile'
+      api_base: 'http://localhost:4000/v1'
+
   # Fallback OpenAI models via Groq proxy
-  - model_name: "gpt-4o-mini"
+  - model_name: 'gpt-4o-mini'
     litellm_params:
-      model: "openai/gpt-4o-mini"
-      api_base: "http://localhost:4000/v1"
+      model: 'openai/gpt-4o-mini'
+      api_base: 'http://localhost:4000/v1'
 ```
 
 ---
@@ -325,12 +334,14 @@ router_settings:
 ## 6. Version-Specific Notes
 
 **LiteLLM 1.81.1 Features:**
+
 - Supports `model_group_retry_policy` for per-model-group retry policies
 - Supports `allowed_fails_policy` for custom failure handling
 - Supports `router_general_settings` for fine-grained control
 - Auto-router deployments via `auto_router/` prefix
 
 **Breaking Changes from Older Versions:**
+
 - `enable_pre_call_checks` now defaults to `False` (was `True`)
 - `routing_strategy` validation is stricter (raises `ValueError` for invalid values)
 - Redis caching parameters consolidated under `cache_kwargs`

@@ -1,214 +1,216 @@
-# User Manual: Agentic Platform 2026
+# User Guide: Marketing Portfolio with AI Agents
 
-## 1. Quick Start - Model Selection
-
-| Task              | Tool       | Model                             | Command            |
-| ----------------- | ---------- | --------------------------------- | ------------------ |
-| Bulk Coding       | Kilo       | `grok-code-fast-1:optimized:free` | Use Kilo extension |
-| Standard Tasks    | OpenCode   | `big-pickle`                      | `opencode` CLI     |
-| Routine Fixes     | Cline      | `minimax-m2.1:free`               | Cmd+K in VS Code   |
-| Complex Analysis  | Gemini CLI | `gemini-2.5-pro`                  | `gemini` CLI       |
-| External Research | Gemini     | `gemini-2.5-flash`                | Conserve quota!    |
-
-**Resource Rule**: NEVER use Gemini for internal searches. Use grok-code-fast-1.
-
-## 2. Orchestration & Parallel Agents
-
-### Quick Agent Templates
-
-Use these simplified prompts:
-
-#### Run Research (OpenCode @researcher)
-
-```
-@researcher Research [TOPIC] in [FILES/FOLDER]. Focus on [WHAT TO FIND]. Deliver: [OUTPUT FORMAT]
-```
-
-#### Run Code Audit (OpenCode @codex)
-
-```
-@codex Audit [FILE/FOLDER] for [ISSUE TYPE]. Do NOT fix - just identify. Deliver: findings list
-```
-
-#### Run Code Review (OpenCode @reviewer)
-
-```
-@reviewer Review [FILE] for [CRITERIA]. Focus on [WHAT TO CHECK]. Deliver: approved/issues
-```
-
-#### Run Multiple in Parallel
-
-```
-[PARALLEL EXECUTION]
-@researcher: Research [topic]
-@codex: Audit [file]
-@reviewer: Review [file]
-AGGREGATE: Combine findings into [OUTPUT FILE]
-```
-
-#### Use BMAD Flow
-
-```
-Use BMAD flow:
-1. Analyst: Research [requirements] → plans/reqs/[feature].md
-2. Architect: Design [solution] → plans/arch/[feature].md
-3. Dev: Implement
-4. QA: Test
-GATE: Each phase passes before next
-```
-
-### Prompting Strategies
-
-**Bad**: "Fix the bugs in the app."
-**Good**: "Scan `src/libs/` for TypeScript errors. Fix only `any` type issues. Do NOT change logic."
-
-**Bad**: "Make it look better."
-**Good**: "Apply Neon Future design from `design-system.md` to Hero. Use Tailwind `bg-slate-900 text-teal-400`."
+> **Quick Start**: This is your marketing portfolio website powered by multiple AI agents. This guide helps you use them effectively.
 
 ---
 
-## 3. Advanced Prompting Strategies (2026)
+## 🎯 What is This Project?
 
-### Parallel Swarms
+**marketing.tvoje.info** is a modern marketing portfolio website built with:
+- **Astro** - Static site generator
+- **Tailwind CSS** - Styling
+- **Multiple AI Agents** - Automate development, research, and content creation
 
-Use this pattern:
+---
 
-```
-Run 3 agents in PARALLEL:
-- @researcher: Research [topic]
-- @codex: Audit [file]
-- @reviewer: Identify a11y issues
-AGGREGATE: Combine into plans/hero-upgrade.md
-```
+## 🤖 AI Agents Overview
 
-### Complex Feature Flow (BMAD)
+### Available Agents
 
-> "**Use BMAD flow**: Analyst → Architect → Dev → QA.
->
-> 1. **Analyst**: Create requirements in `plans/reqs/feature.md`.
-> 2. **Architect**: Design system in `plans/arch/feature.md`.
-> 3. **Dev**: Implement.
-> 4. **QA**: Write tests.
->    **GATE**: Each phase must PASS validation before proceeding."
+| Agent | Best For | Model (Free) |
+|-------|----------|--------------|
+| **Kilo Code** | Bulk coding, implementation | `x-ai/grok-code-fast-1:optimized:free` |
+| **OpenCode** | Standard tasks, research | `big-pickle` |
+| **Cline** | Routine fixes, planning | `minimax-m2.1:free` |
+| **Gemini CLI** | Research, analysis | `gemini-2.5-flash` |
 
-## 4. Core Documentation & Architecture
-
-- **Tech Stack**: Astro 5.0, Tailwind 4.0, TypeScript.
-- **Infrastructure**: VPS (s60/s62) via SSH.
-- **Knowledge Base**: `.kilocode/knowledge/`
-- **Rules**: `.kilocode/rules/` (Canonical Source).
-
-## 4. Git & Selective Commits
-
-### Atomic Commits Principle
-
-Each commit should represent ONE logical change that can be built/tested independently.
-
-### Commit Categories (Conventional Commits)
+### When to Use Which Agent
 
 ```
-feat:     New feature
-fix:      Bug fix
-docs:     Documentation only
-refactor: Code restructuring (no feature change)
-chore:    Maintenance, deps, configs
-test:     Adding tests
+┌─────────────────────────────────────────────────────────────┐
+│                    AGENT ROUTING GUIDE                      │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  Need code written?  ──────►  Kilo Code (free)           │
+│                                                             │
+│  Need research?  ──────────►  OpenCode @researcher       │
+│                                                             │
+│  Need audit/compliance?  ────►  Claude Code (paid)       │
+│                                                             │
+│  Need architecture?  ─────────►  Gemini CLI (free)        │
+│                                                             │
+│  Quick fix?  ─────────────────►  Cline (free)           │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
 ```
 
-### Selective Commit Workflow
+---
+
+## 🚀 Common Scenarios
+
+### 1. Adding a New Feature
+
+**Steps:**
+1. Describe your idea in plain language
+2. Agent creates a plan using TASK_PLAN template
+3. Agent implements using free models (Kilo Code)
+4. Verify with `npm run build`
+
+**Prompt Example:**
+> "Add a contact form with email validation. Use Astro form handling."
+
+### 2. Researching Technologies
+
+**Steps:**
+1. Use OpenCode with `@researcher` persona
+2. Ask specific questions
+3. Agent searches web and compiles findings
+
+**Prompt Example:**
+> "@researcher Find best free AI image generation libraries for self-hosting in 2025"
+
+### 3. Fixing Bugs
+
+**Steps:**
+1. Describe the bug
+2. Cline or Kilo Code investigates
+3. Uses free model for fix
+
+**Prompt Example:**
+> "Navigation menu doesn't work on mobile. Debug and fix."
+
+### 4. Content Updates
+
+**Steps:**
+1. Describe what needs updating
+2. Agent edits content files
+3. Verify changes
+
+**Prompt Example:**
+> "Update the services section to include SEO consulting"
+
+### 5. Generating Images
+
+**Tools Available:**
+- **NVIDIA Canvas** (free) - AI image generation
+- **OpenAI DALL-E** (paid) - High quality
+- **Stable Diffusion** (self-hosted option)
+
+**Prompt Example:**
+> "Generate hero image for marketing services section: professional, modern, blue tones"
+
+---
+
+## 💰 Cost Control (Important!)
+
+### Free Models (Use First)
+- Kilo Code: `grok-code-fast-1:optimized:free` 
+- OpenCode: `big-pickle`
+- Cline: `minimax-m2.1:free`
+- Gemini: `gemini-2.5-flash`
+
+### Paid Models (Requires Approval)
+- Claude Sonnet/Opus
+- OpenAI o3
+- Gemini 2.5 Pro
+
+**Rule**: Always try free models first. Only use paid for complex reasoning.
+
+---
+
+## 📁 Project Structure
+
+```
+marketing.tvoje.info/
+├── src/                    # Source code
+│   ├── pages/            # Astro pages
+│   ├── components/       # UI components
+│   └── layouts/          # Page layouts
+├── public/images/        # Images & graphics
+├── plans/                # Feature plans & research
+├── scripts/              # Automation scripts
+├── litellm/              # AI proxy config
+└── .kilocode/           # Agent configurations
+```
+
+---
+
+## 🔧 Useful Commands
 
 ```bash
-# 1. Check what changed
-git status
+# Development
+npm run dev              # Start local server
+npm run build            # Production build
 
-# 2. Stage specific files (not all)
-git add src/components/Hero.astro
-git add docs/Hero-design.md
+# Verification (run before commit)
+python scripts/verify_agentic_platform.py
+python scripts/validate_template_references.py
 
-# 3. Commit with scope
-git commit -m "feat(hero): add glassmorphism effect"
-
-# 4. Remaining changes - new commit
-git add src/styles/
-git commit -m "chore(styles): add glassmorphism utilities"
+# List available templates
+python scripts/new_plan.py --list
 ```
 
-### When to Split vs Bundle
+---
 
-| Scenario                                  | Action                                    |
-| ----------------------------------------- | ----------------------------------------- |
-| Related changes (feature + tests + docs)  | **Bundle** in one commit                  |
-| Independent changes (fix A + feature B)   | **Split** into separate commits           |
-| Platform configs (agent rules, workflows) | **Bundle** together (maintains integrity) |
-| Bugfix + unrelated feature                | **Split** - bugfix first, feature second  |
+## 🔍 Research Findings: Free AI Image Generation
 
-### Verification Before Commit
+Based on web research (Feb 2026):
 
-Always run before committing:
+### Top Free Options
 
-```bash
-npm run build    # Must pass
-npm run typecheck  # Must pass
-git diff --stat  # Review what changed
-```
+| Tool | Type | Cost | Notes |
+|------|------|------|-------|
+| **Stable Diffusion 3.5** | Self-host | Free | Best open source, needs GPU |
+| **FLUX.1** | Self-host | Free | Newer, quality |
+| **ComfyUI** | GUI/Workflow | Free | Advanced, steep learning |
+| **OpenArt** | Web | Free tier | Easy to start |
+| **Gemini 2.0** | API | Limited free | Google's offering |
 
-## 5. Troubleshooting
+### Recommended for This Project
 
-| Issue                   | Solution                                                     |
-| ----------------------- | ------------------------------------------------------------ |
-| "Agent Context Full"    | Switch to Gemini CLI or start new session                    |
-| "Redis Connection Fail" | Run `python scripts/verify_redis.py`                         |
-| "Deployment Failed"     | Check GitHub Actions logs. Vercel fail = ignore (we use VPS) |
-| Model Not Found         | Check `.kilocode/models.json` for valid model names          |
-| MCP Server Error        | Run `python scripts/verify_agentic_platform.py`              |
+1. **For Quick Assets**: Use OpenArt (free tier)
+2. **For Self-Hosting**: Stable Diffusion 3.5 + ComfyUI
+3. **For Integration**: NVIDIA API (has free tier)
 
-## 6. Parallel Task Orchestration
+---
 
-### ASSESS → SPLIT → ASSIGN → AGGREGATE → VALIDATE
+## 📋 Available Templates
 
-**Pattern** (2026 best practice):
+Use these for structured planning:
 
-1. **ASSESS**: Is task simple/standard/complex?
-2. **SPLIT**: Can parts run in parallel?
-3. **ASSIGN**: Route to free models first
-4. **AGGREGATE**: Collect results via MCP
-5. **VALIDATE**: Run verification scripts
+| Template | Use For |
+|----------|---------|
+| TASK_PLAN | Implementation tasks |
+| RESEARCH_FINDINGS | Research documentation |
+| AUDIT_REPORT | Security/compliance audits |
+| GAP_ANALYSIS | Identifying missing features |
+| TEST_RESULTS | QA documentation |
+| LINT_FIX_STRATEGY | Code quality fixes |
 
-### Parallel-Safe Tasks
+---
 
-- Code + Tests (can run together)
-- Research + Documentation
-- Multi-server SSH checks
-- Lint + Build + Typecheck
+## 🆘 Troubleshooting
 
-### Sequential Gates (Must wait)
+### "Out of credits"
+- Switch to free model (see Cost Control section)
+- Check `.kilocode/rules/cost-optimization`
 
-- Research → Architecture → Implementation
-- Build → Test → Deploy
+### "Agent not responding"
+- Try different agent
+- Check `scripts/verify_agentic_platform.py`
 
-### Example: Multi-Section Website Update
+### "Build failed"
+- Run `npm run build` locally to see errors
+- Check for missing dependencies
 
-```
-ASSESS: Homepage needs 4 new sections → Complex
-SPLIT:
-  [PARALLEL]
-    - Research: Best practices for each section
-    - Audit: Current component implementations
-    - Tests: Write Playwright tests
-  [GATE] → Implement all sections
-  [PARALLEL]
-    - Lint check
-    - Build check
-    - Accessibility check
-ASSIGN:
-  - Research: @researcher (groq/free)
-  - Audit: @codex (groq/free)
-  - Tests: @reviewer (groq/free)
-AGGREGATE: Memory MCP for shared context
-VALIDATE: npm run build && npm run typecheck
-```
+---
 
-## 7. Deployment
+## 📞 Getting Help
 
-- **Production**: Push to `main` triggers `deploy.yml` (VPS).
-- **Preview**: Open a PR triggers `deploy-preview` (Vercel).
+1. **Read AGENTS.md** - Full agent framework docs
+2. **Check CLAUDE.md** - Claude Code instructions
+3. **Review plans/** - Feature documentation
+
+---
+
+*Last Updated: 2026-02-19*

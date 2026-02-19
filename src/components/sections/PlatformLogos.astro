@@ -24,21 +24,24 @@ const platforms = [
   { name: 'GA4', icon: '📊', category: 'analytics' },
 ];
 
-const categories = lang === 'cs' ? {
-  ads: 'Reklamní platformy',
-  crm: 'CRM & Automatizace',
-  ai: 'AI Nástroje',
-  ecom: 'E-commerce',
-  cms: 'CMS',
-  analytics: 'Analytika',
-} : {
-  ads: 'Ad Platforms',
-  crm: 'CRM & Automation',
-  ai: 'AI Tools',
-  ecom: 'E-commerce',
-  cms: 'CMS',
-  analytics: 'Analytics',
-};
+const categories =
+  lang === 'cs'
+    ? {
+        ads: 'Reklamní platformy',
+        crm: 'CRM & Automatizace',
+        ai: 'AI Nástroje',
+        ecom: 'E-commerce',
+        cms: 'CMS',
+        analytics: 'Analytika',
+      }
+    : {
+        ads: 'Ad Platforms',
+        crm: 'CRM & Automation',
+        ai: 'AI Tools',
+        ecom: 'E-commerce',
+        cms: 'CMS',
+        analytics: 'Analytics',
+      };
 ---
 
 <section id="platforms" class="section bg-gray-50 dark:bg-dark-800">
@@ -49,28 +52,32 @@ const categories = lang === 'cs' ? {
         {lang === 'cs' ? 'Nástroje a platformy' : 'Tools & Platforms'}
       </h2>
       <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-        {lang === 'cs' 
-          ? 'Pracujeme s nejlepšími nástroji pro maximální výsledky.'
-          : 'We work with the best tools for maximum results.'}
+        {
+          lang === 'cs'
+            ? 'Pracujeme s nejlepšími nástroji pro maximální výsledky.'
+            : 'We work with the best tools for maximum results.'
+        }
       </p>
     </div>
 
     <!-- Platforms Grid -->
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-      {platforms.map((platform, index) => (
-        <div 
-          class="platform-card group flex flex-col items-center justify-center p-4 rounded-xl bg-white dark:bg-dark-700 border border-gray-200 dark:border-dark-600 hover:border-primary-500 dark:hover:border-primary-400 transition-all duration-300 hover:shadow-lg hover:shadow-primary-500/10"
-          data-aos="fade-up"
-          data-aos-delay={index * 50}
-        >
-          <span class="text-3xl mb-2 transform group-hover:scale-110 transition-transform duration-300">
-            {platform.icon}
-          </span>
-          <span class="text-sm font-medium text-gray-700 dark:text-gray-300">
-            {platform.name}
-          </span>
-        </div>
-      ))}
+      {
+        platforms.map((platform, index) => (
+          <div
+            class="platform-card group flex flex-col items-center justify-center p-4 rounded-xl bg-white dark:bg-dark-700 border border-gray-200 dark:border-dark-600 hover:border-primary-500 dark:hover:border-primary-400 transition-all duration-300 hover:shadow-lg hover:shadow-primary-500/10"
+            data-aos="fade-up"
+            data-aos-delay={index * 50}
+          >
+            <span class="text-3xl mb-2 transform group-hover:scale-110 transition-transform duration-300">
+              {platform.icon}
+            </span>
+            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">
+              {platform.name}
+            </span>
+          </div>
+        ))
+      }
     </div>
 
     <!-- Stats -->

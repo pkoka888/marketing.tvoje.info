@@ -1,0 +1,53 @@
+# Ansible Inventory — Universal Server Infrastructure
+# Connection via Tailscale (primary) or SSH config aliases
+---
+all:
+  vars:
+    ansible_user: admin
+    ansible_ssh_common_args: >-
+      -o StrictHostKeyChecking=no
+      -o ConnectTimeout=10
+      -o BatchMode=yes
+    ansible_python_interpreter: /usr/bin/python3
+
+  children:
+    backup:
+      hosts:
+        s60:
+          ansible_host: "100.111.141.111"  # Tailscale
+          ansible_port: 20
+          server_purpose: "Hub/Backup"
+          server_criticality: medium
+
+    gateway:
+      hosts:
+        s61:
+          ansible_host: "100.111.141.112"  # Tailscale
+          ansible_port: 20
+          server_purpose: "Gateway/Traefik"
+          server_criticality: critical
+
+    webservers:
+      hosts:
+        s62:
+          ansible_host: "100.91.164.109"  # Tailscale
+          ansible_port: 20
+          server_purpose: "Production/Web"
+          server_criticality: high
+
+    # Convenience groups
+    all_servers:
+      children:
+        backup:
+        gateway:
+        webservers:
+
+    # Servers safe for automated deployment (no human-in-the-loop required)
+    auto_deploy:
+      children:
+        webservers:
+
+    # Servers requiring human approval for changes
+    human_approval_required:
+      children:
+        gateway:

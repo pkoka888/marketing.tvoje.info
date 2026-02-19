@@ -42,9 +42,10 @@ The investigation examined the [`SettingsSyncService.ts`](01-agent-frameworks/ki
   - `telemetrySetting`
 
 **Code Reference** (from `SettingsSyncService.ts`):
+
 ```typescript
-const syncKeys = this.SYNC_KEYS.map((key) => `${Package.name}.${key}`)
-context.globalState.setKeysForSync(syncKeys)
+const syncKeys = this.SYNC_KEYS.map((key) => `${Package.name}.${key}`);
+context.globalState.setKeysForSync(syncKeys);
 ```
 
 ### 2. Protection Mechanisms
@@ -56,19 +57,21 @@ The [`ShadowCheckpointService.ts`](01-agent-frameworks/kilocode/src/services/che
 - **Warning System**: Displays warnings when attempting to use protected locations
 
 **Protected Paths Implementation**:
+
 ```typescript
-const homedir = os.homedir()
-const desktopPath = path.join(homedir, "Desktop")
-const documentsPath = path.join(homedir, "Documents")
-const downloadsPath = path.join(homedir, "Downloads")
-const protectedPaths = [homedir, desktopPath, documentsPath, downloadsPath]
+const homedir = os.homedir();
+const desktopPath = path.join(homedir, 'Desktop');
+const documentsPath = path.join(homedir, 'Documents');
+const downloadsPath = path.join(homedir, 'Downloads');
+const protectedPaths = [homedir, desktopPath, documentsPath, downloadsPath];
 if (protectedPaths.includes(workspaceDir)) {
-    showWarning(t("kilocode:checkpoints.protectedPaths", { workspaceDir }))
-    throw new Error(`Cannot use checkpoints in ${workspaceDir}`)
+  showWarning(t('kilocode:checkpoints.protectedPaths', { workspaceDir }));
+  throw new Error(`Cannot use checkpoints in ${workspaceDir}`);
 }
 ```
 
 **Workspace Hashing Implementation**:
+
 ```typescript
 public static hashWorkspaceDir(workspaceDir: string) {
     return crypto.createHash("sha256").update(workspaceDir).digest("hex").toString().slice(0, 8)
@@ -98,7 +101,7 @@ The investigation definitively shows that:
 
 2. **Kilo Code does not store absolute paths by default**: The framework uses workspace-relative paths and hashes for isolation.
 
-3. **The poisoned path likely originated from**: 
+3. **The poisoned path likely originated from**:
    - A previous VS Code installation with that profile path
    - Settings Sync bringing over old configuration from another machine
    - An extension that stored the absolute path before Kilo Code was installed
@@ -130,12 +133,12 @@ The mixed user profile content issue (`C:\Users\HP` appearing in a `C:\Users\pav
 
 ### Contributing Factors
 
-| Factor | Description | Likelihood |
-|--------|-------------|------------|
-| Settings Sync Enabled | User has VS Code Settings Sync turned on | High |
-| Previous Installation | User had VS Code installed on a machine with `HP` profile | High |
-| Profile Path in Settings | Some extension stored the full profile path | Medium |
-| Cross-account Sync | Settings synced from another Microsoft account | Low |
+| Factor                   | Description                                               | Likelihood |
+| ------------------------ | --------------------------------------------------------- | ---------- |
+| Settings Sync Enabled    | User has VS Code Settings Sync turned on                  | High       |
+| Previous Installation    | User had VS Code installed on a machine with `HP` profile | High       |
+| Profile Path in Settings | Some extension stored the full profile path               | Medium     |
+| Cross-account Sync       | Settings synced from another Microsoft account            | Low        |
 
 ### Evidence Chain
 
@@ -180,6 +183,7 @@ The mixed user profile content issue (`C:\Users\HP` appearing in a `C:\Users\pav
 ### What Gets Synced
 
 VS Code Settings Sync shares:
+
 - Extensions and their settings
 - UI state (window size, position)
 - Keybindings
@@ -195,12 +199,12 @@ VS Code Settings Sync shares:
 
 The Kilo Code framework implements multiple protection layers:
 
-| Protection | Description | Status |
-|------------|-------------|--------|
-| Protected Paths | Blocks checkpoints in homedir, Desktop, Documents, Downloads | ✅ Implemented |
-| Workspace Hashing | Uses SHA-256 for workspace identification | ✅ Implemented |
-| Path Validation | Validates all paths before operations | ✅ Implemented |
-| Error Handling | Graceful error messages for protected operations | ✅ Implemented |
+| Protection        | Description                                                  | Status         |
+| ----------------- | ------------------------------------------------------------ | -------------- |
+| Protected Paths   | Blocks checkpoints in homedir, Desktop, Documents, Downloads | ✅ Implemented |
+| Workspace Hashing | Uses SHA-256 for workspace identification                    | ✅ Implemented |
+| Path Validation   | Validates all paths before operations                        | ✅ Implemented |
+| Error Handling    | Graceful error messages for protected operations             | ✅ Implemented |
 
 ### 2. Recommended User Actions
 
@@ -231,6 +235,7 @@ To prevent similar issues in the future:
 ### For Extension Developers
 
 If building extensions that store paths:
+
 1. **Use Workspace-relative Paths**: Store paths relative to `${workspaceFolder}`
 2. **Hash Sensitive Data**: Use SHA-256 hashes for identification rather than full paths
 3. **Validate on Load**: Check if stored paths still exist before using them
@@ -256,5 +261,5 @@ The "ghost" node.exe processes are a characteristic of VS Code's Extension Host 
 
 ---
 
-*Document generated: 2026-02-18*
-*Investigation conducted using code analysis of Kilo Code framework at `C:/Users/pavel/vscodeportable/agentic/01-agent-frameworks/kilocode/`*
+_Document generated: 2026-02-18_
+_Investigation conducted using code analysis of Kilo Code framework at `C:/Users/pavel/vscodeportable/agentic/01-agent-frameworks/kilocode/`_

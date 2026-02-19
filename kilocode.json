@@ -47,12 +47,5 @@
     "batchFileReads": true,
     "enforceAgentsMd": true
   },
-  "mcpServers": [
-    "filesystem-projects",
-    "memory",
-    "redis",
-    "git",
-    "github",
-    "fetch"
-  ]
+  "mcpServers": ["filesystem-projects", "memory", "redis", "git", "github", "fetch"]
 }

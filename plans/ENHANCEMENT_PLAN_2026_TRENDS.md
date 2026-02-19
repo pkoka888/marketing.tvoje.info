@@ -2,8 +2,8 @@
 
 ## Based on Research & 2026 Trends
 
-**Created**: 2026-02-18  
-**Based on**: Gemini CLI research, Firecrawl web research  
+**Created**: 2026-02-18
+**Based on**: Gemini CLI research, Firecrawl web research
 **Scope**: Full site enhancement for marketing.tvoje.info
 
 ---
@@ -163,7 +163,7 @@ This plan outlines comprehensive enhancements to transform the marketing portfol
 
 ### New Section 1: "2026 Marketing Trends" Banner/Strip
 
-**Location**: After Hero or as floating element  
+**Location**: After Hero or as floating element
 **Purpose**: Show expertise in latest trends
 
 **Content Recommendations**:
@@ -182,7 +182,7 @@ This plan outlines comprehensive enhancements to transform the marketing portfol
 
 ### New Section 2: "AI in Marketing" Showcase
 
-**Location**: After About or before Services  
+**Location**: After About or before Services
 **Purpose**: Position as AI-first agency
 
 **Content**:
@@ -211,7 +211,7 @@ Our AI-powered marketing solutions deliver:
 
 ### New Section 3: "Platform Expertise"
 
-**Location**: Before Projects  
+**Location**: Before Projects
 **Purpose**: Show tool/partner stack
 
 **Recommended Platforms**:
@@ -228,7 +228,7 @@ Our AI-powered marketing solutions deliver:
 
 ### New Section 4: "Results & Metrics" (Enhanced Projects)
 
-**Current**: Projects with stats in frontmatter  
+**Current**: Projects with stats in frontmatter
 **Enhanced**: Add ROI calculator or "impact calculator" visual
 
 **Idea**: Show impact cards:
@@ -281,7 +281,7 @@ Our AI-powered marketing solutions deliver:
 
 ### 1. Hero Section
 
-**Current**: Gradient mesh orbs  
+**Current**: Gradient mesh orbs
 **Enhanced (Neon-style)**:
 
 - Add animated gradient text ("Growth That Scales")
@@ -324,7 +324,7 @@ Our AI-powered marketing solutions deliver:
 
 ### 2. Services Section
 
-**Current**: Bento grid  
+**Current**: Bento grid
 **Enhanced**:
 
 - Add hover glow effects
@@ -407,7 +407,7 @@ Proven results: 312% ROI, 45% CAC reduction, 120% more leads.
 
 ## 2. Services Copy Enhancement
 
-**Current**: Generic descriptions  
+**Current**: Generic descriptions
 **Enhanced** (with outcomes):
 
 ### Marketing Automation
@@ -452,7 +452,7 @@ Typical results: +40% ROAS, -25% CAC
 
 ## 4. Call-to-Actions Enhancement
 
-**Current**: "Get in Touch"  
+**Current**: "Get in Touch"
 **Enhanced**:
 
 - "Start Your Growth Journey"

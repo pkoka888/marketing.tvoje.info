@@ -62,7 +62,7 @@ def check_expensive_model_reminder(tool_name: str, arguments: dict) -> str:
     """
     # Check common argument fields that might contain model names
     search_text = ""
-    
+
     # Check model or model_name field
     if isinstance(arguments, dict):
         model = arguments.get("model", "") or arguments.get("model_name", "")
@@ -70,19 +70,19 @@ def check_expensive_model_reminder(tool_name: str, arguments: dict) -> str:
             arguments.get("prompt", "") or
             arguments.get("system_prompt", "")
         )
-        
+
         # Combine relevant fields for searching
         search_text = f"{model} {prompt}".lower()
-    
+
     # Also check string arguments directly
     if isinstance(arguments, str):
         search_text = arguments.lower()
-    
+
     # Check for expensive model keywords
     for keyword in EXPENSIVE_MODEL_KEYWORDS:
         if keyword.lower() in search_text:
             return COST_GATE_NOTE
-    
+
     return ""
 
 
@@ -95,7 +95,7 @@ def main():
     tool = data.get("tool_name", "")
     tool_input = data.get("tool_input", {})
     path = tool_input.get("path", "") or tool_input.get("file_path", "")
-    
+
     result = {"decision": "allow"}
     reasons = []
 
@@ -104,12 +104,12 @@ def main():
         d in path for d in AGENT_DIRS
     ):
         reasons.append(SYNC_NOTE)
-    
+
     # Check for expensive model usage reminder
     model_reminder = check_expensive_model_reminder(tool, tool_input)
     if model_reminder:
         reasons.append(model_reminder)
-    
+
     # Combine all reasons
     if reasons:
         result["reason"] = "".join(reasons)

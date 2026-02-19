@@ -1,6 +1,6 @@
 # UI/UX & Copywriting Audit Report
 
-**Date**: 2026-02-18  
+**Date**: 2026-02-18
 **Scope**: marketing.tvoje.info (Full Site Audit)
 
 ---

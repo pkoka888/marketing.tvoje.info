@@ -160,34 +160,44 @@ E-mail marketing automatizace je jedna z nejvyšších ROI marketingových aktiv
 const { post } = Astro.props;
 ---
 
-<Layout
-  title={`${post.title} - Blog`}
-  description={post.excerpt}
->
+<Layout title={`${post.title} - Blog`} description={post.excerpt}>
   <Header slot="header" />
 
   <main class="py-16 md:py-24">
     <article class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-3xl">
       <!-- Back link -->
-      <a href="/cs/blog" class="inline-flex items-center gap-2 text-primary-600 dark:text-primary-400 mb-8 hover:underline">
+      <a
+        href="/cs/blog"
+        class="inline-flex items-center gap-2 text-primary-600 dark:text-primary-400 mb-8 hover:underline"
+      >
         ← Zpět do Blogu
       </a>
 
       <!-- Header -->
       <header class="mb-12">
         <div class="flex items-center gap-3 text-sm text-gray-500 dark:text-gray-400 mb-4">
-          <span class="px-3 py-1 rounded-full bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300">
+          <span
+            class="px-3 py-1 rounded-full bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300"
+          >
             {post.category}
           </span>
           <span>{post.readTime} čtení</span>
           <span>·</span>
-          <span>{new Date(post.date).toLocaleDateString('cs-CZ', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+          <span
+            >{
+              new Date(post.date).toLocaleDateString('cs-CZ', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+              })
+            }</span
+          >
         </div>
-        
+
         <h1 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6">
           {post.title}
         </h1>
-        
+
         <p class="text-xl text-gray-600 dark:text-gray-300">
           {post.excerpt}
         </p>
@@ -195,19 +205,33 @@ const { post } = Astro.props;
 
       <!-- Content -->
       <div class="prose prose-lg dark:prose-invert max-w-none">
-        <Fragment set:html={post.content.replace(/\n/g, '<br/>').replace(/## (.+)/g, '<h2>$1</h2>').replace(/### (.+)/g, '<h3>$1</h3>').replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/\*(.+?)\*/g, '<em>$1</em>').replace(/- (.+)/g, '<li>$1</li>')} />
+        <Fragment
+          set:html={post.content
+            .replace(/\n/g, '<br/>')
+            .replace(/## (.+)/g, '<h2>$1</h2>')
+            .replace(/### (.+)/g, '<h3>$1</h3>')
+            .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+            .replace(/\*(.+?)\*/g, '<em>$1</em>')
+            .replace(/- (.+)/g, '<li>$1</li>')}
+        />
       </div>
 
       <!-- Share -->
       <div class="mt-12 pt-8 border-t border-gray-200 dark:border-dark-700">
-        <p class="text-gray-600 dark:text-gray-300 mb-4">
-          Sdílet tento článek:
-        </p>
+        <p class="text-gray-600 dark:text-gray-300 mb-4">Sdílet tento článek:</p>
         <div class="flex gap-4">
-          <a href={`https://www.linkedin.com/sharing/share-offsite/?url=https://marketing.tvoje.info/cs/blog/${post.slug}`} target="_blank" class="btn-secondary px-4 py-2">
+          <a
+            href={`https://www.linkedin.com/sharing/share-offsite/?url=https://marketing.tvoje.info/cs/blog/${post.slug}`}
+            target="_blank"
+            class="btn-secondary px-4 py-2"
+          >
             LinkedIn
           </a>
-          <a href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=https://marketing.tvoje.info/cs/blog/${post.slug}`} target="_blank" class="btn-secondary px-4 py-2">
+          <a
+            href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=https://marketing.tvoje.info/cs/blog/${post.slug}`}
+            target="_blank"
+            class="btn-secondary px-4 py-2"
+          >
             Twitter
           </a>
         </div>
@@ -221,9 +245,7 @@ const { post } = Astro.props;
         <p class="text-gray-600 dark:text-gray-300 mb-4">
           Pojďme prodiskutovat, jak můžeme pomoci vašemu podnikání růst.
         </p>
-        <a href="/cs#contact" class="btn-primary">
-          Kontaktovat
-        </a>
+        <a href="/cs#contact" class="btn-primary"> Kontaktovat </a>
       </div>
     </article>
   </main>

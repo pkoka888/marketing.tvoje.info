@@ -1,0 +1,201 @@
+# ============================================================================
+# Master Server Registry — Single Source of Truth
+# ============================================================================
+# Used by: Ansible playbooks, Python scripts, CI/CD workflows
+# Updated: 2026-02-19
+# ============================================================================
+
+network:
+  public_ip: '89.203.173.196'
+  tailscale_network: '100.0.0.0/8'
+  internal_network: '192.168.1.0/24'
+  dns_provider: 'ISP-managed'
+
+servers:
+  s60:
+    hostname: server60
+    purpose: 'Hub/Backup'
+    criticality: medium
+    internal_ip: '192.168.1.60'
+    tailscale_ip: '100.111.141.111'
+    ssh:
+      users: ['admin', 'sugent']
+      port_internal: 2260
+      port_tailscale: 20
+      port_public: 2260
+      public_reachable: true
+    os: 'Debian 13'
+    resources:
+      disk_total: '2.5T'
+      ram_total: '94Gi'
+    services:
+      - { name: nginx, type: systemd, critical: false }
+      - { name: docker, type: systemd, critical: false }
+      - { name: pm2, type: process, critical: false }
+      - { name: rsnapshot, type: cron, critical: true }
+      - { name: borgmatic, type: systemd, critical: true }
+      - { name: ansible, type: binary, critical: false }
+    domains:
+      # All expc.cz subdomains are hosted/proxied through s60
+      - '*.expc.cz'
+    roles:
+      - backup-server
+      - jump-host # Used by marketing.tvoje.info CI/CD to reach s62
+      - ansible-control # Ansible is installed here
+    deploy_paths:
+      - /var/www/
+    notes: |
+      Primary backup server. Also serves as jump host for GitHub Actions
+      deployments that cannot reach s62 directly (port 2262 issue).
+
+  s61:
+    hostname: server61
+    purpose: 'Gateway/Traefik'
+    criticality: critical # ⚠ HIGHEST — sole gateway for ports 80/443
+    internal_ip: '192.168.1.61'
+    tailscale_ip: '100.111.141.112'
+    ssh:
+      users: ['admin']
+      port_internal: 2261
+      port_tailscale: 20
+      port_public: 2261
+      public_reachable: false # Not reachable from public as of 2026-02-12
+    os: 'Debian 13 (trixie)'
+    resources:
+      disk_total: '237G'
+      disk_used_pct: 88 # ⚠ WARNING
+      ram_total: '23Gi'
+    services:
+      # CRITICAL — never restart without human approval
+      - { name: traefik, type: docker, critical: true, ports: [80, 443] }
+      - { name: nginx, type: systemd, critical: true }
+      - { name: docker, type: systemd, critical: true }
+      # Databases
+      - { name: mariadb, type: systemd, critical: true, version: '11.8.3' }
+      - { name: postgresql, type: systemd, critical: true, version: '17' }
+      - { name: redis-server, type: systemd, critical: true }
+      # Monitoring
+      - { name: netdata, type: systemd, critical: false, port: 19999 }
+      - { name: netbox, type: docker, critical: false, port: 9080 }
+      - { name: homarr-dashboard, type: docker, critical: false, port: 7575 }
+      # CI/CD
+      - { name: gitlab-runner, type: systemd, critical: false }
+      - { name: 'php8.3-fpm', type: systemd, critical: true }
+      # Security
+      - { name: fail2ban, type: systemd, critical: true }
+    domains:
+      - 'okamih.cz' # PrestaShop e-commerce — PRODUCTION
+      - 'okamih.sk' # PrestaShop e-commerce — PRODUCTION
+      - 'dash.okamih.cz' # Dashboard
+    protected_containers:
+      # These containers must NEVER be stopped/removed by agents
+      - traefik
+      - netbox
+      - netbox-redis
+      - netbox-postgres
+      - homarr-dashboard
+    failed_containers:
+      # Known failed — do NOT attempt restart without disk space fix
+      - { name: 'dash-prometheus-1', port: 9090 }
+      - { name: 'dash-grafana-1', port: 3000 }
+      - { name: 'dash-redis-1', port: 6379 }
+    roles:
+      - gateway # ONLY server with 80/443 via NAT
+      - database-host
+      - monitoring-host
+    deploy_paths:
+      - /var/www/
+    nginx_sites:
+      - 'okamih.cz-backend.conf'
+      - 'okamih.sk-backend.conf'
+      - 'dash.okamih.cz-backend.conf'
+      - 'dash.okamih.cz-proxy.conf'
+    notes: |
+      CRITICAL SERVER. Only server with ports 80/443 forwarded from firewall.
+      Traefik acts as reverse proxy for all domains. okamih.cz/sk are production
+      PrestaShop stores — must ALWAYS be online. Disk at 88% — do NOT add
+      large files. Failed monitoring containers need disk space before restart.
+
+  s62:
+    hostname: server62
+    purpose: 'Production/Web'
+    criticality: high
+    internal_ip: '192.168.1.62'
+    tailscale_ip: '100.91.164.109'
+    ssh:
+      users: ['admin', 'sugent']
+      port_internal: 2262
+      port_tailscale: 20
+      port_public: 2262
+      public_reachable: false # ⚠ Port 2262 unreachable from public — KNOWN ISSUE
+    os: 'Debian 13'
+    resources:
+      disk_total: '93G'
+      ram_total: '3.8Gi'
+    services:
+      - { name: nginx, type: systemd, critical: true }
+      - { name: docker, type: systemd, critical: false }
+      - { name: pm2, type: process, critical: true }
+    domains:
+      - 'automatizace.expc.cz'
+      - 'marketing.tvoje.info'
+      - 'portfolio.tvoje.info'
+      - '*.tvoje.info'
+    roles:
+      - web-server
+      - astro-host
+    deploy_paths:
+      - /var/www/projects/
+      - /var/www/automatizace.expc.cz/
+    notes: |
+      Main web application server. Hosts all Astro/Node.js projects.
+      Port 2262 NOT reachable from public — use Tailscale or hop through s60.
+      CI/CD for marketing.tvoje.info uses s60 as jump host.
+
+# ============================================================================
+# Port Allocation Registry
+# ============================================================================
+# Ports in use — check before allocating new ones
+ports_in_use:
+  s60:
+    - { port: 2260, service: sshd, protocol: tcp }
+    - { port: 80, service: nginx, protocol: tcp }
+  s61:
+    - { port: 80, service: traefik, protocol: tcp }
+    - { port: 443, service: traefik, protocol: tcp }
+    - { port: 2261, service: sshd, protocol: tcp }
+    - { port: 3306, service: mariadb, protocol: tcp }
+    - { port: 5432, service: postgresql, protocol: tcp }
+    - { port: 6379, service: redis, protocol: tcp }
+    - { port: 9080, service: netbox, protocol: tcp }
+    - { port: 7575, service: homarr, protocol: tcp }
+    - { port: 19999, service: netdata, protocol: tcp }
+    - { port: 9090, service: prometheus, protocol: tcp, status: failed }
+    - { port: 3000, service: grafana, protocol: tcp, status: failed }
+  s62:
+    - { port: 2262, service: sshd, protocol: tcp }
+    - { port: 80, service: nginx, protocol: tcp }
+    - { port: 4321, service: 'astro/pm2', protocol: tcp }
+
+# ============================================================================
+# Connection Priority Order
+# ============================================================================
+# Agents should try connections in this order:
+connection_priority:
+  - tailscale # Best: encrypted, most reliable
+  - public # Fallback: via public IP + NAT port
+  - internal # Only if on the same LAN (192.168.1.0/24)
+
+# ============================================================================
+# SSH Config Aliases (for ~/.ssh/config)
+# ============================================================================
+ssh_aliases:
+  s60pa: { host: '100.111.141.111', port: 20, user: admin }
+  s60pa-pub: { host: '89.203.173.196', port: 2260, user: admin }
+  s60pa-int: { host: '192.168.1.60', port: 20, user: admin }
+  s61pa: { host: '100.111.141.112', port: 20, user: admin }
+  s61pa-pub: { host: '89.203.173.196', port: 2261, user: admin }
+  s61pa-int: { host: '192.168.1.61', port: 20, user: admin }
+  s62pa: { host: '100.91.164.109', port: 20, user: admin }
+  s62pa-pub: { host: '89.203.173.196', port: 2262, user: admin }
+  s62pa-int: { host: '192.168.1.62', port: 20, user: admin }

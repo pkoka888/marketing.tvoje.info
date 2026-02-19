@@ -1,8 +1,7 @@
 # Gap Analysis: [Topic]
 
-**Date**: {{DATE}}
-**Agent**: {{AGENT_NAME}}
-**Target State**: [Description of ideal state]
+**Date**: {{DATE}} **Agent**: {{AGENT_NAME}} **Target State**: [Description of
+ideal state]
 
 ## 1. Executive Summary
 
@@ -34,20 +33,22 @@ _High-level comparison of current vs. target state._
 ## References
 
 ### Dependencies
+
 - [AUDIT_REPORT](AUDIT_REPORT.md) - Referenced template
 - [RESEARCH_FINDINGS](RESEARCH_FINDINGS.md) - Referenced template
 - [TASK_PLAN](TASK_PLAN.md) - Referenced template
 
 ### Referenced By
+
 - [AUDIT_REPORT](AUDIT_REPORT.md) - References this template
-- [RESEARCH_FFINDINGS](RESEARCH_FINDINGS.md) - References this template
+- [RESEARCH_FINDINGS](RESEARCH_FINDINGS.md) - References this template
 - [TASK_PLAN](TASK_PLAN.md) - References this template
 
 ---
 
 ## Related Skills & Rules
 
-| Category | Resource | Description |
-|----------|----------|-------------|
+| Category  | Resource                                                                                                  | Description                   |
+| --------- | --------------------------------------------------------------------------------------------------------- | ----------------------------- |
 | **Skill** | [.kilocode/skills/bmad-discovery-research/SKILL.md](../.kilocode/skills/bmad-discovery-research/SKILL.md) | Market and technical research |
-| **Rule** | [.kilocode/rules/bmad-integration](./bmad-integration.md) | BMAD workflow protocol |
+| **Rule**  | [.kilocode/rules/bmad-integration](./bmad-integration.md)                                                 | BMAD workflow protocol        |

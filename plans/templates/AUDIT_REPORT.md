@@ -1,12 +1,12 @@
 # Audit Report: [Subject/Component]
 
-**Date**: {{DATE}}
-**Agent**: {{AGENT_NAME}} ({{MODEL}})
-**Framework**: Agentic Platform 2026
+**Date**: {{DATE}} **Agent**: {{AGENT_NAME}} ({{MODEL}}) **Framework**: Agentic
+Platform 2026
 
 ## 1. Executive Summary
 
-_Concise overview of the audit scope, critical findings, and overall health score (0-100%)._
+_Concise overview of the audit scope, critical findings, and overall health
+score (0-100%)._
 
 ## 2. Scope & Objectives
 
@@ -50,6 +50,7 @@ _Concise overview of the audit scope, critical findings, and overall health scor
 ## References
 
 ### Dependencies
+
 - [GAP_ANALYSIS](GAP_ANALYSIS.md) - Referenced template
 - [LINT_FIX_STRATEGY](LINT_FIX_STRATEGY.md) - Referenced template
 - [RESEARCH_FINDINGS](RESEARCH_FINDINGS.md) - Referenced template
@@ -57,6 +58,7 @@ _Concise overview of the audit scope, critical findings, and overall health scor
 - [TEST_RESULTS](TEST_RESULTS.md) - Referenced template
 
 ### Referenced By
+
 - [GAP_ANALYSIS](GAP_ANALYSIS.md) - References this template
 - [LINT_FIX_STRATEGY](LINT_FIX_STRATEGY.md) - References this template
 - [RESEARCH_FINDINGS](RESEARCH_FINDINGS.md) - References this template
@@ -65,9 +67,8 @@ _Concise overview of the audit scope, critical findings, and overall health scor
 
 ## Related Skills & Rules
 
-| Category | Resource | Description |
-|----------|----------|-------------|
+| Category  | Resource                                                                                            | Description                   |
+| --------- | --------------------------------------------------------------------------------------------------- | ----------------------------- |
 | **Skill** | [.kilocode/skills/bmad-security-review/SKILL.md](../.kilocode/skills/bmad-security-review/SKILL.md) | Security audit and compliance |
-| **Skill** | [.kilocode/skills/debug/SKILL.md](../.kilocode/skills/debug/SKILL.md) | Debugging and troubleshooting |
-| **Rule** | [.kilocode/rules/server-preservation](./server-preservation.md) | Server preservation protocols |
-
+| **Skill** | [.kilocode/skills/debug/SKILL.md](../.kilocode/skills/debug/SKILL.md)                               | Debugging and troubleshooting |
+| **Rule**  | [.kilocode/rules/server-preservation](./server-preservation.md)                                     | Server preservation protocols |

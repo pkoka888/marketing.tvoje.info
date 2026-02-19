@@ -18,14 +18,14 @@ These agents are based on the official frameworks located in `vscodeportable/age
 
 All agents **MUST** use the standardized templates in `plans/templates/` for complex outputs:
 
-| Template | Triggers | Skills |
-|----------|----------|--------|
-| AUDIT_REPORT | audit, security, compliance | bmad-security-review, debug |
-| GAP_ANALYSIS | gap, missing, analysis | bmad-discovery-research |
-| RESEARCH_FINDINGS | research, investigate | bmad-discovery-research |
-| TASK_PLAN | plan, implement, story | bmad-story-planning |
-| TEST_RESULTS | test, QA, results | bmad-test-strategy, debug |
-| LINT_FIX_STRATEGY | lint, eslint, fix | debug, accessibility-wcag |
+| Template          | Triggers                    | Skills                      |
+| ----------------- | --------------------------- | --------------------------- |
+| AUDIT_REPORT      | audit, security, compliance | bmad-security-review, debug |
+| GAP_ANALYSIS      | gap, missing, analysis      | bmad-discovery-research     |
+| RESEARCH_FINDINGS | research, investigate       | bmad-discovery-research     |
+| TASK_PLAN         | plan, implement, story      | bmad-story-planning         |
+| TEST_RESULTS      | test, QA, results           | bmad-test-strategy, debug   |
+| LINT_FIX_STRATEGY | lint, eslint, fix           | debug, accessibility-wcag   |
 
 ### 1. Cline Configuration (`.clinerules/`)
 
@@ -148,13 +148,13 @@ When ANY agent modifies rule files in any agent config directory:
 
 **Critical rules that must exist in ALL agent rule directories:**
 
-| Rule                  | Purpose                                           |
-| --------------------- | ------------------------------------------------- |
-| `server-preservation` | No cleanup/delete ops on servers without approval |
-| `python-preferred`    | Python over shell scripts for automation          |
-| `cost-optimization`   | Free models first; $20/month paid budget cap      |
-| `bmad-integration`    | BMAD workflow protocol and agent detection        |
-| `plan-approval-required` | Cost control for expensive AI models            |
+| Rule                     | Purpose                                           |
+| ------------------------ | ------------------------------------------------- |
+| `server-preservation`    | No cleanup/delete ops on servers without approval |
+| `python-preferred`       | Python over shell scripts for automation          |
+| `cost-optimization`      | Free models first; $20/month paid budget cap      |
+| `bmad-integration`       | BMAD workflow protocol and agent detection        |
+| `plan-approval-required` | Cost control for expensive AI models              |
 
 ---
 

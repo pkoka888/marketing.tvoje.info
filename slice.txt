@@ -1,5 +1,0 @@
-all: string;
-      devops: string;
-      ai: string;
-      web: string;
-      in

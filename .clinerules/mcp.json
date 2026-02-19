@@ -3,27 +3,27 @@
     "redis": {
       "command": "node",
       "args": [
-        "C:/Users/pavel/projects/marketing.tvoje.info/.kilocode/mcp-servers/redis-server.js"
+        "/c/Users/pavel/projects/marketing.tvoje.info/.kilocode/mcp-servers/redis-server.js"
       ],
       "env": {
         "PROJECT_NAME": "marketing-tvoje-info",
-        "REDIS_PASSWORD": "5XQtvKB2go/FW0EHwnV8kzoiHahDvXcQjih9AtIljzQ="
+        "REDIS_PASSWORD": "${REDIS_PASSWORD}"
       }
     },
     "filesystem-projects": {
       "command": "node",
       "args": [
-        "C:/nvm4w/nodejs/node_modules/@modelcontextprotocol/server-filesystem/dist/index.js",
-        "C:/Users/pavel/projects"
+        "/c/nvm4w/nodejs/node_modules/@modelcontextprotocol/server-filesystem/dist/index.js",
+        "/c/Users/pavel/projects"
       ]
     },
     "memory": {
       "command": "node",
-      "args": ["C:/nvm4w/nodejs/node_modules/@modelcontextprotocol/server-memory/dist/index.js"]
+      "args": ["/c/nvm4w/nodejs/node_modules/@modelcontextprotocol/server-memory/dist/index.js"]
     },
     "git": {
       "command": "node",
-      "args": ["C:/nvm4w/nodejs/node_modules/git-mcp/dist/index.js"]
+      "args": ["/c/nvm4w/nodejs/node_modules/git-mcp/dist/index.js"]
     },
     "fetch": {
       "command": "uvx",
@@ -32,7 +32,7 @@
     "firecrawl-local": {
       "command": "node",
       "args": [
-        "c:/Users/pavel/projects/marketing.tvoje.info/.kilocode/mcp-libs/firecrawl-fresh/node_modules/firecrawl-mcp/dist/index.js"
+        "/c/Users/pavel/projects/marketing.tvoje.info/.kilocode/mcp-libs/firecrawl-fresh/node_modules/firecrawl-mcp/dist/index.js"
       ],
       "env": {
         "FIRECRAWL_API_KEY": "${FIRECRAWL_API_KEY}"
@@ -40,7 +40,7 @@
     },
     "playwright-mcp": {
       "command": "node",
-      "args": ["C:/nvm4w/nodejs/node_modules/@playwright/mcp/cli.js"]
+      "args": ["/c/nvm4w/nodejs/node_modules/@playwright/mcp/cli.js"]
     }
   }
 }

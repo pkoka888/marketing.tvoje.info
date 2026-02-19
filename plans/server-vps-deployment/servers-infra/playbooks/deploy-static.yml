@@ -1,0 +1,119 @@
+---
+# Deploy Static Site (Astro SSG / HTML)
+#
+# Usage:
+#   ansible-playbook -i inventory.yml playbooks/deploy-static.yml \
+#     -e "target_server=s62 project_name=myproject deploy_path=/var/www/projects/myproject dist_dir=./dist"
+#
+# Required variables:
+#   target_server  - Ansible host name (s60, s62)
+#   project_name   - Human-readable project identifier
+#   deploy_path    - Absolute path on target server (e.g., /var/www/projects/mysite)
+#   dist_dir       - Local directory containing built static files
+---
+- name: "Deploy static site: {{ project_name }}"
+  hosts: "{{ target_server }}"
+  gather_facts: true
+  become: false
+
+  vars:
+    backup_dir: "/tmp/deploy-backup-{{ project_name }}-{{ ansible_date_time.epoch }}"
+    nginx_reload: true
+
+  pre_tasks:
+    - name: "SAFETY: Verify target is NOT s61 (gateway)"
+      ansible.builtin.fail:
+        msg: "🔴 BLOCKED: Cannot auto-deploy to s61 (gateway). Requires human approval."
+      when: inventory_hostname == 's61'
+
+    - name: "SAFETY: Verify deploy_path is within allowed paths"
+      ansible.builtin.fail:
+        msg: "🔴 BLOCKED: deploy_path '{{ deploy_path }}' is not within /var/www/"
+      when: "'/var/www/' not in deploy_path"
+
+    - name: "CHECK: Disk space before deployment"
+      ansible.builtin.shell: df -h / | tail -1 | awk '{print $5}' | tr -d '%'
+      register: disk_usage
+      changed_when: false
+
+    - name: "FAIL: Insufficient disk space"
+      ansible.builtin.fail:
+        msg: "🔴 Disk at {{ disk_usage.stdout }}%. Deployment blocked."
+      when: disk_usage.stdout | int >= 90
+
+  tasks:
+    - name: "Ensure deploy directory exists"
+      ansible.builtin.file:
+        path: "{{ deploy_path }}"
+        state: directory
+        mode: '0755'
+      become: true
+
+    - name: "Backup existing deployment"
+      ansible.builtin.shell: |
+        if [ -d "{{ deploy_path }}" ] && [ "$(ls -A {{ deploy_path }})" ]; then
+          cp -r {{ deploy_path }} {{ backup_dir }}
+          echo "Backup created: {{ backup_dir }}"
+        else
+          echo "No existing deployment to backup"
+        fi
+      register: backup_result
+      changed_when: "'Backup created' in backup_result.stdout"
+
+    - name: "Sync static files to server"
+      ansible.posix.synchronize:
+        src: "{{ dist_dir }}/"
+        dest: "{{ deploy_path }}/"
+        delete: true
+        recursive: true
+        rsync_opts:
+          - "--exclude=.git"
+          - "--exclude=node_modules"
+          - "--exclude=.env"
+
+    - name: "Set correct permissions"
+      ansible.builtin.file:
+        path: "{{ deploy_path }}"
+        owner: "www-data"
+        group: "www-data"
+        recurse: true
+        mode: '0755'
+      become: true
+
+    - name: "Test Nginx configuration"
+      ansible.builtin.command: nginx -t
+      register: nginx_test
+      changed_when: false
+      become: true
+      when: nginx_reload
+
+    - name: "Reload Nginx"
+      ansible.builtin.systemd:
+        name: nginx
+        state: reloaded
+      become: true
+      when:
+        - nginx_reload
+        - nginx_test.rc == 0
+
+  post_tasks:
+    - name: "VERIFY: Check site is accessible"
+      ansible.builtin.uri:
+        url: "http://localhost"
+        status_code: [200, 301, 302]
+        timeout: 10
+      register: site_check
+      failed_when: false
+
+    - name: "SUMMARY: Deployment result"
+      ansible.builtin.debug:
+        msg: |
+          ═══════════════════════════════════════
+          Static Deploy: {{ project_name }}
+          ═══════════════════════════════════════
+          Server:     {{ inventory_hostname }}
+          Path:       {{ deploy_path }}
+          Backup:     {{ backup_result.stdout | default('none') }}
+          Nginx:      {{ 'reloaded' if nginx_reload else 'skipped' }}
+          Site check: {{ 'OK' if site_check.status | default(0) in [200,301,302] else 'FAILED' }}
+          ═══════════════════════════════════════

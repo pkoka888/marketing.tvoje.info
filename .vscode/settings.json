@@ -96,5 +96,19 @@
   "kilo.mode": "default",
 
   // Telemetry - privacy first
-  "telemetry.telemetryLevel": "off"
+  "telemetry.telemetryLevel": "off",
+
+  // Terminal Settings - Git Bash as default
+  "terminal.integrated.defaultProfile.windows": "Git Bash",
+  "terminal.integrated.profiles.windows": {
+    "Git Bash": {
+      "source": "Git Bash",
+      "icon": "terminal-bash"
+    },
+    "PowerShell": {
+      "source": "PowerShell",
+      "icon": "terminal-powershell"
+    }
+  },
+  "terminal.integrated.shell.linux.bash": "/usr/bin/bash"
 }

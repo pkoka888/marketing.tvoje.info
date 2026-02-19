@@ -78,11 +78,16 @@ router_settings:
   enable_pre_call_checks: true
   # Fallback chains: OpenRouter (free) → Gemini → Groq → OpenAI
   fallbacks:
-    - minimax-free: [glm4-free, qwen3-coder-free, deepseek-r1-free, gemini-flash, groq-llama-8b, gpt-4o-mini]
-    - glm4-free: [minimax-free, qwen3-coder-free, deepseek-r1-free, gemini-flash, groq-llama-8b, gpt-4o-mini]
-    - qwen3-coder-free: [minimax-free, glm4-free, deepseek-r1-free, gemini-flash, groq-llama-8b, gpt-4o-mini]
-    - deepseek-r1-free: [minimax-free, glm4-free, qwen3-coder-free, gemini-flash, groq-llama-8b, gpt-4o-mini]
-    - gemini-flash: [minimax-free, glm4-free, qwen3-coder-free, groq-llama-8b, gemini-pro, gpt-4o-mini]
+    - minimax-free:
+        [glm4-free, qwen3-coder-free, deepseek-r1-free, gemini-flash, groq-llama-8b, gpt-4o-mini]
+    - glm4-free:
+        [minimax-free, qwen3-coder-free, deepseek-r1-free, gemini-flash, groq-llama-8b, gpt-4o-mini]
+    - qwen3-coder-free:
+        [minimax-free, glm4-free, deepseek-r1-free, gemini-flash, groq-llama-8b, gpt-4o-mini]
+    - deepseek-r1-free:
+        [minimax-free, glm4-free, qwen3-coder-free, gemini-flash, groq-llama-8b, gpt-4o-mini]
+    - gemini-flash:
+        [minimax-free, glm4-free, qwen3-coder-free, groq-llama-8b, gemini-pro, gpt-4o-mini]
     - gemini-pro: [gemini-flash, minimax-free, groq-llama-70b, gpt-4o-mini]
     - groq-llama-8b: [groq-llama-70b, gemini-flash, gpt-4o-mini]
     - groq-llama-70b: [groq-llama-8b, gemini-flash, gpt-4o-mini]

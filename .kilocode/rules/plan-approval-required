@@ -49,7 +49,7 @@ Before invoking expensive models, **MUST** try:
 
 For expensive model usage, create a plan containing:
 - Task description and justification
-- Why free alternatives cannot胜任
+- Why free alternatives cannot handle the task
 - Expected cost range
 - Success criteria
 - Fallback strategy

@@ -25,7 +25,7 @@ from template_reference_manager import TemplateReferenceManager
 TEMPLATE_VARIABLES = {
     "{{DATE}}": lambda: datetime.now().strftime("%Y-%m-%d"),
     "{{DATETIME}}": lambda: datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-    "{{AGENT_NAME}}": lambda: "Cline",
+    "{{AGENT_NAME}}": lambda: "Agent",
     "{{VERSION}}": lambda: "1.0.0",
 }
 
@@ -36,18 +36,18 @@ KEYWORD_SCORE_THRESHOLD = 2
 def load_template_keywords(templates_dir: Path) -> Dict[str, List[str]]:
     """Load activation.keywords from all template metadata JSONs."""
     keywords: Dict[str, List[str]] = {}
-    
+
     if not templates_dir.exists():
         return keywords
-    
+
     for metadata_file in templates_dir.glob("*-metadata.json"):
         try:
             with open(metadata_file, "r", encoding="utf-8") as f:
                 data = json.load(f)
-            
+
             # Extract template ID from filename (e.g., AUDIT_REPORT-metadata.json -> AUDIT_REPORT)
             template_id = metadata_file.stem.replace("-metadata", "")
-            
+
             # Extract keywords from activation.keywords
             if "activation" in data and "keywords" in data["activation"]:
                 kw_list = data["activation"]["keywords"]
@@ -55,7 +55,7 @@ def load_template_keywords(templates_dir: Path) -> Dict[str, List[str]]:
                     keywords[template_id] = [k.lower() for k in kw_list if isinstance(k, str)]
         except (json.JSONDecodeError, IOError) as e:
             print(f"⚠️  Warning: Could not parse {metadata_file}: {e}")
-    
+
     return keywords
 
 
@@ -63,7 +63,7 @@ def score_keywords(description: str, keywords: List[str]) -> int:
     """Score a description against keywords using simple word matching."""
     desc_lower = description.lower()
     words = re.findall(r"\b\w+\b", desc_lower)
-    
+
     score = 0
     for keyword in keywords:
         # Exact word match
@@ -72,45 +72,45 @@ def score_keywords(description: str, keywords: List[str]) -> int:
         # Partial match (keyword contained in word)
         elif any(keyword in word for word in words):
             score += 0.5
-    
+
     return int(score)
 
 
 def auto_select_template(description: str, templates_dir: Path) -> Tuple[str, Dict[str, int]]:
     """
     Automatically select a template based on keyword matching.
-    
+
     Returns:
         Tuple of (selected_template_id, score_dict)
     """
     keywords = load_template_keywords(templates_dir)
-    
+
     if not keywords:
         print("⚠️  No template keywords found, using TASK_PLAN as fallback")
         return "TASK_PLAN", {}
-    
+
     scores: Dict[str, int] = {}
     for template_id, kw_list in keywords.items():
         scores[template_id] = score_keywords(description, kw_list)
-    
+
     # Sort by score descending
     sorted_scores = sorted(scores.items(), key=lambda x: x[1], reverse=True)
-    
+
     # Show all scores for debugging
     print(f"\n🔍 Keyword matching scores:")
     for template_id, score in sorted_scores:
         print(f"   {template_id}: {score}")
-    
+
     # Get highest scoring template
     if sorted_scores:
         best_template, best_score = sorted_scores[0]
-        
+
         if best_score >= KEYWORD_SCORE_THRESHOLD:
             return best_template, scores
         else:
             print(f"\n⚠️  Best score ({best_score}) below threshold ({KEYWORD_SCORE_THRESHOLD}), using TASK_PLAN fallback")
             return "TASK_PLAN", scores
-    
+
     return "TASK_PLAN", scores
 
 
@@ -309,16 +309,16 @@ Examples:
         print(f"\n🤖 Auto-select mode: {args.auto}")
         selected_template, scores = auto_select_template(args.auto, templates_dir)
         print(f"\n✅ Selected template: {selected_template}")
-        
+
         # If --name not provided, use a default
         if not args.name:
             # Use first few words of description as name
             words = args.auto.split()[:4]
             args.name = " ".join(words).title()
-        
+
         # Use selected template
         args.template = selected_template
-    
+
     if args.list:
         list_templates(templates_dir)
         return 0

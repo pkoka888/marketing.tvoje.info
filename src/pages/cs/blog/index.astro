@@ -7,7 +7,8 @@ const blogPosts = [
   {
     slug: 'ai-marketing-2026',
     title: 'AI marketing v roce 2026: Co očekávat',
-    excerpt: 'Objevte nejnovější trendy v AI marketingu a jak mohou změnit vaši strategii. Od AI agentů po hyper-personalizaci.',
+    excerpt:
+      'Objevte nejnovější trendy v AI marketingu a jak mohou změnit vaši strategii. Od AI agentů po hyper-personalizaci.',
     date: '2026-02-15',
     category: 'AI & Automatizace',
     readTime: '5 min',
@@ -16,7 +17,8 @@ const blogPosts = [
   {
     slug: 'tiktok-ads-guide',
     title: 'Průvodce TikTok reklamami pro rok 2026',
-    excerpt: 'Naučte se efektivně využívat TikTok reklamy pro růst vašeho podnikání. Ovládněte Spark Ads a spolupráce s tvůrci.',
+    excerpt:
+      'Naučte se efektivně využívat TikTok reklamy pro růst vašeho podnikání. Ovládněte Spark Ads a spolupráce s tvůrci.',
     date: '2026-02-10',
     category: 'PPC & Reklama',
     readTime: '7 min',
@@ -25,7 +27,8 @@ const blogPosts = [
   {
     slug: 'seo-ai-search',
     title: 'SEO pro AI vyhledávače: ChatGPT, Perplexity',
-    excerpt: 'Jak optimalizovat váš web pro novou éru AI vyhledávání. Strategie, které fungují pro AI Overviews.',
+    excerpt:
+      'Jak optimalizovat váš web pro novou éru AI vyhledávání. Strategie, které fungují pro AI Overviews.',
     date: '2026-02-05',
     category: 'SEO',
     readTime: '6 min',
@@ -34,7 +37,8 @@ const blogPosts = [
   {
     slug: 'marketing-automation-roi',
     title: 'ROI marketingové automatizace: Reálné výsledky',
-    excerpt: 'Případová studie: Jak jsme dosáhli 312% ROI pomocí marketingové automatizace pro B2B SaaS společnost.',
+    excerpt:
+      'Případová studie: Jak jsme dosáhli 312% ROI pomocí marketingové automatizace pro B2B SaaS společnost.',
     date: '2026-01-28',
     category: 'Případové studie',
     readTime: '8 min',
@@ -43,7 +47,8 @@ const blogPosts = [
   {
     slug: 'ppc-trends-2026',
     title: 'PPC trendy, které potřebujete v roce 2026',
-    excerpt: 'Od AI-powered bidingu po cílení s ohledem na soukromí - kompletní průvodce PPC v roce 2026.',
+    excerpt:
+      'Od AI-powered bidingu po cílení s ohledem na soukromí - kompletní průvodce PPC v roce 2026.',
     date: '2026-01-20',
     category: 'PPC',
     readTime: '6 min',
@@ -52,7 +57,8 @@ const blogPosts = [
   {
     slug: 'klaviyo-automation',
     title: 'Klaviyo automatizace - Best Practices',
-    excerpt: 'Ovládněte Klaviyo automatizační flows pro zvýšení tržeb. Tipy z 50+ implementací pro e-commerce.',
+    excerpt:
+      'Ovládněte Klaviyo automatizační flows pro zvýšení tržeb. Tipy z 50+ implementací pro e-commerce.',
     date: '2026-01-15',
     category: 'E-mail Marketing',
     readTime: '5 min',
@@ -71,7 +77,9 @@ const blogPosts = [
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
       <!-- Header -->
       <div class="text-center mb-16">
-        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 text-sm font-medium mb-4">
+        <div
+          class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 text-sm font-medium mb-4"
+        >
           📝 Blog
         </div>
         <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
@@ -85,15 +93,22 @@ const blogPosts = [
       <!-- Featured Post -->
       <div class="mb-16">
         <a href={`/cs/blog/${blogPosts[0].slug}`} class="block group">
-          <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary-500 to-accent-500 p-1">
+          <div
+            class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary-500 to-accent-500 p-1"
+          >
             <div class="bg-white dark:bg-dark-900 rounded-xl p-8 md:p-12">
               <div class="flex items-center gap-3 mb-4">
-                <span class="px-3 py-1 rounded-full bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 text-sm font-medium">
+                <span
+                  class="px-3 py-1 rounded-full bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 text-sm font-medium"
+                >
                   Doporučeno
                 </span>
-                <span class="text-sm text-gray-500 dark:text-gray-400">{blogPosts[0].category}</span>
+                <span class="text-sm text-gray-500 dark:text-gray-400">{blogPosts[0].category}</span
+                >
               </div>
-              <h2 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+              <h2
+                class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors"
+              >
                 {blogPosts[0].title}
               </h2>
               <p class="text-lg text-gray-600 dark:text-gray-300 mb-6">
@@ -101,9 +116,17 @@ const blogPosts = [
               </p>
               <div class="flex items-center justify-between">
                 <span class="text-sm text-gray-500 dark:text-gray-400">
-                  {new Date(blogPosts[0].date).toLocaleDateString('cs-CZ', { year: 'numeric', month: 'long', day: 'numeric' })} · {blogPosts[0].readTime} čtení
+                  {
+                    new Date(blogPosts[0].date).toLocaleDateString('cs-CZ', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                    })
+                  } · {blogPosts[0].readTime} čtení
                 </span>
-                <span class="text-primary-600 dark:text-primary-400 font-medium group-hover:underline">
+                <span
+                  class="text-primary-600 dark:text-primary-400 font-medium group-hover:underline"
+                >
                   Číst více →
                 </span>
               </div>
@@ -114,32 +137,38 @@ const blogPosts = [
 
       <!-- Blog Grid -->
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {blogPosts.slice(1).map((post) => (
-          <article class="card overflow-hidden group">
-            <a href={`/cs/blog/${post.slug}`}>
-              <div class="h-48 bg-gradient-to-br from-primary-100 to-accent-100 dark:from-primary-900/30 dark:to-accent-900/30 flex items-center justify-center text-6xl">
-                {post.image}
-              </div>
-              <div class="p-6">
-                <div class="flex items-center gap-3 text-xs text-gray-500 dark:text-gray-400 mb-3">
-                  <span class="px-2 py-1 rounded-full bg-gray-100 dark:bg-dark-700">
-                    {post.category}
-                  </span>
-                  <span>{post.readTime} čtení</span>
+        {
+          blogPosts.slice(1).map((post) => (
+            <article class="card overflow-hidden group">
+              <a href={`/cs/blog/${post.slug}`}>
+                <div class="h-48 bg-gradient-to-br from-primary-100 to-accent-100 dark:from-primary-900/30 dark:to-accent-900/30 flex items-center justify-center text-6xl">
+                  {post.image}
                 </div>
-                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
-                  {post.title}
-                </h3>
-                <p class="text-sm text-gray-600 dark:text-gray-300 mb-4 line-clamp-2">
-                  {post.excerpt}
-                </p>
-                <div class="text-xs text-gray-400 dark:text-gray-500">
-                  {new Date(post.date).toLocaleDateString('cs-CZ', { year: 'numeric', month: 'long', day: 'numeric' })}
+                <div class="p-6">
+                  <div class="flex items-center gap-3 text-xs text-gray-500 dark:text-gray-400 mb-3">
+                    <span class="px-2 py-1 rounded-full bg-gray-100 dark:bg-dark-700">
+                      {post.category}
+                    </span>
+                    <span>{post.readTime} čtení</span>
+                  </div>
+                  <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+                    {post.title}
+                  </h3>
+                  <p class="text-sm text-gray-600 dark:text-gray-300 mb-4 line-clamp-2">
+                    {post.excerpt}
+                  </p>
+                  <div class="text-xs text-gray-400 dark:text-gray-500">
+                    {new Date(post.date).toLocaleDateString('cs-CZ', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                    })}
+                  </div>
                 </div>
-              </div>
-            </a>
-          </article>
-        ))}
+              </a>
+            </article>
+          ))
+        }
       </div>
 
       <!-- Newsletter CTA -->
@@ -151,15 +180,8 @@ const blogPosts = [
           Nejnovější marketingové postřehy přímo do vaší schránky.
         </p>
         <form class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-          <input
-            type="email"
-            placeholder="vas@email.cz"
-            class="input flex-1"
-            required
-          />
-          <button type="submit" class="btn-primary px-6">
-            Odebírat
-          </button>
+          <input type="email" placeholder="vas@email.cz" class="input flex-1" required />
+          <button type="submit" class="btn-primary px-6"> Odebírat </button>
         </form>
       </div>
     </div>

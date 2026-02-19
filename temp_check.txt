@@ -1,2 +1,0 @@
-Length: 10254
-Has devops: true

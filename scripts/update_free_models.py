@@ -25,7 +25,7 @@ from datetime import datetime
 # Agent directories that need updating
 AGENT_DIRS = [
     ".kilocode/rules",
-    ".agents/rules", 
+    ".agents/rules",
     ".clinerules/skills",
     ".gemini/rules"
 ]
@@ -63,7 +63,7 @@ DEFAULT_ROUTING = {
 
 def get_free_model_format(model_id: str) -> str:
     """Get the proper format suffix for a free model.
-    
+
     Most free models use ':free' suffix.
     Exception: giga-potato has no suffix.
     """
@@ -89,12 +89,12 @@ def generate_kilo_free_models_table() -> str:
         "| Model | Format | Best For | Status |",
         "| ----- | ------ | -------- | ------ |",
     ]
-    
+
     for model_id, display_name, best_for, is_limited in KILO_FREE_MODELS:
         fmt = get_free_model_format(model_id)
         status = "⏳ Limited" if is_limited else "✅ Free"
         lines.append(f"| `{model_id}` | `{fmt}` | {best_for} | {status} |")
-    
+
     return "\n".join(lines)
 
 
@@ -107,10 +107,10 @@ def generate_openrouter_free_models_table() -> str:
         "| Model | Best For | Status |",
         "| ----- | -------- | ------ |",
     ]
-    
+
     for model_id, display_name, best_for in OPENROUTER_FREE_MODELS:
         lines.append(f"| `{model_id}` | {best_for} | ✅ Free |")
-    
+
     return "\n".join(lines)
 
 
@@ -123,7 +123,7 @@ def generate_routing_matrix() -> str:
         "| Task Type | Agent | Model | Tier |",
         "| --------- | ----- | ----- | ---- |",
     ]
-    
+
     routing_configs = [
         ("Bulk coding", "Kilo CLI", DEFAULT_ROUTING["bulk_coding"], "T1 Free"),
         ("Routine fixes", "OpenCode", DEFAULT_ROUTING["routine_fixes"], "T1 Free"),
@@ -133,10 +133,10 @@ def generate_routing_matrix() -> str:
         ("Code synthesis", "Kilo CLI", DEFAULT_ROUTING["code_synthesis"], "T1 Free"),
         ("**Fallback**", "Groq", "llama-3.3-70b", "**T4 Paid**"),
     ]
-    
+
     for task, agent, model, tier in routing_configs:
         lines.append(f"| {task} | {agent} | `{model}` | {tier} |")
-    
+
     return "\n".join(lines)
 
 
@@ -169,41 +169,41 @@ def update_cost_optimization_file(file_path: Path, dry_run: bool = False) -> boo
     if not file_path.exists():
         print(f"  ⚠️  File not found: {file_path}")
         return False
-    
+
     content = file_path.read_text(encoding='utf-8')
-    
+
     # Generate new content sections
     kilo_table = generate_kilo_free_models_table()
     openrouter_table = generate_openrouter_free_models_table()
     routing_matrix = generate_routing_matrix()
     resource_cons = generate_resource_conservation()
     groq_section = generate_groq_section()
-    
+
     # Find and replace Kilo Gateway Free Models section
     # Pattern matches from "## Kilo Gateway Free Models" to just before next "##"
     kilo_pattern = r'## Kilo Gateway Free Models \(2026-\d{2}\).*?(?=\n## |\Z)'
     content = re.sub(kilo_pattern, kilo_table, content, flags=re.DOTALL)
-    
+
     # Replace OpenRouter section
     or_pattern = r'## OpenRouter Free Models \(Require Account\).*?(?=\n## |\Z)'
     content = re.sub(or_pattern, openrouter_table, content, flags=re.DOTALL)
-    
+
     # Replace Routing Matrix
     routing_pattern = r'## Routing Matrix.*?(?=\n## |\Z)'
     content = re.sub(routing_pattern, routing_matrix, content, flags=re.DOTALL)
-    
+
     # Replace Resource Conservation
     res_pattern = r'## Resource Conservation \(IMPORTANT\).*?(?=\n## |\Z)'
     content = re.sub(res_pattern, resource_cons, content, flags=re.DOTALL)
-    
+
     # Replace Groq section
     groq_pattern = r'## Groq \(T4 — Last Resort.*?(?=\n## |\Z)'
     content = re.sub(groq_pattern, groq_section, content, flags=re.DOTALL)
-    
+
     if dry_run:
         print(f"  [DRY RUN] Would update: {file_path}")
         return True
-    
+
     file_path.write_text(content, encoding='utf-8')
     print(f"  ✅ Updated: {file_path}")
     return True
@@ -213,21 +213,21 @@ def main():
     """Main function to update all cost-optimization files."""
     print("🔄 Free Models Update Script")
     print("=" * 50)
-    
+
     # Check for --dry-run flag
     dry_run = "--dry-run" in sys.argv
-    
+
     if dry_run:
         print("⚠️  DRY RUN MODE - No files will be modified\n")
-    
+
     # Get project root
     project_root = Path(__file__).parent.parent
     os.chdir(project_root)
-    
+
     print(f"📁 Project root: {project_root}")
     print(f"📅 Last updated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print()
-    
+
     # Show current configuration
     print("📋 Current Free Models Configuration:")
     print("-" * 40)
@@ -235,32 +235,32 @@ def main():
         fmt = get_free_model_format(model_id)
         print(f"  • {display_name}: {model_id} ({fmt})")
     print()
-    
+
     print("📋 Default Routing:")
     print("-" * 40)
     for task, model in DEFAULT_ROUTING.items():
         print(f"  • {task}: {model}")
     print()
-    
+
     # Update each agent directory
     print("🔄 Updating agent directories...")
     print("-" * 40)
-    
+
     success_count = 0
     for dir_path in AGENT_DIRS:
         full_path = project_root / dir_path / "cost-optimization"
         if update_cost_optimization_file(full_path, dry_run):
             success_count += 1
-    
+
     print()
     print("=" * 50)
     print(f"✅ Updated {success_count}/{len(AGENT_DIRS)} files")
-    
+
     if not dry_run:
         print("\n🧪 Running verification...")
         print("-" * 40)
         os.system("python scripts/verify_agentic_platform.py")
-    
+
     return 0
 
 

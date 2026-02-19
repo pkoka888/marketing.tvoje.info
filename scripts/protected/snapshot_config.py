@@ -34,52 +34,71 @@ def load_snapshot():
 
 
 def get_current_config():
-    """Extract current configuration from verification script."""
-    # This mirrors the API_KEYS_CONFIG from verify_api_keys.py
-    return {
-        "OPENROUTER_API_KEY": {
-            "endpoint": "https://openrouter.ai/api/v1/models",
-            "method": "GET",
-            "auth_type": "bearer",
-        },
-        "GROQ_API_KEY": {
-            "endpoint": "https://api.groq.com/openai/v1/models",
-            "method": "GET",
-            "auth_type": "bearer",
-        },
-        "GEMINI_API_KEY": {
-            "endpoint": "https://generativelanguage.googleapis.com/v1beta/models",
-            "method": "GET",
-            "auth_type": "param",
-            "param_name": "key",
-        },
-        "OPENAI_API_KEY": {
-            "endpoint": "https://api.openai.com/v1/models",
-            "method": "GET",
-            "auth_type": "bearer",
-        },
-        "NVIDIA_API_KEY": {
-            "endpoint": "https://integrate.api.nvidia.com/v1/models",
-            "method": "GET",
-            "auth_type": "bearer",
-        },
-        "KILOCODE_API_KEY": {
-            "presence_only": True,
-        },
-        "ROUTEWAY_API_KEY": {
-            "endpoint": "https://api.routeway.ai/v1/models",
-            "method": "GET",
-            "auth_type": "bearer",
-        },
-        "FIRECRAWL_API_KEY": {
-            "presence_only": True,
-        },
-        "GITHUB_TOKEN": {
-            "endpoint": "https://api.github.com/user",
-            "method": "GET",
-            "auth_type": "bearer",
-        },
-    }
+    """Extract current configuration from verification script.
+    
+    Imports API_KEYS_CONFIG from verify_api_keys.py to avoid duplication.
+    This ensures single source of truth for API key configurations.
+    """
+    try:
+        from verify_api_keys import API_KEYS_CONFIG
+        # Extract endpoint/method/auth info from each key config
+        config = {}
+        for key_name, key_data in API_KEYS_CONFIG.items():
+            config[key_name] = {
+                "endpoint": key_data.get("endpoint"),
+                "method": key_data.get("method", "GET"),
+                "auth_type": key_data.get("auth_type"),
+                "param_name": key_data.get("param_name"),
+                "presence_only": key_data.get("presence_only", False),
+            }
+        return config
+    except ImportError:
+        # Fallback for when import fails - DO NOT remove hardcoded config
+        # This ensures the script still works if verify_api_keys.py is unavailable
+        return {
+            "OPENROUTER_API_KEY": {
+                "endpoint": "https://openrouter.ai/api/v1/models",
+                "method": "GET",
+                "auth_type": "bearer",
+            },
+            "GROQ_API_KEY": {
+                "endpoint": "https://api.groq.com/openai/v1/models",
+                "method": "GET",
+                "auth_type": "bearer",
+            },
+            "GEMINI_API_KEY": {
+                "endpoint": "https://generativelanguage.googleapis.com/v1beta/models",
+                "method": "GET",
+                "auth_type": "param",
+                "param_name": "key",
+            },
+            "OPENAI_API_KEY": {
+                "endpoint": "https://api.openai.com/v1/models",
+                "method": "GET",
+                "auth_type": "bearer",
+            },
+            "NVIDIA_API_KEY": {
+                "endpoint": "https://integrate.api.nvidia.com/v1/models",
+                "method": "GET",
+                "auth_type": "bearer",
+            },
+            "KILOCODE_API_KEY": {
+                "presence_only": True,
+            },
+            "ROUTEWAY_API_KEY": {
+                "endpoint": "https://api.routeway.ai/v1/models",
+                "method": "GET",
+                "auth_type": "bearer",
+            },
+            "FIRECRAWL_API_KEY": {
+                "presence_only": True,
+            },
+            "GITHUB_TOKEN": {
+                "endpoint": "https://api.github.com/user",
+                "method": "GET",
+                "auth_type": "bearer",
+            },
+        }
 
 
 def compare_configs(snapshot, current):

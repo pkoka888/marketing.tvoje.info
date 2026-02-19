@@ -11,39 +11,15 @@
     "updated": "2026-02-18"
   },
   "activation": {
-    "triggers": [
-      "research findings",
-      "investigation results",
-      "analysis report",
-      "study results"
-    ],
-    "keywords": [
-      "research",
-      "findings",
-      "investigation",
-      "analysis",
-      "study",
-      "results"
-    ],
-    "context": [
-      "research",
-      "analysis",
-      "investigation",
-      "documentation"
-    ],
+    "triggers": ["research findings", "investigation results", "analysis report", "study results"],
+    "keywords": ["research", "findings", "investigation", "analysis", "study", "results"],
+    "context": ["research", "analysis", "investigation", "documentation"],
     "priority": "high",
     "auto_activate": true
   },
   "models": {
-    "preferred": [
-      "gemini-2.5-pro",
-      "big-pickle",
-      "minimax-m2.1:free"
-    ],
-    "fallback": [
-      "x-ai/grok-code-fast-1:optimized:free",
-      "claude-sonnet-4-5"
-    ],
+    "preferred": ["gemini-2.5-pro", "big-pickle", "minimax-m2.1:free"],
+    "fallback": ["x-ai/grok-code-fast-1:optimized:free", "claude-sonnet-4-5"],
     "cost_optimization": true
   },
   "references": {
@@ -56,17 +32,9 @@
       ".kilocode/rules/memory-bank/brief.md",
       ".kilocode/rules/memory-bank/context.md"
     ],
-    "related": [
-      "docs/research/*.md",
-      "plans/analysis/*.md"
-    ],
-    "skills": [
-      "bmad-discovery-research",
-      "prompt-consultant"
-    ],
-    "rules": [
-      "cost-optimization"
-    ]
+    "related": ["docs/research/*.md", "plans/analysis/*.md"],
+    "skills": ["bmad-discovery-research", "prompt-consultant"],
+    "rules": ["cost-optimization"]
   },
   "validation": {
     "required_sections": [
@@ -76,34 +44,15 @@
       "Sources / References",
       "Recommendations"
     ],
-    "format_checks": [
-      "markdown_structure",
-      "link_validation",
-      "code_block_syntax"
-    ],
-    "content_rules": [
-      "evidence_based_findings",
-      "actionable_recommendations",
-      "source_attribution"
-    ]
+    "format_checks": ["markdown_structure", "link_validation", "code_block_syntax"],
+    "content_rules": ["evidence_based_findings", "actionable_recommendations", "source_attribution"]
   },
   "metadata": {
-    "frameworks": [
-      "Kilo Code",
-      "OpenCode",
-      "Cline",
-      "Antigravity"
-    ],
+    "frameworks": ["Kilo Code", "OpenCode", "Cline", "Antigravity"],
     "compatibility": "cross-agent",
     "usage_count": 0,
     "last_used": null,
     "success_rate": null,
-    "tags": [
-      "research",
-      "analysis",
-      "investigation",
-      "documentation",
-      "findings"
-    ]
+    "tags": ["research", "analysis", "investigation", "documentation", "findings"]
   }
 }

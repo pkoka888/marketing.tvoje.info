@@ -4,10 +4,10 @@ Generate images using AI providers via `scripts/generate_images.py`.
 
 ## Providers
 
-| Provider | Model | Cost | Key |
-|----------|-------|------|-----|
-| nvidia | Stable Diffusion XL | Free | `NVIDIA_API_KEY` |
-| openai | DALL-E 3 | Paid | `OPENAI_API_KEY` |
+| Provider | Model               | Cost | Key              |
+| -------- | ------------------- | ---- | ---------------- |
+| nvidia   | Stable Diffusion XL | Free | `NVIDIA_API_KEY` |
+| openai   | DALL-E 3            | Paid | `OPENAI_API_KEY` |
 
 ## Usage
 
@@ -26,11 +26,11 @@ python scripts/generate_images.py \
 
 ## Flags
 
-| Flag | Required | Default | Description |
-|------|----------|---------|-------------|
-| `--prompt` | Yes | — | Image generation prompt |
-| `--output` | Yes | — | Output file path |
-| `--provider` | No | `nvidia` | `nvidia` or `openai` |
+| Flag         | Required | Default  | Description             |
+| ------------ | -------- | -------- | ----------------------- |
+| `--prompt`   | Yes      | —        | Image generation prompt |
+| `--output`   | Yes      | —        | Output file path        |
+| `--provider` | No       | `nvidia` | `nvidia` or `openai`    |
 
 ## Notes
 

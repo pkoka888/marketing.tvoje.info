@@ -11,39 +11,15 @@
     "updated": "2026-02-18"
   },
   "activation": {
-    "triggers": [
-      "audit report",
-      "security audit",
-      "compliance check",
-      "assessment report"
-    ],
-    "keywords": [
-      "audit",
-      "security",
-      "compliance",
-      "assessment",
-      "vulnerability",
-      "risk"
-    ],
-    "context": [
-      "security",
-      "compliance",
-      "assessment",
-      "audit"
-    ],
+    "triggers": ["audit report", "security audit", "compliance check", "assessment report"],
+    "keywords": ["audit", "security", "compliance", "assessment", "vulnerability", "risk"],
+    "context": ["security", "compliance", "assessment", "audit"],
     "priority": "high",
     "auto_activate": true
   },
   "models": {
-    "preferred": [
-      "gemini-2.5-pro",
-      "claude-sonnet-4-5",
-      "x-ai/grok-code-fast-1:optimized:free"
-    ],
-    "fallback": [
-      "big-pickle",
-      "minimax-m2.1:free"
-    ],
+    "preferred": ["gemini-2.5-pro", "claude-sonnet-4-5", "x-ai/grok-code-fast-1:optimized:free"],
+    "fallback": ["big-pickle", "minimax-m2.1:free"],
     "cost_optimization": false
   },
   "references": {
@@ -56,18 +32,9 @@
       ".kilocode/rules/memory-bank/brief.md",
       ".kilocode/rules/memory-bank/context.md"
     ],
-    "related": [
-      "docs/security/*.md",
-      "plans/assessments/*.md"
-    ],
-    "skills": [
-      "bmad-security-review",
-      "debug"
-    ],
-    "rules": [
-      "server-preservation",
-      "cost-optimization"
-    ]
+    "related": ["docs/security/*.md", "plans/assessments/*.md"],
+    "skills": ["bmad-security-review", "debug"],
+    "rules": ["server-preservation", "cost-optimization"]
   },
   "validation": {
     "required_sections": [
@@ -78,11 +45,7 @@
       "Recommendations",
       "Conclusion"
     ],
-    "format_checks": [
-      "markdown_structure",
-      "severity_levels",
-      "evidence_links"
-    ],
+    "format_checks": ["markdown_structure", "severity_levels", "evidence_links"],
     "content_rules": [
       "evidence_based_findings",
       "actionable_recommendations",
@@ -90,22 +53,11 @@
     ]
   },
   "metadata": {
-    "frameworks": [
-      "Kilo Code",
-      "OpenCode",
-      "Cline",
-      "Antigravity"
-    ],
+    "frameworks": ["Kilo Code", "OpenCode", "Cline", "Antigravity"],
     "compatibility": "cross-agent",
     "usage_count": 0,
     "last_used": null,
     "success_rate": null,
-    "tags": [
-      "audit",
-      "security",
-      "compliance",
-      "assessment",
-      "risk-management"
-    ]
+    "tags": ["audit", "security", "compliance", "assessment", "risk-management"]
   }
 }

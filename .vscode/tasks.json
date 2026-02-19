@@ -26,16 +26,15 @@
       "label": "Weekly Consistency Check",
       "type": "shell",
       "command": "python",
-      "args": [
-        ".agent/workflows/weekly-consistency.py"
-      ],
+      "args": [".agent/workflows/weekly-consistency.py"],
       "presentation": {
         "reveal": "always",
         "panel": "new"
       },
       "problemMatcher": [],
       "options": {
-        "cwd": "${workspaceFolder}"
+        "cwd": "${workspaceFolder}",
+        "shell": { "executable": "bash", "args": ["-c"] }
       },
       "detail": "Run agent consistency check (weekly)"
     },

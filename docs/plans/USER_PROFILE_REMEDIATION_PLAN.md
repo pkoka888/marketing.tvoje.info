@@ -21,11 +21,11 @@ This remediation plan addresses the "poisoned path" issue where `C:\Users\HP` ap
 
 ## 2. Technical Root Causes
 
-| ID | Root Cause | Evidence |
-|----|------------|----------|
+| ID    | Root Cause                                                                     | Evidence                                                                      |
+| ----- | ------------------------------------------------------------------------------ | ----------------------------------------------------------------------------- |
 | RC-01 | **VS Code Settings Sync** propagates stale paths from previous machine/profile | Kilo Code uses `globalState.setKeysForSync()` - no custom sync implementation |
-| RC-02 | Extension storing absolute paths before Kilo Code installation | Any extension could store `C:\Users\HP\*` in globalState |
-| RC-03 | firecrawl-mcp service failure | Service deprecated, replaced with firecrawl-local |
+| RC-02 | Extension storing absolute paths before Kilo Code installation                 | Any extension could store `C:\Users\HP\*` in globalState                      |
+| RC-03 | firecrawl-mcp service failure                                                  | Service deprecated, replaced with firecrawl-local                             |
 
 ### Evidence Chain
 
@@ -37,13 +37,13 @@ SettingsSyncService.ts → globalState.setKeysForSync() → Microsoft Cloud → 
 
 ## 3. Affected Components
 
-| Component | Impact | Status |
-|-----------|--------|--------|
-| Kilo Code SettingsSyncService | Uses VS Code native sync (no custom impl) | ✅ Not Bug |
-| VS Code Extension Host | Spawns node.exe for MCP (normal behavior) | ✅ Expected |
-| ShadowCheckpointService | Protected paths + SHA-256 hashing | ✅ Active Protection |
-| firecrawl-mcp | Service failed, decommissioned | ✅ Replaced |
-| firecrawl-local | Implemented as replacement | ✅ Working |
+| Component                     | Impact                                    | Status               |
+| ----------------------------- | ----------------------------------------- | -------------------- |
+| Kilo Code SettingsSyncService | Uses VS Code native sync (no custom impl) | ✅ Not Bug           |
+| VS Code Extension Host        | Spawns node.exe for MCP (normal behavior) | ✅ Expected          |
+| ShadowCheckpointService       | Protected paths + SHA-256 hashing         | ✅ Active Protection |
+| firecrawl-mcp                 | Service failed, decommissioned            | ✅ Replaced          |
+| firecrawl-local               | Implemented as replacement                | ✅ Working           |
 
 ---
 
@@ -52,6 +52,7 @@ SettingsSyncService.ts → globalState.setKeysForSync() → Microsoft Cloud → 
 ### P0 - Immediate Actions (Critical)
 
 #### REC-01: Disable VS Code Settings Sync for Sensitive Paths
+
 - **Priority**: P0
 - **Action**: Turn off VS Code Settings Sync or selectively exclude problematic keys
 - **Risk**: Medium - Loses convenience of sync
@@ -59,6 +60,7 @@ SettingsSyncService.ts → globalState.setKeysForSync() → Microsoft Cloud → 
 - **Verification**: Check `File > Preferences > Settings Sync` is properly configured
 
 #### REC-02: Clear Stale Global State
+
 - **Priority**: P0
 - **Action**: Clear VS Code globalState for extensions that may contain old paths
 - **Risk**: Low - Extensions will reinitialize with correct paths
@@ -68,6 +70,7 @@ SettingsSyncService.ts → globalState.setKeysForSync() → Microsoft Cloud → 
 ### P1 - Short-term Actions (High Priority)
 
 #### REC-03: Document Portable VS Code Setup Best Practices
+
 - **Priority**: P1
 - **Action**: Create `.vscode/settings.json` with portable mode configuration to avoid user profile mixing
 - **Risk**: Low - Documentation only
@@ -75,6 +78,7 @@ SettingsSyncService.ts → globalState.setKeysForSync() → Microsoft Cloud → 
 - **Verification**: Settings file present and valid JSON
 
 #### REC-04: Verify ShadowCheckpointService is Active
+
 - **Priority**: P1
 - **Action**: Confirm ShadowCheckpointService protected paths are functioning
 - **Risk**: None - Read-only verification
@@ -84,6 +88,7 @@ SettingsSyncService.ts → globalState.setKeysForSync() → Microsoft Cloud → 
 ### P2 - Long-term Preventive Measures (Medium Priority)
 
 #### REC-05: Add MCP Server Health Checks
+
 - **Priority**: P2
 - **Action**: Implement monitoring for MCP server health (especially firecrawl-local)
 - **Risk**: Low - Improved observability
@@ -91,6 +96,7 @@ SettingsSyncService.ts → globalState.setKeysForSync() → Microsoft Cloud → 
 - **Verification**: Health check endpoint returns status for each MCP server
 
 #### REC-06: Create Incident Response Runbook
+
 - **Priority**: P2
 - **Action**: Document steps for future profile mixing incidents
 - **Risk**: None - Documentation only
@@ -101,30 +107,33 @@ SettingsSyncService.ts → globalState.setKeysForSync() → Microsoft Cloud → 
 
 ## 5. Risk Analysis
 
-| Recommendation | Risk Level | Impact | Mitigation |
-|---------------|------------|--------|------------|
-| REC-01: Disable Settings Sync | Medium | Loss of convenience | Selective key sync |
-| REC-02: Clear Global State | Low | Extension reinit | Export settings first |
-| REC-03: Document Best Practices | Low | None | N/A |
-| REC-04: Verify Protection | None | N/A | N/A |
-| REC-05: MCP Health Checks | Low | Improved ops | N/A |
-| REC-06: Incident Runbook | None | N/A | N/A |
+| Recommendation                  | Risk Level | Impact              | Mitigation            |
+| ------------------------------- | ---------- | ------------------- | --------------------- |
+| REC-01: Disable Settings Sync   | Medium     | Loss of convenience | Selective key sync    |
+| REC-02: Clear Global State      | Low        | Extension reinit    | Export settings first |
+| REC-03: Document Best Practices | Low        | None                | N/A                   |
+| REC-04: Verify Protection       | None       | N/A                 | N/A                   |
+| REC-05: MCP Health Checks       | Low        | Improved ops        | N/A                   |
+| REC-06: Incident Runbook        | None       | N/A                 | N/A                   |
 
 ---
 
 ## 6. Implementation Steps
 
 ### Step 1: Immediate Resolution
+
 - [ ] Disable VS Code Settings Sync or configure selective sync
 - [ ] Clear stale globalState values containing `C:\Users\HP`
 - [ ] Verify path no longer appears in workspace
 
 ### Step 2: Verification
+
 - [ ] Run `python scripts/verify_agentic_platform.py` - must exit 0
 - [ ] Verify ShadowCheckpointService protected paths active
 - [ ] Confirm firecrawl-local is operational
 
 ### Step 3: Documentation
+
 - [ ] Create portable VS Code setup guide
 - [ ] Document incident response procedure
 
@@ -140,11 +149,11 @@ SettingsSyncService.ts → globalState.setKeysForSync() → Microsoft Cloud → 
 
 ## 8. References
 
-| Document | Purpose |
-|----------|---------|
-| `docs/USER_PROFILE_INVESTIGATION.md` | Full investigation report |
-| `AGENTS.md` | Agent platform governance |
-| `.kilocode/rules/bmad-integration.md` | BMAD workflow protocol |
+| Document                              | Purpose                   |
+| ------------------------------------- | ------------------------- |
+| `docs/USER_PROFILE_INVESTIGATION.md`  | Full investigation report |
+| `AGENTS.md`                           | Agent platform governance |
+| `.kilocode/rules/bmad-integration.md` | BMAD workflow protocol    |
 
 ---
 
@@ -152,17 +161,17 @@ SettingsSyncService.ts → globalState.setKeysForSync() → Microsoft Cloud → 
 
 ### ShadowCheckpointService Protections
 
-| Protection | Status |
-|------------|--------|
+| Protection                                               | Status    |
+| -------------------------------------------------------- | --------- |
 | Protected Paths (homedir, Desktop, Documents, Downloads) | ✅ Active |
-| SHA-256 Workspace Hashing | ✅ Active |
-| Warning System | ✅ Active |
+| SHA-256 Workspace Hashing                                | ✅ Active |
+| Warning System                                           | ✅ Active |
 
 ### MCP Server Status
 
-| Server | Status | Notes |
-|--------|--------|-------|
-| firecrawl-local | ✅ Working | Replaced firecrawl-mcp |
-| memory | ✅ Running | Cross-session state |
-| redis | ✅ Running | Parallel coordination |
-| github | ✅ Configured | PR/issue management |
+| Server          | Status        | Notes                  |
+| --------------- | ------------- | ---------------------- |
+| firecrawl-local | ✅ Working    | Replaced firecrawl-mcp |
+| memory          | ✅ Running    | Cross-session state    |
+| redis           | ✅ Running    | Parallel coordination  |
+| github          | ✅ Configured | PR/issue management    |

@@ -14,7 +14,6 @@
 
 | Model | Format | Best For | Status |
 | ----- | ------ | -------- | ------ |
-| `grok-code-fast-1` | `:optimized:free` | Bulk coding, code synthesis | ✅ Free |
 | `minimax-m2.1` | `:free` | General-purpose, strong performance | ✅ Free |
 | `glm-4.7` | `:free` | Agent-centric applications | ✅ Free |
 | `kimi-k2.5` | `:free` | Tool use, reasoning, code synthesis | ✅ Free |
@@ -34,19 +33,18 @@
 
 | Task Type | Agent | Model | Tier |
 | --------- | ----- | ----- | ---- |
-| Bulk coding | Kilo CLI | `x-ai/grok-code-fast-1:optimized:free` | T1 Free |
+| Bulk coding | Kilo CLI | `minimax-m2.1:free` | T1 Free |
 | Routine fixes | OpenCode | `big-pickle` | T1 Free |
 | Research | Gemini CLI | `gemini-2.5-flash` | T2 Free |
-| Planning | Cline | `minimax-m2.5` | T1 Free |
+| Planning | Kilo CLI | `minimax-m2.1:free` | T1 Free |
 | Agent tasks | Kilo CLI | `minimax-m2.1:free` | T1 Free |
-| Code synthesis | Kilo CLI | `x-ai/grok-code-fast-1:optimized:free` | T1 Free |
+| Code synthesis | Kilo CLI | `minimax-m2.1:free` | T1 Free |
 | **Fallback** | Groq | `llama-3.3-70b` | **T4 Paid** |
-
 ## Multi-Platform Free Models (2026-02)
 
 ### Kilo Code (Primary)
 - `minimax-m2.1` → `:free` suffix
-- `glm-4.7` → `:free` suffix  
+- `glm-4.7` → `:free` suffix
 - `kimi-k2.5` → `:free` suffix
 - `giga-potato` → no suffix
 
@@ -61,12 +59,13 @@
 - `kimi-k2.5` → free
 - `minimax-m2.5` → free
 
-### LiteLLM (Self-Hosted Proxy)
+### LiteLLM (Self-Hosted Proxy, port 4000)
 See `litellm/proxy_config.yaml` for full config:
-- T1: `gemini-flash`, `gemini-pro` (Google Free Tier - Use First)
-- T2: `qwen3-coder-free`, `deepseek-r1-free` (OpenRouter Free - No Credits Needed)
-- T3: `groq-llama-8b`, `groq-llama-70b` (Pay-per-token - Use as Last Resort)
-- T4: `gpt-4o-mini` (OpenAI Paid - Most Expensive)
+- T1 FREE: `x-ai/grok-code-fast-1:optimized:free`, `minimax-free`, `glm4-free`, `qwen3-coder-free`, `deepseek-r1-free` (OpenRouter)
+- T2 FREE: `gemini-flash` (15 RPM), `gemini-pro` (2 RPM) (Google free tier)
+- T3 PAID: `groq-llama-8b` ($0.05/$0.08), `groq-llama-70b` ($0.59/$0.79) (Groq)
+- T4 PAID: `gpt-4o-mini` (OpenAI — last resort)
+Fallback chain: T1 → T2 → T3 → T4
 ## How to Verify Current Free Models
 
 **Method 1: IDE Model Picker**
@@ -86,6 +85,7 @@ kilo
 
 
 
+
 ## Resource Conservation (IMPORTANT)
 
 - **NEVER use Gemini for internal code searches** (codesearch, grep, file search)
@@ -98,6 +98,7 @@ If approaching $20/month on any provider:
 1. Stop using paid models immediately
 2. Switch all tasks to free alternatives
 3. Log in `vscodeportable/research/cost-alerts.md`
+
 
 
 

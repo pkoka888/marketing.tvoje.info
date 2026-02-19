@@ -193,3 +193,17 @@ py.cmd
 # Project-specific exclusions
 evidence/
 .vercel/
+
+# Scratch/temp files
+*.tmp
+temp_*.txt
+test_*.txt
+dbg.txt
+Part
+guide_part1.txt
+kd*.txt
+tm*.py
+tt.py
+*.bak
+_test*
+test_nvidia.png

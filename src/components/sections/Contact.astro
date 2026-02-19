@@ -280,15 +280,15 @@ const formspreeId = import.meta.env.PUBLIC_FORMSPREE_ID || 'your-form-id';
 
     try {
       const formData = new FormData(form);
-      
+
       // Submit to our API (for database storage)
       const apiResponse = await fetch(apiEndpoint, {
         method: 'POST',
         body: formData,
       });
-      
+
       const apiResult = await apiResponse.json();
-      
+
       // Also submit to Formspree (for email notifications)
       const formspreeAction = form.action;
       await fetch(formspreeAction, {

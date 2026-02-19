@@ -1,8 +1,7 @@
 # Lint Fix Strategy: ESLint + TypeScript False Positives
 
-**Date**: {{DATE}}
-**Type**: Best Practice Guide (2026)
-**Source**: typescript-eslint official documentation
+**Date**: {{DATE}} **Type**: Best Practice Guide (2026) **Source**:
+typescript-eslint official documentation
 
 ---
 
@@ -10,11 +9,15 @@
 
 ESLint's `@typescript-eslint/no-unused-vars` rule produces false positives with:
 
-1. **Generic function type parameters** - `T extends (...args: unknown[]) => void`
-2. **Closure-captured arguments** - args used inside returned functions (debounce/throttle)
-3. **TypeScript-specific patterns** - ESLint doesn't analyze TypeScript type inference correctly
+1. **Generic function type parameters** -
+   `T extends (...args: unknown[]) => void`
+2. **Closure-captured arguments** - args used inside returned functions
+   (debounce/throttle)
+3. **TypeScript-specific patterns** - ESLint doesn't analyze TypeScript type
+   inference correctly
 
-**Official Reference**: [typescript-eslint no-unused-vars](https://typescript-eslint.io/rules/no-unused-vars/)
+**Official Reference**:
+[typescript-eslint no-unused-vars](https://typescript-eslint.io/rules/no-unused-vars/)
 
 ---
 
@@ -22,7 +25,8 @@ ESLint's `@typescript-eslint/no-unused-vars` rule produces false positives with:
 
 ### Step 1: Configure ESLint Properly
 
-Based on **typescript-eslint official recommendation**, configure `eslint.config.mjs`:
+Based on **typescript-eslint official recommendation**, configure
+`eslint.config.mjs`:
 
 ```javascript
 import js from '@eslint/js';
@@ -88,7 +92,8 @@ function handler(event: Event, data: string) {
 | File-level override       | Isolates known false positives (debounce/throttle patterns)  |
 | Disable base rules        | Prevents conflicts between ESLint and TypeScript rules       |
 
-**Reference**: [typescript-eslint FAQ](https://typescript-eslint.io/troubleshooting/faqs/eslint/#why-does-this-rule-report-variables-used-only-for-types)
+**Reference**:
+[typescript-eslint FAQ](https://typescript-eslint.io/troubleshooting/faqs/eslint/#why-does-this-rule-report-variables-used-only-for-types)
 
 ---
 
@@ -192,10 +197,12 @@ npm run build          # Full build
 ## References
 
 ### Dependencies
+
 - [AUDIT_REPORT](AUDIT_REPORT.md) - Referenced template
 - [TEST_RESULTS](TEST_RESULTS.md) - Referenced template
 
 ### Referenced By
+
 - [AUDIT_REPORT](AUDIT_REPORT.md) - References this template
 - [TEST_RESULTS](TEST_RESULTS.md) - References this template
 
@@ -203,12 +210,11 @@ npm run build          # Full build
 
 ## Related Skills & Rules
 
-| Category | Resource | Description |
-|----------|----------|-------------|
-| **Skill** | [.kilocode/skills/debug/SKILL.md](../.kilocode/skills/debug/SKILL.md) | Systematic debugging protocol |
+| Category  | Resource                                                                                        | Description                          |
+| --------- | ----------------------------------------------------------------------------------------------- | ------------------------------------ |
+| **Skill** | [.kilocode/skills/debug/SKILL.md](../.kilocode/skills/debug/SKILL.md)                           | Systematic debugging protocol        |
 | **Skill** | [.kilocode/skills/accessibility-wcag/SKILL.md](../.kilocode/skills/accessibility-wcag/SKILL.md) | WCAG 2.2 AA accessibility guidelines |
-| **Rule** | [.kilocode/rules/bmad-integration](./bmad-integration.md) | BMAD workflow protocol |
-
+| **Rule**  | [.kilocode/rules/bmad-integration](./bmad-integration.md)                                       | BMAD workflow protocol               |
 
 - [typescript-eslint no-unused-vars](https://typescript-eslint.io/rules/no-unused-vars/)
 - [ESLint v10.0.0 Release](https://eslint.org/blog/2026/02/eslint-v10.0.0-released/)
