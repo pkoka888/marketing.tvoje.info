@@ -16,11 +16,11 @@
 ## Recent Git Changes
 
 Recent commits:
+7936f0e chore: fix CRLF line endings in context.md
 5fec7b6 chore: fix CRLF line endings in context.md
 422b3f4 chore: fix CRLF line endings in context.md
 6be9da6 chore: fix CRLF line endings in context.md
 b11ff82 chore: fix CRLF line endings in context.md
-3f752c3 chore: fix CRLF line endings in context.md
 
 ## Active Task Files
 
