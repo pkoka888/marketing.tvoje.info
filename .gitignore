@@ -207,3 +207,7 @@ tt.py
 *.bak
 _test*
 test_nvidia.png
+
+# Archived Research Repositories
+tmp-agentic/
+tmp-repos/
