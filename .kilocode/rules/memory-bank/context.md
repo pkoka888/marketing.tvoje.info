@@ -16,11 +16,11 @@
 ## Recent Git Changes
 
 Recent commits:
+95d8d5f feat: add tmp-agentic archive structure and dependency verification script
 8968259 feat: complete agent configuration management system
 594f55b feat: add filesystem-vscodeportable MCP server to all agent configs
 f587d50 docs: add agent directory protection and Antigravity best practices
 c5cbc2a docs: add READY-TO-EXECUTE summary with execution options
-eb997ea docs: add BMAD stories for critical gaps
 
 ## Active Task Files
 
