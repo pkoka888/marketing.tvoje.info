@@ -1,0 +1,113 @@
+{
+  "$schema": "https://modelcontextprotocol.io/specification/2024/11/05",
+  "note": "This config uses optimized paths. See .agent/mcp.json for full canonical config.",
+  "mcpServers": {
+    "filesystem-projects": {
+      "command": "node",
+      "args": [
+        "C:/nvm4w/nodejs/node_modules/@modelcontextprotocol/server-filesystem/dist/index.js",
+        "C:/Users/pavel/projects"
+      ],
+      "alwaysAllow": [
+        "read_text_file",
+        "list_directory",
+        "directory_tree",
+        "read_multiple_files",
+        "read_file"
+      ],
+      "description": "Filesystem access to projects directory (optimized)"
+    },
+    "filesystem-agentic": {
+      "command": "node",
+      "args": [
+        "C:/nvm4w/nodejs/node_modules/@modelcontextprotocol/server-filesystem/dist/index.js",
+        "C:/Users/pavel/vscodeportable/agentic"
+      ],
+      "description": "Filesystem access to agentic repository (read-only)"
+    },
+    "filesystem-vscodeportable": {
+      "command": "node",
+      "args": [
+        "C:/nvm4w/nodejs/node_modules/@modelcontextprotocol/server-filesystem/dist/index.js",
+        "C:/Users/pavel/vscodeportable"
+      ],
+      "description": "Filesystem access to VSCode portable directory"
+    },
+    "memory": {
+      "command": "node",
+      "args": [
+        "C:/nvm4w/nodejs/node_modules/@modelcontextprotocol/server-memory/dist/index.js"
+      ],
+      "alwaysAllow": [
+        "read_graph",
+        "search_nodes",
+        "open_nodes"
+      ],
+      "description": "Knowledge graph (optimized)"
+    },
+    "git": {
+      "command": "node",
+      "args": [
+        "C:/nvm4w/nodejs/node_modules/git-mcp/dist/index.js"
+      ],
+      "description": "Git operations (optimized)"
+    },
+    "github": {
+      "command": "node",
+      "args": [
+        "./.kilocode/mcp-servers/mcp-wrapper.js",
+        "github"
+      ],
+      "description": "GitHub API integration"
+    },
+    "fetch": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-fetch"
+      ],
+      "description": "Web fetching"
+    },
+    "redis": {
+      "command": "node",
+      "args": [
+        "./.kilocode/mcp-servers/mcp-wrapper.js",
+        "redis"
+      ],
+      "description": "Redis for rate limiting"
+    },
+    "time": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-time"
+      ],
+      "description": "Time and date operations"
+    },
+    "bmad-mcp": {
+      "command": "node",
+      "args": [
+        "C:/nvm4w/nodejs/node_modules/bmad-mcp/dist/index.js"
+      ],
+      "env": {
+        "PROJECT_ROOT": "."
+      },
+      "description": "BMAD workflow orchestration"
+    },
+    "firecrawl-local": {
+      "command": "node",
+      "args": [
+        "./.kilocode/mcp-servers/mcp-wrapper.js",
+        "firecrawl"
+      ],
+      "description": "Firecrawl web scraping"
+    },
+    "playwright-mcp": {
+      "command": "node",
+      "args": [
+        "C:/nvm4w/nodejs/node_modules/@playwright/mcp/cli.js"
+      ],
+      "description": "Playwright browser automation"
+    }
+  },
+  "disabled": false,
+  "disabledTools": []
+}

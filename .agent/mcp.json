@@ -59,22 +59,11 @@
       ],
       "description": "Filesystem access to VSCode portable directory with write permissions"
     },
-    // DISABLED - Memory MCP causes context issues (200K+ tokens)
-    // Use file-based memory via junctions instead
     /*
-    "memory": {
-      "command": "node",
-      "args": [
-        "C:/nvm4w/nodejs/node_modules/@modelcontextprotocol/server-memory/dist/index.js"
-      ],
-      "alwaysAllow": [
-        "read_graph",
-        "search_nodes",
-        "open_nodes"
-      ],
-      "description": "In-memory knowledge graph for entities, relations, and observations (optimized)"
-    },
-    */
+     * Memory MCP DISABLED - causes context issues (~200K tokens)
+     * Use file-based memory via junctions instead
+     * To re-enable: remove this comment block and uncomment memory server
+     */
     "git": {
       "command": "node",
       "args": ["C:/nvm4w/nodejs/node_modules/git-mcp/dist/index.js"],

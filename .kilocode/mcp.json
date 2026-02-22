@@ -1,1 +1,175 @@
-{"mcpServers":{"filesystem-projects":{"command":"node","args":["C:/nvm4w/nodejs/node_modules/@modelcontextprotocol/server-filesystem/dist/index.js","C:/Users/pavel/projects"],"alwaysAllow":["read_text_file","list_directory","directory_tree","read_multiple_files","write_file","create_directory","read_file","edit_file","search_files"],"description":"Filesystem access to projects directory (optimized: uses global install)"},"filesystem-agentic":{"command":"node","args":["C:/nvm4w/nodejs/node_modules/@modelcontextprotocol/server-filesystem/dist/index.js","C:/Users/pavel/vscodeportable/agentic"],"description":"Filesystem access to agentic repository directory (read-only reference, optimized)","alwaysAllow":["read_multiple_files","create_directory","list_directory","read_text_file","directory_tree","search_files","read_file","list_allowed_directories"]},"filesystem-vscodeportable":{"command":"node","args":["C:/nvm4w/nodejs/node_modules/@modelcontextprotocol/server-filesystem/dist/index.js","C:/Users/pavel/vscodeportable"],"description":"Filesystem access to VSCode portable directory with write permissions","alwaysAllow":["read_text_file","list_directory","directory_tree","read_multiple_files","write_file","create_directory","read_file","edit_file","search_files","move_file","list_allowed_directories"]},"memory":{"command":"node","args":["C:/nvm4w/nodejs/node_modules/@modelcontextprotocol/server-memory/dist/index.js"],"description":"In-memory knowledge graph for entities, relations, and observations (optimized)","alwaysAllow":["read_graph","search_nodes","open_nodes"]},"git":{"command":"node","args":["C:/nvm4w/nodejs/node_modules/git-mcp/dist/index.js"],"description":"Git repository operations (optimized: uses global install)","alwaysAllow":["git_status","git_log","git_branch","git_show","git_stage","git_commit","git_push"]},"github":{"command":"node","args":["./.kilocode/mcp-servers/mcp-wrapper.js","github"],"description":"GitHub API for repo management (loads .env automatically)","alwaysAllow":["get_file_contents","list_commits","list_issues","list_pull_requests","search_code","search_repositories"]},"time":{"command":"uvx","args":["mcp-server-time"],"description":"Time and date operations with timezone support (Python-based, uvx required)","alwaysAllow":["get_current_time","convert_time"]},"fetch":{"command":"uvx","args":["mcp-server-fetch"],"description":"HTTP requests for fetching external content and APIs (Python-based, uvx required)","alwaysAllow":["fetch"]},"redis":{"command":"node","args":["./.kilocode/mcp-servers/mcp-wrapper.js","redis"],"description":"Redis server with project isolation (loads .env automatically)","alwaysAllow":["redis_get","redis_set","redis_del","redis_keys","redis_exists","redis_ttl","redis_expire","redis_ping","redis_info","redis_list_projects"]},"bmad-mcp":{"command":"node","args":["C:/nvm4w/nodejs/node_modules/bmad-mcp/dist/index.js"],"env":{"PROJECT_ROOT":"."},"description":"BMAD MCP server for agile workflow orchestration (optimized: uses global install)","alwaysAllow":["*"]},"firecrawl-local":{"command":"node","args":["./.kilocode/mcp-servers/mcp-wrapper.js","firecrawl"],"description":"Firecrawl web scraping (loads .env automatically)"},"playwright-mcp":{"command":"node","args":["C:/nvm4w/nodejs/node_modules/@playwright/mcp/cli.js"],"description":"Playwright browser automation and testing"}},"security":{"pathValidation":{"enabled":true,"allowedPaths":["C:/Users/pavel/projects","C:/Users/pavel/vscodeportable","C:/Users/pavel/vscodeportable/agentic"],"blockedPaths":["C:/Windows","C:/Program Files","C:/Program Files (x86)","C:/Users/pavel/.ssh","C:/Users/pavel/.gnupg","C:/Users/pavel/AppData"]},"permissionControl":{"writeOperationsRequireApproval":true,"dangerousOperationsRequireApproval":true,"safeReadOperations":["read_text_file","list_directory","directory_tree","read_multiple_files","get_current_time","convert_time","read_graph","search_nodes","open_nodes","git_status","git_log","git_branch","git_show","get_file_contents","list_commits","list_issues","list_pull_requests","fetch","redis_get","redis_keys","redis_exists","redis_ttl","redis_ping","redis_info","redis_list_projects"]}}}
+{
+  "$schema": "https://modelcontextprotocol.io/specification/2024/11/05",
+  "mcpServers": {
+    "filesystem-projects": {
+      "command": "node",
+      "args": [
+        "C:/nvm4w/nodejs/node_modules/@modelcontextprotocol/server-filesystem/dist/index.js",
+        "C:/Users/pavel/projects"
+      ],
+      "alwaysAllow": [
+        "read_text_file",
+        "list_directory",
+        "directory_tree",
+        "read_multiple_files",
+        "write_file",
+        "create_directory",
+        "read_file",
+        "edit_file",
+        "search_files"
+      ],
+      "description": "Filesystem access to projects directory (optimized: uses global install)"
+    },
+    "filesystem-agentic": {
+      "command": "node",
+      "args": [
+        "C:/nvm4w/nodejs/node_modules/@modelcontextprotocol/server-filesystem/dist/index.js",
+        "C:/Users/pavel/vscodeportable/agentic"
+      ],
+      "alwaysAllow": [
+        "read_multiple_files",
+        "create_directory",
+        "list_directory",
+        "read_text_file",
+        "directory_tree",
+        "search_files",
+        "read_file",
+        "list_allowed_directories"
+      ],
+      "description": "Filesystem access to agentic repository directory (read-only reference, optimized)"
+    },
+    "filesystem-vscodeportable": {
+      "command": "node",
+      "args": [
+        "C:/nvm4w/nodejs/node_modules/@modelcontextprotocol/server-filesystem/dist/index.js",
+        "C:/Users/pavel/vscodeportable"
+      ],
+      "alwaysAllow": [
+        "read_text_file",
+        "list_directory",
+        "directory_tree",
+        "read_multiple_files",
+        "write_file",
+        "create_directory",
+        "read_file",
+        "edit_file",
+        "search_files",
+        "move_file",
+        "list_allowed_directories"
+      ],
+      "description": "Filesystem access to VSCode portable directory with write permissions"
+    },
+    // DISABLED - Memory MCP causes context issues (200K+ tokens)
+    // Use file-based memory via junctions instead
+    /*
+    "memory": {
+      "command": "node",
+      "args": [
+        "C:/nvm4w/nodejs/node_modules/@modelcontextprotocol/server-memory/dist/index.js"
+      ],
+      "alwaysAllow": [
+        "read_graph",
+        "search_nodes",
+        "open_nodes"
+      ],
+      "description": "In-memory knowledge graph for entities, relations, and observations (optimized)"
+    },
+    */
+    "git": {
+      "command": "node",
+      "args": ["C:/nvm4w/nodejs/node_modules/git-mcp/dist/index.js"],
+      "alwaysAllow": [
+        "git_status",
+        "git_log",
+        "git_branch",
+        "git_show",
+        "git_stage",
+        "git_commit",
+        "git_push"
+      ],
+      "description": "Git repository operations (optimized: uses global install)"
+    },
+    "github": {
+      "command": "node",
+      "args": ["./.agent/mcp-servers/mcp-wrapper.js", "github"],
+      "alwaysAllow": [
+        "get_file_contents",
+        "list_commits",
+        "list_issues",
+        "list_pull_requests",
+        "search_code",
+        "search_repositories"
+      ],
+      "description": "GitHub API for repo management (loads .env automatically)"
+    },
+    "time": {
+      "command": "uvx",
+      "args": ["mcp-server-time"],
+      "alwaysAllow": ["get_current_time", "convert_time"],
+      "description": "Time and date operations with timezone support (Python-based, uvx required)"
+    },
+    "fetch": {
+      "command": "uvx",
+      "args": ["mcp-server-fetch"],
+      "alwaysAllow": ["fetch"],
+      "description": "HTTP requests for fetching external content and APIs (Python-based, uvx required)"
+    },
+    "redis": {
+      "command": "node",
+      "args": ["./.agent/mcp-servers/mcp-wrapper.js", "redis"],
+      "description": "Redis server with project isolation (loads .env automatically)"
+    },
+    "bmad-mcp": {
+      "command": "node",
+      "args": ["C:/nvm4w/nodejs/node_modules/bmad-mcp/dist/index.js"],
+      "env": {
+        "PROJECT_ROOT": "."
+      },
+      "alwaysAllow": ["*"],
+      "description": "BMAD MCP server for agile workflow orchestration (optimized: uses global install)"
+    },
+    "firecrawl-local": {
+      "command": "node",
+      "args": ["./.agent/mcp-servers/mcp-wrapper.js", "firecrawl"],
+      "blockedPaths": [
+        "C:/Windows",
+        "C:/Program Files",
+        "C:/Program Files (x86)",
+        "C:/Users/pavel/.ssh",
+        "C:/Users/pavel/.gnupg",
+        "C:/Users/pavel/AppData"
+      ]
+    },
+    "permissionControl": {
+      "writeOperationsRequireApproval": true,
+      "dangerousOperationsRequireApproval": true,
+      "safeReadOperations": [
+        "read_text_file",
+        "list_directory",
+        "directory_tree",
+        "read_multiple_files",
+        "get_current_time",
+        "convert_time",
+        "read_graph",
+        "search_nodes",
+        "open_nodes",
+        "git_status",
+        "git_log",
+        "git_branch",
+        "git_show",
+        "get_file_contents",
+        "list_commits",
+        "list_issues",
+        "list_pull_requests",
+        "fetch",
+        "redis_get",
+        "redis_keys",
+        "redis_exists",
+        "redis_ttl",
+        "redis_ping",
+        "redis_info",
+        "redis_list_projects"
+      ]
+    }
+  }
+}
