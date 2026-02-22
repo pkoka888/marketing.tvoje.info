@@ -80,14 +80,9 @@
     },
     "github": {
       "command": "node",
-      "args": ["./.agent/mcp-servers/mcp-wrapper.js", "github"],
-      "alwaysAllow": [
-        "get_file_contents",
-        "list_commits",
-        "list_issues",
-        "list_pull_requests",
-        "search_code",
-        "search_repositories"
+      "args": [
+        "C:/Users/pavel/projects/marketing.tvoje.info/.agent/mcp-servers/mcp-wrapper.js",
+        "github"
       ],
       "description": "GitHub API for repo management (loads .env automatically)"
     },
@@ -105,8 +100,15 @@
     },
     "redis": {
       "command": "node",
-      "args": ["./.agent/mcp-servers/mcp-wrapper.js", "redis"],
-      "description": "Redis server with project isolation (loads .env automatically)"
+      "args": [
+        "C:/Users/pavel/projects/marketing.tvoje.info/.agent/mcp-servers/mcp-wrapper.js",
+        "redis"
+      ],
+      "env": {
+        "REDIS_URL": "redis://:marketing@localhost:36379",
+        "PROJECT_NAME": "marketing_tvoje_info"
+      },
+      "description": "Redis server with project isolation (local port 36379)"
     },
     "bmad-mcp": {
       "command": "node",
@@ -119,15 +121,11 @@
     },
     "firecrawl-local": {
       "command": "node",
-      "args": ["./.agent/mcp-servers/mcp-wrapper.js", "firecrawl"],
-      "blockedPaths": [
-        "C:/Windows",
-        "C:/Program Files",
-        "C:/Program Files (x86)",
-        "C:/Users/pavel/.ssh",
-        "C:/Users/pavel/.gnupg",
-        "C:/Users/pavel/AppData"
-      ]
+      "args": [
+        "C:/Users/pavel/projects/marketing.tvoje.info/.agent/mcp-servers/mcp-wrapper.js",
+        "firecrawl"
+      ],
+      "description": "Firecrawl web scraping (loads .env automatically)"
     },
     "permissionControl": {
       "writeOperationsRequireApproval": true,
